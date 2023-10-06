@@ -1,0 +1,39 @@
+@use "sass:map";
+@import "style/pages/theme";
+.IntroduceContainer {
+  padding: 64px 0;
+}
+
+.IntroduceHeader {
+  text-align: center;
+  margin: 32px 0 96px 0;
+}
+
+.IntroduceContentContainer {
+  max-width: 100rem;
+  display: flex;
+  justify-content: center;
+}
+
+.IntroduceContent {
+  background-color: rgb(227, 242, 255);
+  height: 400px;
+  margin: 0 16px;
+  padding: 32px 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.IntroduceContent > img {
+  max-width: 70%;
+  object-fit: contain;
+}
+
+.IntroduceText {
+  width: 70%;
+  display: inline-block;
+}
+
+.IntroduceText > p {
+  font-size: 14px;
+}

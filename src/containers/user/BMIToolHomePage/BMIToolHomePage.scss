@@ -1,0 +1,95 @@
+@use "sass:map";
+@import "style/pages/theme";
+.BMIToolHomePageContainer {
+  width: 70%;
+  margin-top: 32px;
+  margin-right: 1rem;
+  margin-left: auto;
+  border: 1px solid #e4e8ec;
+  border-radius: 10px;
+  height: fit-content;
+}
+
+.BMIToolHomePageHeader {
+  font-size: 22px;
+  text-align: center;
+  margin: 32px;
+}
+
+.BMIToolHomePageContent {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.BMIFormContainer {
+  display: inline-block;
+  width: 70%;
+  text-align: left;
+}
+
+.BMIGenderSelection {
+  justify-content: space-between;
+}
+
+.BMIGenderSelection > div {
+  box-sizing: border-box;
+}
+
+.BMIMale,
+.BMIFemale {
+  width: 48%;
+  padding: 12px 0;
+  border: 1px solid rgb(242, 242, 242);
+  box-shadow: rgba(40, 74, 117, 0.08) 0px 5px 12px;
+  border-radius: 10px;
+}
+
+.BMIMale > span,
+.BMIFemale > span,
+.BMIMale > svg,
+.BMIFemale > svg {
+  padding: 0 5px;
+}
+
+.BMIMale > svg {
+  color: rgb(45, 135, 243);
+}
+
+.BMIFemale > svg {
+  color: rgb(254, 157, 194);
+}
+
+.BMIMale.selected,
+.BMIFemale.selected {
+  border: 1px solid rgb(45, 135, 243);
+  color: #2d87f3;
+}
+
+.BMIFormAge > input,
+.BMIFormHeight > input,
+.BMIFormWeight > input {
+  height: 40px;
+  font-size: 14px;
+  width: 95%;
+  border: 1px solid rgb(217, 217, 217);
+  border-radius: 10px;
+  padding-left: 10px;
+}
+
+.BMIFormSubmitButton {
+  margin-top: 32px;
+  text-align: center;
+}
+
+.BMIFormSubmitButton > button {
+  padding: 12px 48px;
+  color: #fff;
+  background-color: rgb(45, 135, 243);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.BMIFormSubmitButton > button:hover {
+  background-color: rgb(44, 116, 223);
+}

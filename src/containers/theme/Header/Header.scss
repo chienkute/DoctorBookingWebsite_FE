@@ -1,0 +1,86 @@
+@use "sass:map";
+@import "style/pages/theme";
+.HeaderContainer {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 80px;
+  background-color: white;
+  padding: 4px 16px;
+  box-sizing: border-box;
+}
+
+.HeaderLogoContainer {
+  height: 100%;
+  width: 10%;
+  display: inline-block;
+  cursor: pointer;
+}
+
+#HeaderLogo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.HeaderSearchContainer {
+  width: 20%;
+  height: 65%;
+  border: 1px solid rgb(217, 217, 217);
+  display: flex;
+  border-radius: 10px;
+}
+
+.HeaderSearchIcon {
+  padding: 0 12px;
+}
+
+.HeaderSearchInput {
+  width: 100%;
+  height: 100%;
+}
+
+#HeaderSearch {
+  width: 100%;
+  height: 50%;
+  border: none;
+}
+
+.HeaderCategoryContainer {
+  margin-left: auto;
+}
+
+.HeaderListCategory {
+  margin: 0 32px 0 0;
+}
+
+.HeaderCategory {
+  display: inline-block;
+  margin: 0px 32px;
+}
+
+.HeaderCategoryLink > a {
+  text-decoration: none;
+  color: #000;
+  font-size: 18px;
+}
+
+.HeaderUserContainer {
+  width: 10%;
+  margin-right: 32px;
+}
+
+.HeaderUserContainer {
+  height: 60%;
+  background-color: #2d87f3;
+  border-radius: 10px;
+}
+
+.LoginButtonContainer {
+  background-color: #2d87f3;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  text-decoration: none;
+}

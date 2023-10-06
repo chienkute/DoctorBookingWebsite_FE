@@ -1,0 +1,71 @@
+@use "sass:map";
+@import "style/pages/theme";
+.NewsSmallHeader {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+}
+
+.CategoryName {
+  text-transform: uppercase;
+  font-size: 24px;
+}
+
+.NewsSmallLink {
+  margin-left: auto;
+}
+
+.NewsSmallLink > a {
+  padding: 7px 20px;
+  display: flex;
+  color: rgb(45, 135, 243);
+}
+
+.ListNewsSmallItems > .NewsItem {
+  display: flex;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.NewsSmallContent .NewsItem > .NewsImage,
+.NewsSmallContent .NewsItem > .NewsInfo {
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 8px;
+}
+
+.NewsSmallContent .NewsItem > .NewsImage {
+  width: 150%;
+}
+
+.ListNewsSmallItems .NewsImage > a > img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.NewsInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.NewsSmallContent .NewsItem .NewsTitle,
+.NewsSmallContent .NewsItem .NewsContent,
+.NewsSmallContent .NewsItem .NewsAuthorAndTime {
+  padding: 4px 0;
+}
+
+.NewsSmallContent .NewsItem .NewsTitle > a {
+  font-size: 20px;
+}
+
+.NewsSmallContent .NewsItem .NewsAuthorAndTime,
+.NewsSmallContent .NewsItem .NewsAuthorAndTime > a {
+  display: flex;
+  align-items: center;
+}
+
+.NewsSmallContent .NewsItem .NewsAuthorAndTime > a > img {
+  height: 20px;
+  object-fit: contain;
+  margin-right: 4px;
+}

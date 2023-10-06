@@ -1,0 +1,55 @@
+@use "sass:map";
+@import "style/pages/theme";
+.ListToolsContainer {
+  width: 70%;
+  margin-top: 32px;
+  margin-right: 1rem;
+  margin-left: auto;
+  border: 1px solid #e4e8ec;
+  border-radius: 10px;
+  height: fit-content;
+}
+
+.ListToolsHeader {
+  font-size: 22px;
+  text-align: center;
+  margin: 32px;
+}
+
+.ListToolsContent .Tools > a > img {
+  max-width: 60%;
+  // padding: 16px;
+}
+
+.ListToolsRow > .Tools {
+  padding: 16px;
+  display: flex;
+}
+
+.ListToolsRow > .Tools > a {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.ListToolsRow > .Tools > a > div {
+  text-align: center;
+}
+
+.ListToolsExpand {
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.ListToolsExpand > a {
+  display: block;
+  width: 70%;
+  padding: 18px 24px;
+  border: 1px solid rgb(43, 98, 205);
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  color: #2d87f3;
+  font-size: 18px;
+}

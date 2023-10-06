@@ -1,0 +1,119 @@
+@use "sass:map";
+@import "style/pages/theme";
+.forms {
+  margin: 0 auto;
+  margin-top: 20px;
+  display: flex;
+  max-width: 450px;
+  width: 100%;
+  max-height: 840px;
+  height: 100%;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #b7b7a4;
+  border-radius: 10px;
+  &__register {
+    width: 100%;
+    &_facebook {
+      svg {
+        color: blue;
+      }
+    }
+    &_title {
+      font-size: 30px;
+      text-align: center;
+      font-weight: 500;
+    }
+    &_text {
+      font-size: 15px;
+      font-weight: 500;
+    }
+    &_btn1 {
+      width: 100%;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      span {
+        font-weight: 500;
+        font-size: 18px;
+      }
+    }
+    &_input {
+      height: 40px;
+    }
+    &_google {
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+      height: 40px;
+      width: 100%;
+      padding: 20px;
+      position: relative;
+      background-color: white !important;
+      border: 1px solid #2d8df3 !important;
+      svg {
+        position: absolute;
+        height: 35px;
+        width: 40px;
+        top: 2px;
+        left: 20px;
+      }
+      span {
+        font-size: 18px;
+        font-weight: 500;
+      }
+    }
+    &_facebook {
+      margin-top: 20px;
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+      height: 40px;
+      width: 100%;
+      padding: 20px;
+      position: relative;
+      background-color: white !important;
+      border: 1px solid #2d8df3 !important;
+      svg {
+        position: absolute;
+        height: 30px;
+        width: 40px;
+        top: 4px;
+        left: 20px;
+      }
+      span {
+        padding-left: 22px;
+        font-size: 18px;
+        font-weight: 500;
+      }
+    }
+    &_in {
+      position: relative;
+      svg {
+        position: absolute;
+        height: 20px;
+        width: 20px;
+        right: 10px;
+        top: 25%;
+      }
+    }
+  }
+}
+.register_image1 {
+  position: absolute;
+  left: -20px;
+  bottom: -30px;
+  object-fit: cover;
+  width: 400px;
+  img {
+    width: 100%;
+  }
+}
+.register_image2 {
+  position: absolute;
+  right: -0px;
+  bottom: -30px;
+  width: 400px;
+  img {
+    width: 100%;
+  }
+}
