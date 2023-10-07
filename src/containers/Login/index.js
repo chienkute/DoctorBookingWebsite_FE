@@ -1,24 +1,17 @@
-import { memo, useState, useEffect } from "react";
-import "./style.scss";
-import { useNavigate, Link } from "react-router-dom";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import { BsFacebook } from "react-icons/bs";
-import { FcGoogle } from "react-icons/fc";
+import { memo, useState } from "react";
 import { MdEmail } from "react-icons/md";
-import { AiOutlineEyeInvisible, AiFillEye } from "react-icons/ai";
 import imageLogin from "../../assets/image_1.png";
 import imageLogin2 from "../../assets/image_2.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { loginUser } from "redux/apiRequest";
-import { useDispatch } from "react-redux";
-import "bootstrap/dist/css/bootstrap.min.css";
-
+import { AiOutlineEyeInvisible, AiFillEye } from "react-icons/ai";
+import "./login.scss";
+// import { loginUser } from "redux/apiRequest";
+// import { useDispatch } from "react-redux";
 const Login = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       password: "",
@@ -36,29 +29,30 @@ const Login = () => {
         .min(6, "Mật khẩu không được ít hơn 6 ký tự"),
     }),
     onSubmit: (values) => {
-      const newUser = {
-        email: values.email,
-        password: values.password,
-      };
-      loginUser(newUser, dispatch, navigate);
+      console.log(values);
+      // const newUser = {
+      //   email: values.email,
+      //   password: values.password,
+      // };
+      // loginUser(newUser, dispatch, navigate);
     },
   });
   return (
     <div className="container">
-      <div className="form shadow dark:border form__wrapper">
-        <Form className="form__login" onSubmit={formik.handleSubmit}>
+      <div className="form shadow dark:border">
+        <form className="w-100" onSubmit={formik.handleSubmit}>
           <h1 className="form__login_title">Đăng nhập</h1>
-          <div>
-            <Form.Label className="form__login_text" htmlFor="email">
+          <div class="mb-3">
+            <label for="email" class="form-label form__login_text">
               Email
-            </Form.Label>
-            <Form.Group className="mb-3 form__login_in">
-              <Form.Control
-                id="email"
+            </label>
+            <div className="form__login_in">
+              <input
                 type="email"
+                class="form-control"
+                id="email"
+                aria-describedby="emailHelp"
                 placeholder="Nhập email của bạn"
-                className="form__login_input"
-                size="lg"
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 {...formik.getFieldProps("email")}
@@ -66,116 +60,48 @@ const Login = () => {
               <div>
                 <MdEmail></MdEmail>
               </div>
-            </Form.Group>
-            <div className="form__login_error">
-              {formik.touched.email && formik.errors.email}
+              <div className="form__login_error">
+                {formik.touched.email && formik.errors.email}
+              </div>
             </div>
           </div>
-          <div>
-            <Form.Label className="form__login_text" htmlFor="password">
+          <div class="mb-3">
+            <label for="password" class="form-label form__login_text">
               Mật khẩu
-            </Form.Label>
-            <Form.Group className="mb-3 form__login_in">
-              <Form.Control
+            </label>
+            <div className="form__login_in">
+              <input
                 type={`${isShowPassword ? "text" : "password"}`}
-                className="form__login_input"
-                size="lg"
-                placeholder="Nhập mật khẩu của bạn"
+                class="form-control"
                 id="password"
+                placeholder="Nhập mật khẩu của bạn"
+                value={formik.values.password}
                 onChange={formik.handleChange}
                 {...formik.getFieldProps("password")}
               />
               <div onClick={() => setIsShowPassword(!isShowPassword)}>
                 {isShowPassword ? <AiFillEye /> : <AiOutlineEyeInvisible />}
               </div>
-            </Form.Group>
-            <div className="form__login_error">
-              {formik.touched.password && formik.errors.password}
-            </div>
-          </div>
-          <div className="form__login_link">
-            <Link to={"/register"}>Đăng kí ngay</Link>
-            <Link to={"/forgotpasswd"}>Quên mật khẩu?</Link>
-          </div>
-          <Button
-            type="submit"
-            variant="primary"
-            size="lg"
-            className="form__login_btn1"
-          >
-            <span>Đăng nhập</span>
-          </Button>
-          <div>
-            <Button
-              type="submit"
-              variant="light  "
-              className="form__login_google"
-            >
-              <div>
-                <FcGoogle></FcGoogle>
-              </div>
-              <span>Đăng nhập bằng Google</span>
-            </Button>
-          </div>
-          <div>
-            <Button
-              type="submit"
-              variant="light"
-              className="form__login_facebook"
-            >
-              <div>
-                <BsFacebook></BsFacebook>
-              </div>
-              <span>Đăng nhập bằng Facebook</span>
-            </Button>
-          </div>
-        </Form>
-        {/* <form className="form__login">
-          <div class="form-outline mb-4">
-            <input type="email" id="form2Example1" class="form-control" />
-            <label class="form-label" for="form2Example1">
-              Email address
-            </label>
-          </div>
-
-          <div class="form-outline mb-4">
-            <input type="password" id="form2Example2" class="form-control" />
-            <label class="form-label" for="form2Example2">
-              Password
-            </label>
-          </div>
-
-          <div class="row mb-4">
-            <div class="col d-flex justify-content-center">
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="form2Example34"
-                  checked
-                />
-                <label class="form-check-label" for="form2Example34">
-                  {" "}
-                  Remember me{" "}
-                </label>
+              <div className="form__login_error">
+                {formik.touched.password && formik.errors.password}
               </div>
             </div>
-
-            <div class="col">
-              <a href="#!">Forgot password?</a>
+          </div>
+          <div class="mb-4 d-flex justify-content-between">
+            <div>
+              <a href="/register">Đăng ký</a>
+            </div>
+            <div>
+              <a href="#!">Quên mật khẩu ?</a>
             </div>
           </div>
 
           <button type="submit" class="btn btn-primary btn-block mb-4">
-            Sign in
+            Đăng nhập
           </button>
 
           <div class="text-center">
-            <p>
-              Not a member? <a href="#!">Register</a>
-            </p>
-            <p>or sign up with:</p>
+            <p>Hoặc đăng nhập với:</p>
             <button type="button" class="btn btn-secondary btn-floating mx-1">
               <i class="fab fa-facebook-f"></i>
             </button>
@@ -183,16 +109,8 @@ const Login = () => {
             <button type="button" class="btn btn-secondary btn-floating mx-1">
               <i class="fab fa-google"></i>
             </button>
-
-            <button type="button" class="btn btn-secondary btn-floating mx-1">
-              <i class="fab fa-twitter"></i>
-            </button>
-
-            <button type="button" class="btn btn-secondary btn-floating mx-1">
-              <i class="fab fa-github"></i>
-            </button>
           </div>
-        </form> */}
+        </form>
       </div>
       <div className="image1">
         <img src={imageLogin} alt="" />
