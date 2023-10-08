@@ -1,8 +1,8 @@
 import React from "react";
 import "./NewsSmall.scss";
 
-import blogImg from "../../../assets/blog-img.png";
-import avtImg from "../../../assets/avatar.png";
+import blogImg from "assets/blog-img.png";
+import avtImg from "assets/avatar.png";
 
 class NewsSmall extends React.Component {
   render() {
