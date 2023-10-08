@@ -1,25 +1,19 @@
 import { memo, useState } from "react";
-import "./style.scss";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import { BsFacebook } from "react-icons/bs";
-import { FcGoogle } from "react-icons/fc";
+import "./register.scss";
 import { MdEmail, MdAccountCircle } from "react-icons/md";
 import { AiOutlineEyeInvisible, AiFillEye } from "react-icons/ai";
 import imageLogin from "../../assets/image_1.png";
 import imageLogin2 from "../../assets/image_2.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { registerUser } from "redux/apiRequest";
-import { useDispatch } from "react-redux";
+// import { registerUser } from "redux/apiRequest";
+// import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-
 const Register = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowConfPassword, setIsShowConfPassword] = useState(false);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -46,133 +40,124 @@ const Register = () => {
         ),
     }),
     onSubmit: (values) => {
-      console.log(values);
-      const newUser = {
-        email: values.email,
-        password: values.password,
-        username: values.username,
-      };
-      registerUser(newUser, dispatch, navigate);
+      // console.log(values);
+      // const newUser = {
+      //   email: values.email,
+      //   password: values.password,
+      //   username: values.username,
+      // };
+      // registerUser(newUser, dispatch, navigate);
     },
   });
   return (
     <div className="container">
-      <div className="forms shadow dark:border">
-        <Form className="forms__register" onSubmit={formik.handleSubmit}>
-          <h1 className="forms__register_title">Đăng ký</h1>
-          <Form.Label className="forms__register_text" htmlFor="username">
-            Tài khoản
-          </Form.Label>
-          <Form.Group className="mb-3 forms__register_in">
-            <Form.Control
-              id="username"
-              type="text"
-              placeholder="Nhập tài khoản của bạn"
-              className="forms__register_input"
-              size="lg"
-              onChange={formik.handleChange}
-              {...formik.getFieldProps("username")}
-            />
-            <div>
-              <MdAccountCircle></MdAccountCircle>
-            </div>
-          </Form.Group>
-          <div className="form__login_error">
-            {formik.touched.username && formik.errors.username}
-          </div>
-          <Form.Label className="forms__register_text" htmlFor="password">
-            Mật khẩu
-          </Form.Label>
-          <Form.Group className="mb-3 forms__register_in">
-            <Form.Control
-              id="password"
-              type={`${isShowPassword ? "text" : "password"}`}
-              className="forms__register_input"
-              size="lg"
-              placeholder="Nhập mật khẩu của bạn"
-              onChange={formik.handleChange}
-              {...formik.getFieldProps("password")}
-            />
-            <div onClick={() => setIsShowPassword(!isShowPassword)}>
-              {isShowPassword ? <AiFillEye /> : <AiOutlineEyeInvisible />}
-            </div>
-          </Form.Group>
-          <div className="form__login_error">
-            {formik.touched.password && formik.errors.password}
-          </div>
-          <Form.Label className="forms__register_text" htmlFor="confirmpasswd">
-            Nhập lại mật khẩu
-          </Form.Label>
-          <Form.Group className="mb-3 forms__register_in">
-            <Form.Control
-              id="confirmpasswd"
-              type={`${isShowConfPassword ? "text" : "password"}`}
-              className="forms__register_input"
-              size="lg"
-              placeholder="Nhập lại mật khẩu của bạn"
-              onChange={formik.handleChange}
-              {...formik.getFieldProps("confirmpasswd")}
-            />
-            <div onClick={() => setIsShowConfPassword(!isShowConfPassword)}>
-              {isShowConfPassword ? <AiFillEye /> : <AiOutlineEyeInvisible />}
-            </div>
-          </Form.Group>
-          <div className="form__login_error">
-            {formik.touched.confirmpasswd && formik.errors.confirmpasswd}
-          </div>
-          <Form.Label className="forms__register_text" htmlFor="email">
-            Email
-          </Form.Label>
-          <Form.Group className="mb-3 forms__register_in">
-            <Form.Control
-              id="email"
-              type="email"
-              placeholder="Nhập email của bạn"
-              className="forms__register_input"
-              size="lg"
-              onChange={formik.handleChange}
-              {...formik.getFieldProps("email")}
-            />
-            <div>
-              <MdEmail></MdEmail>
-            </div>
-          </Form.Group>
-          <div className="form__login_error">
-            {formik.touched.email && formik.errors.email}
-          </div>
-          <Button
-            type="submit"
-            variant="primary"
-            size="lg"
-            className="forms__register_btn1"
-          >
-            <span>Đăng ký</span>
-          </Button>
-          <div>
-            <Button
-              type="submit"
-              variant="light  "
-              className="forms__register_google"
-            >
+      <div className="form shadow dark:border">
+        <form className="w-100" onSubmit={formik.handleSubmit}>
+          <h1 className="form__register_title">Đăng ký</h1>
+          <div class="mb-3">
+            <label for="username" class="form-label">
+              Tài khoản
+            </label>
+            <div className="form__register_in">
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                placeholder="Nhập tài khoản của bạn"
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                {...formik.getFieldProps("username")}
+              />
               <div>
-                <FcGoogle></FcGoogle>
+                <MdAccountCircle></MdAccountCircle>
               </div>
-              <span>Đăng nhập bằng Google</span>
-            </Button>
+              <div className="form__register_error">
+                {formik.touched.username && formik.errors.username}
+              </div>
+            </div>
           </div>
-          <div>
-            <Button
-              type="submit"
-              variant="light"
-              className="forms__register_facebook"
-            >
+          <div class="mb-3">
+            <label for="email" class="form-label form__register_text">
+              Email
+            </label>
+            <div className="form__register_in">
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                aria-describedby="emailHelp"
+                placeholder="Nhập email của bạn"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                {...formik.getFieldProps("email")}
+              />
               <div>
-                <BsFacebook></BsFacebook>
+                <MdEmail></MdEmail>
               </div>
-              <span>Đăng nhập bằng Facebook</span>
-            </Button>
+              <div className="form__register_error">
+                {formik.touched.email && formik.errors.email}
+              </div>
+            </div>
           </div>
-        </Form>
+          <div class="mb-3">
+            <label for="password" class="form-label form__register_text">
+              Mật khẩu
+            </label>
+            <div className="form__register_in">
+              <input
+                type={`${isShowPassword ? "text" : "password"}`}
+                class="form-control"
+                id="password"
+                placeholder="Nhập mật khẩu của bạn"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                {...formik.getFieldProps("password")}
+              />
+              <div onClick={() => setIsShowPassword(!isShowPassword)}>
+                {isShowPassword ? <AiFillEye /> : <AiOutlineEyeInvisible />}
+              </div>
+              <div className="form__register_error">
+                {formik.touched.password && formik.errors.password}
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="confirmpasswd" class="form-label form__register_text">
+              Nhập lại mật khẩu
+            </label>
+            <div className="form__register_in">
+              <input
+                type={`${isShowConfPassword ? "text" : "password"}`}
+                class="form-control"
+                id="confirmpasswd"
+                placeholder="Nhập lại mật khẩu của bạn"
+                value={formik.values.confirmpasswd}
+                onChange={formik.handleChange}
+                {...formik.getFieldProps("confirmpasswd")}
+              />
+              <div onClick={() => setIsShowConfPassword(!isShowConfPassword)}>
+                {isShowConfPassword ? <AiFillEye /> : <AiOutlineEyeInvisible />}
+              </div>
+              <div className="form__register_error">
+                {formik.touched.confirmpasswd && formik.errors.confirmpasswd}
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block mb-4">
+            Đăng ký
+          </button>
+
+          <div class="text-center">
+            <p>Hoặc đăng nhập với:</p>
+            <button type="button" class="btn btn-secondary btn-floating mx-1">
+              <i class="fab fa-facebook-f"></i>
+            </button>
+
+            <button type="button" class="btn btn-secondary btn-floating mx-1">
+              <i class="fab fa-google"></i>
+            </button>
+          </div>
+        </form>
       </div>
       <div className="register_image1">
         <img src={imageLogin} alt="" />

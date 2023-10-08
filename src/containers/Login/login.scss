@@ -1,0 +1,64 @@
+@use "sass:map";
+@import "~mdb-ui-kit/css/mdb.min.css";
+.form {
+  position: relative;
+  z-index: 2;
+  margin: 0 auto;
+  display: flex;
+  max-width: 400px !important;
+  width: 100%;
+  max-height: 840px;
+  height: 100%;
+  align-items: center;
+  padding: 40px;
+  border: 1px solid #b7b7a4;
+  border-radius: 10px;
+  margin-top: 60px !important;
+  &__login {
+    &_title {
+      font-size: 25px;
+      margin-top: 20px;
+      font-weight: 400;
+      text-align: center;
+    }
+    &_text {
+      font-size: 16px;
+      font-weight: 500;
+    }
+    &_in {
+      position: relative;
+      svg {
+        position: absolute;
+        height: 20px;
+        width: 20px;
+        right: 10px;
+        top: 17%;
+      }
+    }
+    &_error {
+      margin-top: 10px;
+      height: 5px;
+      font-size: 10px;
+      color: red;
+    }
+  }
+}
+.image1 {
+  width: 400px;
+  position: absolute;
+  left: -20px;
+  bottom: -100px;
+  img {
+    width: 100%;
+  }
+}
+.image2 {
+  width: 400px;
+  position: absolute;
+  right: 0px;
+  bottom: -100px;
+  object-fit: cover;
+  img {
+    width: 100%;
+  }
+}
