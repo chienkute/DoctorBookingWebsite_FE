@@ -22,12 +22,14 @@
 
 .BMIFormContainer {
   display: inline-block;
-  width: 70%;
+  width: 80%;
   text-align: left;
 }
 
 .BMIGenderSelection {
+  display: flex;
   justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .BMIGenderSelection > div {
@@ -91,4 +93,9 @@
 
 .BMIFormSubmitButton > button:hover {
   background-color: rgb(44, 116, 223);
+}
+.BMIFormAge,
+.BMIFormHeight,
+.BMIFormWeight {
+  margin-bottom: 20px;
 }
