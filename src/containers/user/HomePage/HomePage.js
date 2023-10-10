@@ -12,7 +12,6 @@ import Header from "containers/theme/Header/Header";
 function App() {
   return (
     <div className="MainPage">
-      <Header></Header>
       <div className="MainPageContentContainer">
         <div className="MainPageBanner">
           <img src={banner} alt="MainPageBanner"></img>

@@ -98,4 +98,7 @@
 .BMIFormHeight,
 .BMIFormWeight {
   margin-bottom: 20px;
+  input {
+    width: 100%;
+  }
 }
