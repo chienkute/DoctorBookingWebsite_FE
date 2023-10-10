@@ -7,6 +7,7 @@
   display: flex;
   align-items: center;
   padding: 16px;
+  margin-left: -30px;
 }
 
 .NewsLargeOptionsContainer > div:first-child {
@@ -29,6 +30,7 @@
 
 .NewsLargeLink {
   margin-left: auto;
+  margin-right: -60px;
 }
 
 .NewsLargeLink > a {
@@ -81,4 +83,8 @@
   height: 20px;
   object-fit: contain;
   margin-right: 4px;
+}
+.NewsLarge3Items {
+  margin-left: 10px;
+  margin-right: 10px;
 }

@@ -51,14 +51,14 @@ const Register = () => {
   });
   return (
     <div className="container">
-      <div className="form shadow dark:border">
+      <div className="forms shadow dark:border">
         <form className="w-100" onSubmit={formik.handleSubmit}>
-          <h1 className="form__register_title">Đăng ký</h1>
+          <h1 className="forms__register_title">Đăng ký</h1>
           <div class="mb-3">
             <label for="username" class="form-label">
               Tài khoản
             </label>
-            <div className="form__register_in">
+            <div className="forms__register_in">
               <input
                 type="text"
                 class="form-control"
@@ -71,16 +71,16 @@ const Register = () => {
               <div>
                 <MdAccountCircle></MdAccountCircle>
               </div>
-              <div className="form__register_error">
+              <div className="forms__register_error">
                 {formik.touched.username && formik.errors.username}
               </div>
             </div>
           </div>
           <div class="mb-3">
-            <label for="email" class="form-label form__register_text">
+            <label for="email" class="form-label forms__register_text">
               Email
             </label>
-            <div className="form__register_in">
+            <div className="forms__register_in">
               <input
                 type="email"
                 class="form-control"
@@ -94,16 +94,16 @@ const Register = () => {
               <div>
                 <MdEmail></MdEmail>
               </div>
-              <div className="form__register_error">
+              <div className="forms__register_error">
                 {formik.touched.email && formik.errors.email}
               </div>
             </div>
           </div>
           <div class="mb-3">
-            <label for="password" class="form-label form__register_text">
+            <label for="password" class="form-label forms__register_text">
               Mật khẩu
             </label>
-            <div className="form__register_in">
+            <div className="forms__register_in">
               <input
                 type={`${isShowPassword ? "text" : "password"}`}
                 class="form-control"
@@ -116,16 +116,16 @@ const Register = () => {
               <div onClick={() => setIsShowPassword(!isShowPassword)}>
                 {isShowPassword ? <AiFillEye /> : <AiOutlineEyeInvisible />}
               </div>
-              <div className="form__register_error">
+              <div className="forms__register_error">
                 {formik.touched.password && formik.errors.password}
               </div>
             </div>
           </div>
           <div class="mb-3">
-            <label for="confirmpasswd" class="form-label form__register_text">
+            <label for="confirmpasswd" class="form-label forms__register_text">
               Nhập lại mật khẩu
             </label>
-            <div className="form__register_in">
+            <div className="forms__register_in">
               <input
                 type={`${isShowConfPassword ? "text" : "password"}`}
                 class="form-control"
@@ -138,7 +138,7 @@ const Register = () => {
               <div onClick={() => setIsShowConfPassword(!isShowConfPassword)}>
                 {isShowConfPassword ? <AiFillEye /> : <AiOutlineEyeInvisible />}
               </div>
-              <div className="form__register_error">
+              <div className="forms__register_error">
                 {formik.touched.confirmpasswd && formik.errors.confirmpasswd}
               </div>
             </div>
