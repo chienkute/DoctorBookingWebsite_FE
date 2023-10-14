@@ -12,11 +12,6 @@ class NewsLarge extends React.Component {
           <div className="bold">Sắp xếp theo</div>
           <div className="NewsLargeOption bold selected">Phổ biến nhất</div>
           <div className="NewsLargeOption bold">Mới nhất</div>
-          <div className="NewsLargeLink flex-center">
-            <a href="#" className="clear bold">
-              <p>Xem thêm {">"}</p>
-            </a>
-          </div>
         </div>
         <div className="NewsLarge2ItemsContainer">
           <ul className="clear NewsLarge2Items flex-center">
@@ -37,12 +32,14 @@ class NewsLarge extends React.Component {
                 </a>
               </div>
               <div className="NewsContent">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Pulvinar pellentesque habitant morbi tristique senectus et.
-                Libero id faucibus nisl tincidunt eget nullam non nisi est...
+                <span>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Pulvinar pellentesque habitant morbi tristique senectus et.
+                  Libero id faucibus nisl tincidunt eget nullam non nisi est...
+                </span>
               </div>
-              <div className="NewsAuthorAndTime italic">
+              <div className="NewsAuthorAndTime">
                 <a href="#" className="clear">
                   <img src={avtImg} placeholder="Avatar"></img>
                   <span>
@@ -68,12 +65,14 @@ class NewsLarge extends React.Component {
                 </a>
               </div>
               <div className="NewsContent">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Pulvinar pellentesque habitant morbi tristique senectus et.
-                Libero id faucibus nisl tincidunt eget nullam non nisi est...
+                <span>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Pulvinar pellentesque habitant morbi tristique senectus et.
+                  Libero id faucibus nisl tincidunt eget nullam non nisi est...
+                </span>
               </div>
-              <div className="NewsAuthorAndTime italic">
+              <div className="NewsAuthorAndTime">
                 <a href="#" className="clear">
                   <img src={avtImg} placeholder="Avatar"></img>
                   <span>
@@ -102,7 +101,7 @@ class NewsLarge extends React.Component {
                   Tiêu đề bài viết
                 </a>
               </div>
-              <div className="NewsAuthorAndTime italic">
+              <div className="NewsAuthorAndTime">
                 <a href="#" className="clear">
                   <img src={avtImg} placeholder="Avatar"></img>
                   <span>
@@ -127,7 +126,7 @@ class NewsLarge extends React.Component {
                   Tiêu đề bài viết
                 </a>
               </div>
-              <div className="NewsAuthorAndTime italic">
+              <div className="NewsAuthorAndTime">
                 <a href="#" className="clear">
                   <img src={avtImg} placeholder="Avatar"></img>
                   <span>
@@ -152,7 +151,7 @@ class NewsLarge extends React.Component {
                   Tiêu đề bài viết
                 </a>
               </div>
-              <div className="NewsAuthorAndTime italic">
+              <div className="NewsAuthorAndTime">
                 <a href="#" className="clear">
                   <img src={avtImg} placeholder="Avatar"></img>
                   <span>

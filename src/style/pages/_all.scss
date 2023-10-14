@@ -21,6 +21,7 @@ body {
   padding: 0;
   margin: 0;
   font-weight: 500;
+  line-height: 22px;
 }
 .bold {
   font-weight: 700;
@@ -65,4 +66,43 @@ a.clear {
   padding-left: 15px;
   padding-right: 15px;
   position: relative;
+}
+.fs-normal-text {
+  font-size: 14px;
+}
+.fs-larger-title {
+  font-size: 32px;
+}
+.fs-small-title {
+  font-size: 18px;
+}
+.fs-normal-title {
+  font-size: 26px;
+}
+.fs-small-text {
+  font-size: 12px;
+}
+.color-header {
+  color: #1b3250;
+}
+.color-title {
+  color: #262626;
+}
+.color-black {
+  color: #59595b;
+}
+.color-blue {
+  color: #3488f3;
+}
+.color-blink {
+  color: #fc488e;
+}
+.color-white {
+  color: #f4f0ef;
+}
+.color-footer {
+  color: #9a9899;
+}
+.color-title-blue {
+  color: #284a8f;
 }

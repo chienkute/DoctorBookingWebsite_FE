@@ -31,12 +31,15 @@ class NewsSmall extends React.Component {
                   </a>
                 </div>
                 <div className="NewsContent">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Pulvinar pellentesque habitant morbi tristique senectus et.
-                  Libero id faucibus nisl tincidunt eget nullam non nisi est...
+                  <span>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Pulvinar pellentesque habitant morbi tristique
+                    senectus et. Libero id faucibus nisl tincidunt eget nullam
+                    non nisi est...
+                  </span>
                 </div>
-                <div className="NewsAuthorAndTime italic">
+                <div className="NewsAuthorAndTime">
                   <a href="#" className="clear">
                     <img src={avtImg} placeholder="Avatar"></img>
                     <span>
@@ -59,12 +62,15 @@ class NewsSmall extends React.Component {
                   </a>
                 </div>
                 <div className="NewsContent">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Pulvinar pellentesque habitant morbi tristique senectus et.
-                  Libero id faucibus nisl tincidunt eget nullam non nisi est...
+                  <span>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Pulvinar pellentesque habitant morbi tristique
+                    senectus et. Libero id faucibus nisl tincidunt eget nullam
+                    non nisi est...
+                  </span>
                 </div>
-                <div className="NewsAuthorAndTime italic">
+                <div className="NewsAuthorAndTime">
                   <a href="#" className="clear">
                     <img src={avtImg} placeholder="Avatar"></img>
                     <span>
@@ -87,12 +93,15 @@ class NewsSmall extends React.Component {
                   </a>
                 </div>
                 <div className="NewsContent">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Pulvinar pellentesque habitant morbi tristique senectus et.
-                  Libero id faucibus nisl tincidunt eget nullam non nisi est...
+                  <span>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Pulvinar pellentesque habitant morbi tristique
+                    senectus et. Libero id faucibus nisl tincidunt eget nullam
+                    non nisi est...
+                  </span>
                 </div>
-                <div className="NewsAuthorAndTime italic">
+                <div className="NewsAuthorAndTime">
                   <a href="#" className="clear">
                     <img src={avtImg} placeholder="Avatar"></img>
                     <span>
