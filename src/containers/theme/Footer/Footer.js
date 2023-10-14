@@ -10,7 +10,7 @@ const Footer = () => {
             <section class="">
               <div class="d-flex">
                 <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
-                  <h5 class="text-uppercase">HIBACSI</h5>
+                  <h5 class="text-uppercase footer_text">HIBACSI</h5>
 
                   <p>
                     HiBacsi mong muốn trở thành nền tảng thông tin y khoa hàng

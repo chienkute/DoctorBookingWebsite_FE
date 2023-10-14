@@ -8,7 +8,6 @@ import DoctorSearchResult from "containers/theme/DoctorSearchResult/DoctorSearch
 function SearchDoctor() {
   return (
     <div className="SearchDoctorPageContainer">
-      <Header />
       <div className="SearchDoctorPageContent">
         <div className="SearchDoctorInputRows">
           <div className="ProvinceInput">
