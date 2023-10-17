@@ -9,7 +9,7 @@ class NavBar extends React.Component {
       <div className="NavigationContainer">
         <ul className="NavigationList clear flex-center">
           <li className="Navigation bold">
-            <a href="#" className="flex-center clear">
+            <a href="/categories" className="flex-center clear">
               <div className="NavigationIcon flex-center">
                 <FaFileLines />
               </div>
@@ -19,7 +19,7 @@ class NavBar extends React.Component {
             </a>
           </li>
           <li className="Navigation bold">
-            <a href="#" className="flex-center clear">
+            <a href="/care/" className="flex-center clear">
               <div className="NavigationIcon flex-center">
                 <GrSchedules />
               </div>

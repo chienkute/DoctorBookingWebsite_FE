@@ -1,0 +1,105 @@
+@use "sass:map";
+@import "style/pages/theme";
+@import "~mdb-ui-kit/css/mdb.min.css";
+.categories {
+  width: 100%;
+  //   position: relative;
+  margin-top: 70px;
+  &__body {
+    margin: 0 auto;
+    width: 1050px;
+  }
+  &__banner {
+    img {
+      position: absolute;
+      bottom: 0;
+      //   z-index: -1;
+      max-height: 200px;
+      height: 100%;
+      width: 100%;
+      left: 0;
+      //   top: ;
+      //   background-position: 50% bottom;
+      //   background-repeat: no-repeat;
+      //   background-size: cover;
+    }
+  }
+  &__button {
+    height: 42px;
+    margin-top: 30px;
+    width: 100%;
+    border: 1px solid rgb(217, 217, 217);
+    display: flex;
+    border-radius: 10px;
+  }
+  &__icon {
+    padding: 0 12px;
+  }
+  &__input {
+    width: 100%;
+    height: 100%;
+  }
+  &__icon_header {
+    svg {
+      border-radius: 50%;
+      background-color: #f7f9fc;
+      padding: 4px;
+      height: 27px;
+      width: 27px;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      width: 1px;
+      height: 30px;
+      background-color: #f7f9fc;
+      top: 85px;
+      right: 20px;
+      left: 17%;
+    }
+  }
+  &__header {
+    column-gap: 20px;
+    height: 60px;
+    width: 100%;
+    padding: 20px 0 20px 200px;
+  }
+  &__title {
+    text-align: center;
+    font-size: $fs-large-title;
+    color: $color-title-blue;
+    font-weight: 700;
+  }
+  &__list {
+    padding-top: 40px;
+    padding-left: 40px;
+    margin-bottom: 50px;
+    a {
+      width: 150px;
+      height: 150px;
+      background-color: $color-white;
+      margin-right: 20px;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      padding: 16px;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    img {
+      width: 60px;
+      height: 60px;
+    }
+    p {
+      margin-top: 15px;
+      color: $color-title;
+      font-weight: 700;
+    }
+  }
+}
+#categories__in {
+  width: 100%;
+  height: 50%;
+  border: none;
+  outline-color: transparent;
+}
