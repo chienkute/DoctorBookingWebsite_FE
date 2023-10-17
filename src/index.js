@@ -5,12 +5,12 @@ import RouterCustom from "./router";
 import "./style/style.scss";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import { ToastContainer } from "react-toastify";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <RouterCustom />
-    </BrowserRouter>
-  </Provider>
+  <BrowserRouter>
+    <RouterCustom />
+    <ToastContainer autoClose={1000} />
+  </BrowserRouter>
 );

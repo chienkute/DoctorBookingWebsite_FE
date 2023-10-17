@@ -6,12 +6,15 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AiOutlineEyeInvisible, AiFillEye } from "react-icons/ai";
 import "./login.scss";
+import { postSignIn } from "service/authService";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 // import { loginUser } from "redux/apiRequest";
 // import { useDispatch } from "react-redux";
 const Login = () => {
+  const navigate = useNavigate();
   const [isShowPassword, setIsShowPassword] = useState(false);
   // const dispatch = useDispatch();
-  // const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       password: "",
@@ -28,13 +31,13 @@ const Login = () => {
         .required("Bạn chưa nhập mật khẩu")
         .min(6, "Mật khẩu không được ít hơn 6 ký tự"),
     }),
-    onSubmit: (values) => {
-      console.log(values);
-      // const newUser = {
-      //   email: values.email,
-      //   password: values.password,
-      // };
-      // loginUser(newUser, dispatch, navigate);
+    onSubmit: async (values) => {
+      const res = await postSignIn(values.email, values.password);
+      if (res) {
+        console.log(res);
+        // toast.success("Dang nhap thanh cong");
+        navigate("/");
+      }
     },
   });
   return (

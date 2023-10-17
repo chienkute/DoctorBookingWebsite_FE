@@ -6,14 +6,15 @@ import imageLogin from "../../assets/image_1.png";
 import imageLogin2 from "../../assets/image_2.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-// import { registerUser } from "redux/apiRequest";
-// import { useDispatch } from "react-redux";
+import { postSignUp } from "service/authService";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+// import { useDispatch } from "react-redux";
 const Register = () => {
+  const navigate = useNavigate();
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowConfPassword, setIsShowConfPassword] = useState(false);
   // const dispatch = useDispatch();
-  // const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -31,7 +32,10 @@ const Register = () => {
       confirmpasswd: Yup.string()
         .required("Bạn chưa nhập lại mật khẩu")
         .min(6, "Mật khẩu không được ít hơn 6 ký tự")
-        .oneOf([Yup.ref("passwd"), null], "Mật khẩu phải trùng khớp với nhau"),
+        .oneOf(
+          [Yup.ref("password"), null],
+          "Mật khẩu phải trùng khớp với nhau"
+        ),
       email: Yup.string()
         .required("Bạn chưa nhập email")
         .matches(
@@ -39,14 +43,14 @@ const Register = () => {
           "Vui lòng nhập đúng địa chỉ email"
         ),
     }),
-    onSubmit: (values) => {
-      // console.log(values);
-      // const newUser = {
-      //   email: values.email,
-      //   password: values.password,
-      //   username: values.username,
-      // };
-      // registerUser(newUser, dispatch, navigate);
+    onSubmit: async (values) => {
+      const res = await postSignUp(
+        values.username,
+        values.email,
+        values.password
+      );
+      // toast.success("Dang ky thanh cong");
+      navigate("/login");
     },
   });
   return (
@@ -54,14 +58,14 @@ const Register = () => {
       <div className="forms shadow dark:border">
         <form className="w-100" onSubmit={formik.handleSubmit}>
           <h1 className="forms__register_title">Đăng ký</h1>
-          <div class="mb-3">
-            <label for="username" class="form-label">
+          <div className="mb-3">
+            <label htmlFor="username" className="form-label">
               Tài khoản
             </label>
             <div className="forms__register_in">
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 id="username"
                 placeholder="Nhập tài khoản của bạn"
                 value={formik.values.username}
@@ -76,14 +80,14 @@ const Register = () => {
               </div>
             </div>
           </div>
-          <div class="mb-3">
-            <label for="email" class="form-label forms__register_text">
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label forms__register_text">
               Email
             </label>
             <div className="forms__register_in">
               <input
                 type="email"
-                class="form-control"
+                className="form-control"
                 id="email"
                 aria-describedby="emailHelp"
                 placeholder="Nhập email của bạn"
@@ -99,14 +103,17 @@ const Register = () => {
               </div>
             </div>
           </div>
-          <div class="mb-3">
-            <label for="password" class="form-label forms__register_text">
+          <div className="mb-3">
+            <label
+              htmlFor="password"
+              className="form-label forms__register_text"
+            >
               Mật khẩu
             </label>
             <div className="forms__register_in">
               <input
                 type={`${isShowPassword ? "text" : "password"}`}
-                class="form-control"
+                className="form-control"
                 id="password"
                 placeholder="Nhập mật khẩu của bạn"
                 value={formik.values.password}
@@ -121,14 +128,17 @@ const Register = () => {
               </div>
             </div>
           </div>
-          <div class="mb-3">
-            <label for="confirmpasswd" class="form-label forms__register_text">
+          <div className="mb-3">
+            <label
+              htmlFor="confirmpasswd"
+              className="form-label forms__register_text"
+            >
               Nhập lại mật khẩu
             </label>
             <div className="forms__register_in">
               <input
                 type={`${isShowConfPassword ? "text" : "password"}`}
-                class="form-control"
+                className="form-control"
                 id="confirmpasswd"
                 placeholder="Nhập lại mật khẩu của bạn"
                 value={formik.values.confirmpasswd}
@@ -143,18 +153,24 @@ const Register = () => {
               </div>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary btn-block mb-4">
+          <button type="submit" className="btn btn-primary btn-block mb-4">
             Đăng ký
           </button>
 
-          <div class="text-center">
+          <div className="text-center">
             <p>Hoặc đăng nhập với:</p>
-            <button type="button" class="btn btn-secondary btn-floating mx-1">
-              <i class="fab fa-facebook-f"></i>
+            <button
+              type="button"
+              className="btn btn-secondary btn-floating mx-1"
+            >
+              <i className="fab fa-facebook-f"></i>
             </button>
 
-            <button type="button" class="btn btn-secondary btn-floating mx-1">
-              <i class="fab fa-google"></i>
+            <button
+              type="button"
+              className="btn btn-secondary btn-floating mx-1"
+            >
+              <i className="fab fa-google"></i>
             </button>
           </div>
         </form>

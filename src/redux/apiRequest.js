@@ -10,7 +10,10 @@ import {
 export const loginUser = async (user, dispatch, navigate) => {
   dispatch(loginStart());
   try {
-    const res = await axios.port("http://127.0.0.1:8000/login/", user);
+    const res = await axios.port(
+      "https://ncc02.pythonanywhere.com/api/auth/login/",
+      user
+    );
     dispatch(loginSuccess(res.data));
     navigate("/");
   } catch (err) {
@@ -20,7 +23,9 @@ export const loginUser = async (user, dispatch, navigate) => {
 export const registerUser = async (user, dispatch, navigate) => {
   dispatch(registerStart());
   try {
-    const res = await axios.port("http://127.0.0.1:8000/register/", user);
+    const res = await axios.port(
+      "https://ncc02.pythonanywhere.com/api/auth/register/user/"
+    );
     dispatch(registerSuccess(res.data));
     navigate("/login");
   } catch (err) {

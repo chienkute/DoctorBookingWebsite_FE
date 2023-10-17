@@ -27,9 +27,9 @@ class Header extends React.Component {
     return (
       <div>
         <header className="HeaderContainer flex-center">
-          <div className="HeaderLogoContainer">
+          <a className="HeaderLogoContainer" href="/">
             <img src={logo} alt="Logo" id="HeaderLogo"></img>
-          </div>
+          </a>
           <div className="HeaderSearchContainer">
             <div className="HeaderSearchIcon flex-center">
               <FaSistrix />
