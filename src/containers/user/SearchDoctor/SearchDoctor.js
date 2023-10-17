@@ -1,4 +1,3 @@
-import Header from "containers/theme/Header/Header";
 import "./SearchDoctor.scss";
 
 import { FaTrashCan } from "react-icons/fa6";
