@@ -1,0 +1,131 @@
+@use "sass:map";
+
+.UserPageContent {
+    margin : 100px 20rem;
+    display: flex;
+    gap    : 32px;
+}
+
+.UserPageMenu {
+    width     : 20%;
+    border    : 1px solid transparent;
+    padding   : 28px;
+    height    : fit-content;
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 16px 24px 0px, rgba(0, 0, 0, 0.04) 0px 2px 8px 0px, rgba(0, 0, 0, 0.04) 0px 0px 1px;
+}
+
+.UserPageMenu ul.ListOption {
+    display  : flex;
+    flex-wrap: wrap;
+    gap      : 32px;
+}
+
+.UserPageMenu li.Option {
+    width      : 100%;
+    display    : flex;
+    align-items: center;
+    cursor     : pointer;
+}
+
+.UserPageMenu li.Option.selected {
+    color: rgb(45, 135, 243);
+}
+
+.OptionIcon>svg {
+    margin-right: 16px;
+    width       : 24px;
+    height      : 24px;
+}
+
+.UserInfo {
+    margin-left: auto;
+    width      : 75%;
+}
+
+.UserInfoHeader {
+    display        : flex;
+    align-items    : center;
+    justify-content: space-between;
+    margin         : 32px 0;
+}
+
+.UserInfoHeader>.UserInfoEdit {
+    color : rgb(45, 135, 243);
+    cursor: pointer;
+}
+
+.UserBasicInfo {
+    display      : flex;
+    margin-bottom: 48px;
+}
+
+.UserAvatar {
+    width       : 20%;
+    margin-right: 24px;
+}
+
+.UserAvatar>img {
+    width     : 100%;
+    object-fit: contain;
+}
+
+.UserAccount {
+    display  : flex;
+    flex-wrap: wrap;
+    gap      : 8px;
+}
+
+.UserAccount>p {
+    width  : 100%;
+    display: flex;
+    margin : 0;
+}
+
+.UserAccount>p:first-child {
+    align-items: flex-end;
+}
+
+.UserAccount>p:last-child {
+    color: rgb(45, 135, 243);
+}
+
+.UserPersonalInfo {
+    padding      : 16px;
+    box-shadow   : rgba(0, 0, 0, 0.04) 0px 10px 16px, rgba(0, 0, 0, 0.04) 0px 2px 8px, rgba(0, 0, 0, 0.04) 0px 0px 1px;
+    border-radius: 6px;
+    height       : fit-content;
+}
+
+.ListPersonalInfos {
+    display      : flex;
+    gap          : 8px;
+    flex-wrap    : wrap;
+    margin-bottom: 0;
+}
+
+li.PersonalInfo {
+    width      : 100%;
+    border-top : 1px solid rgb(228, 232, 236);
+    padding-top: 16px;
+    display    : flex;
+    flex-wrap  : wrap;
+    gap        : 8px
+}
+
+.ListPersonalInfos>li.PersonalInfo:first-child {
+    border-top : none !important;
+    padding-top: 0 !important;
+}
+
+li.PersonalInfo>.PersonalInfoHeader {
+    width        : 100%;
+    font-size    : 12px;
+    margin-bottom: 4px;
+    color        : rgb(89, 89, 89);
+}
+
+li.PersonalInfo>.PersonalInfoData {
+    width        : 100%;
+    font-size    : 16px;
+    margin-bottom: 0;
+}

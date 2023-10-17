@@ -7,7 +7,6 @@ import NewsSmall from "./NewsSmall/NewsSmall";
 import ListTools from "./ListTools/ListTools";
 import Introduce from "./Introduce/Introduce";
 import BMIToolHomePage from "./BMIToolHomePage/BMIToolHomePage";
-import Header from "containers/theme/Header/Header";
 
 function App() {
   return (

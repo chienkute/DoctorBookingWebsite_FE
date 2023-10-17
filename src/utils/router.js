@@ -5,6 +5,8 @@ import SearchDoctor from "containers/user/SearchDoctor/SearchDoctor";
 import Search from "containers/user/Search/Search";
 import categories from "containers/user/Categories/categories";
 import care from "containers/user/Care/care";
+import UserPage from "containers/user/UserPage/UserPage";
+
 
 const publicRoutes = [
   { path: "/", component: HomePage },
@@ -14,5 +16,6 @@ const publicRoutes = [
   { path: "/search", component: Search },
   { path: "/categories", component: categories },
   { path: "/care/", component: care },
+  { path: "/user", component: UserPage },
 ];
 export { publicRoutes };
