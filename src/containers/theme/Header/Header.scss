@@ -11,6 +11,7 @@
   box-sizing: border-box;
   border-bottom: 1px solid rgb(217, 217, 217);
   position: fixed;
+  z-index: 2;
 }
 
 .HeaderLogoContainer {
@@ -135,7 +136,7 @@
     border-right: 10px solid transparent;
     border-bottom: 15px solid white;
     right: 110px;
-    top: -15px;
+    top: -14px;
   }
 }
 .dropdown__menu2 {
@@ -151,7 +152,7 @@
     border-right: 10px solid transparent;
     border-bottom: 15px solid white;
     right: 130px;
-    top: -15px;
+    top: -14px;
   }
 }
 .dropdown__menu3 {
@@ -167,6 +168,26 @@
     border-right: 10px solid transparent;
     border-bottom: 15px solid white;
     right: 110px;
-    top: -15px;
+    top: -14px;
+  }
+}
+.header__menu_link {
+  height: 40px;
+  width: 85%;
+  margin: 0 auto;
+  border-radius: 5px;
+  color: $color-blue;
+  font-weight: 500;
+  font-size: $fs-normal-text;
+  border: 1px solid $color-blue;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-top: 10px;
+  display: flex;
+  padding-left: 15px;
+  column-gap: 5px;
+  align-items: start;
+  svg {
+    font-size: 17px;
   }
 }

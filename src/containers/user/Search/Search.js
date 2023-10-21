@@ -1,11 +1,13 @@
-import { memo } from "react";
+import { memo, useContext } from "react";
 import "./Search.scss";
 import { FaSistrix } from "react-icons/fa6";
 import { FcPrevious, FcNext } from "react-icons/fc";
 import imagedoctor1 from "../../../assets/doctor/tat.jpg";
 import blogImg from "../../../assets/blog-img.png";
 import "../../../style/pages/_theme.scss";
+import { SearchContext } from "context/SearchContext";
 const Search = () => {
+  const { search } = useContext(SearchContext);
   return (
     <div className="searchr">
       <div className="search__container">

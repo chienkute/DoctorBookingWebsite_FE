@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 const MasterLayout = ({ children, ...props }) => {

@@ -1,0 +1,76 @@
+@use "sass:map";
+@import "style/pages/theme";
+@import "~mdb-ui-kit/css/mdb.min.css";
+.category {
+  margin-top: 70px;
+  &__icon_header {
+    svg {
+      border-radius: 50%;
+      background-color: #f7f9fc;
+      padding: 4px;
+      height: 27px;
+      width: 27px;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      width: 1px;
+      height: 30px;
+      background-color: #f7f9fc;
+      top: 85px;
+      right: 20px;
+      left: 17%;
+    }
+  }
+  &__header {
+    column-gap: 20px;
+    height: 60px;
+    width: 100%;
+    padding: 20px 0 20px 200px;
+  }
+  &__color {
+    background-color: $color-banner;
+    height: 70px;
+  }
+  &__banner {
+    &_description {
+      border: 1px solid rgb(242, 242, 242);
+      height: 150px;
+      padding: 24px;
+    }
+    &_header {
+      margin: 0 auto;
+      width: 700px;
+      height: 400px;
+    }
+    &_heading {
+      display: flex;
+      img {
+        height: 170px;
+        width: 170px;
+        object-fit: cover;
+      }
+      h1 {
+        font-size: $fs-normal-title;
+        color: $color-title;
+        font-weight: 600;
+        padding-left: 40px;
+        padding-top: 6%;
+      }
+    }
+    &_image {
+      &_header {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background-color: white;
+        margin-top: -40px;
+      }
+    }
+  }
+  &__blog {
+    margin: 0 auto;
+    max-width: 1000px;
+    margin-top: -70px;
+  }
+}
