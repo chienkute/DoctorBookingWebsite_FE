@@ -40,6 +40,11 @@
       border: 1px solid rgb(217, 217, 217);
       display: flex;
       border-radius: 10px;
+      position: relative;
+      z-index: 0;
+      svg {
+        color: $color-footer;
+      }
     }
     &_icon {
       padding-top: 7px;
@@ -54,10 +59,157 @@
       padding: 50px;
       column-gap: 15px;
     }
+    &_menu {
+      width: 110% !important;
+      margin: 20px 2px 0px -27px !important;
+      z-index: 2;
+      &_title {
+        padding-left: 14px;
+        column-gap: 10px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        svg {
+          font-size: 15px;
+          font-weight: 300;
+          color: $color-footer;
+        }
+        p {
+          display: inline-block;
+          padding-left: 3px;
+          padding-top: 19px;
+          color: $color-black;
+          font-size: $fs-small-title;
+        }
+        &_line {
+          background-color: #e9eaee;
+          width: 90%;
+          height: 1px;
+          margin: -1px auto;
+        }
+      }
+    }
+    &_menus {
+      width: 100%;
+      ul {
+        position: absolute;
+        left: 0;
+        top: 130%;
+        width: 100%;
+        border-radius: 6px;
+        background-color: #fff;
+        box-shadow: rgba(0, 0, 0, 0.04) 0px 24px 32px,
+          rgba(0, 0, 0, 0.04) 0px 16px 24px, rgba(0, 0, 0, 0.04) 0px 4px 8px,
+          rgba(0, 0, 0, 0.04) 0px 0px 1px;
+      }
+      li {
+        list-style: none;
+        margin-left: -32px;
+      }
+      &_header {
+        display: flex;
+        column-gap: 15px;
+        height: 100%;
+        width: 100%;
+        background-color: $color-page;
+        padding-left: 20px;
+        padding-top: 10px;
+        font-size: $fs-normal-text;
+        height: 40px;
+        a {
+          margin-left: auto;
+          margin-right: 20px;
+        }
+        svg {
+          font-size: 19px;
+          margin-top: -2px;
+        }
+      }
+      &_item {
+        padding-left: 14px;
+        padding-top: 13px;
+        img {
+          display: inline;
+          height: 32px;
+          width: 32px;
+          border-radius: 50%;
+          object-fit: contain;
+          background-color: $color-page;
+          margin-top: -6px;
+        }
+        &_col {
+          display: flex;
+          justify-content: start;
+          column-gap: 7px;
+        }
+      }
+    }
+  }
+  &__hospital {
+    background-color: $color-page;
+    height: 720px;
+    margin-top: 150px;
+    padding-left: 195px;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    a {
+      font-size: $fs-normal-text;
+      display: flex;
+      column-gap: 5px;
+      align-items: start;
+      margin-left: 913px;
+      p {
+        font-weight: 600;
+        color: $color-blue;
+      }
+      svg {
+        font-size: 20px;
+      }
+    }
+    h2 {
+      margin-left: -12px;
+      font-style: $fs-large-title;
+      font-weight: 700;
+    }
+    &_item {
+      background-color: white;
+      width: 242px;
+      height: 242px;
+      padding: 16px;
+      margin-right: 15px;
+      margin-bottom: 15px;
+    }
+    img {
+      height: 48px;
+      width: 136px;
+    }
+    &_name {
+      margin-top: 5px;
+      font-weight: 700;
+      font-size: $fs-normal-text;
+    }
+    &_address {
+      display: flex;
+      column-gap: 4px;
+      margin-left: -2px;
+      p {
+        font-size: $fs-normal-text;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+    }
+    &_button {
+      width: 100%;
+      margin-top: 30px;
+    }
   }
 }
+
 #care__in {
-  padding-left: 15 px;
+  padding-left: 15px;
   width: 100%;
   height: 50%;
   border: none;

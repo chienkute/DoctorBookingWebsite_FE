@@ -109,3 +109,14 @@ a.clear {
 .color-banner {
   color: #f7f9fc;
 }
+.button {
+  color: white;
+  font-weight: 700;
+  font-size: $fs-normal-text;
+  background-color: #2d87f3;
+  text-transform: none;
+  &:hover {
+    background-color: #2d87f3;
+    color: white;
+  }
+}

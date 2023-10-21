@@ -1,42 +1,53 @@
-import { memo, useState } from "react";
+import { memo, useState, useEffect } from "react";
 import { MdEmail } from "react-icons/md";
+import { MdAccountCircle } from "react-icons/md";
 import imageLogin from "../../assets/image_1.png";
 import imageLogin2 from "../../assets/image_2.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AiOutlineEyeInvisible, AiFillEye } from "react-icons/ai";
 import "./login.scss";
-import { postSignIn } from "service/authService";
+import { login } from "service/UserService";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-// import { loginUser } from "redux/apiRequest";
-// import { useDispatch } from "react-redux";
 const Login = () => {
   const navigate = useNavigate();
   const [isShowPassword, setIsShowPassword] = useState(false);
-  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   let token = localStorage.getItem("token");
+  //   if (token) {
+  //     navigate("/");
+  //   }
+  // }, []);
   const formik = useFormik({
     initialValues: {
+      username: "",
       password: "",
-      email: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string()
-        .required("Bạn chưa nhập email")
-        .matches(
-          /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-          "Vui lòng nhập đúng địa chỉ email"
-        ),
+      // email: Yup.string()
+      //   .required("Bạn chưa nhập email")
+      //   .matches(
+      //     /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+      //     "Vui lòng nhập đúng địa chỉ email"
+      //   ),
+      username: Yup.string()
+        .required("Bạn chưa nhập tài khoản")
+        .min(6, "Tên tài khoản ít nhất phải chứa 6 ký tự hoặc hơn"),
       password: Yup.string()
         .required("Bạn chưa nhập mật khẩu")
         .min(6, "Mật khẩu không được ít hơn 6 ký tự"),
     }),
     onSubmit: async (values) => {
-      const res = await postSignIn(values.email, values.password);
-      if (res) {
-        console.log(res);
-        // toast.success("Dang nhap thanh cong");
+      const res = await login(values.username, values.password);
+      if (res && res.access_token) {
+        localStorage.setItem("token", res.access_token);
         navigate("/");
+        toast.success("Đăng nhập thành công");
+      } else {
+        if (res && res.status === 401) {
+          toast.error("Lỗi đăng nhập");
+        }
       }
     },
   });
@@ -45,7 +56,7 @@ const Login = () => {
       <div className="form shadow dark:border">
         <form className="w-100" onSubmit={formik.handleSubmit}>
           <h1 className="form__login_title">Đăng nhập</h1>
-          <div class="mb-3">
+          {/* <div class="mb-3">
             <label for="email" class="form-label form__login_text">
               Email
             </label>
@@ -65,6 +76,28 @@ const Login = () => {
               </div>
               <div className="form__login_error">
                 {formik.touched.email && formik.errors.email}
+              </div>
+            </div>
+          </div> */}
+          <div className="mb-3">
+            <label htmlFor="username" className="form-label">
+              Tài khoản
+            </label>
+            <div className="form__login_in">
+              <input
+                type="text"
+                className="form-control"
+                id="username"
+                placeholder="Nhập tài khoản của bạn"
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                {...formik.getFieldProps("username")}
+              />
+              <div>
+                <MdAccountCircle></MdAccountCircle>
+              </div>
+              <div className="form__login_error">
+                {formik.touched.username && formik.errors.username}
               </div>
             </div>
           </div>
@@ -100,6 +133,7 @@ const Login = () => {
           </div>
 
           <button type="submit" class="btn btn-primary btn-block mb-4">
+            {/* <i class="fas fa-sync fa-spin"></i> */}
             Đăng nhập
           </button>
 

@@ -6,15 +6,13 @@ import imageLogin from "../../assets/image_1.png";
 import imageLogin2 from "../../assets/image_2.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { postSignUp } from "service/authService";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-// import { useDispatch } from "react-redux";
+import { signup } from "service/UserService";
 const Register = () => {
   const navigate = useNavigate();
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowConfPassword, setIsShowConfPassword] = useState(false);
-  // const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -44,12 +42,8 @@ const Register = () => {
         ),
     }),
     onSubmit: async (values) => {
-      const res = await postSignUp(
-        values.username,
-        values.email,
-        values.password
-      );
-      // toast.success("Dang ky thanh cong");
+      const res = await signup(values.username, values.email, values.password);
+      toast.success("Dang ky thanh cong");
       navigate("/login");
     },
   });

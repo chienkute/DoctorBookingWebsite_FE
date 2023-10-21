@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const instance = axios.create({
-  // duong dan la chi
   baseURL: "https://ncc02.pythonanywhere.com/",
 });
 

@@ -16,9 +16,6 @@ const categories = () => {
         </a>
       </div>
       <div className="categories__body">
-        {/* <div className="categories__banner">
-          <img src={banner} alt="" />
-        </div> */}
         <h1 className="categories__title">Không biết bắt đầu từ đâu?</h1>
         <div className="categories__button">
           <div className="categories__icon flex-center">
