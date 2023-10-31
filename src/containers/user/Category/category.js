@@ -4,9 +4,12 @@ import { BiSolidCategory } from "react-icons/bi";
 import chuyenmucImages from "../../../assets/chuyenmuc/tooth1.png";
 import blogImages from "../../../assets/blog-img.png";
 import avtImg from "../../../assets/avatar.png";
-import NewsLarge from "../HomePage/NewsLarge/NewsLarge";
-import NewsSmall from "../HomePage/NewsSmall/NewsSmall";
 import "../HomePage/NewsLarge/NewsLarge.scss";
+import { FcPrevious, FcNext } from "react-icons/fc";
+import doctorImg from "../../../assets/doctor/tat.jpg";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import "../Category/CategoryListStyle.scss";
 const Category = () => {
   return (
     <div className="category">
@@ -39,7 +42,7 @@ const Category = () => {
         </div>
         <div className="category__blog">
           <h3>Kiến thức chung</h3>
-          <div>
+          <div className="category__blog_news">
             <div className="NewsLarge2ItemsContainer">
               <ul className="clear NewsLarge2Items flex-center">
                 <li className="NewsItem col-2">
@@ -205,20 +208,205 @@ const Category = () => {
             </div>
           </div>
           <h3>Khám phá thêm các chuyên mục về Sức khỏe răng miệng</h3>
-          <div className="category__blog_category row">
-            <a className="col-md-2">
-              <div>
-                <img src={chuyenmucImages} alt="" />
-              </div>
-              <p>Viêm nưới & nha chu</p>
-            </a>
+          <div className="category__blog_category category-list row">
+            <Swiper
+              modules={[Navigation, Pagination]}
+              spaceBetween={30}
+              slidesPerView={"auto"}
+              grabCursor={"true"}
+              navigation
+            >
+              <SwiperSlide>
+                <a className="col-md-2 category-item" href="#">
+                  <div className="category-item-image">
+                    <img src={chuyenmucImages} alt="" />
+                  </div>
+                  <p>Viêm nướu & nha chu</p>
+                </a>
+              </SwiperSlide>
+              <SwiperSlide>
+                <a className="col-md-2 category-item-image" href="#">
+                  <div>
+                    <img src={chuyenmucImages} alt="" />
+                  </div>
+                  <p>Viêm nướu & nha chu</p>
+                </a>
+              </SwiperSlide>
+              <SwiperSlide>
+                <a className="col-md-2 category-item-image" href="#">
+                  <div>
+                    <img src={chuyenmucImages} alt="" />
+                  </div>
+                  <p>Viêm nướu & nha chu</p>
+                </a>
+              </SwiperSlide>
+              <SwiperSlide>
+                <a className="col-md-2 category-item-image" href="#">
+                  <div>
+                    <img src={chuyenmucImages} alt="" />
+                  </div>
+                  <p>Viêm nướu & nha chu</p>
+                </a>
+              </SwiperSlide>
+              <SwiperSlide>
+                <a className="col-md-2 category-item-image" href="#">
+                  <div>
+                    <img src={chuyenmucImages} alt="" />
+                  </div>
+                  <p>Viêm nướu & nha chu</p>
+                </a>
+              </SwiperSlide>
+              <SwiperSlide>
+                <a className="col-md-2 category-item-image" href="#">
+                  <div>
+                    <img src={chuyenmucImages} alt="" />
+                  </div>
+                  <p>Viêm nướu & nha chu</p>
+                </a>
+              </SwiperSlide>
+              <SwiperSlide>
+                <a className="col-md-2 category-item-image" href="#">
+                  <div>
+                    <img src={chuyenmucImages} alt="" />
+                  </div>
+                  <p>Viêm nướu & nha chu</p>
+                </a>
+              </SwiperSlide>
+              <SwiperSlide>
+                <a className="col-md-2 category-item-image" href="#">
+                  <div>
+                    <img src={chuyenmucImages} alt="" />
+                  </div>
+                  <p>Viêm nướu & nha chu</p>
+                </a>
+              </SwiperSlide>
+              <SwiperSlide>
+                <a className="col-md-2 category-item-image" href="#">
+                  <div>
+                    <img src={chuyenmucImages} alt="" />
+                  </div>
+                  <p>Viêm nướu & nha chu</p>
+                </a>
+              </SwiperSlide>
+            </Swiper>
           </div>
-          <ul className="category__blog_bullet">
-            <li>1</li>
-            <li>1</li>
-          </ul>
           <h3>Xem thêm về Sức khỏe răng miệng</h3>
-          <div className="category__blog_item"></div>
+          <div className="category__blog_item">
+            <div className="NewsSmallContainer">
+              <div className="NewsSmallContent">
+                <ul className="ListNewsSmallItems clear">
+                  <li className="NewsItem">
+                    <div className="NewsImage">
+                      <a href="#" className="clear">
+                        <img src={blogImages} alt="Blog Img"></img>
+                      </a>
+                    </div>
+                    <div className="NewsInfo">
+                      <div className="NewsTitle">
+                        <a href="#" className="clear bold">
+                          Tiêu đề bài viết
+                        </a>
+                      </div>
+                      <div className="NewsContent">
+                        <span>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit, sed do eiusmod tempor incididunt ut labore et
+                          dolore magna aliqua. Pulvinar pellentesque habitant
+                          morbi tristique senectus et. Libero id faucibus nisl
+                          tincidunt eget nullam non nisi est...
+                        </span>
+                      </div>
+                      <div className="NewsAuthorAndTime">
+                        <a href="#" className="clear">
+                          <img src={avtImg} placeholder="Avatar"></img>
+                          <span>
+                            Được viết bởi <b>Lorem ipsum</b> - 01/01/1990
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li className="NewsItem">
+                    <div className="NewsImage">
+                      <a href="#" className="clear">
+                        <img src={blogImages} alt="Blog Img"></img>
+                      </a>
+                    </div>
+                    <div className="NewsInfo">
+                      <div className="NewsTitle">
+                        <a href="#" className="clear bold">
+                          Tiêu đề bài viết
+                        </a>
+                      </div>
+                      <div className="NewsContent">
+                        <span>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit, sed do eiusmod tempor incididunt ut labore et
+                          dolore magna aliqua. Pulvinar pellentesque habitant
+                          morbi tristique senectus et. Libero id faucibus nisl
+                          tincidunt eget nullam non nisi est...
+                        </span>
+                      </div>
+                      <div className="NewsAuthorAndTime">
+                        <a href="#" className="clear">
+                          <img src={avtImg} placeholder="Avatar"></img>
+                          <span>
+                            Được viết bởi <b>Lorem ipsum</b> - 01/01/1990
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li className="NewsItem">
+                    <div className="NewsImage">
+                      <a href="#" className="clear">
+                        <img src={blogImages} alt="Blog Img"></img>
+                      </a>
+                    </div>
+                    <div className="NewsInfo">
+                      <div className="NewsTitle">
+                        <a href="#" className="clear bold">
+                          Tiêu đề bài viết
+                        </a>
+                      </div>
+                      <div className="NewsContent">
+                        <span>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit, sed do eiusmod tempor incididunt ut labore et
+                          dolore magna aliqua. Pulvinar pellentesque habitant
+                          morbi tristique senectus et. Libero id faucibus nisl
+                          tincidunt eget nullam non nisi est...
+                        </span>
+                      </div>
+                      <div className="NewsAuthorAndTime">
+                        <a href="#" className="clear">
+                          <img src={avtImg} placeholder="Avatar"></img>
+                          <span>
+                            Được viết bởi <b>Lorem ipsum</b> - 01/01/1990
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className="DoctorResultPageMonitor search__page">
+              <div className="PrevPage flex-center disabled">
+                <FcPrevious />
+              </div>
+              <ul className="Pages clear">
+                <li className="Page flex-center bold selected">1</li>
+                <li className="Page flex-center bold">2</li>
+                <li className="Page flex-center bold">3</li>
+                <li className="Page flex-center bold">4</li>
+                <li className="Page flex-center bold">5</li>
+              </ul>
+              <div className="NextPage flex-center">
+                <FcNext />
+              </div>
+            </div>
+          </div>
           <div className="category__blog_doctor">
             <div className="category__blog_doctor_info">
               <h3>Đội ngũ chuyên gia của Hello Bacsi</h3>
@@ -238,13 +426,46 @@ const Category = () => {
               </p>
               <a href="#">Xem thêm chuyên gia</a>
             </div>
-            <div className="catgory__blog_doctor_item row">
-              <div className="cateogry__blog_doctor_item_list">
-                <div>
-                  <img src="" alt="" />
+            <div className="category__blog_doctor_item row">
+              <div className="category__blog_doctor_item_list col-sm-6">
+                <div className="category__blog_doctor_item_list_img">
+                  <img src={doctorImg} alt="" />
                 </div>
                 <p>Bác sĩ Lê Thị Mỹ Duyên</p>
-                <p>Đa khoa • Bệnh viện Đa khoa Hồng Ngọc</p>
+                <div className="category__blog_doctor_item_list_text">
+                  <span>Đa khoa</span>{" "}
+                  <span>• Bệnh viện Đa khoa Hồng Ngọc</span>
+                </div>
+              </div>
+              <div className="category__blog_doctor_item_list col-sm-6">
+                <div className="category__blog_doctor_item_list_img">
+                  <img src={doctorImg} alt="" />
+                </div>
+                <p>Bác sĩ Lê Thị Mỹ Duyên</p>
+                <div className="category__blog_doctor_item_list_text">
+                  <span>Đa khoa</span>{" "}
+                  <span>• Bệnh viện Đa khoa Hồng Ngọc</span>
+                </div>
+              </div>
+              <div className="category__blog_doctor_item_list col-sm-6">
+                <div className="category__blog_doctor_item_list_img">
+                  <img src={doctorImg} alt="" />
+                </div>
+                <p>Bác sĩ Lê Thị Mỹ Duyên</p>
+                <div className="category__blog_doctor_item_list_text">
+                  <span>Đa khoa</span>{" "}
+                  <span>• Bệnh viện Đa khoa Hồng Ngọc</span>
+                </div>
+              </div>
+              <div className="category__blog_doctor_item_list col-sm-6">
+                <div className="category__blog_doctor_item_list_img">
+                  <img src={doctorImg} alt="" />
+                </div>
+                <p>Bác sĩ Lê Thị Mỹ Duyên</p>
+                <div className="category__blog_doctor_item_list_text">
+                  <span>Đa khoa</span>{" "}
+                  <span>• Bệnh viện Đa khoa Hồng Ngọc</span>
+                </div>
               </div>
             </div>
           </div>

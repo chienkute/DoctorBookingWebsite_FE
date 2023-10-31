@@ -1,0 +1,295 @@
+@use "sass:map";
+@import "style/pages/theme";
+@import "~mdb-ui-kit/css/mdb.min.css";
+.hospital {
+  margin-top: 70px;
+  margin-bottom: 100px;
+  &__header {
+    width: 100%;
+    height: 50px;
+    background-color: $color-banner;
+    &_head {
+      max-width: 1099px;
+      display: flex;
+      column-gap: 5px;
+      margin: 0 auto;
+      font-size: $fs-small-text;
+      padding-top: 14px;
+      &_text {
+        color: $color-title;
+      }
+      &_text2 {
+        width: 190px;
+        p {
+          height: 25px;
+          text-wrap: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+  &__body {
+    max-width: 1099px;
+    margin: 20px auto 0;
+    &_image {
+      img {
+        width: 100%;
+      }
+    }
+    &_header {
+      display: flex;
+      align-items: center;
+      &_image {
+        img {
+          width: 140px;
+          height: 140px;
+          border-radius: 50%;
+          object-fit: scale-down;
+          border: 1px solid $border;
+          box-shadow: $box-shadow;
+          background-color: white;
+          margin-top: -20px;
+        }
+      }
+      &_info {
+        margin-left: 20px;
+        h1 {
+          font-size: 22px;
+          font-weight: 700;
+          color: $color-title;
+        }
+      }
+      &_location {
+        display: flex;
+        column-gap: 4px;
+        div {
+          color: $color-black;
+          font-size: $fs-normal-text;
+          svg {
+            font-size: 20px;
+            margin-top: -6px;
+          }
+        }
+      }
+    }
+    &_line {
+      margin-top: 20px;
+      height: 8px;
+      width: 162%;
+      margin-left: -50%;
+      background-color: #f8f9fc;
+    }
+    &_item {
+      text-transform: none !important;
+      font-size: $fs-normal-text !important;
+      font-weight: 700 !important;
+      text-align: left !important;
+    }
+    &_main {
+      max-width: 80%;
+    }
+    &_list {
+      margin-bottom: 25px;
+    }
+    &_thongtin {
+      h2 {
+        font-weight: 700;
+        color: $color-header;
+        font-size: $fs-normal-text;
+        padding-left: 10px;
+        margin-bottom: 17px;
+        &::before {
+          content: "";
+          width: 2px;
+          height: 14px;
+          background-color: $color-blue;
+          position: absolute;
+          left: 142px;
+        }
+      }
+      &_schedule {
+        display: flex;
+        flex-direction: column;
+        max-width: 50%;
+        font-size: $fs-normal-text;
+        margin-bottom: 30px;
+        p {
+          color: $color-title;
+        }
+        h2 {
+          font-size: 14px;
+          font-weight: 700;
+          color: $color-header;
+          margin-bottom: 20px;
+        }
+      }
+      &_time {
+        display: flex;
+        justify-content: space-between;
+        height: 30px;
+      }
+      &_desc {
+        max-width: 80%;
+        p {
+          line-height: 24px;
+          margin-bottom: 25px;
+          color: $color-title;
+        }
+      }
+      &_chuyenkhoa {
+        ol {
+          li {
+            margin-bottom: 10px;
+            list-style: disc;
+            text-align: left;
+            color: $color-title;
+          }
+        }
+      }
+      &_thanhtoan {
+        display: flex;
+        column-gap: 15px;
+      }
+      &_phuongthuc {
+        width: 100px;
+        height: 50px;
+        border-radius: 6px;
+        border: 1px solid $border;
+        display: flex;
+        flex-direction: column;
+        row-gap: 20px;
+        img {
+          height: 30px;
+          width: 70px;
+          object-fit: scale-down;
+        }
+        p {
+          text-align: center;
+          text-wrap: nowrap;
+        }
+      }
+      &_img {
+        padding-top: 10px;
+        padding-left: 15px;
+      }
+    }
+    &_dichvu {
+      max-width: 80%;
+      &_result {
+        margin-top: 30px;
+        width: 100%;
+        height: 140px;
+        border-radius: 6px;
+        box-shadow: $box-shadow;
+        border: 1px solid $border;
+      }
+      &_info {
+        padding-top: 14px;
+        padding-left: 14px;
+        h6 {
+          color: $color-title;
+          font-size: $fs-normal-text;
+          font-weight: 700;
+        }
+      }
+      &_price {
+        display: flex;
+        column-gap: 10px;
+        &_icon {
+          margin-top: -2px;
+        }
+        p {
+          color: green;
+        }
+      }
+      &_bottom {
+        display: flex;
+        height: 66px;
+        background-color: $color-page;
+        padding-top: 14px;
+        padding-left: 14px;
+        column-gap: 10px;
+        &_avtHosp {
+          img {
+            width: 40px;
+            height: 40px;
+            object-fit: scale-down;
+            border-radius: 50%;
+            background-color: white;
+            border: 1px solid $border;
+          }
+        }
+        &_descrip {
+          font-size: $fs-small-text;
+          display: flex;
+          flex-direction: column;
+          a {
+            color: $color-title;
+            font-weight: 600;
+          }
+        }
+        &_button {
+          height: 43px;
+          width: 140px;
+          margin-left: auto;
+          margin-right: 14px;
+        }
+      }
+    }
+    &_bacsi {
+      max-width: 80%;
+      &_result {
+        margin-top: 30px;
+        width: 100%;
+        height: 204px;
+        border-radius: 6px;
+        box-shadow: $box-shadow;
+        border: 1px solid $border;
+        padding-top: 16px;
+      }
+      &_content {
+        display: flex;
+        height: 120px;
+        padding-left: 16px;
+        column-gap: 20px;
+        &_avt {
+          img {
+            height: 80px;
+            width: 80px;
+            border-radius: 50%;
+          }
+        }
+        &_info {
+          height: 100px;
+          &_name {
+            font-weight: 700;
+            color: $color-title;
+            font-size: $fs-small-title;
+          }
+          &_ck {
+            font-size: $fs-normal-text;
+          }
+          &_price {
+            display: flex;
+            align-items: start;
+            column-gap: 10px;
+            font-size: $fs-normal-text;
+          }
+          &_icon {
+            svg {
+              margin-top: -2px;
+            }
+          }
+          &_cost {
+            color: green;
+          }
+        }
+      }
+    }
+  }
+}
+.bolds {
+  color: $color-title;
+  font-weight: 700;
+}
