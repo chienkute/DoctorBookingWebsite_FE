@@ -7,6 +7,7 @@ import categories from "containers/user/Categories/categories";
 import Care from "containers/user/Care/care";
 import UserPage from "containers/user/UserPage/UserPage";
 import category from "containers/user/Category/category";
+import hospitalPage from "containers/user/HospitalPage/hospitalPage";
 
 const publicRoutes = [
   { path: "/", component: HomePage },
@@ -17,6 +18,7 @@ const publicRoutes = [
   { path: "/categories", component: categories },
   { path: "/care/", component: Care },
   { path: "/user/", component: UserPage },
-  { path: "/category/", component: category, layout: null },
+  { path: "/category/", component: category },
+  { path: "/care/hospital", component: hospitalPage },
 ];
 export { publicRoutes };

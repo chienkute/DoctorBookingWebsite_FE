@@ -67,14 +67,14 @@ const Header = () => {
                   aria-labelledby="dropdownMenuLink"
                 >
                   <li>
-                    <a class="dropdown-item dropdown_title" href="#">
+                    <div class="dropdown-item dropdown_title">
                       Chuyên mục sức khỏe
-                    </a>
+                    </div>
                   </li>
                   <li>
                     <a
                       class="dropdown-item d-flex align-items-center dropdown__item"
-                      href="#"
+                      href="/category"
                     >
                       <div className="header__menu_image">
                         <img src={imageChuyenMuc1} alt="" />
@@ -167,9 +167,9 @@ const Header = () => {
                   aria-labelledby="dropdownMenuLink"
                 >
                   <li>
-                    <a class="dropdown-item dropdown_title" href="#">
+                    <div class="dropdown-item dropdown_title">
                       Công cụ sức khỏe
-                    </a>
+                    </div>
                   </li>
                   <li>
                     <a
@@ -271,14 +271,14 @@ const Header = () => {
                   aria-labelledby="dropdownMenuLink"
                 >
                   <li>
-                    <a class="dropdown-item dropdown_title" href="#">
+                    <div class="dropdown-item dropdown_title">
                       Các chuyên khoa
-                    </a>
+                    </div>
                   </li>
                   <li>
                     <a
                       class="dropdown-item d-flex align-items-center dropdown__item"
-                      href="#"
+                      href="/searchDoctor"
                     >
                       <div className="header__menu_image">
                         <img src={imageck1} alt="" />
