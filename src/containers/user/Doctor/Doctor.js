@@ -2,6 +2,9 @@ import React from "react";
 import "./Doctor.scss";
 import avatar from "assets/avatar.png";
 import icon from "assets/icon.png";
+import banking from "assets/ck.png";
+import VISA from "assets/VISA.jpg";
+import { FaCcVisa } from "react-icons/fa6";
 
 class Doctor extends React.Component {
   render() {
@@ -35,7 +38,9 @@ class Doctor extends React.Component {
         <div className="MakeAppointmentContent">
           <div className="DoctorInfo">
             <div className="DoctorHighlight">
-              <div className="DoctorHighlightHeader">Điểm nổi bật nhất</div>
+              <div className="bold DoctorHighlightHeader">
+                Điểm nổi bật nhất
+              </div>
               <div className="DoctorHighlightContent">
                 <ul className="ListHighlight">
                   <li className="Highlight">
@@ -121,66 +126,72 @@ class Doctor extends React.Component {
                         <div className="ServiceFee">
                           <span className="Icon">
                             <img src={icon} alt="Icon"></img>
-                          </span>{" "}
-                          Phí tư vấn ban đầu từ
+                          </span>
+                          <span>Phí tư vấn ban đầu từ</span>
                           <span className="Fee"> 150.000đ</span>
                         </div>
                       </li>
                     </ul>
                   </div>
                 </div>
-                <div className="Experiences">
+                <div className="History">
+                  <div className="Experiences">
+                    <div className="Header">
+                      <div className="HeaderIcon">
+                        <img src={icon} alt="Icon"></img>
+                      </div>
+                      <div className="HeaderName">Kinh nghiệm làm việc</div>
+                    </div>
+                    <div className="Content">
+                      <ul className="ListExperiences">
+                        <li className="Experience">
+                          <div className="ExperienceHeader">
+                            Khám, tư vấn và điều trị nội trú và ngoại trú cho
+                            người lớn và trẻ em
+                          </div>
+                          <div className="ExperienceDetails">
+                            Trung tâm Y tế Tân Trụ
+                          </div>
+                          <div className="ExperienceDetails">
+                            2019 - Hiện tại
+                          </div>
+                        </li>
+                        <li className="Experience">
+                          <div className="ExperienceHeader">
+                            Khám sàng lọc và tư vấn, tiêm ngừa dịch vụ
+                          </div>
+                          <div className="ExperienceDetails">2022</div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="Education">
+                    <div className="Header">
+                      <div className="HeaderIcon">
+                        <img src={icon} alt="Icon"></img>
+                      </div>
+                      <div className="HeaderName">Quá trình đào tạo</div>
+                    </div>
+                    <div className="Content">
+                      <ul className="ListSchools">
+                        <li className="School">
+                          <div className="SchoolHeader">
+                            Trường Đại học Y Dược Cần Thơ
+                          </div>
+                          <div className="SchoolDetails">
+                            Tốt nghiệp Bác sĩ đa khoa
+                          </div>
+                          <div className="SchoolDetails">2015 - 2019</div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div className="WorkTime">
                   <div className="Header">
                     <div className="HeaderIcon">
                       <img src={icon} alt="Icon"></img>
                     </div>
-                    <div className="HeaderName">Kinh nghiệm làm việc</div>
-                  </div>
-                  <div className="Content">
-                    <ul className="clear ListExperiences">
-                      <li className="Experience">
-                        <div className="ServiceHeader">
-                          Khám, tư vấn và điều trị nội trú và ngoại trú cho
-                          người lớn và trẻ em
-                        </div>
-                        <div className="ServiceDetails">
-                          Trung tâm Y tế Tân Trụ
-                        </div>
-                        <div className="ServiceDetails">2019 - Hiện tại</div>
-                      </li>
-                      <li className="Experience">
-                        <div className="ServiceHeader">
-                          Khám sàng lọc và tư vấn, tiêm ngừa dịch vụ
-                        </div>
-                        <div className="ServiceDetails">2022</div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="Education">
-                  <div className="Header">
-                    <div className="HeaderIcon">
-                      <img src={icon} alt="Icon"></img>
-                    </div>
-                    <div className="HeaderName">Quá trình đào tạo</div>
-                  </div>
-                  <div className="Content">
-                    <ul className="clear ListSchools">
-                      <li className="School">
-                        <div className="SchoolHeader">
-                          Trường Đại học Y Dược Cần Thơ
-                        </div>
-                        <div className="SchoolDetails">
-                          Tốt nghiệp Bác sĩ đa khoa
-                        </div>
-                        <div className="SchoolDetails">2015 - 2019</div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="Worktime">
-                  <div className="Header">
-                    <div className="HeaderIcon"></div>
                     <div className="HeaderName">Giờ làm việc</div>
                   </div>
                   <div className="Content">
@@ -240,12 +251,16 @@ class Doctor extends React.Component {
                   <div className="Content">
                     <ul className="clear ListPaymentMethod">
                       <li className="Method">
-                        <div className="Icons"></div>
-                        <div className="Details">Visa</div>
+                        <div className="flex-center MethodIcon">
+                          <img src={VISA} alt="Icon"></img>
+                        </div>
+                        <div className="MethodDetails">Visa</div>
                       </li>
                       <li className="Method">
-                        <div className="Icons"></div>
-                        <div className="Details">Chuyển khoản</div>
+                        <div className="flex-center MethodIcon">
+                          <img src={banking} alt="Icon"></img>
+                        </div>
+                        <div className="MethodDetails">Chuyển khoản</div>
                       </li>
                     </ul>
                   </div>

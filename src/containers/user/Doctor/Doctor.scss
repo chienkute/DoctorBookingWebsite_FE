@@ -1,7 +1,7 @@
 @use "sass:map";
 
 .MakeAppointmentContainer {
-    margin    : 0 20rem;
+    margin    : 0 15rem;
     display   : flex;
     flex-wrap : wrap;
     margin-top: 90px;
@@ -65,7 +65,26 @@
 }
 
 .MakeAppointmentContent {
-    width: 75%;
+    width: 65%;
+}
+
+.MakeAppointmentContent .DoctorInfo {
+    width: 100%;
+}
+
+.MakeAppointmentContent .DoctorHighlight {
+    background-color: rgb(227, 242, 255);
+    padding         : 16px;
+}
+
+.MakeAppointmentContent .DoctorHighlight .DoctorHighlightHeader {
+    margin-bottom: 12px;
+    display      : flex;
+    align-items  : center;
+}
+
+.MakeAppointmentContent .DoctorHighlight .DoctorHighlightContent {
+    font-size: 14px;
 }
 
 .DoctorBasicInfo ul.ListTab {
@@ -94,17 +113,23 @@
 
 .DoctorBasicInfo>.Content>.BasicInfo>.Header,
 .DoctorBasicInfo>.Content .Header {
-    font-size    : 19px;
+    font-size    : 16px;
     margin-bottom: 16px;
 }
 
+.DoctorBasicInfo>.Content>.BasicInfo>.Header {
+    display    : flex;
+    align-items: center;
+}
+
+.MakeAppointmentContent .DoctorHighlight>.DoctorHighlightHeader::before,
 .DoctorBasicInfo>.Content>.BasicInfo>.Header::before {
     content         : "";
     width           : 2px;
-    height          : 14px;
+    height          : 15px;
     margin-right    : 8px;
     background-color: rgb(45, 135, 243);
-    display         : inline-block;
+    display         : block;
 }
 
 .DoctorBasicInfo>.Content .Header {
@@ -113,8 +138,12 @@
 }
 
 .DoctorBasicInfo>.Content .HeaderIcon {
-    width       : 5%;
-    margin-right: 8px;
+    width          : 18px;
+    height         : 18px;
+    margin-right   : 8px;
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
 }
 
 .DoctorBasicInfo>.Content .HeaderIcon>img {
@@ -124,22 +153,25 @@
 
 .DoctorBasicInfo>.Content .HeaderName {
     font-weight: 700;
+    font-size  : 18px;
 }
 
 .DoctorBasicInfo .Strengths ul.ListStrengthsTab {
     display  : flex;
     flex-wrap: wrap;
+    gap      : 8px;
 }
 
 .DoctorBasicInfo .Strengths li.Strengths {
     background   : rgb(248, 249, 252);
-    padding      : 8px 16px;
+    padding      : 4px 8px;
     border-radius: 10px;
+    font-size    : 12px;
 }
 
 .DoctorBasicInfo .Services li.Service {
     background-color: rgb(248, 249, 252);
-    font-size       : 14px;
+    font-size       : 12px;
     padding         : 16px;
 }
 
@@ -158,7 +190,10 @@
 }
 
 .DoctorBasicInfo .Services li.Service .ServiceFee span.Icon {
-    width: 5%;
+    width      : 15px;
+    height     : 15px;
+    display    : flex;
+    align-items: center;
 }
 
 .DoctorBasicInfo .Services li.Service .ServiceFee span.Icon>img {
@@ -168,4 +203,70 @@
 
 .DoctorBasicInfo .Services li.Service .ServiceFee span.Fee {
     color: #009E5C;
+}
+
+.DoctorBasicInfo .History {
+    display: flex;
+    gap    : 16px
+}
+
+.DoctorBasicInfo .Experiences,
+.DoctorBasicInfo .Education {
+    width: 49%;
+}
+
+.DoctorBasicInfo .Experiences .Experience {
+    margin-bottom: 12px;
+}
+
+.DoctorBasicInfo .Experiences .ExperienceHeader,
+.DoctorBasicInfo .Education .SchoolHeader {
+    font-size     : 15px;
+    padding-bottom: 4px;
+}
+
+.DoctorBasicInfo .Experiences .ExperienceDetails,
+.DoctorBasicInfo .Education .SchoolDetails {
+    font-size: 12px;
+    color    : #737373;
+}
+
+.DoctorBasicInfo .WorkTime .Time {
+    display        : flex;
+    justify-content: space-between;
+    padding        : 2px 0;
+}
+
+.DoctorBasicInfo .PaymentMethod ul.ListPaymentMethod {
+    display  : flex;
+    flex-wrap: wrap;
+    gap      : 16px
+}
+
+.DoctorBasicInfo .PaymentMethod li.Method {
+    width    : 100px;
+    display  : flex;
+    flex-wrap: wrap;
+}
+
+.DoctorBasicInfo .PaymentMethod li.Method>* {
+    width: 100%;
+}
+
+.DoctorBasicInfo .PaymentMethod li.Method>div.MethodIcon {
+    padding      : 8px 12px;
+    border       : 1px solid rgb(210, 214, 220);
+    border-radius: 6px;
+    height       : 50px;
+    margin-bottom: 8px;
+}
+
+.DoctorBasicInfo .PaymentMethod li.Method img {
+    width     : 50%;
+    object-fit: cover;
+}
+
+.DoctorBasicInfo .PaymentMethod li.Method>div.MethodDetails {
+    text-align: center;
+    font-size : 14px;
 }
