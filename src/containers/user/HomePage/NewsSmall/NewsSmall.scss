@@ -46,7 +46,7 @@
 .NewsInfo {
   display: flex;
   flex-direction: column;
-  margin-top: -7px;
+  margin-top: -3px;
 }
 
 .NewsSmallContent .NewsItem .NewsTitle,
@@ -76,5 +76,10 @@
 .NewsContent {
   span {
     font-size: $fs-normal-text;
+  }
+}
+.NewsImage {
+  img {
+    border-radius: 6px;
   }
 }

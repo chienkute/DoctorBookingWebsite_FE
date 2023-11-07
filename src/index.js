@@ -7,6 +7,10 @@ import "./style/style.scss";
 // import store from "./redux/store";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "swiper/scss/scrollbar";
+import "swiper/scss/pagination";
+import "swiper/scss/navigation";
+import "swiper/scss";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <Provider store={store}>
