@@ -1,0 +1,171 @@
+@use "sass:map";
+
+.MakeAppointmentContainer {
+    margin    : 0 20rem;
+    display   : flex;
+    flex-wrap : wrap;
+    margin-top: 90px;
+}
+
+.MakeAppointmentHeader {
+    padding-bottom: 32px;
+    border-bottom : 1px solid rgb(228, 232, 236)
+}
+
+.MakeAppointmentHeader>.Avatar {
+    width    : 20%;
+    max-width: 400px;
+    min-width: 100px;
+    padding  : 0 16px;
+}
+
+.MakeAppointmentHeader>.Avatar>img {
+    width     : 100%;
+    height    : 100%;
+    object-fit: cover;
+}
+
+.MakeAppointmentHeader>.BasicInfo {
+    margin-left: 48px;
+    flex-wrap  : wrap;
+    display    : flex;
+    gap        : 8px;
+    height     : fit-content;
+}
+
+.MakeAppointmentHeader>.BasicInfo>* {
+    width  : 100%;
+    padding: 4px 0;
+    margin : 0;
+}
+
+.MakeAppointmentHeader>.BasicInfo ul.ListTags {
+    display: flex;
+    gap    : 16px;
+}
+
+.MakeAppointmentHeader>.BasicInfo ul.ListTags>li {
+    color        : rgb(89, 89, 89);
+    background   : rgb(248, 249, 252);
+    border       : rgb(248, 249, 252);
+    padding      : 2px 8px;
+    border-radius: 10px;
+}
+
+.MakeAppointmentHeader>.BasicInfo ul.ListTags>li.blue {
+    border          : 1px solid rgb(45, 135, 243);
+    background-color: rgb(227, 242, 255);
+    color           : rgb(45, 135, 243);
+}
+
+.MakeAppointmentHeader>.BasicInfo ul.ListTags>li.orange {
+    border          : 1px solid rgb(254, 146, 29);
+    background-color: rgb(255, 248, 226);
+    color           : rgb(254, 146, 29);
+}
+
+.MakeAppointmentContent {
+    width: 75%;
+}
+
+.DoctorBasicInfo ul.ListTab {
+    display      : flex;
+    gap          : 20px;
+    margin       : 42px 0;
+    border-bottom: 1px solid rgb(228, 232, 236);
+    width        : fit-content;
+    overflow     : auto hidden;
+    color        : rgb(140, 140, 140);
+}
+
+.DoctorBasicInfo ul.ListTab>li.Tab {
+    padding-bottom: 8px;
+
+}
+
+.DoctorBasicInfo ul.ListTab>li.Tab.selected {
+    color        : rgb(45, 135, 243);
+    border-bottom: 3px solid rgb(45, 135, 243);
+}
+
+.DoctorBasicInfo>.Content>* {
+    margin-bottom: 24px;
+}
+
+.DoctorBasicInfo>.Content>.BasicInfo>.Header,
+.DoctorBasicInfo>.Content .Header {
+    font-size    : 19px;
+    margin-bottom: 16px;
+}
+
+.DoctorBasicInfo>.Content>.BasicInfo>.Header::before {
+    content         : "";
+    width           : 2px;
+    height          : 14px;
+    margin-right    : 8px;
+    background-color: rgb(45, 135, 243);
+    display         : inline-block;
+}
+
+.DoctorBasicInfo>.Content .Header {
+    display    : flex;
+    align-items: center;
+}
+
+.DoctorBasicInfo>.Content .HeaderIcon {
+    width       : 5%;
+    margin-right: 8px;
+}
+
+.DoctorBasicInfo>.Content .HeaderIcon>img {
+    width     : 100%;
+    object-fit: cover;
+}
+
+.DoctorBasicInfo>.Content .HeaderName {
+    font-weight: 700;
+}
+
+.DoctorBasicInfo .Strengths ul.ListStrengthsTab {
+    display  : flex;
+    flex-wrap: wrap;
+}
+
+.DoctorBasicInfo .Strengths li.Strengths {
+    background   : rgb(248, 249, 252);
+    padding      : 8px 16px;
+    border-radius: 10px;
+}
+
+.DoctorBasicInfo .Services li.Service {
+    background-color: rgb(248, 249, 252);
+    font-size       : 14px;
+    padding         : 16px;
+}
+
+.DoctorBasicInfo .Services li.Service>* {
+    margin-bottom: 8px;
+}
+
+.DoctorBasicInfo .Services li.Service .ServiceHeader {
+    font-weight: 700;
+}
+
+.DoctorBasicInfo .Services li.Service .ServiceFee {
+    display    : flex;
+    align-items: center;
+    gap        : 8px
+}
+
+.DoctorBasicInfo .Services li.Service .ServiceFee span.Icon {
+    width: 5%;
+}
+
+.DoctorBasicInfo .Services li.Service .ServiceFee span.Icon>img {
+    width     : 100%;
+    object-fit: cover;
+}
+
+.DoctorBasicInfo .Services li.Service .ServiceFee span.Fee {
+    color: #009E5C;
+}
