@@ -1,28 +1,33 @@
 @use "sass:map";
 @import "theme";
+
 a {
   background-color: transparent;
 }
+
 img {
   border-style: none;
 }
+
 textarea {
   overflow: auto;
 }
 
 html,
 body {
-  margin: 0;
+  margin    : 0;
   box-sizing: border-box;
-  padding: 0;
+  padding   : 0;
 }
+
 * {
   // font-family: "Inter", sans-serif;
-  padding: 0;
-  margin: 0;
+  padding    : 0;
+  margin     : 0;
   font-weight: 500;
   line-height: 22px;
 }
+
 .bold {
   font-weight: 700;
 }
@@ -32,19 +37,20 @@ body {
 }
 
 ul.clear {
-  list-style: none;
-  padding-left: 0;
+  list-style   : none;
+  padding-left : 0;
+  margin-bottom: 0;
 }
 
 .flex-center {
-  display: flex;
+  display        : flex;
   justify-content: center;
-  align-items: center;
+  align-items    : center;
 }
 
 a.clear {
   text-decoration: none;
-  color: #000;
+  color          : #000;
 }
 
 .col-2 {
@@ -58,65 +64,82 @@ a.clear {
 .col-4 {
   width: 25%;
 }
+
 .container {
-  max-width: 1500px !important;
-  max-height: 739px !important;
-  width: 100%;
-  height: 100%;
-  padding-left: 15px;
+  max-width    : 1500px !important;
+  max-height   : 739px !important;
+  width        : 100%;
+  height       : 100%;
+  padding-left : 15px;
   padding-right: 15px;
-  position: relative;
+  position     : relative;
 }
+
 .fs-normal-text {
   font-size: 14px;
 }
+
 .fs-larger-title {
   font-size: 32px;
 }
+
 .fs-small-title {
   font-size: 18px;
 }
+
 .fs-normal-title {
   font-size: 26px;
 }
+
 .fs-small-text {
   font-size: 12px;
 }
+
 .color-header {
   color: #1b3250;
 }
+
 .color-title {
   color: #262626;
 }
+
 .color-black {
   color: #59595b;
 }
+
 .color-blue {
   color: #3488f3;
 }
+
 .color-blink {
   color: #fc488e;
 }
+
 .color-white {
   color: #f4f0ef;
 }
+
 .color-footer {
   color: #9a9899;
 }
+
 .color-title-blue {
   color: #284a8f;
 }
+
 .color-banner {
   color: #f7f9fc;
 }
+
 .button {
-  color: white;
-  font-weight: 700;
-  font-size: $fs-normal-text;
+  color           : white;
+  font-weight     : 700;
+  font-size       : $fs-normal-text;
   background-color: #2d87f3;
-  text-transform: none;
+  text-transform  : none;
+
   &:hover {
     background-color: #2d87f3;
-    color: white;
+    color           : white;
   }
 }
