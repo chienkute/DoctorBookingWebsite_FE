@@ -1,31 +1,31 @@
 @use "sass:map";
 
-.MakeAppointmentContainer {
+.DoctorPageContainer {
     margin    : 0 15rem;
     display   : flex;
     flex-wrap : wrap;
     margin-top: 90px;
 }
 
-.MakeAppointmentHeader {
+.DoctorPageHeader {
     padding-bottom: 32px;
     border-bottom : 1px solid rgb(228, 232, 236)
 }
 
-.MakeAppointmentHeader>.Avatar {
+.DoctorPageHeader>.Avatar {
     width    : 20%;
     max-width: 400px;
     min-width: 100px;
     padding  : 0 16px;
 }
 
-.MakeAppointmentHeader>.Avatar>img {
+.DoctorPageHeader>.Avatar>img {
     width     : 100%;
     height    : 100%;
     object-fit: cover;
 }
 
-.MakeAppointmentHeader>.BasicInfo {
+.DoctorPageHeader>.BasicInfo {
     margin-left: 48px;
     flex-wrap  : wrap;
     display    : flex;
@@ -33,18 +33,18 @@
     height     : fit-content;
 }
 
-.MakeAppointmentHeader>.BasicInfo>* {
+.DoctorPageHeader>.BasicInfo>* {
     width  : 100%;
     padding: 4px 0;
     margin : 0;
 }
 
-.MakeAppointmentHeader>.BasicInfo ul.ListTags {
+.DoctorPageHeader>.BasicInfo ul.ListTags {
     display: flex;
     gap    : 16px;
 }
 
-.MakeAppointmentHeader>.BasicInfo ul.ListTags>li {
+.DoctorPageHeader>.BasicInfo ul.ListTags>li {
     color        : rgb(89, 89, 89);
     background   : rgb(248, 249, 252);
     border       : rgb(248, 249, 252);
@@ -52,38 +52,49 @@
     border-radius: 10px;
 }
 
-.MakeAppointmentHeader>.BasicInfo ul.ListTags>li.blue {
+.DoctorPageHeader>.BasicInfo ul.ListTags>li.blue {
     border          : 1px solid rgb(45, 135, 243);
     background-color: rgb(227, 242, 255);
     color           : rgb(45, 135, 243);
 }
 
-.MakeAppointmentHeader>.BasicInfo ul.ListTags>li.orange {
+.DoctorPageHeader>.BasicInfo ul.ListTags>li.orange {
     border          : 1px solid rgb(254, 146, 29);
     background-color: rgb(255, 248, 226);
     color           : rgb(254, 146, 29);
 }
 
-.MakeAppointmentContent {
-    width: 65%;
+.DoctorPageContent {
+    display        : flex;
+    justify-content: space-between;
 }
 
-.MakeAppointmentContent .DoctorInfo {
-    width: 100%;
+
+.DoctorPageContent .DoctorInfo {
+    width : 65%;
+    margin: 16px;
 }
 
-.MakeAppointmentContent .DoctorHighlight {
+.DoctorPageContent>.AppointmentBox {
+    width           : 30%;
+    padding         : 16px;
+    background-color: rgb(248, 249, 252);
+    border          : 1px solid #dbdfe5;
+    border-radius   : 8px;
+}
+
+.DoctorPageContent .DoctorHighlight {
     background-color: rgb(227, 242, 255);
     padding         : 16px;
 }
 
-.MakeAppointmentContent .DoctorHighlight .DoctorHighlightHeader {
+.DoctorPageContent .DoctorHighlight .DoctorHighlightHeader {
     margin-bottom: 12px;
     display      : flex;
     align-items  : center;
 }
 
-.MakeAppointmentContent .DoctorHighlight .DoctorHighlightContent {
+.DoctorPageContent .DoctorHighlight .DoctorHighlightContent {
     font-size: 14px;
 }
 
@@ -122,7 +133,7 @@
     align-items: center;
 }
 
-.MakeAppointmentContent .DoctorHighlight>.DoctorHighlightHeader::before,
+.DoctorPageContent .DoctorHighlight>.DoctorHighlightHeader::before,
 .DoctorBasicInfo>.Content>.BasicInfo>.Header::before {
     content         : "";
     width           : 2px;
@@ -231,6 +242,10 @@
     color    : #737373;
 }
 
+.DoctorBasicInfo .WorkTime {
+    width: 60%
+}
+
 .DoctorBasicInfo .WorkTime .Time {
     display        : flex;
     justify-content: space-between;
@@ -269,4 +284,14 @@
 .DoctorBasicInfo .PaymentMethod li.Method>div.MethodDetails {
     text-align: center;
     font-size : 14px;
+}
+
+.DoctorPageAppointmentBox {
+    width           : 28%;
+    height          : fit-content;
+    background-color: rgb(248, 249, 252);
+    border          : 1px solid #dbdfe5;
+    border-radius   : 6px;
+    padding         : 16px;
+    margin          : 16px
 }

@@ -1,16 +1,16 @@
 import React from "react";
 import "./Doctor.scss";
+import AppointmentBox from "../AppointmentBox/AppointmentBox";
 import avatar from "assets/avatar.png";
 import icon from "assets/icon.png";
 import banking from "assets/ck.png";
 import VISA from "assets/VISA.jpg";
-import { FaCcVisa } from "react-icons/fa6";
 
 class Doctor extends React.Component {
   render() {
     return (
-      <div className="MakeAppointmentContainer">
-        <div className="MakeAppointmentHeader flex-center">
+      <div className="DoctorPageContainer">
+        <div className="DoctorPageHeader flex-center">
           <div className="Avatar">
             <img src={avatar} alt=""></img>
           </div>
@@ -35,7 +35,7 @@ class Doctor extends React.Component {
             </div>
           </div>
         </div>
-        <div className="MakeAppointmentContent">
+        <div className="DoctorPageContent">
           <div className="DoctorInfo">
             <div className="DoctorHighlight">
               <div className="bold DoctorHighlightHeader">
@@ -267,6 +267,9 @@ class Doctor extends React.Component {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="DoctorPageAppointmentBox">
+            <AppointmentBox />
           </div>
         </div>
       </div>
