@@ -1,7 +1,7 @@
 import logo from "../../../assets/logo.png";
 import React, { useContext } from "react";
 import { FaSistrix } from "react-icons/fa6";
-import { RiArrowDropDownLine } from "react-icons/ri";
+import { RiArrowDropDownLine, RiStickyNote2Fill } from "react-icons/ri";
 import "./Header.scss";
 import { Link, useNavigate } from "react-router-dom";
 import imageChuyenMuc1 from "../../../assets/chuyenmuc/medical.png";
@@ -22,11 +22,23 @@ import imageck4 from "../../../assets/chuyenkhoa/nhankhoa.png";
 import imageck5 from "../../../assets/chuyenkhoa/phukhoa.png";
 import imageck6 from "../../../assets/chuyenkhoa/cotsong.png";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { FaUserLarge } from "react-icons/fa6";
+import { toast } from "react-toastify";
+import useClickOutSide from "components/hooks/useClickOutSide";
+import { AiOutlineLogout } from "react-icons/ai";
+import { GiHealthNormal } from "react-icons/gi";
+import { BsCalendarEventFill } from "react-icons/bs";
+import { BiSolidHelpCircle } from "react-icons/bi";
 // import { SearchContext } from "context/SearchContext";
-
 const Header = () => {
   // const { setSearch } = useContext(SearchContext);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+    toast.success("Log out success!");
+  };
+  const { show, setShow, nodeRef } = useClickOutSide();
   return (
     <div>
       <header className="HeaderContainer flex-center">
@@ -344,7 +356,7 @@ const Header = () => {
                   <li>
                     <a
                       className="header__menu_link"
-                      href="/categories"
+                      href="/care/specialties"
                       style={{ paddingLeft: "30px" }}
                     >
                       <p>Tất cả chuyên khoa</p>
@@ -361,11 +373,73 @@ const Header = () => {
             </li>
           </ul>
         </div>
-        <div className="HeaderUserContainer flex-center">
-          <Link to={"/login"} className="LoginButtonContainer bold">
-            Đăng nhập
-          </Link>
-        </div>
+        {localStorage.getItem("token") ? (
+          <div className="HeaderDropdown" ref={nodeRef}>
+            <div className="HeaderUser flex-center">
+              <a
+                href="#"
+                onClick={() => {
+                  setShow(!show);
+                }}
+              >
+                <FaUserLarge></FaUserLarge>
+              </a>
+            </div>
+            {show && (
+              <div className="HeaderItem">
+                <div className="HeaderItem__user">
+                  <div className="HeaderItem__user_avt">
+                    <FaUserLarge></FaUserLarge>
+                  </div>
+                  <div className="HeaderItem__user_name">
+                    <h6>Phạm Sĩ Chiến</h6>
+                    <a href="/user/">Xem hồ sơ cá nhân</a>
+                  </div>
+                </div>
+                <div className="HeaderItem__list row">
+                  <a href="/user/" className="HeaderItem__list_item col-6">
+                    <div className="HeaderItem__list_item_icon">
+                      <GiHealthNormal></GiHealthNormal>
+                    </div>
+                    <p>Sức khỏe</p>
+                  </a>
+                  <a href="/user/" className="HeaderItem__list_item col-6">
+                    <div className="HeaderItem__list_item_icon">
+                      <RiStickyNote2Fill></RiStickyNote2Fill>
+                    </div>
+                    <p>Đã lưu</p>
+                  </a>
+                  <a href="/user/" className="HeaderItem__list_item col-6">
+                    <div className="HeaderItem__list_item_icon">
+                      <BsCalendarEventFill></BsCalendarEventFill>
+                    </div>
+                    <p>Lịch sử hẹn</p>
+                  </a>
+                  <a href="/user/" className="HeaderItem__list_item col-6">
+                    <div className="HeaderItem__list_item_icon">
+                      <BiSolidHelpCircle></BiSolidHelpCircle>
+                    </div>
+                    <p>Trợ giúp</p>
+                  </a>
+                </div>
+                <button className="HeaderItem__button" onClick={handleLogout}>
+                  <span>
+                    <div className="HeaderItem__button_icon">
+                      <AiOutlineLogout></AiOutlineLogout>
+                    </div>
+                    <p>Đăng xuất</p>
+                  </span>
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="HeaderUserContainer flex-center">
+            <Link to={"/login"} className="LoginButtonContainer bold">
+              Đăng nhập
+            </Link>
+          </div>
+        )}
       </header>
     </div>
   );

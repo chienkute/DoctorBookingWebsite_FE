@@ -11,12 +11,6 @@ const UserCRUD = (props) => {
   const [totalPage, setTotalPage] = useState(0);
   const [name, setName] = useState("");
   const [job, setJob] = useState("");
-  // logout
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/");
-    toast.success("Log out success!");
-  };
   // phân trang
   const handlePageClick = (event) => {
     getUser(+event.selected + 1);
@@ -95,6 +89,7 @@ const UserCRUD = (props) => {
             onClick={(event) => setName(event.target.value)}
           />
           <button onClick={() => handleSaveUser()}></button>
+          <button></button>
         </form>
       </div>
     );

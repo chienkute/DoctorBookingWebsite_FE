@@ -1,0 +1,41 @@
+@import "style/pages/theme";
+@import "~mdb-ui-kit/css/mdb.min.css";
+.specialties {
+  width: 1100px;
+  margin: 100px auto;
+  &__list {
+    padding-top: 10px;
+    padding-left: 40px;
+    margin-bottom: 50px;
+    a {
+      margin-top: 20px;
+      width: 160px;
+      height: 160px;
+      background-color: white;
+      margin-right: 20px;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      padding: 16px;
+      cursor: pointer;
+      border-radius: 6px;
+      border: 1px solid $border;
+      box-shadow: $box-shadow;
+    }
+    img {
+      width: 60px;
+      height: 60px;
+    }
+    p {
+      margin-top: 15px;
+      color: $color-title;
+      font-weight: 700;
+    }
+  }
+  h1 {
+    font-size: $fs-small-title;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-left: 27px;
+  }
+}

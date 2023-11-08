@@ -179,7 +179,7 @@
       &_result {
         margin-top: 30px;
         width: 100%;
-        height: 140px;
+        height: 146px;
         border-radius: 6px;
         box-shadow: $box-shadow;
         border: 1px solid $border;
@@ -187,10 +187,12 @@
       &_info {
         padding-top: 14px;
         padding-left: 14px;
-        h6 {
+        a {
           color: $color-title;
           font-size: $fs-normal-text;
           font-weight: 700;
+          display: inline-block;
+          margin-bottom: 5px;
         }
       }
       &_price {
@@ -205,9 +207,9 @@
       }
       &_bottom {
         display: flex;
-        height: 66px;
+        height: 63px;
         background-color: $color-page;
-        padding-top: 14px;
+        padding-top: 10px;
         padding-left: 14px;
         column-gap: 10px;
         &_avtHosp {

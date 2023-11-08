@@ -6,7 +6,7 @@ class DoctorSearchResult extends React.Component {
   render() {
     return (
       <div className="DoctorSearchResultContainer">
-        <div className="DoctorHeader flex-center">
+        <a href="#" className="DoctorHeader flex-center">
           <div className="DoctorAvatar">
             <img src={avt} alt="avt img"></img>
           </div>
@@ -20,13 +20,13 @@ class DoctorSearchResult extends React.Component {
               <div className="AdultTag">Dành cho người lớn</div>
             </div>
           </div>
-        </div>
-        <div className="DoctorFooter">
+        </a>
+        <a href="/care/hospital" className="DoctorFooter">
           <div className="DoctorOfficeAvatar">
             <img src={avt} alt="avt img"></img>
           </div>
           <div className="DoctorOffice">
-            <div className="DoctorOfficeName bold">
+            <div className="DoctorOfficeName">
               Phòng khám Đa khoa trực tuyến BS. Nguyễn Thanh Tâm
             </div>
             <div className="DoctorOfficeAddress">
@@ -36,7 +36,7 @@ class DoctorSearchResult extends React.Component {
           <div className="BookDoctor">
             <button className="BookDoctorButton bold">Đặt lịch hẹn</button>
           </div>
-        </div>
+        </a>
       </div>
     );
   }

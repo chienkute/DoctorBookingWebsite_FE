@@ -191,3 +191,117 @@
     font-size: 17px;
   }
 }
+.HeaderUser {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: white;
+  border: 1px solid $border;
+  margin-right: 37px;
+  svg {
+    color: $color-footer;
+    width: 25px;
+    height: 25px;
+    padding-bottom: 4px;
+  }
+}
+.HeaderDropdown {
+  height: 50px;
+}
+.HeaderItem {
+  background-color: white;
+  border: 1px solid $border;
+  box-shadow: $box-shadow;
+  border-radius: 6px;
+  margin-left: -280px;
+  width: 340px;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  margin-top: 19px;
+  &__user {
+    display: flex;
+    column-gap: 10px;
+    align-items: start;
+    &_avt {
+      width: 60px;
+      height: 60px;
+      background: white;
+      border-radius: 50%;
+      border: 1px solid $border;
+      text-align: center;
+      padding-top: 10px;
+      svg {
+        width: 30px;
+        height: 30px;
+        color: $color-footer;
+      }
+    }
+    &_name {
+      h6 {
+        font-weight: 700;
+        color: $color-title;
+        height: 10px;
+        margin-top: 10px;
+      }
+      a {
+        color: $color-black;
+        font-size: $fs-small-text;
+      }
+    }
+  }
+  &__list {
+    &_item {
+      box-shadow: $box-shadow;
+      border-radius: 6px;
+      width: 143px;
+      margin-bottom: 10px;
+      margin-left: 15px;
+      padding-top: 10px;
+      height: 70px;
+      &_icon {
+        color: $color-black;
+        svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+      p {
+        font-weight: 700;
+        font-size: $fs-normal-text;
+        color: $color-title;
+        margin-top: 10px;
+      }
+    }
+  }
+  &__button {
+    height: 42px;
+    margin-left: 3px;
+    border: 1px solid $border;
+    border-radius: 6px;
+    background-color: white;
+    padding-left: 34%;
+    padding-top: 10px;
+    margin-right: 3px;
+    span {
+      display: flex;
+      align-items: start;
+      column-gap: 10px;
+      svg {
+        margin-top: -2px;
+      }
+    }
+  }
+  &::before {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 15px solid white;
+    right: 68px;
+    top: 60px;
+  }
+}

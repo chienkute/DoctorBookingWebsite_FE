@@ -42,6 +42,7 @@ const Login = () => {
       const res = await login(values.username, values.password);
       if (res && res.access_token) {
         localStorage.setItem("token", res.access_token);
+        localStorage.setItem("user", JSON.stringify(res));
         navigate("/");
         toast.success("Đăng nhập thành công");
       } else {

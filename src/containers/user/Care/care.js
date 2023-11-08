@@ -10,8 +10,13 @@ import { FaUserDoctor } from "react-icons/fa6";
 import hospitalImgaes from "../../../assets/hospital.jpg";
 import { CiLocationOn } from "react-icons/ci";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 const Care = () => {
+  const navigate = useNavigate();
   const { show, setShow, nodeRef } = useClickOutSide();
+  const handleClick = () => {
+    navigate("/searchDoctor");
+  };
   return (
     <div className="care">
       <div className="care__banner">
@@ -93,7 +98,7 @@ const Care = () => {
                         <BiSolidCategory></BiSolidCategory>
                       </div>
                       <p>Chuyên khoa</p>
-                      <a href="#">Xem tất cả</a>
+                      <a href="/care/specialties">Xem tất cả</a>
                     </div>
                     <div className="care__banner_menus_item">
                       <div className="row">
@@ -298,7 +303,11 @@ const Care = () => {
                   Minh, Vietnam
                 </p>
               </div>
-              <button type="button" class="btn button care__hospital_button">
+              <button
+                type="button"
+                class="btn button care__hospital_button"
+                onClick={handleClick}
+              >
                 Đặt lịch bệnh viện
               </button>
             </div>
