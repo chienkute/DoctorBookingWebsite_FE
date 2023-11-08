@@ -187,6 +187,27 @@ class Doctor extends React.Component {
                     </div>
                   </div>
                 </div>
+                <div className="HospitalLocation">
+                  <div className="bold Header">Thông tin bệnh viện</div>
+                  <iframe
+                    title="Map"
+                    src="https://www.google.com/maps/embed?pb=!1m13!1m8!1m3!1d15675.383782640081!2d106.629664!3d10.823099000000001!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTDCsDQ5JzIzLjIiTiAxMDbCsDM3JzQ2LjgiRQ!5e0!3m2!1sen!2sus!4v1699429489519!5m2!1sen!2sus"
+                    width="100%"
+                    height="350"
+                    style={{ border: 0 }}
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                  ></iframe>
+                  <div className="HospitalInfo">
+                    <div className="HospitalName">
+                      Phòng khám Đa khoa trực tuyến BS. Nguyễn Thanh Tâm
+                    </div>
+                    <div className="HospitalDetails">
+                      Ho Chi Minh, Ho Chi Minh City, Vietnam
+                    </div>
+                  </div>
+                </div>
                 <div className="WorkTime">
                   <div className="Header">
                     <div className="HeaderIcon">

@@ -124,17 +124,19 @@
 
 .DoctorBasicInfo>.Content>.BasicInfo>.Header,
 .DoctorBasicInfo>.Content .Header {
-    font-size    : 16px;
+    font-size    : 20px;
     margin-bottom: 16px;
 }
 
-.DoctorBasicInfo>.Content>.BasicInfo>.Header {
+.DoctorBasicInfo>.Content>.BasicInfo>.Header,
+.DoctorBasicInfo>.Content>.HospitalLocation>.Header {
     display    : flex;
     align-items: center;
 }
 
 .DoctorPageContent .DoctorHighlight>.DoctorHighlightHeader::before,
-.DoctorBasicInfo>.Content>.BasicInfo>.Header::before {
+.DoctorBasicInfo>.Content>.BasicInfo>.Header::before,
+.DoctorBasicInfo>.Content>.HospitalLocation>.Header::before {
     content         : "";
     width           : 2px;
     height          : 15px;
@@ -240,6 +242,20 @@
 .DoctorBasicInfo .Education .SchoolDetails {
     font-size: 12px;
     color    : #737373;
+}
+
+.DoctorBasicInfo .HospitalLocation .HospitalInfo {
+    padding: 16px;
+    border : 1px solid #dbdfe5;
+}
+
+.DoctorBasicInfo .HospitalLocation .HospitalInfo .HospitalName {
+    font-weight: 700;
+    font-size  : 16px
+}
+
+.DoctorBasicInfo .HospitalLocation .HospitalInfo .HospitalDetails {
+    font-size: 14px;
 }
 
 .DoctorBasicInfo .WorkTime {
