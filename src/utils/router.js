@@ -8,6 +8,8 @@ import Care from "containers/user/Care/care";
 import UserPage from "containers/user/UserPage/UserPage";
 import category from "containers/user/Category/category";
 import hospitalPage from "containers/user/HospitalPage/hospitalPage";
+import service from "containers/user/Service/service";
+import specialties from "containers/user/Specialties/specialties";
 
 const publicRoutes = [
   { path: "/", component: HomePage },
@@ -20,5 +22,7 @@ const publicRoutes = [
   { path: "/user/", component: UserPage },
   { path: "/category/", component: category },
   { path: "/care/hospital", component: hospitalPage },
+  { path: "/care/service", component: service, layout: null },
+  { path: "/care/specialties", component: specialties },
 ];
 export { publicRoutes };

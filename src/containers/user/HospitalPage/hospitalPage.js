@@ -203,7 +203,7 @@ const hospitalPage = () => {
               </div>
               <div className="hospital__body_dichvu_result">
                 <div className="hospital__body_dichvu_info">
-                  <h6>Thăm khám và tư vấn</h6>
+                  <a href="/care/dich-vu">Thăm khám và tư vấn</a>
                   <div className="hospital__body_dichvu_price">
                     <div className="hospital__body_dichvu_price_icon">
                       <RiMoneyDollarCircleLine></RiMoneyDollarCircleLine>
