@@ -7,11 +7,10 @@ const Specialties = () => {
   // const [selectedDoctor, setSelectedDoctor] = useState([]);
   useEffect(() => {
     getSpecialty();
-    // handleDoctorClick();
   }, []);
   const getSpecialty = async () => {
     let res = await fetchAllSpecialties();
-    setSpecialty(res);
+    setSpecialty(res.results);
   };
   // const handleDoctorClick = async (id) => {
   //   let data = await getSpecialtiesById(id);

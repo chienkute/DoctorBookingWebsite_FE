@@ -1,6 +1,8 @@
 import "./SearchDoctor.scss";
-
+import ReactPaginate from "react-paginate";
 import { FaTrashCan } from "react-icons/fa6";
+import "../../../style/page.scss";
+import "../SearchDoctor/DoctorSearchResult/DoctorSearchResult.scss";
 import { FcPrevious, FcNext } from "react-icons/fc";
 import DoctorSearchResult from "containers/theme/DoctorSearchResult/DoctorSearchResult";
 import HospitalSearchResult from "containers/theme/HospitalSearchResult/HospitalSearchResult";
@@ -77,6 +79,27 @@ function SearchDoctor() {
               <li className="DoctorResult">
                 <DoctorSearchResult />
               </li>
+            </ul>
+          </div>
+          <div className="DoctorResultPageMonitor">
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel=">"
+              // onPageChange={handlePageClick}
+              pageRangeDisplayed={5}
+              pageCount={3}
+              previousLabel="<"
+              pageClassName="page-item"
+              pageLinkClassName="page-link"
+              previousClassName="page-item previous"
+              previousLinkClassName="page-link"
+              nextClassName="page-item previous"
+              nextLinkClassName="page-link"
+              breakClassName="page-item"
+              breakLinkClassName="page-link"
+              containerClassName="pagination"
+              activeClassName="active"
+            />
               <li className="DoctorResult">
                 <DoctorSearchResult />
               </li>

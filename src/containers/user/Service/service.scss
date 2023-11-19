@@ -1,2 +1,149 @@
 @import "style/pages/theme";
 @import "~mdb-ui-kit/css/mdb.min.css";
+.service {
+  margin-top: 70px;
+  margin-bottom: 100px;
+  &__header {
+    width: 100%;
+    height: 50px;
+    background-color: $color-banner;
+    &_head {
+      max-width: 1099px;
+      display: flex;
+      column-gap: 5px;
+      margin: 0 auto;
+      font-size: $fs-small-text;
+      padding-top: 14px;
+      &_text {
+        color: $color-title;
+      }
+      &_text2 {
+        width: 190px;
+        p {
+          height: 25px;
+          text-wrap: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+  &__main {
+    width: 1099px;
+    margin: 30px auto;
+    &_header {
+      display: flex;
+      column-gap: 20px;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 30px;
+      border-bottom: 1px solid $border;
+      height: 80px;
+      &_img {
+        img {
+          height: 60px;
+          width: 60px;
+        }
+      }
+      &_text {
+        h1 {
+          font-size: $fs-small-title;
+          font-weight: 700;
+        }
+        &_price {
+          display: flex;
+          color: $color-green;
+          column-gap: 7px;
+          &_icon {
+            svg {
+              height: 20px;
+              width: 20px;
+              margin-top: -5px;
+            }
+          }
+          span {
+            font-weight: 700;
+          }
+        }
+      }
+    }
+    &_body {
+      width: 60%;
+      h2 {
+        font-weight: 700;
+        color: $color-header;
+        font-size: $fs-small-title;
+        padding-left: 10px;
+        margin-bottom: 17px;
+        &::before {
+          content: "";
+          width: 3px;
+          height: 20px;
+          background-color: $color-blue;
+          position: absolute;
+          left: 140px;
+        }
+      }
+      &_title {
+        height: 30px;
+        border-bottom: 1px solid $border;
+        margin-bottom: 20px;
+        p {
+          font-weight: 700;
+          color: $color-blue;
+        }
+      }
+      &_line {
+        background-color: $color-blue;
+        width: 16%;
+        height: 2px;
+        margin-top: -21px;
+      }
+      &_info {
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      &_hour {
+        display: flex;
+        flex-direction: column;
+        max-width: 50%;
+        font-size: $fs-normal-text;
+        margin-bottom: 30px;
+        p {
+          color: $color-title;
+        }
+      }
+      &_time {
+        display: flex;
+        justify-content: space-between;
+        height: 30px;
+      }
+      &_thanhtoan {
+        display: flex;
+        column-gap: 15px;
+      }
+      &_phuongthuc {
+        width: 100px;
+        height: 50px;
+        border-radius: 6px;
+        border: 1px solid $border;
+        display: flex;
+        flex-direction: column;
+        row-gap: 20px;
+        img {
+          height: 30px;
+          width: 70px;
+          object-fit: scale-down;
+        }
+        p {
+          text-align: center;
+          text-wrap: nowrap;
+        }
+      }
+      &_img {
+        padding-top: 10px;
+        padding-left: 15px;
+      }
+    }
+  }
+}

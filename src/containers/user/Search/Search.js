@@ -6,8 +6,20 @@ import imagedoctor1 from "../../../assets/doctor/tat.jpg";
 import blogImg from "../../../assets/blog-img.png";
 import "../../../style/pages/_theme.scss";
 import { SearchContext } from "context/SearchContext";
+import ReactPaginate from "react-paginate";
+import "../../../style/page.scss";
 const Search = () => {
   const { search } = useContext(SearchContext);
+  const handlePageClick = (event) => {
+    getUser(+event.selected + 1);
+  };
+  const getUser = async (page) => {
+    // let res = await fetchAllUser(page);
+    // if (res && res.data) {
+    //   setTotal(res.total);
+    //   setList(res.data);
+    //   setTotalPage(res.total_pages);
+  };
   return (
     <div className="searchr">
       <div className="search__container">
@@ -24,7 +36,7 @@ const Search = () => {
           </div>
         </div>
         <div className="search__info">
-          <h3 className="search__title text-center">đột quỵ</h3>
+          <h3 className="search__title text-center">{search}</h3>
           <p className="search__result text-center">
             3934 kết quả được tìm thấy
           </p>
@@ -162,19 +174,24 @@ const Search = () => {
           </ul>
         </div>
         <div className="DoctorResultPageMonitor search__page">
-          <div className="PrevPage flex-center disabled">
-            <FcPrevious />
-          </div>
-          <ul className="Pages clear">
-            <li className="Page flex-center bold selected">1</li>
-            <li className="Page flex-center bold">2</li>
-            <li className="Page flex-center bold">3</li>
-            <li className="Page flex-center bold">4</li>
-            <li className="Page flex-center bold">5</li>
-          </ul>
-          <div className="NextPage flex-center">
-            <FcNext />
-          </div>
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel=">"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5}
+            pageCount={3}
+            previousLabel="<"
+            pageClassName="page-item"
+            pageLinkClassName="page-link"
+            previousClassName="page-item previous"
+            previousLinkClassName="page-link"
+            nextClassName="page-item previous"
+            nextLinkClassName="page-link"
+            breakClassName="page-item"
+            breakLinkClassName="page-link"
+            containerClassName="pagination"
+            activeClassName="active"
+          />
         </div>
       </div>
     </div>

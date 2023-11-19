@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo } from "react";
 import "../Category/category.scss";
 import { BiSolidCategory } from "react-icons/bi";
 import chuyenmucImages from "../../../assets/chuyenmuc/tooth1.png";
@@ -8,7 +8,7 @@ import "../HomePage/NewsLarge/NewsLarge.scss";
 import { FcPrevious, FcNext } from "react-icons/fc";
 import doctorImg from "../../../assets/doctor/tat.jpg";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import { Navigation, Pagination } from "swiper";
 import "../Category/CategoryListStyle.scss";
 const Category = () => {
   return (
