@@ -1,10 +1,13 @@
-import "./SearchDoctor.scss";
+import "../../user/SearchDoctor/SearchDoctor.scss";
+import "../../user/HospitalPage/hospitalPage.scss";
 import ReactPaginate from "react-paginate";
 import { FaTrashCan } from "react-icons/fa6";
 import DoctorSearchResult from "containers/user/SearchDoctor/DoctorSearchResult/DoctorSearchResult";
 import "../../../style/page.scss";
-import "../SearchDoctor/DoctorSearchResult/DoctorSearchResult.scss";
-function SearchDoctor() {
+import hospavt from "../../../assets/hospital.jpg";
+import { RiMoneyDollarCircleLine } from "react-icons/ri";
+
+const serviceSearch = () => {
   return (
     <div className="SearchDoctorPageContainer">
       <div className="SearchDoctorPageContent">
@@ -35,22 +38,45 @@ function SearchDoctor() {
           <div className="SearchDoctorResultLabel bold">
             <label>86 kết quả tìm được</label>
           </div>
-          <div className="SearchDoctorResultHeader">
-            <ul className="clear ResultFilters">
-              <li className="ResultFilter bold selection">
-                <div className="FilterName">Bác sĩ</div>
-              </li>
-              <li className="ResultFilter bold">
-                <div className="FilterName">Bệnh viện</div>
-              </li>
-            </ul>
-          </div>
           <div className="SearchDoctorResultContent">
-            <ul className="clear ListResult">
-              <li className="Result">
-                <DoctorSearchResult />
-              </li>
-            </ul>
+            {/* <div className="care__banner_button">
+              <div className="care__banner_input flex-center">
+                <input
+                  type="text"
+                  placeholder="Tìm kiếm..."
+                  id="care__ins"
+                ></input>
+              </div>
+            </div> */}
+            <div className="hospital__body_dichvu_result">
+              <div className="hospital__body_dichvu_info">
+                <a href="/care/dich-vu">Thăm khám và tư vấn</a>
+                <div className="hospital__body_dichvu_price">
+                  <div className="hospital__body_dichvu_price_icon">
+                    <RiMoneyDollarCircleLine></RiMoneyDollarCircleLine>
+                  </div>
+                  <p>800.000</p>
+                </div>
+              </div>
+              <div className="hospital__body_dichvu_bottom">
+                <div className="hospital__body_dichvu_bottom_avtHosp">
+                  <img src={hospavt} alt="" />
+                </div>
+                <div className="hospital__body_dichvu_bottom_descrip">
+                  <a href="#">Phòng Khám ACC - Chiropractic Đà Nẵng</a>
+                  <p>
+                    112 Đường 2 Tháng 9, phường Bình Thuận, Hải Châu, Đà Nẵng,
+                    Viet Nam
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className="btn button hospital__body_dichvu_bottom_button"
+                >
+                  Đặt Lịch Hẹn
+                </button>
+              </div>
+            </div>
           </div>
           <div className="DoctorResultPageMonitor">
             <ReactPaginate
@@ -261,6 +287,6 @@ function SearchDoctor() {
       </div>
     </div>
   );
-}
+};
 
-export default SearchDoctor;
+export default serviceSearch;

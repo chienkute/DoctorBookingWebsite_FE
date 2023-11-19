@@ -193,6 +193,7 @@
           font-weight: 700;
           display: inline-block;
           margin-bottom: 5px;
+          background-color: white;
         }
       }
       &_price {
@@ -202,7 +203,8 @@
           margin-top: -2px;
         }
         p {
-          color: green;
+          color: $color-green;
+          font-weight: 700;
         }
       }
       &_bottom {
@@ -229,6 +231,7 @@
           a {
             color: $color-title;
             font-weight: 600;
+            background-color: white;
           }
         }
         &_button {
@@ -263,7 +266,6 @@
           }
         }
         &_info {
-          height: 100px;
           &_name {
             font-weight: 700;
             color: $color-title;
@@ -271,8 +273,10 @@
           }
           &_ck {
             font-size: $fs-normal-text;
+            margin-top: -5px;
           }
           &_price {
+            margin-top: -6px;
             display: flex;
             align-items: start;
             column-gap: 10px;
@@ -284,7 +288,8 @@
             }
           }
           &_cost {
-            color: green;
+            color: $color-green;
+            font-weight: 700;
           }
         }
       }

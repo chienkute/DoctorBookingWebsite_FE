@@ -5,13 +5,17 @@ import SearchDoctor from "containers/user/SearchDoctor/SearchDoctor";
 import Search from "containers/user/Search/Search";
 import categories from "containers/user/Categories/categories";
 import Care from "containers/user/Care/care";
-import UserPage from "containers/user/UserPage/UserPage";
 import category from "containers/user/Category/category";
 import hospitalPage from "containers/user/HospitalPage/hospitalPage";
 import service from "containers/user/Service/service";
 import specialties from "containers/user/Specialties/specialties";
 import Doctor from "containers/user/Doctor/Doctor";
-
+import serviceSearch from "containers/user/ServiceSearch/serviceSearch";
+import userInfo from "containers/user/UserPage/UserInfo/userInfo";
+import routesConfig from "../config/routes";
+import userHistory from "containers/user/UserPage/UserHistory/userHistory";
+import confirm from "containers/user/Confirm/confirm";
+import blog from "containers/user/Blog/blog";
 const publicRoutes = [
   { path: "/", component: HomePage },
   { path: "/login", component: Login, layout: null },
@@ -20,11 +24,17 @@ const publicRoutes = [
   { path: "/search", component: Search },
   { path: "/categories", component: categories },
   { path: "/care/", component: Care },
-  { path: "/care/doctor", component: Doctor },
-  { path: "/user/", component: UserPage },
+  { path: "/care/doctor/:id", component: Doctor },
   { path: "/category/", component: category },
-  { path: "/care/hospital", component: hospitalPage },
-  { path: "/care/service", component: service, layout: null },
+  { path: "/care/hospital/", component: hospitalPage },
+  { path: "/care/service", component: service },
   { path: "/care/specialties", component: specialties },
+  { path: "/serviceSearch", component: serviceSearch },
+  { path: routesConfig.userinfo, component: userInfo },
+  { path: "/user/history", component: userHistory },
+  { path: "/user/changePassword", component: userHistory },
+  { path: "/user/help", component: userHistory },
+  { path: "/care/doctor/confirm", component: confirm },
+  { path: "/blog", component: blog },
 ];
 export { publicRoutes };

@@ -1,7 +1,7 @@
 import logo from "../../../assets/logo.png";
 import React, { useContext } from "react";
 import { FaSistrix } from "react-icons/fa6";
-import { RiArrowDropDownLine, RiStickyNote2Fill } from "react-icons/ri";
+import { RiArrowDropDownLine } from "react-icons/ri";
 import "./Header.scss";
 import { Link, useNavigate } from "react-router-dom";
 import imageChuyenMuc1 from "../../../assets/chuyenmuc/medical.png";
@@ -26,13 +26,19 @@ import { FaUserLarge } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import useClickOutSide from "components/hooks/useClickOutSide";
 import { AiOutlineLogout } from "react-icons/ai";
-import { GiHealthNormal } from "react-icons/gi";
-import { BsCalendarEventFill } from "react-icons/bs";
 import { BiSolidHelpCircle } from "react-icons/bi";
-// import { SearchContext } from "context/SearchContext";
+import { SearchContext } from "context/SearchContext";
+import { FaCalendarAlt, FaHeartbeat } from "react-icons/fa";
+import { RiLockPasswordFill } from "react-icons/ri";
 const Header = () => {
-  // const { setSearch } = useContext(SearchContext);
+  const { setSearch } = useContext(SearchContext);
   const navigate = useNavigate();
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      setSearch(e.target.value);
+      navigate("/search");
+    }
+  };
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/");
@@ -54,10 +60,7 @@ const Header = () => {
               type="text"
               placeholder="Tìm kiếm..."
               id="HeaderSearch"
-              // onBlur={(e) => {
-              //   setSearch(e.target.value);
-              //   navigate("/search");
-              // }}
+              onKeyDown={handleKeyDown}
             ></input>
           </div>
         </div>
@@ -393,25 +396,28 @@ const Header = () => {
                   </div>
                   <div className="HeaderItem__user_name">
                     <h6>Phạm Sĩ Chiến</h6>
-                    <a href="/user/">Xem hồ sơ cá nhân</a>
+                    <a href="/user/information">Xem hồ sơ cá nhân</a>
                   </div>
                 </div>
                 <div className="HeaderItem__list row">
                   <a href="/user/" className="HeaderItem__list_item col-6">
                     <div className="HeaderItem__list_item_icon">
-                      <GiHealthNormal></GiHealthNormal>
+                      <FaHeartbeat></FaHeartbeat>
                     </div>
                     <p>Sức khỏe</p>
                   </a>
                   <a href="/user/" className="HeaderItem__list_item col-6">
                     <div className="HeaderItem__list_item_icon">
-                      <RiStickyNote2Fill></RiStickyNote2Fill>
+                      <RiLockPasswordFill></RiLockPasswordFill>
                     </div>
-                    <p>Đã lưu</p>
+                    <p>Đổi mật khẩu</p>
                   </a>
-                  <a href="/user/" className="HeaderItem__list_item col-6">
+                  <a
+                    href="/user/history"
+                    className="HeaderItem__list_item col-6"
+                  >
                     <div className="HeaderItem__list_item_icon">
-                      <BsCalendarEventFill></BsCalendarEventFill>
+                      <FaCalendarAlt></FaCalendarAlt>
                     </div>
                     <p>Lịch sử hẹn</p>
                   </a>
