@@ -2,7 +2,7 @@
 @import "style/pages/theme";
 
 .SearchResultPageContent {
-  margin    : 0 12rem;
+  margin    : 0 12rem 60px 12rem;
   display   : flex;
   flex-wrap : wrap;
   margin-top: 100px;
@@ -39,7 +39,8 @@
 }
 
 .SearchResultContainer,
-.DoctorResultFilters {
+.DoctorResultFilters,
+.HospitalResultFilters {
   margin-top: 24px;
 }
 
@@ -56,7 +57,7 @@
   }
 }
 
-.SearchResultHeader>.ResultFilters {
+.SearchResultHeader>.ResultTypes {
   display      : flex;
   gap          : 20px;
   margin       : 42px 0;
@@ -66,13 +67,23 @@
   color        : rgb(140, 140, 140);
 }
 
-.SearchResultHeader .ResultFilter {
+.SearchResultHeader .ResultType {
+  width         : fit-content;
+  cursor        : pointer;
   padding-bottom: 8px;
 }
 
-.SearchResultHeader .ResultFilter.selection {
+.SearchResultHeader .ResultType.selection {
   color        : rgb(45, 135, 243);
   border-bottom: 3px solid rgb(45, 135, 243);
+}
+
+.SearchResultContent {
+  width: 95%;
+}
+
+.SearchResultContent>ul.disabled {
+  display: none;
 }
 
 .PageMonitor,

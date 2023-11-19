@@ -3,9 +3,27 @@ import "./SearchDoctor.scss";
 import { FaTrashCan } from "react-icons/fa6";
 import { FcPrevious, FcNext } from "react-icons/fc";
 import DoctorSearchResult from "containers/theme/DoctorSearchResult/DoctorSearchResult";
-import HospitalSearchResult from "containers/theme/ HospiitalSearchResult/HospitalSearchResult";
+import HospitalSearchResult from "containers/theme/HospitalSearchResult/HospitalSearchResult";
 
 function SearchDoctor() {
+  function SwapDoctor() {
+    document.getElementById("DoctorType").classList.add("selection");
+    document.getElementById("HospitalType").classList.remove("selection");
+    document.getElementById("ListDoctorResult").style.display = "block";
+    document.getElementById("ListHospitalResult").style.display = "none";
+    document.getElementById("DoctorResultFilters").style.display = "block";
+    document.getElementById("HospitalResultFilters").style.display = "none";
+  }
+
+  function SwapHospital() {
+    document.getElementById("HospitalType").classList.add("selection");
+    document.getElementById("DoctorType").classList.remove("selection");
+    document.getElementById("ListHospitalResult").style.display = "block";
+    document.getElementById("ListDoctorResult").style.display = "none";
+    document.getElementById("HospitalResultFilters").style.display = "block";
+    document.getElementById("DoctorResultFilters").style.display = "none";
+  }
+
   return (
     <div className="SearchResultPageContainer">
       <div className="SearchResultPageContent">
@@ -37,17 +55,25 @@ function SearchDoctor() {
             <label>86 kết quả tìm được</label>
           </div>
           <div className="SearchResultHeader">
-            <ul className="clear ResultFilters">
-              <li className="ResultFilter bold selection">
-                <div className="FilterName">Bác sĩ</div>
+            <ul className="clear ResultTypes">
+              <li
+                className="ResultType bold selection"
+                id="DoctorType"
+                onClick={SwapDoctor}
+              >
+                <div className="ResultName">Bác sĩ</div>
               </li>
-              <li className="ResultFilter bold">
-                <div className="FilterName">Bệnh viện</div>
+              <li
+                className="ResultType bold"
+                id="HospitalType"
+                onClick={SwapHospital}
+              >
+                <div className="ResultName">Bệnh viện</div>
               </li>
             </ul>
           </div>
           <div className="SearchResultContent">
-            <ul className="clear ListDoctorResult">
+            <ul className="clear ListDoctorResult" id="ListDoctorResult">
               <li className="DoctorResult">
                 <DoctorSearchResult />
               </li>
@@ -64,7 +90,10 @@ function SearchDoctor() {
                 <DoctorSearchResult />
               </li>
             </ul>
-            <ul className="clear ListHospitalResult">
+            <ul
+              className="clear ListHospitalResult disabled"
+              id="ListHospitalResult"
+            >
               <li className="HospitalResult">
                 <HospitalSearchResult />
               </li>
@@ -93,7 +122,7 @@ function SearchDoctor() {
           </div>
         </div>
         <div className="ResultFilter">
-          <div className="DoctorResultFilters">
+          <div className="DoctorResultFilters" id="DoctorResultFilters">
             <div className="DoctorResultFilter">
               <div className="DoctorResultFilterHeader">
                 <header>Còn trống</header>
@@ -286,7 +315,7 @@ function SearchDoctor() {
               </button>
             </div>
           </div>
-          <div className="HospitalResultFilters">
+          <div className="HospitalResultFilters" id="HospitalResultFilters">
             <div className="HospitalResultFilter">
               <div className="HospitalResultFilterHeader">
                 <header>Có thể nhận lịch hẹn</header>
