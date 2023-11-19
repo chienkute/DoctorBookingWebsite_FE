@@ -1,0 +1,83 @@
+@use "sass:map";
+@import "style/pages/theme";
+
+.HospitalSearchResultContainer {
+    display      : flex;
+    flex-wrap    : wrap;
+    border       : 1px solid #dbdfe5;
+    border-radius: 10px;
+    margin       : 24px 0;
+}
+
+.HospitalSearchResultContent {
+    display: flex;
+}
+
+.HospitalAvatar {
+    width          : 10%;
+    min-width      : 100px;
+    padding        : 16px;
+    display        : flex;
+    justify-content: center;
+}
+
+.HospitalAvatar>img {
+    object-fit: cover;
+    width     : 80px;
+    height    : 80px;
+}
+
+.HospitalInfo {
+    width        : calc(85% - 32px);
+    margin       : 16px;
+    margin-bottom: 32px;
+}
+
+.HospitalName {
+    font-size     : 18px;
+    line-height   : 32px;
+    color         : $color-title;
+    letter-spacing: -0.2px;
+    font-weight   : 700;
+    margin-bottom : 16px
+}
+
+.HospitalAddress,
+.HospitalAddressLink,
+.HospitalServiceType {
+    line-height  : 22px;
+    margin-bottom: 8px;
+    font-size    : 16px;
+    color        : $color-title;
+}
+
+.HospitalDescription {
+    font-size : 12px;
+    margin-top: 16px
+}
+
+.HospitalDescription>.HospitalDescriptionExpand {
+    font-weight: 600;
+    color      : #2d87f3
+}
+
+.HospitalSearchResultFooter {
+    padding         : 16px;
+    width           : 100%;
+    display         : flex;
+    align-items     : center;
+    background-color: $color-page;
+}
+
+.HospitalViewButton {
+    margin-left     : auto;
+    background-color: #2d87f3;
+    border          : none;
+    color           : #fff;
+    padding         : 12px 24px;
+    border-radius   : 10px;
+}
+
+.HospitalViewButton:hover {
+    background-color: #2c74df;
+}

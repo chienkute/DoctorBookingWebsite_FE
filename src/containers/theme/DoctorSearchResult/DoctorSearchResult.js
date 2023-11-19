@@ -15,7 +15,6 @@ class DoctorSearchResult extends React.Component {
             <div className="DoctorSpeicalist">Đa khoa, Nội tổng quát</div>
             <div className="TagContainer">
               <div className="DirectTag">Tư vấn trực tiếp</div>
-              <div className="AwayTag">Tư vấn từ xa</div>
               <div className="ChildrenTag">Dành cho trẻ em</div>
               <div className="AdultTag">Dành cho người lớn</div>
             </div>
