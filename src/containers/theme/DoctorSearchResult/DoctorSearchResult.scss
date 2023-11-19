@@ -2,86 +2,80 @@
 @import "style/pages/theme";
 
 .DoctorSearchResultContainer {
-  display: flex;
-  flex-wrap: wrap;
-  border: 1px solid #dbdfe5;
+  display      : flex;
+  flex-wrap    : wrap;
+  border       : 1px solid #dbdfe5;
   border-radius: 10px;
-  margin: 24px 0;
+  margin       : 24px 0;
 }
 
 .DoctorAvatar {
-  width: 15%;
+  width  : 15%;
   padding: 16px;
 }
 
-.DoctorAvatar > img {
+.DoctorAvatar>img {
   object-fit: cover;
-  width: 80px;
-  height: 80px;
+  width     : 80px;
+  height    : 80px;
   margin-top: -25px;
 }
 
 .DoctorInfo {
-  width: calc(85% - 32px);
-  margin: 16px;
+  width        : calc(85% - 32px);
+  margin       : 16px;
   margin-bottom: 32px;
 }
 
 .DoctorName {
-  font-size: 18px;
-  line-height: 32px;
-  color: $color-title;
+  font-size     : 18px;
+  line-height   : 32px;
+  color         : $color-title;
   letter-spacing: -0.2px;
 }
 
 .DoctorSpeicalist {
-  line-height: 22px;
+  line-height  : 22px;
   margin-bottom: 8px;
-  font-size: 14px;
-  color: $color-title;
+  font-size    : 14px;
+  color        : $color-title;
 }
 
 .TagContainer {
   display: flex;
-  gap: 8px;
+  gap    : 8px;
 }
 
-.TagContainer > div {
-  padding: 2px 4px;
-  color: rgb(89, 89, 89);
+.TagContainer>div {
+  padding         : 2px 4px;
+  color           : rgb(89, 89, 89);
   background-color: rgb(248, 249, 252);
-  border: 1px solid rgb(248, 249, 252);
-  border-radius: 24px;
-  font-size: $fs-normal-text;
+  border          : 1px solid rgb(248, 249, 252);
+  border-radius   : 24px;
+  font-size       : $fs-normal-text;
 }
 
-.TagContainer > .DirectTag {
+.TagContainer>.DirectTag {
   background-color: rgb(227, 242, 255);
-  border: 1px solid rgb(45, 135, 243);
-  color: rgb(45, 135, 243);
-}
-
-.TagContainer > .AwayTag {
-  background-color: rgb(255, 248, 226);
-  border: 1px solid rgb(254, 146, 29);
-  color: rgb(254, 146, 29);
+  border          : 1px solid rgb(45, 135, 243);
+  color           : rgb(45, 135, 243);
 }
 
 .DoctorFooter {
-  padding: 16px;
-  width: 100%;
-  display: flex;
-  align-items: center;
+  padding         : 16px;
+  width           : 100%;
+  display         : flex;
+  align-items     : center;
   background-color: $color-page;
 }
 
 .DoctorOfficeAvatar {
-  width: 45px;
+  width : 45px;
   height: 45px;
 }
 
-.DoctorOfficeAvatar > img {
-  width: 100%;
+.DoctorOfficeAvatar>img {
+  width     : 100%;
   object-fit: cover;
 }
 
@@ -89,7 +83,7 @@
   padding-left: 12px;
 }
 
-.DoctorOffice > div {
+.DoctorOffice>div {
   line-height: 24px;
 }
 
@@ -99,21 +93,23 @@
 
 .BookDoctorButton {
   background-color: #2d87f3;
-  border: none;
-  color: #fff;
-  padding: 12px 24px;
-  border-radius: 10px;
+  border          : none;
+  color           : #fff;
+  padding         : 12px 24px;
+  border-radius   : 10px;
 }
 
 .BookDoctorButton:hover {
   background-color: #2c74df;
 }
+
 .DoctorOfficeName {
-  color: $color-title;
-  font-size: 14px;
+  color      : $color-title;
+  font-size  : 14px;
   font-weight: 600;
 }
+
 .DoctorOfficeAddress {
-  color: $color-black;
+  color    : $color-black;
   font-size: $fs-small-text;
 }
