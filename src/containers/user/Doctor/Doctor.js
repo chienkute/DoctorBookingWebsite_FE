@@ -220,50 +220,48 @@ const Doctor = () => {
                   <div className="HeaderName">Giờ làm việc</div>
                 </div>
                 <div className="Content">
-                  <ul className="clear ListWorktime">
-                    <li className="Time">
-                      <div className="Day">Thứ Hai </div>
-                      <div className="Time bold">
-                        12:00 - 13:15, 17:00 - 21:00
-                      </div>
-                    </li>
-                    <li className="Time">
-                      <div className="Day">Thứ Ba </div>
-                      <div className="Time bold">
-                        12:00 - 13:15, 17:00 - 21:00
-                      </div>
-                    </li>
-                    <li className="Time">
-                      <div className="Day">Thứ Tư </div>
-                      <div className="Time bold">
-                        12:00 - 13:15, 17:00 - 21:00
-                      </div>
-                    </li>
-                    <li className="Time">
-                      <div className="Day">Thứ Năm </div>
-                      <div className="Time bold">
-                        12:00 - 13:15, 17:00 - 21:00
-                      </div>
-                    </li>
-                    <li className="Time">
-                      <div className="Day">Thứ Sáu </div>
-                      <div className="Time bold">
-                        12:00 - 13:15, 17:00 - 21:00
-                      </div>
-                    </li>
-                    <li className="Time">
-                      <div className="Day">Thứ Bảy </div>
-                      <div className="Time bold">
-                        12:00 - 13:15, 17:00 - 21:00
-                      </div>
-                    </li>
-                    <li className="Time">
-                      <div className="Day">Chủ Nhật </div>
-                      <div className="Time bold">
-                        12:00 - 13:15, 17:00 - 21:00
-                      </div>
-                    </li>
-                  </ul>
+                  <div className="content_container">
+                    <div className="content_day">Thứ Hai </div>
+                    <div className="content_time bold">
+                      12:00 - 13:15, 17:00 - 21:00
+                    </div>
+                  </div>
+                  <div className="content_container">
+                    <div className="content_day">Thứ Ba </div>
+                    <div className="content_time bold">
+                      12:00 - 13:15, 17:00 - 21:00
+                    </div>
+                  </div>
+                  <div className="content_container">
+                    <div className="content_day">Thứ Tư </div>
+                    <div className="content_time bold">
+                      12:00 - 13:15, 17:00 - 21:00
+                    </div>
+                  </div>
+                  <div className="content_container">
+                    <div className="content_day">Thứ Năm </div>
+                    <div className="content_time bold">
+                      12:00 - 13:15, 17:00 - 21:00
+                    </div>
+                  </div>
+                  <div className="content_container">
+                    <div className="content_day">Thứ Sáu </div>
+                    <div className="content_time bold">
+                      12:00 - 13:15, 17:00 - 21:00
+                    </div>
+                  </div>
+                  <div className="content_container">
+                    <div className="content_day">Thứ Bảy </div>
+                    <div className="content_time bold">
+                      12:00 - 13:15, 17:00 - 21:00
+                    </div>
+                  </div>
+                  <div className="content_container">
+                    <div className="content_day">Chủ Nhật </div>
+                    <div className="content_time bold">
+                      12:00 - 13:15, 17:00 - 21:00
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="PaymentMethod">

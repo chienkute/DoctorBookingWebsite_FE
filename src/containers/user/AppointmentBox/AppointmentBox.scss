@@ -1,5 +1,6 @@
 @use "sass:map";
 @import "style/pages/theme";
+@import "~mdb-ui-kit/css/mdb.min.css";
 
 .AppointmentBoxHeader {
   width: 100%;
@@ -39,7 +40,7 @@
   margin-bottom: 150px;
 }
 
-.AppointmentHourSelect > ul.ListPartOfDay {
+.ListPartOfDay {
   display: flex;
   gap: 12px;
   margin: 42px 0 28px 0;
@@ -48,7 +49,7 @@
   color: rgb(140, 140, 140);
 }
 
-.AppointmentHourSelect li.PartOfDay {
+.PartOfDay {
   padding-bottom: 8px;
   font-weight: 700;
   display: flex;
@@ -61,13 +62,15 @@
   border-bottom: 3px solid rgb(45, 135, 243);
 }
 
-.AppointmentHourSelect div.ListTime {
+.ListTime {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+  margin-left: 0;
+  margin-right: auto;
 }
 
-.AppointmentHourSelect div.Time {
+.Time {
   width: 90px;
   height: fit-content;
   display: flex;
@@ -118,9 +121,12 @@
 .AppointmentBoxButton > button:hover {
   background-color: #2c74df;
 }
-.select {
+.selects {
   background-color: $color-blue !important;
   color: white !important;
+}
+.selects2 {
+  background-color: #e3f2ff !important;
 }
 .day {
   margin-top: 20px;
@@ -182,8 +188,8 @@
   transform: translateY(1px) !important;
 }
 .afternoon {
-  margin-top: -75px;
+  margin-top: 0px;
 }
 .night {
-  margin-top: -76px;
+  margin-top: 0px;
 }

@@ -14,19 +14,22 @@ const CareSearch = () => {
   const [query, setQuery] = useState(null);
   const [doctor, setDoctor] = useState([]);
   const [hospital, setHospital] = useState([]);
-  const hospitalSlice = hospital.slice(0, 3);
+  // const hospitalSlice = hospital.slice(0, 3);
   const [adress, setAdress] = useState("");
   const [search, setSearch] = useState([]);
-  const [specialty, setSpecialty] = useState(null);
-  const [service, setService] = useState(null);
+  console.log(search);
+  const [specialty, setSpecialty] = useState("");
+  const [service, setService] = useState("");
   const debouncedSearchTerm = useDebounce(query, 500);
   useEffect(() => {
     const search = async () => {
       if (debouncedSearchTerm) {
-        let res = await searchAll(debouncedSearchTerm, adress);
+        let res = await searchAll(adress, debouncedSearchTerm);
         setSearch(res);
-        setDoctor(res.doctors);
-        setHospital(res.hospitals);
+        setDoctor(res?.results?.doctors);
+        setHospital(res?.results?.hospitals);
+        setService(res?.results?.services);
+        setSpecialty(res?.results?.specialtys);
       }
     };
     search();
@@ -107,14 +110,23 @@ const CareSearch = () => {
                 </div>
                 <div className="care__banner_menus_item">
                   <div className="row">
-                    <a href="/" className="col-2 care__banner_menus_item_col">
-                      <div>
-                        <img src={dakhoaImages} alt="" />
-                      </div>
-                      <p>Da khoa</p>
-                    </a>
+                    {specialty &&
+                      specialty.length > 0 &&
+                      specialty.map((item, index) => {
+                        return (
+                          <a
+                            href="/"
+                            className="col-2 care__banner_menus_item_col"
+                            key={index}
+                          >
+                            <div>
+                              <img src={dakhoaImages} alt="" />
+                            </div>
+                            <p>{item.name}</p>
+                          </a>
+                        );
+                      })}
                   </div>
-                  {/* <a href="/searchDoctor">Xem Thêm <Chuy></Chuy>ên Khoa</a> */}
                 </div>
               </li>
               <li>
@@ -127,30 +139,22 @@ const CareSearch = () => {
                 </div>
                 <div className="care__banner_menus_item">
                   <div className="row">
-                    <a href="/" className="col-2 care__banner_menus_item_col">
-                      <div>
-                        <img src={dakhoaImages} alt="" />
-                      </div>
-                      <p>Đa khoa</p>
-                    </a>
-                    <a href="/" className="col-2 care__banner_menus_item_col">
-                      <div>
-                        <img src={dakhoaImages} alt="" />
-                      </div>
-                      <p>Đa khoa</p>
-                    </a>
-                    <a href="/" className="col-2 care__banner_menus_item_col">
-                      <div>
-                        <img src={dakhoaImages} alt="" />
-                      </div>
-                      <p>Đa khoa</p>
-                    </a>
-                    <a href="/" className="col-2 care__banner_menus_item_col">
-                      <div>
-                        <img src={dakhoaImages} alt="" />
-                      </div>
-                      <p>Đa khoa</p>
-                    </a>
+                    {service &&
+                      service.length > 0 &&
+                      service.map((item, index) => {
+                        return (
+                          <a
+                            href="/"
+                            className="col-2 care__banner_menus_item_col"
+                            key={index}
+                          >
+                            <div>
+                              <img src={dakhoaImages} alt="" />
+                            </div>
+                            <p>{item.name}</p>
+                          </a>
+                        );
+                      })}
                   </div>
                 </div>
               </li>
@@ -166,11 +170,12 @@ const CareSearch = () => {
                   <div className="row">
                     {hospital &&
                       hospital.length > 0 &&
-                      hospitalSlice.map((item, index) => {
+                      hospital.map((item, index) => {
                         return (
                           <a
                             href="/"
                             className="col-2 care__banner_menus_item_col"
+                            key={index}
                           >
                             <div>
                               <img src={dakhoaImages} alt="" />
@@ -202,6 +207,7 @@ const CareSearch = () => {
                               navigate(`/care/doctor/${item.id}`);
                             }}
                             role="button"
+                            key={index}
                           >
                             <div>
                               <img src={dakhoaImages} alt="" />

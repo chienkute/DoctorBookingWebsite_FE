@@ -5,7 +5,7 @@ const fetchAllUser = (page) => {
 };
 const editUser = (id, name) => {
   return instance.patch(`/api/users/${id}/`, {
-    name: name,
+    name,
   });
 };
 const login = (username, password) => {
@@ -36,8 +36,8 @@ const signup = (username, email, password) => {
     password,
   });
 };
-const searchAll = (name, adress) => {
-  return instance.get(`api/search_all/?name=${name}&addres=${adress}`);
+const searchAll = (adress, name) => {
+  return instance.get(`api/search_all/?addres=${adress}&name=${name}`);
 };
 const search = (name, address, specialty) => {
   return instance.get(
@@ -50,7 +50,12 @@ const scheduleDoctor = (id) => {
 const getSchedule = (id) => {
   return instance.get(`api/schedules/${id}/`);
 };
-
+const Booking = (id_doctor, id_schedule, date, time) => {
+  return instance.post("/api/booking/", { id_doctor, id_schedule, date, time });
+};
+const getBooking = () => {
+  return instance.get("/api/appointments/");
+};
 export {
   fetchAllUser,
   fetchAllSpecialties,
@@ -66,4 +71,6 @@ export {
   scheduleDoctor,
   getSchedule,
   getSpecialtyByID,
+  Booking,
+  getBooking,
 };

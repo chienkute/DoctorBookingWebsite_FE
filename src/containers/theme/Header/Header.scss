@@ -102,6 +102,9 @@
   font-size: 18px;
   cursor: pointer;
   text-decoration: none;
+  &:hover {
+    color: white;
+  }
 }
 .dropdown_title {
   font-weight: bold;
