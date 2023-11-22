@@ -2,38 +2,16 @@ import "../../user/SearchDoctor/SearchDoctor.scss";
 import "../../user/HospitalPage/hospitalPage.scss";
 import ReactPaginate from "react-paginate";
 import { FaTrashCan } from "react-icons/fa6";
-import DoctorSearchResult from "containers/user/SearchDoctor/DoctorSearchResult/DoctorSearchResult";
+import "../../theme/DoctorSearchResult/DoctorSearchResult.scss";
 import "../../../style/page.scss";
 import hospavt from "../../../assets/hospital.jpg";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
-
+import "../ServiceSearch/serviceSearch.scss";
 const serviceSearch = () => {
   return (
-    <div className="SearchDoctorPageContainer">
-      <div className="SearchDoctorPageContent">
-        <div className="SearchDoctorInputRows">
-          <div className="ProvinceInput">
-            <input
-              list="Province"
-              name="ProvinceInputField"
-              placeholder="Nhập tỉnh thành"
-            ></input>
-            <datalist id="Province">
-              <option value="Tỉnh thành 1" />
-              <option value="Tỉnh thành 2" />
-              <option value="Tỉnh thành 3" />
-              <option value="Tỉnh thành 4" />
-              <option value="Tỉnh thành 5" />
-              <option value="Tỉnh thành 6" />
-            </datalist>
-          </div>
-          <div className="TextInput">
-            <input
-              name="TextInputField"
-              placeholder="Nhập tên bác sĩ, chuyên khoa, bệnh viện, dịch vụ, v.v.."
-            ></input>
-          </div>
-        </div>
+    <div className="serviceSearch">
+      <div className="SearchDoctorPageContent serviceSearch__page">
+        <div className="SearchDoctorInputRows"></div>
         <div className="SearchDoctorResultContainer">
           <div className="SearchDoctorResultLabel bold">
             <label>86 kết quả tìm được</label>
@@ -99,7 +77,7 @@ const serviceSearch = () => {
             />
           </div>
         </div>
-        <div className="DoctorResultFilters">
+        {/* <div className="DoctorResultFilters">
           <div className="DoctorResultFilter">
             <div className="DoctorResultFilterHeader">
               <header>Còn trống</header>
@@ -283,7 +261,7 @@ const serviceSearch = () => {
               <span>Xoá tất cả</span>
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

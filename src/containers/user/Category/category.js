@@ -10,6 +10,7 @@ import doctorImg from "../../../assets/doctor/tat.jpg";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import "../Category/CategoryListStyle.scss";
+import ReactPaginate from "react-paginate";
 const Category = () => {
   return (
     <div className="category">
@@ -392,19 +393,24 @@ const Category = () => {
               </div>
             </div>
             <div className="DoctorResultPageMonitor search__page">
-              <div className="PrevPage flex-center disabled">
-                <FcPrevious />
-              </div>
-              <ul className="Pages clear">
-                <li className="Page flex-center bold selected">1</li>
-                <li className="Page flex-center bold">2</li>
-                <li className="Page flex-center bold">3</li>
-                <li className="Page flex-center bold">4</li>
-                <li className="Page flex-center bold">5</li>
-              </ul>
-              <div className="NextPage flex-center">
-                <FcNext />
-              </div>
+              <ReactPaginate
+                breakLabel="..."
+                nextLabel=">"
+                // onPageChange={handlePageClick}
+                pageRangeDisplayed={5}
+                pageCount={3}
+                previousLabel="<"
+                pageClassName="page-item"
+                pageLinkClassName="page-link"
+                previousClassName="page-item previous"
+                previousLinkClassName="page-link"
+                nextClassName="page-item previous"
+                nextLinkClassName="page-link"
+                breakClassName="page-item"
+                breakLinkClassName="page-link"
+                containerClassName="pagination"
+                activeClassName="active"
+              />
             </div>
           </div>
           <div className="category__blog_doctor">

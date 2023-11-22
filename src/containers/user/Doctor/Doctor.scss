@@ -258,22 +258,17 @@
   font-size: 14px;
 }
 
-.DoctorBasicInfo .WorkTime {
-  width: 60%;
-}
-
-.DoctorBasicInfo .WorkTime .Time {
-  display: flex;
-  justify-content: space-between;
-  padding: 2px 0;
-}
-
 .DoctorBasicInfo .PaymentMethod ul.ListPaymentMethod {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
 }
-
+.content_container {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
 .DoctorBasicInfo .PaymentMethod li.Method {
   width: 100px;
   display: flex;

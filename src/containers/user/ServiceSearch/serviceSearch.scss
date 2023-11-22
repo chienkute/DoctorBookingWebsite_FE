@@ -1,0 +1,10 @@
+@use "sass:map";
+@import "style/pages/theme";
+@import "~mdb-ui-kit/css/mdb.min.css";
+.serviceSearch {
+  width: 1000px;
+  margin: 100px auto;
+  &__page {
+    width: 80%;
+  }
+}

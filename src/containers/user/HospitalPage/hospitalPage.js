@@ -247,7 +247,7 @@ const hospitalPage = () => {
                 </div>
               </div>
               <div className="hospital__body_bacsi_result">
-                <div className="hospital__body_bacsi_content">
+                <div role="button" className="hospital__body_bacsi_content">
                   <div className="hospital__body_bacsi_content_avt">
                     <img src={doctorImg} alt="" />
                   </div>
@@ -269,7 +269,7 @@ const hospitalPage = () => {
                     </div>
                   </div>
                 </div>
-                <div className="hospital__body_dichvu_bottom">
+                <div role="button" className="hospital__body_dichvu_bottom">
                   <div className="hospital__body_dichvu_bottom_avtHosp">
                     <img src={hospavt} alt="" />
                   </div>
