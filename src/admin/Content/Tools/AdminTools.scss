@@ -1,0 +1,140 @@
+@use "sass:map";
+@import "style/pages/theme";
+
+.AdminToolContainer {
+    margin: 32px;
+}
+
+.AdminToolResult .ResultPerTable {
+    margin-bottom: 16px;
+}
+
+.AdminToolResult .ResultPerTable label {
+    margin-right: 16px
+}
+
+.AdminToolResult .Table {
+    display        : flex;
+    justify-content: center;
+    width          : 100%;
+    flex-wrap      : wrap;
+}
+
+.AdminToolResult .Table table {
+    width: 100%;
+}
+
+
+.AdminToolResult tr:nth-child(odd) {
+    background-color: #F1F0F0;
+}
+
+.AdminToolResult tr:nth-child(even) {
+    background-color: #FFFFFF;
+}
+
+.AdminToolResult th,
+.AdminToolResult td {
+    padding   : 16px 8px;
+    width     : fit-content;
+    text-align: center;
+}
+
+.AdminToolResult th {
+    font-weight     : 700;
+    background-color: #D9D9D9;
+}
+
+.AdminToolResult td.hiddenTool,
+.AdminToolResult td.displayedTool {
+    display    : flex;
+    align-items: center;
+}
+
+.AdminToolResult td.displayedTool svg {
+    color       : #1B9B0F;
+    margin-right: 4px;
+}
+
+.AdminToolResult td.hiddenTool svg {
+    color       : #BE2424;
+    margin-right: 4px;
+}
+
+.AdminToolResult td div.Action {
+    display        : flex;
+    gap            : 16px;
+    justify-content: center;
+}
+
+.AdminToolResult td div.Action button {
+    border : none;
+    padding: 2px;
+}
+
+.AdminToolResult td div.Action button svg {
+    width: 22px;
+}
+
+.AdminToolResult td div.Action button.HiddenButton {
+    background-color: #90F2F87A;
+    color           : #0066FF;
+}
+
+.AdminToolResult td div.Action button.DisplayButton {
+
+    background-color: #ADF4BD;
+    color           : #209C43;
+}
+
+.AdminToolResult td div.Action button.DeleteButton {
+    background-color: #E21C1C78;
+    color           : #BE2424;
+}
+
+.AdminToolResult .PageMonitor {
+    margin-left: auto;
+    margin-top : 32px;
+}
+
+.AdminToolResult .PageMonitor,
+.AdminToolResult .PageMonitor>.Pages {
+    display: flex;
+    gap    : 4px;
+}
+
+.AdminToolResult .PageMonitor {
+    margin-left: auto;
+    width      : fit-content;
+}
+
+.AdminToolResult .PageMonitor>div,
+.AdminToolResult .PageMonitor>.Pages>li {
+    width : 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+.AdminToolResult .PageMonitor>.PrevPage,
+.AdminToolResult .PageMonitor>.NextPage {
+    border       : 1px solid rgb(217, 217, 217);
+    border-radius: 4px;
+}
+
+.AdminToolResult .PageMonitor>.PrevPage.disabled,
+.AdminToolResult .PageMonitor>.NextPage.disabled {
+    background-color: rgb(242, 242, 242);
+    cursor          : not-allowed;
+    border          : none;
+}
+
+.AdminToolResult .PageMonitor>.PrevPage.disabled>svg>polygon,
+.AdminToolResult .PageMonitor>.NextPage.disabled>svg>polygon {
+    fill: #c5c5c5;
+}
+
+.AdminToolResult .PageMonitor>.Pages>li.selected {
+    color           : rgb(255, 255, 255);
+    background-color: rgb(45, 135, 243);
+    border-radius   : 4px;
+}

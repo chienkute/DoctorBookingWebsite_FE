@@ -1,0 +1,158 @@
+@use "sass:map";
+@import "style/pages/theme";
+
+.AdminSpecialistContainer {
+    margin: 32px;
+}
+
+.AdminSpecialistFilter {
+    display      : flex;
+    flex-wrap    : wrap;
+    margin-bottom: 32px;
+}
+
+.AdminSpecialistFilter>h3 {
+    width      : 100%;
+    font-weight: 700;
+}
+
+.AdminSpecialistFilter .FilterRow {
+    display: flex;
+    width  : 100%;
+}
+
+.AdminSpecialistFilter .FilterLabel {
+    font-weight: 700;
+}
+
+.AdminSpecialistFilter .FilterRow .Filter {
+    margin-bottom: 24px;
+}
+
+.AdminSpecialistFilter .FilterRow .Filter .FilterLabel {
+    margin-bottom: 8px;
+}
+
+.AdminSpecialistFilter .FilterRow .Filter.col .FilterTextInput input {
+    border-radius: 10px;
+    border       : 1px solid #B6A5A5;
+    padding      : 8px;
+    width        : 40%;
+}
+
+.AdminSpecialistFilter .FilterRow .Filter .FilterTextInput input::placeholder {
+    color     : #00000059;
+    font-style: italic;
+}
+
+.AdminSpecialistResult .ResultPerTable {
+    margin-bottom: 16px;
+}
+
+.AdminSpecialistResult .ResultPerTable label {
+    margin-right: 16px
+}
+
+.AdminSpecialistResult .Table {
+    display        : flex;
+    justify-content: center;
+    width          : 100%;
+    flex-wrap      : wrap;
+}
+
+.AdminSpecialistResult .Table table {
+    width: 100%;
+}
+
+.AdminSpecialistResult tr:nth-child(odd) {
+    background-color: #F1F0F0;
+}
+
+.AdminSpecialistResult tr:nth-child(even) {
+    background-color: #FFFFFF;
+}
+
+.AdminSpecialistResult th,
+.AdminSpecialistResult td {
+    padding   : 16px 8px;
+    width     : fit-content;
+    text-align: center;
+}
+
+.AdminSpecialistResult th {
+    font-weight     : 700;
+    background-color: #D9D9D9;
+}
+
+.AdminSpecialistResult td div.Action {
+    display        : flex;
+    gap            : 16px;
+    justify-content: center;
+}
+
+.AdminSpecialistResult td div.Action button {
+    border : none;
+    padding: 2px;
+}
+
+.AdminSpecialistResult td div.Action button svg {
+    width: 22px;
+}
+
+.AdminSpecialistResult td div.Action button.EditButton {
+
+    background-color: #ADF4BD;
+    color           : #209C43;
+}
+
+.AdminSpecialistResult td div.Action button.DeleteButton {
+    background-color: #E21C1C78;
+    color           : #BE2424;
+}
+
+.AdminSpecialistResult .PageMonitor {
+    margin-left: auto;
+    margin-top : 32px;
+}
+
+.AdminSpecialistResult .PageMonitor,
+.AdminSpecialistResult .PageMonitor>.Pages {
+    display: flex;
+    gap    : 4px;
+}
+
+.AdminSpecialistResult .PageMonitor {
+    margin-left: auto;
+    width      : fit-content;
+}
+
+.AdminSpecialistResult .PageMonitor>div,
+.AdminSpecialistResult .PageMonitor>.Pages>li {
+    width : 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+.AdminSpecialistResult .PageMonitor>.PrevPage,
+.AdminSpecialistResult .PageMonitor>.NextPage {
+    border       : 1px solid rgb(217, 217, 217);
+    border-radius: 4px;
+}
+
+.AdminSpecialistResult .PageMonitor>.PrevPage.disabled,
+.AdminSpecialistResult .PageMonitor>.NextPage.disabled {
+    background-color: rgb(242, 242, 242);
+    cursor          : not-allowed;
+    border          : none;
+}
+
+.AdminSpecialistResult .PageMonitor>.PrevPage.disabled>svg>polygon,
+.AdminSpecialistResult .PageMonitor>.NextPage.disabled>svg>polygon {
+    fill: #c5c5c5;
+}
+
+.AdminSpecialistResult .PageMonitor>.Pages>li.selected {
+    color           : rgb(255, 255, 255);
+    background-color: rgb(45, 135, 243);
+    border-radius   : 4px;
+}

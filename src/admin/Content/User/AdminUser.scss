@@ -1,0 +1,182 @@
+@use "sass:map";
+@import "style/pages/theme";
+
+.AdminUserContainer {
+    margin: 0 32px;
+}
+
+.AdminUserFilter {
+    display      : flex;
+    flex-wrap    : wrap;
+    margin-bottom: 32px;
+}
+
+.AdminUserFilter>h3 {
+    width      : 100%;
+    font-weight: 700;
+}
+
+.AdminUserFilter .FilterRow {
+    display: flex;
+    width  : 100%;
+}
+
+.AdminUserFilter .FilterLabel {
+    font-weight: 700;
+}
+
+.AdminUserFilter .FilterRow .Filter {
+    margin-bottom: 24px;
+}
+
+.AdminUserFilter .FilterRow .Filter .FilterLabel {
+    margin-bottom: 8px;
+}
+
+.AdminUserFilter .FilterRow .Filter .FilterTextInput input {
+    border-radius: 10px;
+    border       : 1px solid #B6A5A5;
+    padding      : 8px;
+    width        : 80%;
+}
+
+.AdminUserFilter .FilterRow .Filter .FilterTextInput input::placeholder {
+    color     : #00000059;
+    font-style: italic;
+}
+
+.AdminUserFilter .FilterRow .Filter .RadioButton label {
+    margin-left: 8px;
+}
+
+.AdminUserResult .ResultPerTable {
+    margin-bottom: 16px;
+}
+
+.AdminUserResult .ResultPerTable label {
+    margin-right: 16px
+}
+
+.AdminUserResult .Table {
+    display        : flex;
+    justify-content: center;
+    width          : 100%;
+    flex-wrap      : wrap;
+}
+
+.AdminUserResult .Table table {
+    width: 100%;
+}
+
+.AdminUserResult tr:nth-child(odd) {
+    background-color: #F1F0F0;
+}
+
+.AdminUserResult tr:nth-child(even) {
+    background-color: #FFFFFF;
+}
+
+.AdminUserResult th,
+.AdminUserResult td {
+    padding   : 16px 8px;
+    text-align: center;
+}
+
+.AdminUserResult th {
+    font-weight     : 700;
+    background-color: #D9D9D9;
+}
+
+.AdminUserResult td.normalAcc {
+    color: green;
+}
+
+.AdminUserResult td.bannedAcc {
+    color: red;
+}
+
+.AdminUserResult td div.Action {
+    display: flex;
+    gap    : 4px;
+}
+
+.AdminUserResult td div.Action button {
+    border : none;
+    padding: 2px;
+}
+
+.AdminUserResult td div.Action button svg {
+    width: 22px;
+}
+
+.AdminUserResult td div.Action button.InfoButton {
+    background-color: #ADF4BD;
+    color           : #209C43;
+}
+
+.AdminUserResult td div.Action button.ChangePasswordButton {
+    background-color: #00000038;
+    color           : #000000BF;
+}
+
+.AdminUserResult td div.Action button.LockButton {
+    background-color: #D9A1117A;
+    color           : #FF8000;
+}
+
+.AdminUserResult td div.Action button.UnlockButton {
+    background-color: #b8dfeb;
+    color           : #34caf8;
+}
+
+.AdminUserResult td div.Action button.DeleteAccount {
+    background-color: #E21C1C78;
+    color           : #BE2424;
+}
+
+.AdminUserResult .PageMonitor {
+    margin-left: auto;
+    margin-top : 32px;
+}
+
+.AdminUserResult .PageMonitor,
+.AdminUserResult .PageMonitor>.Pages {
+    display: flex;
+    gap    : 4px;
+}
+
+.AdminUserResult .PageMonitor {
+    margin-left: auto;
+    width      : fit-content;
+}
+
+.AdminUserResult .PageMonitor>div,
+.AdminUserResult .PageMonitor>.Pages>li {
+    width : 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+.AdminUserResult .PageMonitor>.PrevPage,
+.AdminUserResult .PageMonitor>.NextPage {
+    border       : 1px solid rgb(217, 217, 217);
+    border-radius: 4px;
+}
+
+.AdminUserResult .PageMonitor>.PrevPage.disabled,
+.AdminUserResult .PageMonitor>.NextPage.disabled {
+    background-color: rgb(242, 242, 242);
+    cursor          : not-allowed;
+    border          : none;
+}
+
+.AdminUserResult .PageMonitor>.PrevPage.disabled>svg>polygon,
+.AdminUserResult .PageMonitor>.NextPage.disabled>svg>polygon {
+    fill: #c5c5c5;
+}
+
+.AdminUserResult .PageMonitor>.Pages>li.selected {
+    color           : rgb(255, 255, 255);
+    background-color: rgb(45, 135, 243);
+    border-radius   : 4px;
+}

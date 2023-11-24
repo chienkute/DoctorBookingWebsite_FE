@@ -10,6 +10,8 @@ import hospitalPage from "containers/user/HospitalPage/hospitalPage";
 import service from "containers/user/Service/service";
 import specialties from "containers/user/Specialties/specialties";
 import Doctor from "containers/user/Doctor/Doctor";
+import AdminPage from "admin/AdminPage";
+
 import serviceSearch from "containers/user/ServiceSearch/serviceSearch";
 import userInfo from "containers/user/UserPage/UserInfo/userInfo";
 import routesConfig from "../config/routes";
@@ -29,6 +31,7 @@ const publicRoutes = [
   { path: "/care/hospital/", component: hospitalPage },
   { path: "/care/service", component: service },
   { path: "/care/specialties", component: specialties },
+  { path: "/admin", component: AdminPage },
   { path: "/serviceSearch", component: serviceSearch },
   { path: routesConfig.userinfo, component: userInfo },
   { path: "/user/history", component: userHistory },
