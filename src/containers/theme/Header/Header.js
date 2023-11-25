@@ -1,5 +1,5 @@
 import logo from "../../../assets/logo.png";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaSistrix } from "react-icons/fa6";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import "./Header.scss";
@@ -17,10 +17,6 @@ import imageskhoe4 from "../../../assets/suckhoe/ktraskhoe4.png";
 import imageskhoe5 from "../../../assets/suckhoe/ktrasuckhoe5.png";
 import imageskhoe6 from "../../../assets/suckhoe/ktrasuckhoe6.png";
 import imageck1 from "../../../assets/chuyenkhoa/dakhoa.png";
-import imageck3 from "../../../assets/chuyenkhoa/dalieu.png";
-import imageck4 from "../../../assets/chuyenkhoa/nhankhoa.png";
-import imageck5 from "../../../assets/chuyenkhoa/phukhoa.png";
-import imageck6 from "../../../assets/chuyenkhoa/cotsong.png";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { FaUserLarge } from "react-icons/fa6";
 import { toast } from "react-toastify";
@@ -28,8 +24,10 @@ import useClickOutSide from "components/hooks/useClickOutSide";
 import { AiOutlineLogout } from "react-icons/ai";
 import { BiSolidHelpCircle } from "react-icons/bi";
 import { SearchContext } from "context/SearchContext";
-import { FaCalendarAlt, FaHeartbeat } from "react-icons/fa";
+import { FaCalendarAlt } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
+import { fetchAllSpecialties } from "service/UserService";
+import { FaUserAlt } from "react-icons/fa";
 const Header = () => {
   const { setSearch } = useContext(SearchContext);
   const navigate = useNavigate();
@@ -45,6 +43,17 @@ const Header = () => {
     toast.success("Log out success!");
   };
   const { show, setShow, nodeRef } = useClickOutSide();
+  const [specialty, setSpecialty] = useState([]);
+  const specialtySlice = specialty.slice(0, 5);
+  const getSpecialty = async () => {
+    let res = await fetchAllSpecialties();
+    if (res) {
+      setSpecialty(res?.results);
+    }
+  };
+  useEffect(() => {
+    getSpecialty();
+  }, []);
   return (
     <div>
       <header className="HeaderContainer flex-center">
@@ -61,6 +70,7 @@ const Header = () => {
               placeholder="Tìm kiếm..."
               id="HeaderSearch"
               onKeyDown={handleKeyDown}
+              autoComplete="off"
             ></input>
           </div>
         </div>
@@ -280,7 +290,7 @@ const Header = () => {
                   aria-expanded="true"
                 >
                   Đặt lịch với bác sĩ
-                </a>{" "}
+                </a>
                 <ul
                   class="dropdown-menu dropdown__menu3"
                   aria-labelledby="dropdownMenuLink"
@@ -290,72 +300,24 @@ const Header = () => {
                       Các chuyên khoa
                     </div>
                   </li>
-                  <li>
-                    <a
-                      class="dropdown-item d-flex align-items-center dropdown__item"
-                      href="/searchDoctor"
-                    >
-                      <div className="header__menu_image">
-                        <img src={imageck1} alt="" />
-                      </div>
-                      <span>Đa khoa</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      class="dropdown-item d-flex align-items-center dropdown__item"
-                      href="#"
-                    >
-                      <div className="header__menu_image">
-                        <img src={imageChuyenMuc2} alt="" />
-                      </div>
-                      <span>Nha khoa</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      class="dropdown-item d-flex align-items-center dropdown__item"
-                      href="#"
-                    >
-                      <div className="header__menu_image">
-                        <img src={imageck3} alt="" />
-                      </div>
-                      <span>Da liễu</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      class="dropdown-item d-flex align-items-center dropdown__item"
-                      href="#"
-                    >
-                      <div className="header__menu_image">
-                        <img src={imageck4} alt="" />
-                      </div>
-                      <span>Nhãn khoa</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      class="dropdown-item d-flex align-items-center dropdown__item"
-                      href="#"
-                    >
-                      <div className="header__menu_image">
-                        <img src={imageck5} alt="" />
-                      </div>
-                      <span>Sản - Phụ Khoa</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      class="dropdown-item d-flex align-items-center dropdown__item"
-                      href="#"
-                    >
-                      <div className="header__menu_image">
-                        <img src={imageck6} alt="" />
-                      </div>
-                      <span>Trị liệu thần kinh cột sống</span>
-                    </a>
-                  </li>
+                  {specialtySlice &&
+                    specialtySlice.length > 0 &&
+                    specialtySlice.map((item, index) => {
+                      return (
+                        <li>
+                          <a
+                            class="dropdown-item d-flex align-items-center dropdown__item"
+                            href="/searchDoctor"
+                            key={index}
+                          >
+                            <div className="header__menu_image">
+                              <img src={imageck1} alt="" />
+                            </div>
+                            <span>{item.name}</span>
+                          </a>
+                        </li>
+                      );
+                    })}
                   <li>
                     <a
                       className="header__menu_link"
@@ -396,17 +358,23 @@ const Header = () => {
                   </div>
                   <div className="HeaderItem__user_name">
                     <h6>Phạm Sĩ Chiến</h6>
-                    <a href="/user/information">Xem hồ sơ cá nhân</a>
+                    <p>chienkute</p>
                   </div>
                 </div>
                 <div className="HeaderItem__list row">
-                  <a href="/user/" className="HeaderItem__list_item col-6">
+                  <a
+                    href="/user/information"
+                    className="HeaderItem__list_item col-6"
+                  >
                     <div className="HeaderItem__list_item_icon">
-                      <FaHeartbeat></FaHeartbeat>
+                      <FaUserAlt></FaUserAlt>
                     </div>
-                    <p>Sức khỏe</p>
+                    <p>Hồ sơ</p>
                   </a>
-                  <a href="/user/" className="HeaderItem__list_item col-6">
+                  <a
+                    href="/user/changePassword"
+                    className="HeaderItem__list_item col-6"
+                  >
                     <div className="HeaderItem__list_item_icon">
                       <RiLockPasswordFill></RiLockPasswordFill>
                     </div>
@@ -421,7 +389,7 @@ const Header = () => {
                     </div>
                     <p>Lịch sử hẹn</p>
                   </a>
-                  <a href="/user/" className="HeaderItem__list_item col-6">
+                  <a href="/user/help" className="HeaderItem__list_item col-6">
                     <div className="HeaderItem__list_item_icon">
                       <BiSolidHelpCircle></BiSolidHelpCircle>
                     </div>

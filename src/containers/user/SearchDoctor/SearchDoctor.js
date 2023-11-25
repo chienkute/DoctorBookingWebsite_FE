@@ -1,26 +1,156 @@
 import "./SearchDoctor.scss";
 import ReactPaginate from "react-paginate";
-import { FaLocationDot, FaTrashCan } from "react-icons/fa6";
+import { FaLocationDot } from "react-icons/fa6";
 import "../../../style/page.scss";
-import "../../theme/DoctorSearchResult/DoctorSearchResult.scss";
-import { FcPrevious, FcNext } from "react-icons/fc";
-import DoctorSearchResult from "containers/theme/DoctorSearchResult/DoctorSearchResult";
-import HospitalSearchResult from "containers/theme/HospitalSearchResult/HospitalSearchResult";
-import { useState } from "react";
-
+import "../../user/SearchDoctor/DoctorSearchResult.scss";
+import "../../user/SearchDoctor/HospitalSearchResult.scss";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import avt from "../../../assets/avatar.png";
+import {
+  fetchAllService,
+  fetchAllSpecialties,
+  search,
+} from "service/UserService";
+import { useDebounce } from "@uidotdev/usehooks";
+import { MdLocationOn } from "react-icons/md";
+import dakhoaImages from "../../../assets/chuyenkhoa/dakhoa.png";
+import Skeleton from "react-loading-skeleton";
 function SearchDoctor() {
   const [adress, setAdress] = useState("");
-  const [query, setQuery] = useState(null);
+  const [address, setAddress] = useState("");
+  const [query, setQuery] = useState("");
+  const [doctor, setDoctor] = useState([]);
+  const [hospital, setHospital] = useState([]);
+  const [specialty, setSpecialty] = useState("");
+  const [specialtyy, setSpecialtyy] = useState("");
+  const [specialties, setSpecialties] = useState(null);
+  const [service, setService] = useState("");
+  const [services, setServices] = useState([]);
+  const [serviceValue, setServiceValue] = useState("");
+  const [doctorCount, setDoctorCount] = useState(null);
+  const [hospitalCount, setHospitalCount] = useState(null);
+  const [count, setCount] = useState(doctorCount);
+  const debouncedSearchTerm = useDebounce(query, 500);
+  const [loadingSkeleton, SetLoadingSkeleton] = useState(true);
+  const navigate = useNavigate();
+  console.log(debouncedSearchTerm);
+  console.log(specialty);
+  console.log(service);
+  console.log(doctor);
+  console.log(hospital);
+  const Search = async () => {
+    let res = await search(service, adress, specialty, debouncedSearchTerm, "");
+    if (res) {
+      setDoctor(res?.results?.doctors);
+      setHospital(res?.results?.hospitals);
+      setDoctorCount(res?.results?.total_doctors);
+      setHospitalCount(res?.results?.total_hospitals);
+      SetLoadingSkeleton(true);
+    }
+  };
+  useEffect(() => {
+    Search();
+    setTimeout(() => {
+      SetLoadingSkeleton(false);
+    }, 1000);
+  }, [debouncedSearchTerm, adress, specialty, service]);
+  useEffect(() => {
+    const getAllSpecialty = async () => {
+      let res = await fetchAllSpecialties();
+      if (res) {
+        setSpecialties(res?.results);
+      }
+    };
+    getAllSpecialty();
+    const getService = async () => {
+      let res = await fetchAllService();
+      if (res) {
+        setServices(res?.results);
+      }
+    };
+    getService();
+    setTimeout(() => {
+      SetLoadingSkeleton(false);
+    }, 1500);
+  }, []);
   const provinces = [
-    "Hà Nội",
-    "Hồ Chí Minh",
+    "An Giang",
+    "Bà Rịa - Vũng Tàu",
+    "Bạc Liêu",
+    "Bắc Giang",
+    "Bắc Kạn",
+    "Bắc Ninh",
+    "Bến Tre",
+    "Bình Định",
+    "Bình Dương",
+    "Bình Phước",
+    "Bình Thuận",
+    "Cà Mau",
+    "Cần Thơ",
+    "Cao Bằng",
     "Đà Nẵng",
+    "Đắk Lắk",
+    "Đắk Nông",
+    "Điện Biên",
+    "Đồng Nai",
+    "Đồng Tháp",
+    "Gia Lai",
+    "Hà Giang",
+    "Hà Nam",
+    "Hà Nội",
+    "Hà Tĩnh",
+    "Hải Dương",
     "Hải Phòng",
-    "Biên Hòa",
+    "Hậu Giang",
+    "Hòa Bình",
+    "Hưng Yên",
+    "Khánh Hòa",
+    "Kiên Giang",
+    "Kon Tum",
+    "Lai Châu",
+    "Lâm Đồng",
+    "Lạng Sơn",
+    "Lào Cai",
+    "Long An",
+    "Nam Định",
+    "Nghệ An",
+    "Ninh Bình",
+    "Ninh Thuận",
+    "Phú Thọ",
+    "Phú Yên",
+    "Quảng Bình",
+    "Quảng Nam",
+    "Quảng Ngãi",
+    "Quảng Ninh",
+    "Quảng Trị",
+    "Sóc Trăng",
+    "Sơn La",
+    "Tây Ninh",
+    "Thái Bình",
+    "Thái Nguyên",
+    "Thanh Hóa",
+    "Thừa Thiên Huế",
+    "Tiền Giang",
+    "TP Hồ Chí Minh",
+    "Trà Vinh",
+    "Tuyên Quang",
+    "Vĩnh Long",
+    "Vĩnh Phúc",
+    "Yên Bái",
   ];
   const handleClickAdress = (e) => {
     const pValue = e.currentTarget.querySelector("p").innerText;
     setAdress(pValue);
+    setAddress(pValue);
+  };
+  const handleClickSpeciaylty = (e) => {
+    const Value = e.currentTarget.querySelector("p").innerText;
+    setSpecialtyy(Value);
+  };
+  const handleClickService = (e) => {
+    const Value = e.currentTarget.querySelector("p").innerText;
+    setServiceValue(Value);
   };
   function SwapDoctor() {
     document.getElementById("DoctorType").classList.add("selection");
@@ -28,7 +158,7 @@ function SearchDoctor() {
     document.getElementById("ListDoctorResult").style.display = "block";
     document.getElementById("ListHospitalResult").style.display = "none";
     document.getElementById("DoctorResultFilters").style.display = "block";
-    document.getElementById("HospitalResultFilters").style.display = "none";
+    setCount(doctorCount);
   }
 
   function SwapHospital() {
@@ -36,8 +166,8 @@ function SearchDoctor() {
     document.getElementById("DoctorType").classList.remove("selection");
     document.getElementById("ListHospitalResult").style.display = "block";
     document.getElementById("ListDoctorResult").style.display = "none";
-    document.getElementById("HospitalResultFilters").style.display = "block";
-    document.getElementById("DoctorResultFilters").style.display = "none";
+    document.getElementById("DoctorResultFilters").style.display = "block";
+    setCount(hospitalCount);
   }
 
   return (
@@ -54,13 +184,31 @@ function SearchDoctor() {
                 placeholder="Vị trí hiện tại"
                 id="care__in"
                 data-mdb-toggle="dropdown"
-                aria-expanded="true"
-                value={`${adress}`}
+                value={`${address}`}
+                autoComplete="off "
               ></input>
               <ul
                 class="dropdown-menu care__banner_menu"
                 aria-labelledby="care_in"
               >
+                <li>
+                  <a
+                    href="#"
+                    class="dropdown-item care__banner_menu_title"
+                    onClick={(e) => {
+                      const pValue =
+                        e.currentTarget.querySelector("p").innerText;
+                      setAddress(pValue);
+                      setAdress("");
+                    }}
+                  >
+                    <div>
+                      <FaLocationDot></FaLocationDot>
+                    </div>
+                    <p>Tất cả vị trí</p>
+                  </a>
+                  <div className="care__banner_menu_title_line"></div>
+                </li>
                 {provinces.map((province, index) => (
                   <li key={index}>
                     <a
@@ -82,7 +230,7 @@ function SearchDoctor() {
             <div className="care__banner_input flex-center">
               <input
                 type="text"
-                placeholder="Tìm kiếm theo chuyên khoa, dịch vụ, bệnh viện, bác sĩ ....."
+                placeholder="Tìm kiếm theo tên bác sĩ,bệnh viện......"
                 id="care__ins"
                 onChange={(e) => {
                   setQuery(e.target.value);
@@ -95,7 +243,7 @@ function SearchDoctor() {
         <div className="d-flex">
           <div className="SearchResultContainer">
             <div className="SearchResultLabel bold">
-              <label>86 kết quả tìm được</label>
+              <label>{count || "Những"} kết quả tìm được</label>
             </div>
             <div className="SearchResultHeader">
               <ul className="clear ResultTypes">
@@ -118,19 +266,217 @@ function SearchDoctor() {
             <div className="SearchResultContent">
               <ul className="clear ListDoctorResult" id="ListDoctorResult">
                 <li className="DoctorResult">
-                  <DoctorSearchResult />
+                  {doctor &&
+                    doctor.length > 0 &&
+                    doctor.map((item, index) => {
+                      return (
+                        <div className="DoctorSearchResultContainer">
+                          <a
+                            href=""
+                            className="DoctorHeader flex-center"
+                            onClick={() => {
+                              navigate(`/care/doctor/${item.id}`);
+                            }}
+                            key={index}
+                          >
+                            <div className="DoctorAvatar">
+                              {loadingSkeleton ? (
+                                <Skeleton
+                                  height="75px"
+                                  width="75px"
+                                  circle
+                                  style={{ transform: "translateY(-10px)" }}
+                                />
+                              ) : (
+                                <img src={avt} alt="Avatar"></img>
+                              )}
+                            </div>
+                            <div className="DoctorInfo">
+                              {loadingSkeleton ? (
+                                <div className="DoctorName bold">
+                                  <Skeleton
+                                    count={1}
+                                    width="70%"
+                                    style={{ marginLeft: "10px" }}
+                                  />
+                                </div>
+                              ) : (
+                                <div className="DoctorName bold">
+                                  {item.name}
+                                </div>
+                              )}
+                              {loadingSkeleton ? (
+                                <div className="DoctorSpeicalist">
+                                  <Skeleton
+                                    count={1}
+                                    width="50%"
+                                    style={{ marginLeft: "10px" }}
+                                  />
+                                </div>
+                              ) : (
+                                <div className="DoctorSpeicalist">
+                                  Đa khoa, Nội tổng quát
+                                </div>
+                              )}
+
+                              <div className="TagContainer">
+                                {loadingSkeleton ? (
+                                  <Skeleton
+                                    count={1}
+                                    width="80px"
+                                    style={{ marginLeft: "10px" }}
+                                  />
+                                ) : (
+                                  <div className="DirectTag">
+                                    Tư vấn trực tiếp
+                                  </div>
+                                )}
+
+                                {loadingSkeleton ? (
+                                  <Skeleton
+                                    count={1}
+                                    width="80px"
+                                    style={{ marginLeft: "10px" }}
+                                  />
+                                ) : (
+                                  <div className="ChildrenTag">
+                                    Dành cho trẻ em
+                                  </div>
+                                )}
+
+                                {loadingSkeleton ? (
+                                  <Skeleton
+                                    count={1}
+                                    width="80px"
+                                    style={{ marginLeft: "10px" }}
+                                  />
+                                ) : (
+                                  <div className="AdultTag">
+                                    Dành cho người lớn
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </a>
+                          <a href="/care/hospital" className="DoctorFooter">
+                            <div className="DoctorOfficeAvatar">
+                              {loadingSkeleton ? (
+                                <Skeleton circle width="45px" height="45px" />
+                              ) : (
+                                <div className="DoctorOfficeAvatar">
+                                  <img src={avt} alt="avt img"></img>
+                                </div>
+                              )}
+                            </div>
+
+                            <div className="DoctorOffice">
+                              {loadingSkeleton ? (
+                                <div className="DoctorOfficeName">
+                                  <Skeleton width="400px" />
+                                </div>
+                              ) : (
+                                <div className="DoctorOfficeName">
+                                  Phòng khám Đa khoa trực tuyến BS. Nguyễn Thanh
+                                  Tâm
+                                </div>
+                              )}
+
+                              {loadingSkeleton ? (
+                                <div className="DoctorOfficeAddress">
+                                  <Skeleton />
+                                </div>
+                              ) : (
+                                <div className="DoctorOfficeAddress">
+                                  Ho Chi Minh, Ho Chi Minh City, Vietnam
+                                </div>
+                              )}
+                            </div>
+                            <div className="BookDoctor">
+                              <button className="BookDoctorButton bold">
+                                Đặt lịch hẹn
+                              </button>
+                            </div>
+                          </a>
+                        </div>
+                      );
+                    })}
                 </li>
               </ul>
               <ul
                 className="clear ListHospitalResult disabled"
                 id="ListHospitalResult"
               >
-                <li className="HospitalResult">
-                  <HospitalSearchResult />
-                </li>
-                <li className="HospitalResult">
-                  <HospitalSearchResult />
-                </li>
+                {hospital &&
+                  hospital.length > 0 &&
+                  hospital.map((item, index) => {
+                    return (
+                      <li
+                        className="HospitalResult"
+                        role="button"
+                        onClick={() => {
+                          navigate(`/care/hospital/${item.id}`);
+                        }}
+                      >
+                        <div className="HospitalSearchResultContainer">
+                          <div className="HospitalSearchResultContent">
+                            <div className="HospitalAvatar">
+                              {loadingSkeleton ? (
+                                <Skeleton height="64px" width="64px" circle />
+                              ) : (
+                                <img src={avt} alt="Avatar"></img>
+                              )}
+                            </div>
+                            <div className="HospitalInfo">
+                              {loadingSkeleton ? (
+                                <div className="HospitalName">
+                                  <Skeleton width="50%" />
+                                </div>
+                              ) : (
+                                <div className="HospitalName">{item.name}</div>
+                              )}
+
+                              {loadingSkeleton ? (
+                                <div className="HospitalAddress">
+                                  <Skeleton
+                                    width="200px"
+                                    style={{ marginBottom: "15px" }}
+                                  />
+                                </div>
+                              ) : (
+                                <div className="HospitalAddress">
+                                  <span className="AddressIcon">
+                                    <MdLocationOn></MdLocationOn>
+                                  </span>
+                                  <p>
+                                    47 Lê Đình Lý, Quận Thanh Khê, Thành phố Đà
+                                    Nẵng
+                                  </p>
+                                </div>
+                              )}
+
+                              {loadingSkeleton ? (
+                                <div className="HospitalDescriptionContent">
+                                  <Skeleton count={2} width="500px" />
+                                </div>
+                              ) : (
+                                <div className="HospitalDescriptionContent">
+                                  Hệ thống phòng khám Sản - Phụ khoa Dr. Marie
+                                  là đối tác chiến lược của tổ chức MSI
+                                  Reproductive Choices. Phòng khám được thành
+                                  lập từ năm 1994
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          <div className="HospitalSearchResultFooter">
+                            <button className="HospitalViewButton bold">
+                              Xem bệnh viện
+                            </button>
+                          </div>
+                        </div>
+                      </li>
+                    );
+                  })}
               </ul>
               <div className="DoctorResultPageMonitor">
                 <ReactPaginate
@@ -158,9 +504,9 @@ function SearchDoctor() {
             <div className="DoctorResultFilters" id="DoctorResultFilters">
               <div className="DoctorResultFilter">
                 <div className="DoctorResultFilterHeader">
-                  <header>Còn trống</header>
+                  <header>Chuyên khoa</header>
                 </div>
-                <div className="DoctorResultFilterContent">
+                {/* <div className="DoctorResultFilterContent">
                   <label>
                     <input
                       type="radio"
@@ -206,35 +552,118 @@ function SearchDoctor() {
                     ></input>
                     Cuối tuần
                   </label>
+                </div> */}
+                <div className="care__banner_button" style={{ width: "100%" }}>
+                  <div className="care__banner_input flex-center dropdown">
+                    <input
+                      type="text"
+                      placeholder="Tìm kiếm theo chuyên khoa"
+                      id="care__in"
+                      data-mdb-toggle="dropdown"
+                      value={`${specialtyy}`}
+                      autoComplete="off"
+                    ></input>
+                    <ul
+                      class="dropdown-menu care__banner_menu search_menu"
+                      aria-labelledby="care_in"
+                    >
+                      <li>
+                        <a
+                          class="dropdown-item care__banner_menu_title"
+                          onClick={(e) => {
+                            const pValue =
+                              e.currentTarget.querySelector("p").innerText;
+                            setSpecialtyy(pValue);
+                            setSpecialty("");
+                          }}
+                        >
+                          <div className="img_chuyenkhoa">
+                            <img src={dakhoaImages} alt="" />
+                          </div>
+                          <p style={{ fontSize: "14px" }}>Tất cả chuyên khoa</p>
+                        </a>
+                        <div className="care__banner_menu_title_line"></div>
+                      </li>
+                      {specialties &&
+                        specialties.map((item, index) => (
+                          <li key={index}>
+                            <a
+                              class="dropdown-item care__banner_menu_title"
+                              onClick={(e) => {
+                                handleClickSpeciaylty(e);
+                                setSpecialty(item.id);
+                              }}
+                            >
+                              <div className="img_chuyenkhoa">
+                                <img src={dakhoaImages} alt="" />
+                              </div>
+                              <p style={{ fontSize: "14px" }}>{item.name}</p>
+                            </a>
+                            <div className="care__banner_menu_title_line"></div>
+                          </li>
+                        ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
               <div className="DoctorResultFilter">
                 <div className="DoctorResultFilterHeader">
-                  <header>Giờ đặc biệt</header>
+                  <header>Dịch vụ</header>
                 </div>
-                <div className="DoctorResultFilterContent">
-                  <label htmlFor="SH_intime">
+                <div className="care__banner_button" style={{ width: "100%" }}>
+                  <div className="care__banner_input flex-center dropdown">
                     <input
-                      type="checkbox"
-                      id="SH_intime"
-                      name="SpeicalHours"
-                      value="intime"
+                      type="text"
+                      placeholder="Tìm kiếm theo dịch vụ"
+                      id="care__in"
+                      data-mdb-toggle="dropdown"
+                      value={`${serviceValue}`}
+                      autoComplete="off"
                     ></input>
-                    Trong giờ hành chính
-                  </label>
-
-                  <label htmlFor="AA_today">
-                    <input
-                      type="checkbox"
-                      id="SH_outtime"
-                      name="SpeicalHours"
-                      value="outtime"
-                    ></input>
-                    Ngoài giờ hành chính
-                  </label>
+                    <ul
+                      class="dropdown-menu care__banner_menu search_menu"
+                      aria-labelledby="care_in"
+                    >
+                      <li>
+                        <a
+                          class="dropdown-item care__banner_menu_title"
+                          onClick={(e) => {
+                            const pValue =
+                              e.currentTarget.querySelector("p").innerText;
+                            setServiceValue(pValue);
+                            setService("");
+                          }}
+                        >
+                          <div className="img_chuyenkhoa">
+                            <img src={dakhoaImages} alt="" />
+                          </div>
+                          <p style={{ fontSize: "14px" }}>Tất cả dịch vụ</p>
+                        </a>
+                        <div className="care__banner_menu_title_line"></div>
+                      </li>
+                      {services &&
+                        services.map((item, index) => (
+                          <li key={index}>
+                            <a
+                              class="dropdown-item care__banner_menu_title"
+                              onClick={(e) => {
+                                handleClickService(e);
+                                setService(item.id);
+                              }}
+                            >
+                              <div className="img_chuyenkhoa">
+                                <img src={dakhoaImages} alt="" />
+                              </div>
+                              <p style={{ fontSize: "14px" }}>{item.name}</p>
+                            </a>
+                            <div className="care__banner_menu_title_line"></div>
+                          </li>
+                        ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
-              <div className="DoctorResultFilter">
+              {/* <div className="DoctorResultFilter">
                 <div className="DoctorResultFilterHeader">
                   <header>Loại hình khám</header>
                 </div>
@@ -258,8 +687,8 @@ function SearchDoctor() {
                     Tư vấn trực tiếp
                   </label>
                 </div>
-              </div>
-              <div className="DoctorResultFilter">
+              </div> */}
+              {/* <div className="DoctorResultFilter">
                 <div className="DoctorResultFilterHeader">
                   <header>Cung cấp dịch vụ chăm sóc</header>
                 </div>
@@ -341,9 +770,9 @@ function SearchDoctor() {
                   </span>
                   <span>Xoá tất cả</span>
                 </button>
-              </div>
+              </div> */}
             </div>
-            <div className="HospitalResultFilters" id="HospitalResultFilters">
+            {/* <div className="HospitalResultFilters" id="HospitalResultFilters">
               <div className="HospitalResultFilter">
                 <div className="HospitalResultFilterHeader">
                   <header>Có thể nhận lịch hẹn</header>
@@ -377,7 +806,7 @@ function SearchDoctor() {
                   <span>Xoá tất cả</span>
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

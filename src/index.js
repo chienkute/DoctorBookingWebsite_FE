@@ -9,6 +9,8 @@ import "swiper/scss/scrollbar";
 import "swiper/scss/pagination";
 import "swiper/scss/navigation";
 import "swiper/scss";
+import "../node_modules/nprogress/nprogress.css";
+import "react-loading-skeleton/dist/skeleton.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>

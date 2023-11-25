@@ -42,8 +42,7 @@
 
 .ListPartOfDay {
   display: flex;
-  gap: 12px;
-  margin: 42px 0 28px 0;
+  margin-top: 42px;
   width: 100%;
   overflow: auto hidden;
   color: rgb(140, 140, 140);
@@ -192,4 +191,9 @@
 }
 .night {
   margin-top: 0px;
+}
+.nav-night {
+  min-width: 90px;
+  display: block;
+  text-align: center;
 }

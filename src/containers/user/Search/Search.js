@@ -1,25 +1,49 @@
-import { memo, useContext } from "react";
+import { memo, useContext, useEffect, useState } from "react";
 import "./Search.scss";
 import { FaSistrix } from "react-icons/fa6";
-import { FcPrevious, FcNext } from "react-icons/fc";
 import imagedoctor1 from "../../../assets/doctor/tat.jpg";
 import blogImg from "../../../assets/blog-img.png";
 import "../../../style/pages/_theme.scss";
 import { SearchContext } from "context/SearchContext";
 import ReactPaginate from "react-paginate";
 import "../../../style/page.scss";
+import { searchBlogByName } from "service/UserService";
+import { useDebounce } from "@uidotdev/usehooks";
+import { useNavigate } from "react-router-dom";
+import Skeleton from "react-loading-skeleton";
 const Search = () => {
-  const { search } = useContext(SearchContext);
+  const { search, setSearch } = useContext(SearchContext);
+  const [searchBlog, setSearchBlog] = useState("");
+  const [dataBlog, setDataBlog] = useState([]);
+  const [count, setScount] = useState("");
+  const debouncedSearchTerm = useDebounce(searchBlog, 500);
+  const [loadingSkeleton, SetLoadingSkeleton] = useState(true);
+  const navigate = useNavigate();
   const handlePageClick = (event) => {
-    getUser(+event.selected + 1);
+    // getUser(+event.selected + 1);
   };
-  const getUser = async (page) => {
-    // let res = await fetchAllUser(page);
-    // if (res && res.data) {
-    //   setTotal(res.total);
-    //   setList(res.data);
-    //   setTotalPage(res.total_pages);
+  const searchNameBlog = async () => {
+    let res = await searchBlogByName(debouncedSearchTerm);
+    if (res) {
+      SetLoadingSkeleton(true);
+      setDataBlog(res?.results);
+      setScount(res?.count);
+    }
   };
+  useEffect(() => {
+    setSearchBlog(search);
+    searchNameBlog();
+    setTimeout(() => {
+      SetLoadingSkeleton(false);
+    }, 1500);
+  }, []);
+  useEffect(() => {
+    searchNameBlog();
+    setSearch(debouncedSearchTerm);
+    setTimeout(() => {
+      SetLoadingSkeleton(false);
+    }, 1000);
+  }, [debouncedSearchTerm]);
   return (
     <div className="searchr">
       <div className="search__container">
@@ -32,145 +56,122 @@ const Search = () => {
               type="text"
               placeholder="Tìm kiếm..."
               id="search__in"
+              onChange={(e) => {
+                setSearchBlog(e.target.value);
+              }}
+              defaultValue={searchBlog}
             ></input>
           </div>
         </div>
         <div className="search__info">
-          <h3 className="search__title text-center">{search}</h3>
           <p className="search__result text-center">
-            3934 kết quả được tìm thấy
+            {count} kết quả được tìm thấy
           </p>
         </div>
         <div className="search__list">
           <ul>
-            <li>
-              <div className="d-flex justify-content-center align-items-start search__item">
-                <div className="search__image">
-                  <img src={blogImg} alt="" />
-                </div>
-                <div className="search__summary d-flex flex-column">
-                  <a className="search__category" href="">
-                    <span>ĐỘT QUỴ VÀ PHÌNH MẠCH NÃO</span>
-                  </a>
-                  <a className="search__titles" href="">
-                    Nhận biết các dấu hiệu của đột quỵ nhẹ (đột quỵ nhỏ)
-                  </a>
-                  <p className="search__text">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quae praesentium labore perferendis odit veniam delectus
-                    veritatis deserunt accusamus repudiandae ullam, excepturi
-                    modi similique nam possimus corporis illum iure! Quibusdam,
-                    ullam.
-                  </p>
-                  <div className="search__author d-flex">
-                    <div className="search__images">
-                      <img src={imagedoctor1} alt="" />
+            {dataBlog &&
+              dataBlog.map((item, index) => {
+                return (
+                  <li role="button">
+                    <div className="d-flex justify-content-center align-items-start search__item">
+                      <div className="search__image">
+                        {loadingSkeleton ? (
+                          <Skeleton
+                            width="200px"
+                            height="150px"
+                            style={{ transform: "translateY(-5px)" }}
+                          />
+                        ) : (
+                          <img src={blogImg} alt="" />
+                        )}
+                      </div>
+                      <div className="search__summary d-flex flex-column">
+                        <a
+                          className="search__category"
+                          onClick={() => {
+                            navigate(`/category/${item.id_category}`);
+                          }}
+                        >
+                          {loadingSkeleton ? (
+                            <span>
+                              {" "}
+                              <Skeleton width="50%" />
+                            </span>
+                          ) : (
+                            <span> Chuyên mục</span>
+                          )}
+                        </a>
+                        {loadingSkeleton ? (
+                          <Skeleton count={1} width="80%" />
+                        ) : (
+                          <a
+                            className="search__titles"
+                            onClick={() => {
+                              navigate(`/blog/${item.id}`);
+                            }}
+                          >
+                            {item.title}
+                          </a>
+                        )}
+                        {loadingSkeleton ? (
+                          <p className="search__text">
+                            <Skeleton count={2} />
+                          </p>
+                        ) : (
+                          <p
+                            className="search__text"
+                            onClick={() => {
+                              navigate(`/blog/${item.id}`);
+                            }}
+                          >
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Quae praesentium labore perferendis odit
+                            veniam delectus veritatis deserunt accusamus
+                            repudiandae ullam, excepturi modi similique nam
+                            possimus corporis illum iure! Quibusdam, ullam.
+                          </p>
+                        )}
+
+                        <div
+                          className="search__author d-flex"
+                          onClick={() => {
+                            navigate(`/care/doctor/${item.id_doctor}`);
+                          }}
+                        >
+                          {loadingSkeleton ? (
+                            <div className="search__images">
+                              <Skeleton
+                                count={1}
+                                circle
+                                width="25px"
+                                height="25px"
+                                style={{ transform: "translateY(-5px)" }}
+                              />
+                            </div>
+                          ) : (
+                            <div className="search__images">
+                              <img src={imagedoctor1} alt="" />
+                            </div>
+                          )}
+                          {loadingSkeleton ? (
+                            <p>
+                              <Skeleton count={1} width="400px" height="10px" />
+                            </p>
+                          ) : (
+                            <p>
+                              Tham vấn y khoa {""}
+                              <span>TS.Dược khoa Trương Anh Thư </span>
+                              17/04/2023
+                            </p>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                    <p>
-                      Tham vấn y khoa <span>TS.Dược khoa Trương Anh Thư </span>
-                      17/04/2023
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="search__bar"></div>
-            </li>
-            <li>
-              <div className="d-flex justify-content-center align-items-start search__item">
-                <div className="search__image">
-                  <img src={blogImg} alt="" />
-                </div>
-                <div className="search__summary d-flex flex-column">
-                  <a className="search__category" href="">
-                    <span>ĐỘT QUỴ VÀ PHÌNH MẠCH NÃO</span>
-                  </a>
-                  <a className="search__titles" href="">
-                    Nhận biết các dấu hiệu của đột quỵ nhẹ (đột quỵ nhỏ)
-                  </a>
-                  <p className="search__text">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quae praesentium labore perferendis odit veniam delectus
-                    veritatis deserunt accusamus repudiandae ullam, excepturi
-                    modi similique nam possimus corporis illum iure! Quibusdam,
-                    ullam.
-                  </p>
-                  <div className="search__author d-flex">
-                    <div className="search__images">
-                      <img src={imagedoctor1} alt="" />
-                    </div>
-                    <p>
-                      Tham vấn y khoa <span>TS.Dược khoa Trương Anh Thư </span>
-                      17/04/2023
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="search__bar"></div>
-            </li>
-            <li>
-              <div className="d-flex justify-content-center align-items-start search__item">
-                <div className="search__image">
-                  <img src={blogImg} alt="" />
-                </div>
-                <div className="search__summary d-flex flex-column">
-                  <a className="search__category" href="">
-                    <span>ĐỘT QUỴ VÀ PHÌNH MẠCH NÃO</span>
-                  </a>
-                  <a className="search__titles" href="">
-                    Nhận biết các dấu hiệu của đột quỵ nhẹ (đột quỵ nhỏ)
-                  </a>
-                  <p className="search__text">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quae praesentium labore perferendis odit veniam delectus
-                    veritatis deserunt accusamus repudiandae ullam, excepturi
-                    modi similique nam possimus corporis illum iure! Quibusdam,
-                    ullam.
-                  </p>
-                  <div className="search__author d-flex">
-                    <div className="search__images">
-                      <img src={imagedoctor1} alt="" />
-                    </div>
-                    <p>
-                      Tham vấn y khoa <span>TS.Dược khoa Trương Anh Thư </span>
-                      17/04/2023
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="search__bar"></div>
-            </li>
-            <li>
-              <div className="d-flex justify-content-center align-items-start search__item">
-                <div className="search__image">
-                  <img src={blogImg} alt="" />
-                </div>
-                <div className="search__summary d-flex flex-column">
-                  <a className="search__category" href="">
-                    <span>ĐỘT QUỴ VÀ PHÌNH MẠCH NÃO</span>
-                  </a>
-                  <a className="search__titles" href="">
-                    Nhận biết các dấu hiệu của đột quỵ nhẹ (đột quỵ nhỏ)
-                  </a>
-                  <p className="search__text">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quae praesentium labore perferendis odit veniam delectus
-                    veritatis deserunt accusamus repudiandae ullam, excepturi
-                    modi similique nam possimus corporis illum iure! Quibusdam,
-                    ullam.
-                  </p>
-                  <div className="search__author d-flex">
-                    <div className="search__images">
-                      <img src={imagedoctor1} alt="" />
-                    </div>
-                    <p>
-                      Tham vấn y khoa <span>TS.Dược khoa Trương Anh Thư </span>
-                      17/04/2023
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="search__bar"></div>
-            </li>
+                    <div className="search__bar"></div>
+                  </li>
+                );
+              })}
           </ul>
         </div>
         <div className="DoctorResultPageMonitor search__page">

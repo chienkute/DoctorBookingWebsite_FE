@@ -30,7 +30,7 @@
     }
   }
   &__body {
-    max-width: 1099px;
+    max-width: 1100px;
     margin: 20px auto 0;
     &_image {
       img {
@@ -87,7 +87,7 @@
       text-align: left !important;
     }
     &_main {
-      max-width: 80%;
+      max-width: 100%;
     }
     &_list {
       margin-bottom: 25px;
@@ -130,7 +130,7 @@
         height: 30px;
       }
       &_desc {
-        max-width: 80%;
+        max-width: 88%;
         p {
           line-height: 24px;
           margin-bottom: 25px;
@@ -292,6 +292,44 @@
             font-weight: 700;
           }
         }
+      }
+    }
+  }
+  &__page {
+    width: 100%;
+    display: flex;
+  }
+  &__schedule {
+    width: 1000px;
+    border: 1px solid $border;
+    transform: translateX(-50px);
+    background-color: $color-page;
+    padding: 16px;
+    height: fit-content;
+    &_day {
+      width: 320px;
+    }
+    h5 {
+      font-size: $fs-small-title;
+      font-weight: 700;
+    }
+    &_content {
+      font-size: $fs-normal-text;
+    }
+    &_chuyenkhoa {
+      p {
+        font-size: $fs-small-text;
+        font-weight: 700;
+      }
+    }
+    &_banner {
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+    &_bacsi {
+      p {
+        font-size: $fs-small-text;
+        font-weight: 700;
       }
     }
   }

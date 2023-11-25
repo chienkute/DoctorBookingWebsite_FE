@@ -4,14 +4,14 @@
 .UserPageContent {
   display: flex;
   gap: 32px;
-  width: 900px;
-  margin-left: 200px;
+  width: 1000px;
+  margin-left: 170px;
   margin-top: 100px;
   margin-bottom: 200px;
 }
 
 .UserPageMenu {
-  width: 30%;
+  width: 27%;
   border: 1px solid transparent;
   padding: 28px;
   height: fit-content;
@@ -211,4 +211,7 @@
       color: $color-blue;
     }
   }
+}
+.lds-user {
+  transform: translateX(400px);
 }
