@@ -9,7 +9,11 @@ class NavBar extends React.Component {
       <div className="NavigationContainer">
         <ul className="NavigationList clear flex-center">
           <li className="Navigation bold">
-            <a href="/categories" className="flex-center clear">
+            <a
+              href="/categories"
+              className="flex-center clear"
+              style={{ marginLeft: "20px" }}
+            >
               <div className="NavigationIcon flex-center">
                 <FaFileLines />
               </div>
@@ -19,7 +23,11 @@ class NavBar extends React.Component {
             </a>
           </li>
           <li className="Navigation bold">
-            <a href="/care/" className="flex-center clear">
+            <a
+              href="/care/"
+              className="flex-center clear"
+              style={{ marginLeft: "30px" }}
+            >
               <div className="NavigationIcon flex-center">
                 <GrSchedules />
               </div>
@@ -32,14 +40,6 @@ class NavBar extends React.Component {
                 <FaHeartPulse />
               </div>
               <div className="NavigationName">Kiểm tra sức khoẻ</div>
-            </a>
-          </li>
-          <li className="Navigation bold">
-            <a href="#" className="flex-center clear">
-              <div className="NavigationIcon flex-center">
-                <FaNewspaper />
-              </div>
-              <div className="NavigationName">Tin tức</div>
             </a>
           </li>
         </ul>

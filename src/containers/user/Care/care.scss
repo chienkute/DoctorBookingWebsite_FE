@@ -41,7 +41,7 @@
       display: flex;
       border-radius: 10px;
       position: relative;
-      z-index: 0;
+      background-color: white;
       svg {
         color: $color-footer;
       }
@@ -60,9 +60,10 @@
       column-gap: 15px;
     }
     &_menu {
-      width: 110% !important;
-      margin: 20px 2px 0px -27px !important;
+      width: 100% !important;
+      margin: 20px 2px 0px -19px !important;
       z-index: 2;
+      overflow-y: scroll;
       &_title {
         padding-left: 14px;
         column-gap: 10px;
@@ -91,6 +92,7 @@
     }
     &_menus {
       width: 100%;
+      z-index: 100;
       ul {
         position: absolute;
         left: 0;
@@ -98,8 +100,10 @@
         width: 100%;
         border-radius: 6px;
         background-color: #fff;
-        box-shadow: rgba(0, 0, 0, 0.04) 0px 24px 32px,
-          rgba(0, 0, 0, 0.04) 0px 16px 24px, rgba(0, 0, 0, 0.04) 0px 4px 8px,
+        box-shadow:
+          rgba(0, 0, 0, 0.04) 0px 24px 32px,
+          rgba(0, 0, 0, 0.04) 0px 16px 24px,
+          rgba(0, 0, 0, 0.04) 0px 4px 8px,
           rgba(0, 0, 0, 0.04) 0px 0px 1px;
       }
       li {
@@ -216,7 +220,7 @@
 
 #care__in {
   padding-left: 15px;
-  width: 100%;
+  width: 98%;
   height: 50%;
   border: none;
   outline-color: transparent;
@@ -227,4 +231,12 @@
   height: 50%;
   border: none;
   outline-color: transparent;
+}
+.lds-care {
+  margin-bottom: 1000px;
+  margin-top: 80px;
+}
+.no-result {
+  font-size: 14px;
+  margin-bottom: 10px;
 }

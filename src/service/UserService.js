@@ -1,8 +1,5 @@
 const { default: instance } = require("utils/axiosCutomize");
 
-const fetchAllUser = (page) => {
-  return instance.get(`/api/users?page=${page}`);
-};
 const editUser = (id, name) => {
   return instance.patch(`/api/users/${id}/`, {
     name,
@@ -20,11 +17,11 @@ const getSpecialtyByID = (id) => {
 const fetchAllService = () => {
   return instance.get("api/services/");
 };
-const fetchAllDoctor = () => {
-  return instance.get("api/doctors/");
-};
 const getDoctorByID = (id) => {
   return instance.get(`api/doctors/${id}/`);
+};
+const fetchAllHospital = () => {
+  return instance.get("api/hospitals/");
 };
 const getHospitalByID = (id) => {
   return instance.get(`api/hospitals/${id}/`);
@@ -39,9 +36,9 @@ const signup = (username, email, password) => {
 const searchAll = (adress, name) => {
   return instance.get(`api/search_all/?addres=${adress}&name=${name}`);
 };
-const search = (name, address, specialty) => {
+const search = (service, address, specialty, name, hospital) => {
   return instance.get(
-    `api/search_doctor/?specialty=${specialty}&name=${name}&adress=${address}`
+    `api/search_doctor/?service=${service}&address=${address}&specialty=${specialty}&name=${name}&hospital=${hospital}`,
   );
 };
 const scheduleDoctor = (id) => {
@@ -56,11 +53,30 @@ const Booking = (id_doctor, id_schedule, date, time) => {
 const getBooking = () => {
   return instance.get("/api/appointments/");
 };
+const fetchAllCategories = () => {
+  return instance.get("/api/categories/");
+};
+const searchBlogByName = (name) => {
+  return instance.get(`/api/search_blog/?name=${name}`);
+};
+const getBlogByIdCategory = (id) => {
+  return instance.get(`/api/search_blog/?id_category=${id}`);
+};
+const getBlogById = (id) => {
+  return instance.get(`/api/blogs/${id}/`);
+};
+const getCategoryById = (id) => {
+  return instance.get(`/api/categories/${id}`);
+};
+const changePassword = (oldpassword, newpassword, id) => {
+  return instance.patch(`/api/accounts/${id}/change_password`, {
+    oldpassword,
+    newpassword,
+  });
+};
 export {
-  fetchAllUser,
   fetchAllSpecialties,
   fetchAllService,
-  fetchAllDoctor,
   searchAll,
   search,
   getDoctorByID,
@@ -73,4 +89,11 @@ export {
   getSpecialtyByID,
   Booking,
   getBooking,
+  fetchAllHospital,
+  fetchAllCategories,
+  searchBlogByName,
+  getBlogByIdCategory,
+  getBlogById,
+  getCategoryById,
+  changePassword,
 };
