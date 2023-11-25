@@ -32,13 +32,13 @@ const Register = () => {
         .min(6, "Mật khẩu không được ít hơn 6 ký tự")
         .oneOf(
           [Yup.ref("password"), null],
-          "Mật khẩu phải trùng khớp với nhau"
+          "Mật khẩu phải trùng khớp với nhau",
         ),
       email: Yup.string()
         .required("Bạn chưa nhập email")
         .matches(
           /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-          "Vui lòng nhập đúng địa chỉ email"
+          "Vui lòng nhập đúng địa chỉ email",
         ),
     }),
     onSubmit: async (values) => {

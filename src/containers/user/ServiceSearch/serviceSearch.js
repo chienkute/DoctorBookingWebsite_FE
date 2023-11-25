@@ -25,7 +25,7 @@ const ServiceSearch = () => {
     getService();
   }, []);
   const filteredCategories = service.filter((item) =>
-    item.name.toLowerCase().includes(search.toLowerCase())
+    item.name.toLowerCase().includes(search.toLowerCase()),
   );
   return (
     <div className="serviceSearch">

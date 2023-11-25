@@ -283,7 +283,7 @@ const HospitalPage = () => {
                                   onClick={(e) => {
                                     const pValue =
                                       e.currentTarget.querySelector(
-                                        "p"
+                                        "p",
                                       ).innerText;
                                     setSpecialtyy(pValue);
                                     setSpecialty("");

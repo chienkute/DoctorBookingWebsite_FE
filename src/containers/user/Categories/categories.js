@@ -20,7 +20,7 @@ const Categories = () => {
     }
   };
   const filteredCategories = category.filter((item) =>
-    item.name.toLowerCase().includes(search.toLowerCase())
+    item.name.toLowerCase().includes(search.toLowerCase()),
   );
   useEffect(() => {
     getAllCategories();
