@@ -232,3 +232,15 @@
   width: 80%;
   margin: 100px auto;
 }
+.img_chuyenkhoa {
+  img {
+    width: 30px;
+    height: 30px;
+  }
+}
+.dropdown-menu {
+  max-height: 400px; /* Điều chỉnh chiều cao tối đa của dropdown */
+}
+.search_menu {
+  transform: translate(20px, 30px) !important;
+}

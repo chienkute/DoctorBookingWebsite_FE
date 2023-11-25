@@ -17,7 +17,7 @@ export default function useClickOutSide(dom = "button") {
     return () => {
       document.removeEventListener("click", handleClickOut);
     };
-  }, []);
+  }, [dom]);
   return {
     show,
     setShow,

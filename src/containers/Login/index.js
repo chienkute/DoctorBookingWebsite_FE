@@ -1,5 +1,5 @@
 import { memo, useState, useEffect } from "react";
-import { MdEmail } from "react-icons/md";
+// import { MdEmail } from "react-icons/md";
 import { MdAccountCircle } from "react-icons/md";
 import imageLogin from "../../assets/image_1.png";
 import imageLogin2 from "../../assets/image_2.png";
@@ -13,12 +13,12 @@ import { toast } from "react-toastify";
 const Login = () => {
   const navigate = useNavigate();
   const [isShowPassword, setIsShowPassword] = useState(false);
-  // useEffect(() => {
-  //   let token = localStorage.getItem("token");
-  //   if (token) {
-  //     navigate("/");
-  //   }
-  // }, []);
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+    if (token) {
+      navigate("/");
+    }
+  }, []);
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -46,9 +46,7 @@ const Login = () => {
         navigate("/");
         toast.success("Đăng nhập thành công");
       } else {
-        if (res && res.status === 401) {
-          toast.error("Lỗi đăng nhập");
-        }
+        toast.error("Lỗi đăng nhập");
       }
     },
   });

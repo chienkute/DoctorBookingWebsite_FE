@@ -1,0 +1,21 @@
+@use "sass:map";
+@import "style/pages/theme";
+@import "~mdb-ui-kit/css/mdb.min.css";
+.history {
+  h1 {
+    font-weight: 700;
+    font-size: $fs-normal-title;
+  }
+  &__tab {
+    &_table {
+      min-width: 500px;
+      &_title {
+        transform: translateX(20px);
+      }
+    }
+  }
+}
+.nav-link {
+  font-weight: 400 !important;
+  font-size: 14px !important;
+}

@@ -1,9 +1,8 @@
 import { memo } from "react";
-import { FaUserAlt, FaHeartbeat } from "react-icons/fa";
+import { FaUserAlt } from "react-icons/fa";
 import { MdHelp } from "react-icons/md";
 import { HiOutlineLogout } from "react-icons/hi";
 import { NavLink } from "react-router-dom";
-import config from "../../../config/routes";
 import { FaCalendarAlt } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 const UserTab = () => {
@@ -11,7 +10,7 @@ const UserTab = () => {
     <div className="UserPageMenu">
       <div className="ListOption clear">
         <NavLink
-          to={config.userinfo}
+          to={"/user/information"}
           className={({ isActive }) =>
             isActive ? "sideBarActive Option selected" : "Option selected"
           }
@@ -28,23 +27,13 @@ const UserTab = () => {
           }
         >
           <div className="OptionIcon">
-            <FaHeartbeat />
-          </div>
-          <div className="OptionName">Sức khoẻ của tôi</div>
-        </NavLink>
-        <NavLink
-          to={"/"}
-          className={({ isActive }) =>
-            isActive ? "sideBarActive Option selected" : "Option selected"
-          }
-        >
-          <div className="OptionIcon">
             <FaCalendarAlt></FaCalendarAlt>
           </div>
           <div className="OptionName">Quản lí cuộc hẹn</div>
         </NavLink>
+
         <NavLink
-          to={"/"}
+          to={"/user/changePassword"}
           className={({ isActive }) =>
             isActive ? "sideBarActive Option selected" : "Option"
           }
@@ -55,7 +44,7 @@ const UserTab = () => {
           <div className="OptionName">Đổi mật khẩu</div>
         </NavLink>
         <NavLink
-          to={"/"}
+          to={"/user/help"}
           className={({ isActive }) =>
             isActive ? "sideBarActive Option selected" : "Option selected"
           }
