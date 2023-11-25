@@ -16,5 +16,5 @@ root.render(
   <BrowserRouter>
     <RouterCustom />
     <ToastContainer autoClose={1000} />
-  </BrowserRouter>
+  </BrowserRouter>,
 );

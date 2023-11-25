@@ -15,8 +15,10 @@
   border: 1px solid transparent;
   padding: 28px;
   height: fit-content;
-  box-shadow: rgba(0, 0, 0, 0.06) 0px 16px 24px 0px,
-    rgba(0, 0, 0, 0.04) 0px 2px 8px 0px, rgba(0, 0, 0, 0.04) 0px 0px 1px;
+  box-shadow:
+    rgba(0, 0, 0, 0.06) 0px 16px 24px 0px,
+    rgba(0, 0, 0, 0.04) 0px 2px 8px 0px,
+    rgba(0, 0, 0, 0.04) 0px 0px 1px;
 }
 
 .UserPageMenu div.ListOption {
@@ -96,7 +98,9 @@
 
 .UserPersonalInfo {
   padding: 16px;
-  box-shadow: rgba(0, 0, 0, 0.04) 0px 10px 16px, rgba(0, 0, 0, 0.04) 0px 2px 8px,
+  box-shadow:
+    rgba(0, 0, 0, 0.04) 0px 10px 16px,
+    rgba(0, 0, 0, 0.04) 0px 2px 8px,
     rgba(0, 0, 0, 0.04) 0px 0px 1px;
   border-radius: 6px;
   height: fit-content;

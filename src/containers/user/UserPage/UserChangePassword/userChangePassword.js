@@ -44,7 +44,7 @@ const UserChangePassword = () => {
         .min(6, "Mật khẩu không được ít hơn 6 ký tự")
         .oneOf(
           [Yup.ref("newpasswd"), null],
-          "Mật khẩu phải trùng khớp với nhau"
+          "Mật khẩu phải trùng khớp với nhau",
         ),
     }),
     onSubmit: async (values) => {

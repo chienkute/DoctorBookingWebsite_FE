@@ -38,7 +38,7 @@ const searchAll = (adress, name) => {
 };
 const search = (service, address, specialty, name, hospital) => {
   return instance.get(
-    `api/search_doctor/?service=${service}&address=${address}&specialty=${specialty}&name=${name}&hospital=${hospital}`
+    `api/search_doctor/?service=${service}&address=${address}&specialty=${specialty}&name=${name}&hospital=${hospital}`,
   );
 };
 const scheduleDoctor = (id) => {
