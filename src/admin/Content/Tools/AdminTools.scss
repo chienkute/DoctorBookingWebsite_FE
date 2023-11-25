@@ -36,7 +36,6 @@
 .AdminToolResult th,
 .AdminToolResult td {
     padding   : 16px 8px;
-    width     : fit-content;
     text-align: center;
 }
 
@@ -47,8 +46,9 @@
 
 .AdminToolResult td.hiddenTool,
 .AdminToolResult td.displayedTool {
-    display    : flex;
-    align-items: center;
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
 }
 
 .AdminToolResult td.displayedTool svg {

@@ -10,19 +10,8 @@ import AdminHospital from "./Content/Hospital/AdminHospital";
 import AdminSpecialList from "./Content/Specialist/AdminSpecialist";
 
 class AdminPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeMenu: "AdminMenuDashboard",
-    };
-  }
-
-  changeActiveMenu = (menuName) => {
-    this.setState({ activeMenu: menuName });
-  };
-
   renderContent = () => {
-    switch (this.state.activeMenu) {
+    switch (this.props.menuName) {
       case "AdminMenuDashboard":
         return <AdminDashboard />;
       case "AdminMenuUser":
@@ -46,7 +35,7 @@ class AdminPage extends React.Component {
     return (
       <div className="AdminPageContainer">
         <div className="AdminPageSideMenu">
-          <SideMenu changeAdminMenu={this.changeActiveMenu} />
+          <SideMenu menuName={this.props.menuName} />
         </div>
         <div className="AdminPageContent">{this.renderContent()}</div>
       </div>

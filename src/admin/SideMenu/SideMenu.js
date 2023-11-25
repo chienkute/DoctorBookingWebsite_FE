@@ -3,30 +3,29 @@ import "./SideMenu.scss";
 import logo from "assets/logo.png";
 
 class SideMenu extends React.Component {
-  changeStyleMenu = (menuName) => {
-    let listMenu = document.querySelectorAll("li.AdminMenu");
-    listMenu.forEach((element) => {
-      element.classList.remove("selected");
-    });
-    document.getElementById(menuName).classList.add("selected");
+  componentDidMount() {
+    document.getElementById(this.props.menuName).classList.add("selected");
+  }
+
+  gotoAdminFunction = (menuLink) => {
+    window.location.href = menuLink;
   };
 
   render() {
-    const { changeAdminMenu } = this.props;
-
     return (
       <div className="AdminSideMenuContainer">
         <div className="AdminSideMenuLogo flex-center">
-          <img src={logo} alt="Logo"></img>
+          <a href="/admin" alt="AdminPageLink">
+            <img src={logo} alt="Logo"></img>
+          </a>
         </div>
         <div className="AdminMenu">
           <ul className="clear AdminListMenu">
             <li
-              className="AdminMenu selected"
+              className="AdminMenu"
               id="AdminMenuDashboard"
-              onClick={(event) => {
-                this.changeStyleMenu(event.target.id);
-                changeAdminMenu(event.target.id);
+              onClick={() => {
+                this.gotoAdminFunction("/admin/dashboard");
               }}
             >
               Trang chủ
@@ -34,9 +33,8 @@ class SideMenu extends React.Component {
             <li
               className="AdminMenu"
               id="AdminMenuUser"
-              onClick={(event) => {
-                this.changeStyleMenu(event.target.id);
-                changeAdminMenu(event.target.id);
+              onClick={() => {
+                this.gotoAdminFunction("/admin/user");
               }}
             >
               Quản lí người dùng
@@ -44,9 +42,8 @@ class SideMenu extends React.Component {
             <li
               className="AdminMenu"
               id="AdminMenuTopic"
-              onClick={(event) => {
-                this.changeStyleMenu(event.target.id);
-                changeAdminMenu(event.target.id);
+              onClick={() => {
+                this.gotoAdminFunction("/admin/topic");
               }}
             >
               Quản lí chuyên mục
@@ -54,9 +51,8 @@ class SideMenu extends React.Component {
             <li
               className="AdminMenu"
               id="AdminMenuPost"
-              onClick={(event) => {
-                this.changeStyleMenu(event.target.id);
-                changeAdminMenu(event.target.id);
+              onClick={() => {
+                this.gotoAdminFunction("/admin/post");
               }}
             >
               Quản lí bài viết
@@ -64,9 +60,8 @@ class SideMenu extends React.Component {
             <li
               className="AdminMenu"
               id="AdminMenuTool"
-              onClick={(event) => {
-                this.changeStyleMenu(event.target.id);
-                changeAdminMenu(event.target.id);
+              onClick={() => {
+                this.gotoAdminFunction("/admin/tool");
               }}
             >
               Quản lí công cụ
@@ -74,9 +69,8 @@ class SideMenu extends React.Component {
             <li
               className="AdminMenu"
               id="AdminMenuHospital"
-              onClick={(event) => {
-                this.changeStyleMenu(event.target.id);
-                changeAdminMenu(event.target.id);
+              onClick={() => {
+                this.gotoAdminFunction("/admin/hospital");
               }}
             >
               Quản lí cơ sở KCB
@@ -84,9 +78,8 @@ class SideMenu extends React.Component {
             <li
               className="AdminMenu"
               id="AdminMenuSpecialist"
-              onClick={(event) => {
-                this.changeStyleMenu(event.target.id);
-                changeAdminMenu(event.target.id);
+              onClick={() => {
+                this.gotoAdminFunction("/admin/specialist");
               }}
             >
               Quản lí chuyên khoa

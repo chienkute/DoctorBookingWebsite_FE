@@ -87,17 +87,10 @@
     background-color: #D9D9D9;
 }
 
-.AdminUserResult td.normalAcc {
-    color: green;
-}
-
-.AdminUserResult td.bannedAcc {
-    color: red;
-}
-
 .AdminUserResult td div.Action {
-    display: flex;
-    gap    : 4px;
+    display        : flex;
+    gap            : 4px;
+    justify-content: center;
 }
 
 .AdminUserResult td div.Action button {
@@ -114,19 +107,9 @@
     color           : #209C43;
 }
 
-.AdminUserResult td div.Action button.ChangePasswordButton {
+.AdminUserResult td div.Action button.ChangeInfoButton {
     background-color: #00000038;
     color           : #000000BF;
-}
-
-.AdminUserResult td div.Action button.LockButton {
-    background-color: #D9A1117A;
-    color           : #FF8000;
-}
-
-.AdminUserResult td div.Action button.UnlockButton {
-    background-color: #b8dfeb;
-    color           : #34caf8;
 }
 
 .AdminUserResult td div.Action button.DeleteAccount {

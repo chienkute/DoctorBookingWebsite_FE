@@ -83,7 +83,6 @@
 .AdminPostResult th,
 .AdminPostResult td {
     padding   : 16px 8px;
-    width     : fit-content;
     text-align: center;
 }
 
@@ -94,8 +93,9 @@
 
 .AdminPostResult td.waitingPost,
 .AdminPostResult td.approvedPost {
-    display    : flex;
-    align-items: center;
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
 }
 
 .AdminPostResult td.waitingPost svg {
@@ -108,9 +108,11 @@
     margin-right: 4px;
 }
 
+
 .AdminPostResult td div.Action {
-    display: flex;
-    gap    : 4px;
+    display        : flex;
+    gap            : 4px;
+    justify-content: center;
 }
 
 .AdminPostResult td div.Action button {

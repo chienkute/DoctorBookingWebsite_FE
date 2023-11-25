@@ -10,7 +10,6 @@ import hospitalPage from "containers/user/HospitalPage/hospitalPage";
 import service from "containers/user/Service/service";
 import specialties from "containers/user/Specialties/specialties";
 import Doctor from "containers/user/Doctor/Doctor";
-import AdminPage from "admin/AdminPage";
 
 import serviceSearch from "containers/user/ServiceSearch/serviceSearch";
 import userInfo from "containers/user/UserPage/UserInfo/userInfo";
@@ -18,6 +17,7 @@ import routesConfig from "../config/routes";
 import userHistory from "containers/user/UserPage/UserHistory/userHistory";
 import confirm from "containers/user/Confirm/confirm";
 import blog from "containers/user/Blog/blog";
+import AdminPage from "admin/AdminPage";
 const publicRoutes = [
   { path: "/", component: HomePage },
   { path: "/login", component: Login, layout: null },
@@ -31,7 +31,46 @@ const publicRoutes = [
   { path: "/care/hospital/", component: hospitalPage },
   { path: "/care/service", component: service },
   { path: "/care/specialties", component: specialties },
-  { path: "/admin", component: AdminPage },
+  //{ path: "/admin/dashboard", component: AdminPage, layout: null },
+  {
+    path: "/admin/dashboard",
+    component: (props) => (
+      <AdminPage {...props} menuName="AdminMenuDashboard" />
+    ),
+    layout: null,
+  },
+  {
+    path: "/admin/user",
+    component: (props) => <AdminPage {...props} menuName="AdminMenuUser" />,
+    layout: null,
+  },
+  {
+    path: "/admin/topic",
+    component: (props) => <AdminPage {...props} menuName="AdminMenuTopic" />,
+    layout: null,
+  },
+  {
+    path: "/admin/post",
+    component: (props) => <AdminPage {...props} menuName="AdminMenuPost" />,
+    layout: null,
+  },
+  {
+    path: "/admin/tool",
+    component: (props) => <AdminPage {...props} menuName="AdminMenuTool" />,
+    layout: null,
+  },
+  {
+    path: "/admin/hospital",
+    component: (props) => <AdminPage {...props} menuName="AdminMenuHospital" />,
+    layout: null,
+  },
+  {
+    path: "/admin/specialist",
+    component: (props) => (
+      <AdminPage {...props} menuName="AdminMenuSpecialist" />
+    ),
+    layout: null,
+  },
   { path: "/serviceSearch", component: serviceSearch },
   { path: routesConfig.userinfo, component: userInfo },
   { path: "/user/history", component: userHistory },

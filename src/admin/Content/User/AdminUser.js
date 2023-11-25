@@ -1,13 +1,8 @@
 import React from "react";
 import "./AdminUser.scss";
 import { FaRegCheckSquare, FaEraser } from "react-icons/fa";
-import {
-  IoIosCheckmarkCircleOutline,
-  IoIosCloseCircleOutline,
-} from "react-icons/io";
 import { FcPrevious, FcNext } from "react-icons/fc";
 import { IoInformation } from "react-icons/io5";
-import { MdLockOutline, MdLockOpen } from "react-icons/md";
 import { FiEdit3 } from "react-icons/fi";
 
 class AdminUser extends React.Component {
@@ -57,29 +52,6 @@ class AdminUser extends React.Component {
                 ></input>
               </div>
             </div>
-            <div className="Filter col-2">
-              <div className="FilterLabel">Tình trạng tài khoản</div>
-              <div className="FilterInput FilterRadioInput">
-                <div className="RadioButton">
-                  <input
-                    type="radio"
-                    name="status"
-                    id="normal"
-                    value="normal"
-                  ></input>
-                  <label htmlFor="normal">Bình thường</label>
-                </div>
-                <div className="RadioButton">
-                  <input
-                    type="radio"
-                    name="status"
-                    id="banned"
-                    value="banned"
-                  ></input>
-                  <label htmlFor="banned">Đã khoá</label>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
         <div className="AdminUserResult">
@@ -102,7 +74,6 @@ class AdminUser extends React.Component {
                 <th>Họ tên người dùng</th>
                 <th>Tên tài khoản</th>
                 <th>Vai trò</th>
-                <th>Tình trạng</th>
                 <th>Hành động</th>
               </tr>
               <tr>
@@ -113,19 +84,13 @@ class AdminUser extends React.Component {
                 <td>Nguyễn Hoàng Anh</td>
                 <td>hoanganh07</td>
                 <td>Thành viên</td>
-                <td className="normalAcc">
-                  <IoIosCheckmarkCircleOutline />
-                </td>
                 <td>
                   <div className="Action">
                     <button className="InfoButton">
                       <IoInformation />
                     </button>
-                    <button className="ChangePasswordButton">
+                    <button className="ChangeInfoButton">
                       <FiEdit3 />
-                    </button>
-                    <button className="LockButton">
-                      <MdLockOutline />
                     </button>
                     <button className="DeleteAccount">
                       <FaEraser />
@@ -141,19 +106,13 @@ class AdminUser extends React.Component {
                 <td>Nguyễn Hoàng Anh</td>
                 <td>hoanganh07</td>
                 <td>Thành viên</td>
-                <td className="bannedAcc">
-                  <IoIosCloseCircleOutline />
-                </td>
                 <td>
                   <div className="Action">
                     <button className="InfoButton">
                       <IoInformation />
                     </button>
-                    <button className="ChangePasswordButton">
+                    <button className="ChangeInfoButton">
                       <FiEdit3 />
-                    </button>
-                    <button className="UnlockButton">
-                      <MdLockOpen />
                     </button>
                     <button className="DeleteAccount">
                       <FaEraser />
