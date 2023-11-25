@@ -18,13 +18,13 @@
     # health check for railway
     respond /health 200
 
-    # serve from the 'dist' folder (Angular has been set to build into the 'dist' folder)
-    root * dist
+    # serve from the 'build' folder (react-scripts builds into the 'build' folder)
+    root * build
 
     # enable gzipping responses
     encode gzip
 
-    # serve files from 'dist'
+    # serve files from 'build'
     file_server
 
     # if path doesn't exist, redirect it to 'index.html' for client side routing

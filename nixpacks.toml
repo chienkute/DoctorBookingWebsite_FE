@@ -4,7 +4,7 @@
 [variables]
     NPM_CONFIG_UPDATE_NOTIFIER = 'false' # the update notification is relatively useless in a production environment
     NPM_CONFIG_FUND = 'false' # the fund notification is also pretty useless in a production environment
-    CADDY_VERSION = '2.7.4' # specify the caddy version to use here, without a 'v' prefix. https://github.com/caddyserver/caddy/releases
+    CADDY_VERSION = '2.7.5' # specify the caddy version to use here, without a 'v' prefix. https://github.com/caddyserver/caddy/releases
 
 # download and untar caddy
 [phases.caddy]
@@ -23,5 +23,5 @@
 # copy caddy and build artifacts to a new image and start the caddy web server
 [start]
     runImage = 'ubuntu:20.04' # use a new ubuntu image to run the caddy server in
-    onlyIncludeFiles = ['caddy', 'Caddyfile', 'dist'] # copy only the needed files and folders into the new image (Angular is configured to build to a 'dist' folder)
+    onlyIncludeFiles = ['caddy', 'Caddyfile', 'build'] # copy only the needed files and folders into the new image (react-scripts builds to a 'build' folder)
     cmd = './caddy run --config Caddyfile --adapter caddyfile 2>&1' # start caddy using the Caddyfile config and caddyfile adapter
