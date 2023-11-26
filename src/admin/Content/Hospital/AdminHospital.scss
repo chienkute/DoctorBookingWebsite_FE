@@ -1,0 +1,162 @@
+@use "sass:map";
+@import "style/pages/theme";
+
+.AdminHospitalContainer {
+    margin: 32px;
+}
+
+.AdminHospitalFilter {
+    display      : flex;
+    flex-wrap    : wrap;
+    margin-bottom: 32px;
+}
+
+.AdminHospitalFilter>h3 {
+    width      : 100%;
+    font-weight: 700;
+}
+
+.AdminHospitalFilter .FilterRow {
+    display: flex;
+    width  : 100%;
+}
+
+.AdminHospitalFilter .FilterLabel {
+    font-weight: 700;
+}
+
+.AdminHospitalFilter .FilterRow .Filter {
+    margin-bottom: 24px;
+}
+
+.AdminHospitalFilter .FilterRow .Filter .FilterLabel {
+    margin-bottom: 8px;
+}
+
+.AdminHospitalFilter .FilterRow .Filter.col .FilterTextInput input {
+    border-radius: 10px;
+    border       : 1px solid #B6A5A5;
+    padding      : 8px;
+    width        : 40%;
+}
+
+.AdminHospitalFilter .FilterRow .Filter .FilterTextInput input::placeholder {
+    color     : #00000059;
+    font-style: italic;
+}
+
+.AdminHospitalResult .ResultPerTable {
+    margin-bottom: 16px;
+}
+
+.AdminHospitalResult .ResultPerTable label {
+    margin-right: 16px
+}
+
+.AdminHospitalResult .Table {
+    display        : flex;
+    justify-content: center;
+    width          : 100%;
+    flex-wrap      : wrap;
+}
+
+.AdminHospitalResult .Table table {
+    width: 100%;
+}
+
+.AdminHospitalResult tr:nth-child(odd) {
+    background-color: #F1F0F0;
+}
+
+.AdminHospitalResult tr:nth-child(even) {
+    background-color: #FFFFFF;
+}
+
+.AdminHospitalResult th,
+.AdminHospitalResult td {
+    padding   : 16px 8px;
+    width     : fit-content;
+    text-align: center;
+}
+
+.AdminHospitalResult th {
+    font-weight     : 700;
+    background-color: #D9D9D9;
+}
+
+.AdminHospitalResult td div.Action {
+    display        : flex;
+    gap            : 16px;
+    justify-content: center;
+}
+
+.AdminHospitalResult td div.Action button {
+    border : none;
+    padding: 2px;
+}
+
+.AdminHospitalResult td div.Action button svg {
+    width: 22px;
+}
+
+.AdminHospitalResult td div.Action button.ViewButton {
+    background-color: #ADF4BD;
+    color           : #209C43;
+}
+
+.AdminHospitalResult td div.Action button.ChangePasswordButton {
+    background-color: #00000038;
+    color           : #000000BF;
+}
+
+.AdminHospitalResult td div.Action button.DeleteButton {
+    background-color: #E21C1C78;
+    color           : #BE2424;
+}
+
+.AdminHospitalResult .PageMonitor {
+    margin-left: auto;
+    margin-top : 32px;
+}
+
+.AdminHospitalResult .PageMonitor,
+.AdminHospitalResult .PageMonitor>.Pages {
+    display: flex;
+    gap    : 4px;
+}
+
+.AdminHospitalResult .PageMonitor {
+    margin-left: auto;
+    width      : fit-content;
+}
+
+.AdminHospitalResult .PageMonitor>div,
+.AdminHospitalResult .PageMonitor>.Pages>li {
+    width : 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+.AdminHospitalResult .PageMonitor>.PrevPage,
+.AdminHospitalResult .PageMonitor>.NextPage {
+    border       : 1px solid rgb(217, 217, 217);
+    border-radius: 4px;
+}
+
+.AdminHospitalResult .PageMonitor>.PrevPage.disabled,
+.AdminHospitalResult .PageMonitor>.NextPage.disabled {
+    background-color: rgb(242, 242, 242);
+    cursor          : not-allowed;
+    border          : none;
+}
+
+.AdminHospitalResult .PageMonitor>.PrevPage.disabled>svg>polygon,
+.AdminHospitalResult .PageMonitor>.NextPage.disabled>svg>polygon {
+    fill: #c5c5c5;
+}
+
+.AdminHospitalResult .PageMonitor>.Pages>li.selected {
+    color           : rgb(255, 255, 255);
+    background-color: rgb(45, 135, 243);
+    border-radius   : 4px;
+}
