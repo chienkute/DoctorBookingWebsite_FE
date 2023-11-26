@@ -1,7 +1,7 @@
 @use "sass:map";
 @import "style/pages/theme";
 .page-link {
-  color: $color-title;
+  color: $color-title !important;
   font-weight: 700;
   font-style: $fs-normal-text;
   font-size: 16px;

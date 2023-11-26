@@ -1,9 +1,16 @@
 const { default: instance } = require("utils/axiosCutomize");
 
-const editUser = (id, name) => {
+const editUser = (id, name, gender, phone, address, birthday) => {
   return instance.patch(`/api/users/${id}/`, {
     name,
+    gender,
+    phone,
+    address,
+    birthday,
   });
+};
+const getUserID = (id) => {
+  return instance.get(`/api/users/${id}`);
 };
 const login = (username, password) => {
   return instance.post("api/auth/login/", { username, password });
@@ -11,9 +18,7 @@ const login = (username, password) => {
 const fetchAllSpecialties = () => {
   return instance.get("api/specialties/");
 };
-const getSpecialtyByID = (id) => {
-  return instance.get(`api/specialtydoctor/${id}/`);
-};
+
 const fetchAllService = () => {
   return instance.get("api/services/");
 };
@@ -44,9 +49,6 @@ const search = (service, address, specialty, name, hospital) => {
 const scheduleDoctor = (id) => {
   return instance.get(`api/schedulerdoctor?doctor=${id}`);
 };
-const getSchedule = (id) => {
-  return instance.get(`api/schedules/${id}/`);
-};
 const Booking = (id_doctor, id_schedule, date, time) => {
   return instance.post("/api/booking/", { id_doctor, id_schedule, date, time });
 };
@@ -74,7 +76,19 @@ const changePassword = (oldpassword, newpassword, id) => {
     newpassword,
   });
 };
+const getAppoinment = () => {
+  return instance.get("/api/appointmentsbyuser/");
+};
+const ratingAppointment = (id, rating) => {
+  return instance.post(`/api/statusappointment/${id}/`, { rating });
+};
+const statusAppoinment = (id, status) => {
+  return instance.post(`/api/statusappointment/${id}/`, { status });
+};
 export {
+  getAppoinment,
+  ratingAppointment,
+  statusAppoinment,
   fetchAllSpecialties,
   fetchAllService,
   searchAll,
@@ -85,8 +99,6 @@ export {
   signup,
   getHospitalByID,
   scheduleDoctor,
-  getSchedule,
-  getSpecialtyByID,
   Booking,
   getBooking,
   fetchAllHospital,
@@ -96,4 +108,5 @@ export {
   getBlogById,
   getCategoryById,
   changePassword,
+  getUserID,
 };

@@ -30,6 +30,7 @@ import { fetchAllSpecialties } from "service/UserService";
 import { FaUserAlt } from "react-icons/fa";
 const Header = () => {
   const { setSearch } = useContext(SearchContext);
+  const [user, setUser] = useState([]);
   const navigate = useNavigate();
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -42,6 +43,12 @@ const Header = () => {
     navigate("/");
     toast.success("Log out success!");
   };
+  const getUser = () => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      setUser(JSON.parse(user));
+    }
+  };
   const { show, setShow, nodeRef } = useClickOutSide();
   const [specialty, setSpecialty] = useState([]);
   const specialtySlice = specialty.slice(0, 5);
@@ -53,6 +60,7 @@ const Header = () => {
   };
   useEffect(() => {
     getSpecialty();
+    getUser();
   }, []);
   return (
     <div>
@@ -362,15 +370,15 @@ const Header = () => {
                   </div>
                 </div>
                 <div className="HeaderItem__list row">
-                  <a
-                    href="/user/information"
+                  <Link
+                    to={`/user/information/${user?.user?.id}`}
                     className="HeaderItem__list_item col-6"
                   >
                     <div className="HeaderItem__list_item_icon">
                       <FaUserAlt></FaUserAlt>
                     </div>
                     <p>Hồ sơ</p>
-                  </a>
+                  </Link>
                   <a
                     href="/user/changePassword"
                     className="HeaderItem__list_item col-6"
