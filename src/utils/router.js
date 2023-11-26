@@ -31,7 +31,7 @@ const publicRoutes = [
   { path: "/care/service/:id", component: service },
   { path: "/care/specialties", component: specialties },
   { path: "/care/serviceSearch", component: serviceSearch },
-  { path: "/user/information", component: userInfo },
+  { path: "/user/information/:id", component: userInfo },
   { path: "/user/history", component: userHistory },
   { path: "/user/changePassword", component: userChangePassword },
   { path: "/user/help", component: userhelp },

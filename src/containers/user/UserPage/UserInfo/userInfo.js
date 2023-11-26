@@ -1,36 +1,46 @@
 import { memo, useContext, useEffect, useState } from "react";
 import avtImg from "assets/avatar.png";
 import Moment from "react-moment";
-import { editUser } from "service/UserService";
+import { editUser, getUserID } from "service/UserService";
 import UserTab from "../../UserTab/userTab";
 import "../../UserPage/UserPage.scss";
 import { LoadingContext } from "context/LoadingContext";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 const UserInfo = () => {
   const [user, setUser] = useState([]);
   const [edit, setEdit] = useState(false);
-  const [id, setId] = useState(null);
+  // const [id, setId] = useState(null);
+  const { id } = useParams();
   const [nameOld, setNameOld] = useState("");
   const [nameNew, setNameNew] = useState("");
   const [birthdayOld, setBirthdayOld] = useState("");
+  const [birthdayNew, setBirthdayNew] = useState("");
   const [adressOld, setAdressOld] = useState("");
+  const [adressNew, setAdressNew] = useState("");
   const [genderOld, setGenderOld] = useState("");
+  const [genderNew, setGenderNew] = useState("");
   const [phoneOld, setPhoneOld] = useState("");
+  const [phoneNew, setPhoneNew] = useState("");
   const [usernameOld, setUsernameOld] = useState("");
   const { loading, setLoading } = useContext(LoadingContext);
-  console.log(nameOld);
+  console.log(birthdayNew);
+  console.log(genderNew);
+  console.log(adressNew);
+  console.log(phoneNew);
   const editUserInfo = async () => {
-    let res = await editUser(id, nameNew);
+    let res = await editUser(
+      id,
+      nameNew,
+      genderNew,
+      phoneNew,
+      adressNew,
+      birthdayNew,
+    );
     if (res) {
-      console.log(res);
-      setNameOld(nameNew);
       setEdit(false);
-    }
-  };
-  const handleId = () => {
-    if (user && user.user) {
-      setId(user?.user?.id);
     } else {
-      setId("");
+      toast.error("Sửa đổi thất bại");
     }
   };
   const getUser = () => {
@@ -39,21 +49,32 @@ const UserInfo = () => {
       setUser(JSON.parse(user));
     }
   };
-  const setUserOld = () => {
-    setNameOld(user?.user?.name);
+  const getUserByID = async () => {
+    let res = await getUserID(id);
+    if (res) {
+      setNameOld(res?.name);
+      setBirthdayOld(res?.birthday);
+      setGenderOld(res?.gender);
+      setPhoneOld(res?.phone);
+      setAdressOld(res?.address);
+      setUsernameOld(res?.account?.username);
+      setNameNew(res?.name);
+      setBirthdayNew(res?.birthday);
+      setGenderNew(res?.gender);
+      setPhoneNew(res?.phone);
+      setAdressNew(res?.address);
+    }
   };
   useEffect(() => {
     getUser();
-    handleId();
     const loadUser = () => {
       if (user) {
         setLoading(false);
       }
     };
     loadUser();
-    setUserOld();
+    getUserByID();
   }, []);
-  console.log(user);
   if (user === null) {
     return <div className="UserPageContainer"></div>;
   }
@@ -109,6 +130,7 @@ const UserInfo = () => {
                   e.preventDefault();
                   editUserInfo();
                   setEdit(false);
+                  getUserByID();
                 }}
               >
                 <div className="user__info">
@@ -117,7 +139,7 @@ const UserInfo = () => {
                     <input
                       type="text"
                       placeholder="Nhập họ và tên của bạn"
-                      defaultValue={nameOld}
+                      defaultValue={nameNew}
                       onChange={(e) => {
                         setNameNew(e.target.value);
                       }}
@@ -131,9 +153,9 @@ const UserInfo = () => {
                       type="date"
                       name=""
                       id=""
-                      defaultValue={user?.user?.birthday}
+                      defaultValue={birthdayNew}
                       onChange={(e) => {
-                        // setBirthday(e.target.value);
+                        setBirthdayNew(e.target.value);
                       }}
                     />
                   </div>
@@ -149,9 +171,9 @@ const UserInfo = () => {
                         id="nam"
                         value="true"
                         onChange={(e) => {
-                          // setGender(e.target.value);
+                          setGenderNew(e.target.value);
                         }}
-                        checked={user?.user?.gender ? true : false}
+                        checked={genderNew ? true : false}
                       />
                       <label class="form-check-label" for="nam">
                         Nam
@@ -165,9 +187,9 @@ const UserInfo = () => {
                         id="nu"
                         value="false"
                         onChange={(e) => {
-                          // setGender(e.target.value);
+                          setGenderNew(e.target.value);
                         }}
-                        checked={user?.user?.gender ? false : true}
+                        checked={genderNew ? false : true}
                       />
                       <label class="form-check-label" for="nu">
                         Nữ
@@ -181,9 +203,9 @@ const UserInfo = () => {
                     <input
                       type="text"
                       placeholder="Nhập địa chỉ của bạn"
-                      defaultValue={user?.user?.address}
+                      defaultValue={adressNew}
                       onChange={(e) => {
-                        // setAdress(e.target.value);
+                        setAdressNew(e.target.value);
                       }}
                     />
                   </div>
@@ -194,9 +216,9 @@ const UserInfo = () => {
                     <input
                       type="text"
                       placeholder="Nhập số điện thoại"
-                      defaultValue={user?.user?.phone}
+                      defaultValue={phoneNew}
                       onChange={(e) => {
-                        // setPhone(e.target.value);
+                        setPhoneNew(e.target.value);
                       }}
                     />
                   </div>
@@ -206,6 +228,7 @@ const UserInfo = () => {
                     href="#"
                     onClick={() => {
                       setEdit(false);
+                      getUserByID();
                     }}
                   >
                     Hủy
@@ -220,9 +243,7 @@ const UserInfo = () => {
                     <p className="PersonalInfoHeader">
                       <b>Tên truy cập</b>
                     </p>
-                    <p className="PersonalInfoData">
-                      {user?.account?.username}
-                    </p>
+                    <p className="PersonalInfoData">{usernameOld}</p>
                   </div>
                   <li className="PersonalInfo">
                     <p className="PersonalInfoHeader">
@@ -241,22 +262,16 @@ const UserInfo = () => {
                       <b>Ngày sinh</b>
                     </p>
                     <p className="PersonalInfoData">
-                      {user?.user?.birthday ? (
-                        <Moment format="DD/MM/YYYY">
-                          {user?.user?.birthday}
-                        </Moment>
-                      ) : (
-                        <p></p>
-                      )}
+                      <Moment format="DD/MM/YYYY">{birthdayOld}</Moment>
                     </p>
                   </li>
                   <li className="PersonalInfo">
                     <p className="PersonalInfoHeader">
                       <b>Giới tính</b>
                     </p>
-                    {user?.user?.gender === true ? (
+                    {genderOld === true ? (
                       <p className="PersonalInfoData">Nam</p>
-                    ) : user?.user?.gender === false ? (
+                    ) : genderOld === false ? (
                       <p className="PersonalInfoData">Nữ</p>
                     ) : (
                       <p className="PersonalInfoData"></p>
@@ -266,13 +281,13 @@ const UserInfo = () => {
                     <p className="PersonalInfoHeader">
                       <b>Địa chỉ</b>
                     </p>
-                    <p className="PersonalInfoData">{user?.user?.address}</p>
+                    <p className="PersonalInfoData">{adressOld}</p>
                   </li>
                   <li className="PersonalInfo">
                     <p className="PersonalInfoHeader">
                       <b>Số điện thoại</b>
                     </p>
-                    <p className="PersonalInfoData">{user?.user?.phone}</p>
+                    <p className="PersonalInfoData">{phoneOld}</p>
                   </li>
                 </div>
               </form>

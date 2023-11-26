@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { MdHelp } from "react-icons/md";
 import { HiOutlineLogout } from "react-icons/hi";
@@ -6,11 +6,21 @@ import { NavLink } from "react-router-dom";
 import { FaCalendarAlt } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 const UserTab = () => {
+  const [user, setUser] = useState("");
+  const getUser = () => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      setUser(JSON.parse(user));
+    }
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
   return (
     <div className="UserPageMenu">
       <div className="ListOption clear">
         <NavLink
-          to={"/user/information"}
+          to={`/user/information/${user?.user?.id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive Option selected" : "Option selected"
           }

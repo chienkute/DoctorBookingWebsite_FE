@@ -1,3 +1,44 @@
 @use "sass:map";
 @import "style/pages/theme";
 @import "~mdb-ui-kit/css/mdb.min.css";
+.blog {
+  margin-top: 70px;
+  &__main {
+    width: 998px;
+    margin: 30px auto;
+    display: flex;
+    &_content {
+      width: 60%;
+    }
+    &_author {
+      border-radius: 4px;
+      width: 300px;
+      height: 320px;
+      border: 1px solid $border;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    &_avatar {
+      img {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        margin-bottom: 3px;
+      }
+    }
+    &_text {
+      font-size: $fs-small-text;
+      text-align: center;
+    }
+    &_name {
+      text-align: center;
+      font-weight: 400;
+      color: $color-title;
+    }
+    button {
+      width: 100%;
+    }
+  }
+}
