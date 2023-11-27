@@ -10,7 +10,8 @@ import avt from "../../../assets/avatar.png";
 import {
   fetchAllService,
   fetchAllSpecialties,
-  search,
+  searchDoctor,
+  searchHospital,
 } from "service/UserService";
 import { useDebounce } from "@uidotdev/usehooks";
 import { MdLocationOn } from "react-icons/md";
@@ -34,23 +35,36 @@ function SearchDoctor() {
   const debouncedSearchTerm = useDebounce(query, 500);
   const [loadingSkeleton, SetLoadingSkeleton] = useState(true);
   const navigate = useNavigate();
-  console.log(debouncedSearchTerm);
-  console.log(specialty);
-  console.log(service);
-  console.log(doctor);
-  console.log(hospital);
-  const Search = async () => {
-    let res = await search(service, adress, specialty, debouncedSearchTerm, "");
+  const getDoctor = async () => {
+    let res = await searchDoctor(
+      debouncedSearchTerm,
+      adress,
+      "",
+      specialty,
+      service,
+    );
     if (res) {
-      setDoctor(res?.results?.doctors);
-      setHospital(res?.results?.hospitals);
-      setDoctorCount(res?.results?.total_doctors);
-      setHospitalCount(res?.results?.total_hospitals);
       SetLoadingSkeleton(true);
+      setDoctor(res?.results);
+      setDoctorCount(res?.results?.total_doctors);
+    }
+  };
+  const getHospital = async () => {
+    let res = await searchHospital(
+      debouncedSearchTerm,
+      adress,
+      specialty,
+      service,
+    );
+    if (res) {
+      SetLoadingSkeleton(true);
+      setHospital(res?.results);
+      setHospitalCount(res?.results?.total_doctors);
     }
   };
   useEffect(() => {
-    Search();
+    getDoctor();
+    getHospital();
     setTimeout(() => {
       SetLoadingSkeleton(false);
     }, 1000);
@@ -74,76 +88,11 @@ function SearchDoctor() {
       SetLoadingSkeleton(false);
     }, 1500);
   }, []);
-  const provinces = [
-    "An Giang",
-    "Bà Rịa - Vũng Tàu",
-    "Bạc Liêu",
-    "Bắc Giang",
-    "Bắc Kạn",
-    "Bắc Ninh",
-    "Bến Tre",
-    "Bình Định",
-    "Bình Dương",
-    "Bình Phước",
-    "Bình Thuận",
-    "Cà Mau",
-    "Cần Thơ",
-    "Cao Bằng",
-    "Đà Nẵng",
-    "Đắk Lắk",
-    "Đắk Nông",
-    "Điện Biên",
-    "Đồng Nai",
-    "Đồng Tháp",
-    "Gia Lai",
-    "Hà Giang",
-    "Hà Nam",
-    "Hà Nội",
-    "Hà Tĩnh",
-    "Hải Dương",
-    "Hải Phòng",
-    "Hậu Giang",
-    "Hòa Bình",
-    "Hưng Yên",
-    "Khánh Hòa",
-    "Kiên Giang",
-    "Kon Tum",
-    "Lai Châu",
-    "Lâm Đồng",
-    "Lạng Sơn",
-    "Lào Cai",
-    "Long An",
-    "Nam Định",
-    "Nghệ An",
-    "Ninh Bình",
-    "Ninh Thuận",
-    "Phú Thọ",
-    "Phú Yên",
-    "Quảng Bình",
-    "Quảng Nam",
-    "Quảng Ngãi",
-    "Quảng Ninh",
-    "Quảng Trị",
-    "Sóc Trăng",
-    "Sơn La",
-    "Tây Ninh",
-    "Thái Bình",
-    "Thái Nguyên",
-    "Thanh Hóa",
-    "Thừa Thiên Huế",
-    "Tiền Giang",
-    "TP Hồ Chí Minh",
-    "Trà Vinh",
-    "Tuyên Quang",
-    "Vĩnh Long",
-    "Vĩnh Phúc",
-    "Yên Bái",
+  const province = [
+    { value: "Danang", label: "Đà Nẵng" },
+    { value: "Hanoi", label: "Hà Nội" },
+    { value: "HoChiMinh", label: "Hồ Chí Minh" },
   ];
-  const handleClickAdress = (e) => {
-    const pValue = e.currentTarget.querySelector("p").innerText;
-    setAdress(pValue);
-    setAddress(pValue);
-  };
   const handleClickSpeciaylty = (e) => {
     const Value = e.currentTarget.querySelector("p").innerText;
     setSpecialtyy(Value);
@@ -209,16 +158,19 @@ function SearchDoctor() {
                   </a>
                   <div className="care__banner_menu_title_line"></div>
                 </li>
-                {provinces.map((province, index) => (
+                {province.map((item, index) => (
                   <li key={index}>
                     <a
                       class="dropdown-item care__banner_menu_title"
-                      onClick={handleClickAdress}
+                      onClick={() => {
+                        setAdress(item.value);
+                        setAddress(item.label);
+                      }}
                     >
                       <div>
                         <FaLocationDot></FaLocationDot>
                       </div>
-                      <p>{province}</p>
+                      <p>{item.label}</p>
                     </a>
                     <div className="care__banner_menu_title_line"></div>
                   </li>

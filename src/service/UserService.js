@@ -85,7 +85,45 @@ const ratingAppointment = (id, rating) => {
 const statusAppoinment = (id, status) => {
   return instance.post(`/api/statusappointment/${id}/`, { status });
 };
+const getDoctorByNameAddress = (name, city) => {
+  return instance.get(`/api/search_doctor/?name=${name}&city=${city}`);
+};
+const getHospitalByNameAddress = (name, city) => {
+  return instance.get(`/api/search_hospital/?name=${name}&city=${city}`);
+};
+const getServiceByNameAddress = (name, city) => {
+  return instance.get(`/api/search_service/?name=${name}&city=${city}`);
+};
+const getSpecialtyByNameAddress = (name, city) => {
+  return instance.get(`/api/search_specialty/?name=${name}&city=${city}`);
+};
+const searchDoctor = (name, city, id_hospital, id_specialty, id_service) => {
+  return instance.get(
+    `/api/search_doctor666/?name=${name}&city=${city}&id_hospital=${id_hospital}&id_specialty=${id_specialty}&id_service=${id_service}`,
+  );
+};
+const searchHospital = (name, city, id_specialty, id_service) => {
+  return instance.get(
+    `/api/search_hospital666/?name=${name}&city=${city}&id_specialty=${id_specialty}&id_service=${id_service}`,
+  );
+};
+const getSpecialtyByIdHospital = (id_hospital) => {
+  return instance.get(`/api/search_specialty666/?id_hospital=${id_hospital}`);
+};
+const getServiceByIdHospital = (name, id_hospital) => {
+  return instance.get(
+    `api/search_service666/?name=${name}&id_hospital=${id_hospital}`,
+  );
+};
 export {
+  getDoctorByNameAddress,
+  getHospitalByNameAddress,
+  getServiceByNameAddress,
+  getSpecialtyByNameAddress,
+  searchDoctor,
+  searchHospital,
+  getSpecialtyByIdHospital,
+  getServiceByIdHospital,
   getAppoinment,
   ratingAppointment,
   statusAppoinment,
