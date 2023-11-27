@@ -6,12 +6,11 @@ import categoriesimage1 from "../../../assets/chuyenmuc/tooth.png";
 import { fetchAllCategories } from "service/UserService";
 import { useEffect } from "react";
 import { LoadingContext } from "context/LoadingContext";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 const Categories = () => {
   const [category, setCategory] = useState([]);
   const [search, setSearch] = useState("");
   const { loading, setLoading } = useContext(LoadingContext);
-  const navigate = useNavigate();
   const getAllCategories = async () => {
     let res = await fetchAllCategories();
     if (res) {
@@ -68,18 +67,16 @@ const Categories = () => {
                 category.length > 0 &&
                 filteredCategories.map((item, index) => {
                   return (
-                    <a
+                    <Link
                       className="col-md-2"
-                      onClick={() => {
-                        navigate(`/category/${item.id}`);
-                      }}
+                      to={`/category/${item.id}`}
                       key={index}
                     >
                       <div>
                         <img src={categoriesimage1} alt="" />
                       </div>
                       <p>{item.name}</p>
-                    </a>
+                    </Link>
                   );
                 })}
             </div>

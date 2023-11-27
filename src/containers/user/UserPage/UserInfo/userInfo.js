@@ -5,7 +5,7 @@ import { editUser, getUserID } from "service/UserService";
 import UserTab from "../../UserTab/userTab";
 import "../../UserPage/UserPage.scss";
 import { LoadingContext } from "context/LoadingContext";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MdPhotoCamera } from "react-icons/md";
 const UserInfo = () => {
@@ -226,15 +226,14 @@ const UserInfo = () => {
                   </div>
                 </div>
                 <div className="user__button">
-                  <a
-                    href="#"
+                  <Link
                     onClick={() => {
                       setEdit(false);
                       getUserByID();
                     }}
                   >
                     Hủy
-                  </a>
+                  </Link>
                   <button>Lưu thay đổi</button>
                 </div>
               </form>

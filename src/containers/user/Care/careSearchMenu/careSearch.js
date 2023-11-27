@@ -386,7 +386,9 @@ const CareSearch = () => {
                     <TbBuildingHospital></TbBuildingHospital>
                   </div>
                   <p>Bệnh viện và Phòng khám</p>
-                  <a href="/care/searchDoctor">Xem tất cả</a>
+                  <Link to={"/care/searchDoctor"} state={{ chuyenkhoa: "" }}>
+                    Xem tất cả
+                  </Link>
                 </div>
                 <div className="care__banner_menus_item">
                   {loadingSkeleton ? (
@@ -465,7 +467,9 @@ const CareSearch = () => {
                     <FaUserDoctor></FaUserDoctor>
                   </div>
                   <p>Bác sĩ</p>
-                  <a href="/care/searchDoctor">Xem tất cả</a>
+                  <Link to={"/care/searchDoctor"} state={{ chuyenkhoa: "" }}>
+                    Xem tất cả
+                  </Link>
                 </div>
                 <div className="care__banner_menus_item">
                   {loadingSkeleton ? (

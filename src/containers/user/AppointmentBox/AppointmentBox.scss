@@ -109,14 +109,17 @@
   width: 100%;
   padding: 12px;
   margin: 24px 0;
-  text-transform: uppercase;
-  font-weight: 700;
   background-color: #2d87f3;
   border-radius: 6px;
-  color: white;
   border: none;
 }
-
+.AppointmentBoxButton {
+  a {
+    color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}
 .AppointmentBoxButton > button:hover {
   background-color: #2c74df;
 }

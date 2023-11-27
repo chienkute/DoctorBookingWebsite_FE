@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useState } from "react";
 import "./userChangePassword.scss";
 import UserTab from "containers/user/UserTab/userTab";
 import { useFormik } from "formik";
@@ -6,26 +6,14 @@ import * as Yup from "yup";
 import { AiFillEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { changePassword } from "service/UserService";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 const UserChangePassword = () => {
-  const [user, setUser] = useState([]);
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowConfPassword, setIsShowConfPassword] = useState(false);
   const [isShowNewPassword, setisShowNewPassword] = useState(false);
-  const [id, setId] = useState(null);
+  const { id } = useParams();
   const navigate = useNavigate();
-  console.log(user);
-  console.log(id);
-  useEffect(() => {
-    const getUser = () => {
-      const user = localStorage.getItem("user");
-      if (user) {
-        setUser(JSON.parse(user));
-      }
-    };
-    getUser();
-    setId(user?.account?.id);
-  }, []);
+
   const formik = useFormik({
     initialValues: {
       password: "",

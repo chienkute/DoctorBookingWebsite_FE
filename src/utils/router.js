@@ -34,9 +34,9 @@ const publicRoutes = [
   { path: "/care/serviceSearch", component: serviceSearch },
   { path: "/user/information/:id", component: userInfo },
   { path: "/user/history", component: userHistory },
-  { path: "/user/changePassword", component: userChangePassword },
+  { path: "/user/changePassword/:id", component: userChangePassword },
   { path: "/user/help", component: userhelp },
-  { path: "/care/doctor/confirm", component: confirm },
+  { path: "/care/doctor/confirm/:id", component: confirm },
   { path: "/blog/:id", component: blog },
 ];
 export { publicRoutes };

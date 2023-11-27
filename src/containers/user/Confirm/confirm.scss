@@ -167,10 +167,14 @@
           }
         }
         &_text2 {
-          font-size: $fs-small-text;
-          color: $color-black;
-          font-weight: normal;
-          transform: translateY(-11px);
+          display: flex;
+          column-gap: 10px;
+          p {
+            font-size: $fs-small-text;
+            color: $color-black;
+            font-weight: normal;
+            transform: translateY(-11px);
+          }
         }
       }
       &_footer {
@@ -218,5 +222,9 @@
     width: 70%;
     display: flex;
     justify-content: flex-end;
+    column-gap: 10px;
   }
+}
+.moment__text {
+  font-weight: bold;
 }
