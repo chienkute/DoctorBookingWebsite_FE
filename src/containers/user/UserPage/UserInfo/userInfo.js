@@ -117,9 +117,7 @@ const UserInfo = () => {
                 <MdPhotoCamera></MdPhotoCamera>
               </div>
               <div className="UserAccount">
-                <p>
-                  {user?.user?.name ? <b>{user?.user?.name}</b> : <b>---</b>}
-                </p>
+                <p>{nameOld ? <b>{nameOld}</b> : <b>---</b>}</p>
                 {user?.account?.username ? (
                   <p className="UserAccountName">{user?.account?.username}</p>
                 ) : (
@@ -265,9 +263,13 @@ const UserInfo = () => {
                     <p className="PersonalInfoHeader">
                       <b>Ngày sinh</b>
                     </p>
-                    <p className="PersonalInfoData">
-                      <Moment format="DD/MM/YYYY">{birthdayOld}</Moment>
-                    </p>
+                    {birthdayOld ? (
+                      <p className="PersonalInfoData">
+                        <Moment format="DD/MM/YYYY">{birthdayOld}</Moment>
+                      </p>
+                    ) : (
+                      <p className="PersonalInfoData">--</p>
+                    )}
                   </li>
                   <li className="PersonalInfo">
                     <p className="PersonalInfoHeader">

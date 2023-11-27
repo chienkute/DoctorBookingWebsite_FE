@@ -55,8 +55,8 @@ const Booking = (id_doctor, id_schedule, date, time) => {
 const getBooking = () => {
   return instance.get("/api/appointments/");
 };
-const fetchAllCategories = () => {
-  return instance.get("/api/categories/");
+const fetchAllCategories = (page) => {
+  return instance.get(`/api/categories/?current_page=${page}`);
 };
 const searchBlogByName = (name) => {
   return instance.get(`/api/search_blog/?name=${name}`);
