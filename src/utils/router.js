@@ -24,6 +24,7 @@ const publicRoutes = [
   { path: "/login", component: Login, layout: null },
   { path: "/register", component: Register, layout: null },
   { path: "/care/searchDoctor", component: SearchDoctor },
+  { path: "/care/searchDoctor/:id", component: SearchDoctor },
   { path: "/search", component: Search },
   { path: "/categories", component: categories },
   { path: "/care/", component: Care },

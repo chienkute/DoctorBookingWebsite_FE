@@ -20,6 +20,7 @@ import { LoadingContext } from "context/LoadingContext";
 import dakhoaImages from "../../../assets/chuyenkhoa/dakhoa.png";
 import AppointmentBox from "../AppointmentBox/AppointmentBox";
 import { useDebounce } from "@uidotdev/usehooks";
+import ReactPaginate from "react-paginate";
 const HospitalPage = () => {
   const { id } = useParams();
   const { loading, setLoading } = useContext(LoadingContext);
@@ -455,6 +456,26 @@ const HospitalPage = () => {
                         </div>
                       );
                     })}
+                  <div className="service__pagination">
+                    <ReactPaginate
+                      breakLabel="..."
+                      nextLabel=">"
+                      // onPageChange={handlePageClick}
+                      pageRangeDisplayed={5}
+                      pageCount={3}
+                      previousLabel="<"
+                      pageClassName="page-item"
+                      pageLinkClassName="page-link"
+                      previousClassName="page-item previous"
+                      previousLinkClassName="page-link"
+                      nextClassName="page-item previous"
+                      nextLinkClassName="page-link"
+                      breakClassName="page-item"
+                      breakLinkClassName="page-link"
+                      containerClassName="pagination"
+                      activeClassName="active"
+                    />
+                  </div>
                 </div>
 
                 <div
@@ -532,6 +553,26 @@ const HospitalPage = () => {
                         </div>
                       );
                     })}
+                  <div className="service__pagination">
+                    <ReactPaginate
+                      breakLabel="..."
+                      nextLabel=">"
+                      // onPageChange={handlePageClick}
+                      pageRangeDisplayed={5}
+                      pageCount={3}
+                      previousLabel="<"
+                      pageClassName="page-item"
+                      pageLinkClassName="page-link"
+                      previousClassName="page-item previous"
+                      previousLinkClassName="page-link"
+                      nextClassName="page-item previous"
+                      nextLinkClassName="page-link"
+                      breakClassName="page-item"
+                      breakLinkClassName="page-link"
+                      containerClassName="pagination"
+                      activeClassName="active"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

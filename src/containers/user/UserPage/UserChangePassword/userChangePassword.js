@@ -50,7 +50,7 @@ const UserChangePassword = () => {
     onSubmit: async (values) => {
       const res = await changePassword(values.password, values.newpasswd, id);
       if (res) {
-        navigate("/user/information");
+        navigate("/");
         toast.success("Đổi mật khẩu thành công");
       } else {
         toast.error("Đổi mật khẩu thất bại");
