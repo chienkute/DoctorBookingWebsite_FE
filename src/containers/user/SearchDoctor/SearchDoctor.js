@@ -5,7 +5,7 @@ import "../../../style/page.scss";
 import "../../user/SearchDoctor/DoctorSearchResult.scss";
 import "../../user/SearchDoctor/HospitalSearchResult.scss";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import avt from "../../../assets/avatar.png";
 import {
   fetchAllService,
@@ -147,8 +147,7 @@ function SearchDoctor() {
                 aria-labelledby="care_in"
               >
                 <li>
-                  <a
-                    href="#"
+                  <Link
                     class="dropdown-item care__banner_menu_title"
                     onClick={(e) => {
                       const pValue =
@@ -161,12 +160,12 @@ function SearchDoctor() {
                       <FaLocationDot></FaLocationDot>
                     </div>
                     <p>Tất cả vị trí</p>
-                  </a>
+                  </Link>
                   <div className="care__banner_menu_title_line"></div>
                 </li>
                 {province.map((item, index) => (
                   <li key={index}>
-                    <a
+                    <Link
                       class="dropdown-item care__banner_menu_title"
                       onClick={() => {
                         setAdress(item.value);
@@ -177,7 +176,7 @@ function SearchDoctor() {
                         <FaLocationDot></FaLocationDot>
                       </div>
                       <p>{item.label}</p>
-                    </a>
+                    </Link>
                     <div className="care__banner_menu_title_line"></div>
                   </li>
                 ))}
@@ -188,7 +187,7 @@ function SearchDoctor() {
             <div className="care__banner_input flex-center">
               <input
                 type="text"
-                placeholder="Tìm kiếm theo tên bác sĩ,bệnh viện......"
+                placeholder="Tìm kiếm theo tên bác sĩ, bệnh viện......"
                 id="care__ins"
                 onChange={(e) => {
                   setQuery(e.target.value);
@@ -229,12 +228,9 @@ function SearchDoctor() {
                     doctor.map((item, index) => {
                       return (
                         <div className="DoctorSearchResultContainer">
-                          <a
-                            href=""
+                          <Link
                             className="DoctorHeader flex-center"
-                            onClick={() => {
-                              navigate(`/care/doctor/${item.id}`);
-                            }}
+                            to={`/care/doctor/${item.id}`}
                             key={index}
                           >
                             <div className="DoctorAvatar">
@@ -315,7 +311,7 @@ function SearchDoctor() {
                                 )}
                               </div>
                             </div>
-                          </a>
+                          </Link>
                           <a href="/care/hospital" className="DoctorFooter">
                             <div className="DoctorOfficeAvatar">
                               {loadingSkeleton ? (
@@ -526,7 +522,7 @@ function SearchDoctor() {
                       aria-labelledby="care_in"
                     >
                       <li>
-                        <a
+                        <Link
                           class="dropdown-item care__banner_menu_title"
                           onClick={(e) => {
                             const pValue =
@@ -539,13 +535,13 @@ function SearchDoctor() {
                             <img src={dakhoaImages} alt="" />
                           </div>
                           <p style={{ fontSize: "14px" }}>Tất cả chuyên khoa</p>
-                        </a>
+                        </Link>
                         <div className="care__banner_menu_title_line"></div>
                       </li>
                       {specialties &&
                         specialties.map((item, index) => (
                           <li key={index}>
-                            <a
+                            <Link
                               class="dropdown-item care__banner_menu_title"
                               onClick={(e) => {
                                 handleClickSpeciaylty(e);
@@ -556,7 +552,7 @@ function SearchDoctor() {
                                 <img src={dakhoaImages} alt="" />
                               </div>
                               <p style={{ fontSize: "14px" }}>{item.name}</p>
-                            </a>
+                            </Link>
                             <div className="care__banner_menu_title_line"></div>
                           </li>
                         ))}
@@ -583,7 +579,7 @@ function SearchDoctor() {
                       aria-labelledby="care_in"
                     >
                       <li>
-                        <a
+                        <Link
                           class="dropdown-item care__banner_menu_title"
                           onClick={(e) => {
                             const pValue =
@@ -596,13 +592,13 @@ function SearchDoctor() {
                             <img src={dakhoaImages} alt="" />
                           </div>
                           <p style={{ fontSize: "14px" }}>Tất cả dịch vụ</p>
-                        </a>
+                        </Link>
                         <div className="care__banner_menu_title_line"></div>
                       </li>
                       {services &&
                         services.map((item, index) => (
                           <li key={index}>
-                            <a
+                            <Link
                               class="dropdown-item care__banner_menu_title"
                               onClick={(e) => {
                                 handleClickService(e);
@@ -613,7 +609,7 @@ function SearchDoctor() {
                                 <img src={dakhoaImages} alt="" />
                               </div>
                               <p style={{ fontSize: "14px" }}>{item.name}</p>
-                            </a>
+                            </Link>
                             <div className="care__banner_menu_title_line"></div>
                           </li>
                         ))}

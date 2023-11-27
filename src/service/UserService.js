@@ -47,7 +47,7 @@ const search = (service, address, specialty, name, hospital) => {
   );
 };
 const scheduleDoctor = (id) => {
-  return instance.get(`api/schedulerdoctor?doctor=${id}`);
+  return instance.get(`api/getschedulerdoctor?doctor=${id}`);
 };
 const Booking = (id_doctor, id_schedule, date, time) => {
   return instance.post("/api/booking/", { id_doctor, id_schedule, date, time });
