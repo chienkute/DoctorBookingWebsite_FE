@@ -7,6 +7,7 @@ import "../../UserPage/UserPage.scss";
 import { LoadingContext } from "context/LoadingContext";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { MdPhotoCamera } from "react-icons/md";
 const UserInfo = () => {
   const [user, setUser] = useState([]);
   const [edit, setEdit] = useState(false);
@@ -111,6 +112,9 @@ const UserInfo = () => {
             <div className="UserBasicInfo">
               <div className="UserAvatar">
                 <img src={avtImg} alt="BlogImg"></img>
+              </div>
+              <div className="upload__image" role="button">
+                <MdPhotoCamera></MdPhotoCamera>
               </div>
               <div className="UserAccount">
                 <p>

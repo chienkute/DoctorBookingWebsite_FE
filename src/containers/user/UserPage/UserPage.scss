@@ -70,8 +70,24 @@
 .UserAvatar {
   width: 20%;
   margin-right: 24px;
+  position: relative;
 }
 
+.upload__image {
+  position: absolute;
+  top: 250px;
+  right: 760px;
+  background-color: white;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    font-size: 20px;
+  }
+}
 .UserAvatar > img {
   width: 100%;
   object-fit: contain;

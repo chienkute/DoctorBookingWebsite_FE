@@ -5,7 +5,12 @@ import dakhoaImages from "../../../../assets/chuyenkhoa/dakhoa.png";
 import { MdOutlineMedicalServices } from "react-icons/md";
 import { TbBuildingHospital } from "react-icons/tb";
 import { FaLocationDot, FaUserDoctor } from "react-icons/fa6";
-import { searchAll } from "service/UserService";
+import {
+  getDoctorByNameAddress,
+  getHospitalByNameAddress,
+  getServiceByNameAddress,
+  getSpecialtyByNameAddress,
+} from "service/UserService";
 import { useDebounce } from "@uidotdev/usehooks";
 // import { useNavigate } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
@@ -15,101 +20,133 @@ const CareSearch = () => {
   const [query, setQuery] = useState("");
   const [doctor, setDoctor] = useState([]);
   const [hospital, setHospital] = useState([]);
-  // const hospitalSlice = hospital.slice(0, 3);
   const [adress, setAdress] = useState("");
   const [address, setAddress] = useState("");
   const [specialty, setSpecialty] = useState("");
   const [service, setService] = useState("");
   const debouncedSearchTerm = useDebounce(query, 500);
   const [loadingSkeleton, SetLoadingSkeleton] = useState(true);
+  const getDoctor = async () => {
+    let res = await getDoctorByNameAddress(debouncedSearchTerm, adress);
+    if (res) {
+      SetLoadingSkeleton(true);
+      setDoctor(res?.results);
+    }
+  };
+  const getHospital = async () => {
+    let res = await getHospitalByNameAddress(debouncedSearchTerm, adress);
+    if (res) {
+      SetLoadingSkeleton(true);
+      setHospital(res?.results);
+    }
+  };
+  const getService = async () => {
+    let res = await getServiceByNameAddress(debouncedSearchTerm, adress);
+    if (res) {
+      SetLoadingSkeleton(true);
+      setService(res?.results);
+    }
+  };
+  const getSpecialty = async () => {
+    let res = await getSpecialtyByNameAddress(debouncedSearchTerm, adress);
+    if (res) {
+      SetLoadingSkeleton(true);
+      setSpecialty(res?.results);
+    }
+  };
+
   useEffect(() => {
-    const search = async () => {
-      if (debouncedSearchTerm) {
-        let res = await searchAll(adress, debouncedSearchTerm);
-        console.log(res);
-        if (res) {
-          SetLoadingSkeleton(true);
-          setDoctor(res?.results?.doctors);
-          setHospital(res?.results?.hospitals);
-          setService(res?.results?.services);
-          setSpecialty(res?.results?.specialtys);
-        }
-      }
-    };
-    search();
+    getDoctor();
+    getHospital();
+    getService();
+    getSpecialty();
     setTimeout(() => {
       SetLoadingSkeleton(false);
     }, 1500);
   }, [debouncedSearchTerm, adress]);
-  const handleClickAdress = (e) => {
-    const pValue = e.currentTarget.querySelector("p").innerText;
-    setAdress(pValue);
-    setAddress(pValue);
-  };
-  const provinces = [
-    "An Giang",
-    "Bà Rịa - Vũng Tàu",
-    "Bạc Liêu",
-    "Bắc Giang",
-    "Bắc Kạn",
-    "Bắc Ninh",
-    "Bến Tre",
-    "Bình Định",
-    "Bình Dương",
-    "Bình Phước",
-    "Bình Thuận",
-    "Cà Mau",
-    "Cần Thơ",
-    "Cao Bằng",
-    "Đà Nẵng",
-    "Đắk Lắk",
-    "Đắk Nông",
-    "Điện Biên",
-    "Đồng Nai",
-    "Đồng Tháp",
-    "Gia Lai",
-    "Hà Giang",
-    "Hà Nam",
-    "Hà Nội",
-    "Hà Tĩnh",
-    "Hải Dương",
-    "Hải Phòng",
-    "Hậu Giang",
-    "Hòa Bình",
-    "Hưng Yên",
-    "Khánh Hòa",
-    "Kiên Giang",
-    "Kon Tum",
-    "Lai Châu",
-    "Lâm Đồng",
-    "Lạng Sơn",
-    "Lào Cai",
-    "Long An",
-    "Nam Định",
-    "Nghệ An",
-    "Ninh Bình",
-    "Ninh Thuận",
-    "Phú Thọ",
-    "Phú Yên",
-    "Quảng Bình",
-    "Quảng Nam",
-    "Quảng Ngãi",
-    "Quảng Ninh",
-    "Quảng Trị",
-    "Sóc Trăng",
-    "Sơn La",
-    "Tây Ninh",
-    "Thái Bình",
-    "Thái Nguyên",
-    "Thanh Hóa",
-    "Thừa Thiên Huế",
-    "Tiền Giang",
-    "TP Hồ Chí Minh",
-    "Trà Vinh",
-    "Tuyên Quang",
-    "Vĩnh Long",
-    "Vĩnh Phúc",
-    "Yên Bái",
+  // const provinces = [
+  //   "An Giang",
+  //   "Bà Rịa - Vũng Tàu",
+  //   "Bạc Liêu",
+  //   "Bắc Giang",
+  //   "Bắc Kạn",
+  //   "Bắc Ninh",
+  //   "Bến Tre",
+  //   "Bình Định",
+  //   "Bình Dương",
+  //   "Bình Phước",
+  //   "Bình Thuận",
+  //   "Cà Mau",
+  //   "Cần Thơ",
+  //   "Cao Bằng",
+  //   "Đà Nẵng",
+  //   "Đắk Lắk",
+  //   "Đắk Nông",
+  //   "Điện Biên",
+  //   "Đồng Nai",
+  //   "Đồng Tháp",
+  //   "Gia Lai",
+  //   "Hà Giang",
+  //   "Hà Nam",
+  //   "Hà Nội",
+  //   "Hà Tĩnh",
+  //   "Hải Dương",
+  //   "Hải Phòng",
+  //   "Hậu Giang",
+  //   "Hòa Bình",
+  //   "Hưng Yên",
+  //   "Khánh Hòa",
+  //   "Kiên Giang",
+  //   "Kon Tum",
+  //   "Lai Châu",
+  //   "Lâm Đồng",
+  //   "Lạng Sơn",
+  //   "Lào Cai",
+  //   "Long An",
+  //   "Nam Định",
+  //   "Nghệ An",
+  //   "Ninh Bình",
+  //   "Ninh Thuận",
+  //   "Phú Thọ",
+  //   "Phú Yên",
+  //   "Quảng Bình",
+  //   "Quảng Nam",
+  //   "Quảng Ngãi",
+  //   "Quảng Ninh",
+  //   "Quảng Trị",
+  //   "Sóc Trăng",
+  //   "Sơn La",
+  //   "Tây Ninh",
+  //   "Thái Bình",
+  //   "Thái Nguyên",
+  //   "Thanh Hóa",
+  //   "Thừa Thiên Huế",
+  //   "Tiền Giang",
+  //   "TP Hồ Chí Minh",
+  //   "Trà Vinh",
+  //   "Tuyên Quang",
+  //   "Vĩnh Long",
+  //   "Vĩnh Phúc",
+  //   "Yên Bái",
+  // ];
+  // const provincesWithValues = provinces.map((province) => {
+  //   const value = province
+  //     .toLowerCase() // Chuyển thành chữ thường
+  //     .replace(/\s+/g, "") // Loại bỏ khoảng trắng
+  //     .normalize("NFD") // Chuẩn hóa Unicode
+  //     .replace(/[\u0300-\u036f]/g, "") // Loại bỏ dấu
+  //     .replace(/đ/g, "d") // Thay thế "đ" thành "d"
+  //     .replace(/(^|\s)\S/g, (char) => char.toUpperCase()); // Viết hoa chữ cái đầu
+
+  //   return {
+  //     value,
+  //     label: province,
+  //   };
+  // });
+  const province = [
+    { value: "Danang", label: "Đà Nẵng" },
+    { value: "Hanoi", label: "Hà Nội" },
+    { value: "HoChiMinh", label: "Hồ Chí Minh" },
   ];
   return (
     <div className="care__banner_search">
@@ -143,16 +180,19 @@ const CareSearch = () => {
               </a>
               <div className="care__banner_menu_title_line"></div>
             </li>
-            {provinces.map((province, index) => (
+            {province.map((province, index) => (
               <li key={index}>
                 <a
                   class="dropdown-item care__banner_menu_title"
-                  onClick={handleClickAdress}
+                  onClick={() => {
+                    setAdress(province.value);
+                    setAddress(province.label);
+                  }}
                 >
                   <div>
                     <FaLocationDot></FaLocationDot>
                   </div>
-                  <p>{province}</p>
+                  <p>{province.label}</p>
                 </a>
                 <div className="care__banner_menu_title_line"></div>
               </li>

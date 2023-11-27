@@ -10,12 +10,16 @@ import tienmat from "../../../assets/tienmat.png";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import hospavt from "../../../assets/hospital.jpg";
 import doctorImg from "../../../assets/doctor/tat.jpg";
-import { fetchAllSpecialties, search } from "service/UserService";
+import {
+  fetchAllSpecialties,
+  getServiceByIdHospital,
+  searchDoctor,
+} from "service/UserService";
 import { useParams } from "react-router-dom";
 import { LoadingContext } from "context/LoadingContext";
 import dakhoaImages from "../../../assets/chuyenkhoa/dakhoa.png";
 import AppointmentBox from "../AppointmentBox/AppointmentBox";
-
+import { useDebounce } from "@uidotdev/usehooks";
 const HospitalPage = () => {
   const { id } = useParams();
   const { loading, setLoading } = useContext(LoadingContext);
@@ -23,19 +27,30 @@ const HospitalPage = () => {
   const [specialtyy, setSpecialtyy] = useState("");
   const [specialties, setSpecialties] = useState(null);
   const [doctor, setDoctor] = useState([]);
+  const [service, setService] = useState([]);
   const [selectDoctor, setSelectDoctor] = useState("");
   const [doctorSearch, setDoctorSearch] = useState([]);
   const [show, setShow] = useState(false);
+  const [queryDoctor, setQueryDoctor] = useState("");
+  const [queryService, setQueryService] = useState("");
+  const debouncedSearchDoctor = useDebounce(queryDoctor, 500);
+  const debouncedSearchService = useDebounce(queryService, 500);
   const getDoctor = async () => {
-    let res = await search("", "", specialty, "", id);
+    let res = await searchDoctor("", "", id, specialty, "");
     if (res) {
-      setDoctor(res?.results?.doctors);
+      setDoctor(res?.results);
     }
   };
   const getDoctorByIdHospital = async () => {
-    let res = await search("", "", "", "", id);
+    let res = await searchDoctor(debouncedSearchDoctor, "", "", "", id);
     if (res) {
-      setDoctorSearch(res?.results?.doctors);
+      setDoctorSearch(res?.results);
+    }
+  };
+  const getService = async () => {
+    let res = await getServiceByIdHospital(debouncedSearchService, id);
+    if (res) {
+      setService(res?.results);
     }
   };
   const getSpecialty = async () => {
@@ -57,9 +72,14 @@ const HospitalPage = () => {
   }, [specialty]);
   useEffect(() => {
     getSpecialty();
-    getDoctorByIdHospital();
     setLoading(false);
   }, []);
+  useEffect(() => {
+    getDoctorByIdHospital();
+  }, [queryDoctor]);
+  useEffect(() => {
+    getService();
+  }, [queryService]);
   return (
     <div>
       {loading ? (
@@ -272,6 +292,9 @@ const HospitalPage = () => {
                               data-mdb-toggle="dropdown"
                               value={`${specialtyy}`}
                               autoComplete="off"
+                              onClick={() => {
+                                setSelectDoctor("");
+                              }}
                             ></input>
                             <ul
                               class="dropdown-menu care__banner_menu search_menu"
@@ -351,7 +374,6 @@ const HospitalPage = () => {
                                       class="dropdown-item care__banner_menu_title"
                                       onClick={(e) => {
                                         handleClickDoctor(e);
-                                        setSpecialty(item.id);
                                         setShow(true);
                                       }}
                                     >
@@ -391,38 +413,48 @@ const HospitalPage = () => {
                         type="text"
                         placeholder="Tìm kiếm..."
                         id="care__ins"
+                        onChange={(e) => {
+                          setQueryService(e.target.value);
+                        }}
                       ></input>
                     </div>
                   </div>
-                  <div className="hospital__body_dichvu_result">
-                    <div className="hospital__body_dichvu_info">
-                      <a href="/care/dich-vu">Thăm khám và tư vấn</a>
-                      <div className="hospital__body_dichvu_price">
-                        <div className="hospital__body_dichvu_price_icon">
-                          <RiMoneyDollarCircleLine></RiMoneyDollarCircleLine>
+                  {service &&
+                    service.map((item, index) => {
+                      return (
+                        <div className="hospital__body_dichvu_result">
+                          <div className="hospital__body_dichvu_info">
+                            <a href="/care/dich-vu">{item.name}</a>
+                            <div className="hospital__body_dichvu_price">
+                              <div className="hospital__body_dichvu_price_icon">
+                                <RiMoneyDollarCircleLine></RiMoneyDollarCircleLine>
+                              </div>
+                              <p>800.000</p>
+                            </div>
+                          </div>
+                          <div className="hospital__body_dichvu_bottom">
+                            <div className="hospital__body_dichvu_bottom_avtHosp">
+                              <img src={hospavt} alt="" />
+                            </div>
+                            <div className="hospital__body_dichvu_bottom_descrip">
+                              <a href="#">
+                                Phòng Khám ACC - Chiropractic Đà Nẵng
+                              </a>
+                              <p>
+                                112 Đường 2 Tháng 9, phường Bình Thuận, Hải
+                                Châu, Đà Nẵng, Viet Nam
+                              </p>
+                            </div>
+                            <button
+                              type="button"
+                              className="btn button hospital__body_dichvu_bottom_button"
+                            >
+                              Đặt Lịch Hẹn
+                            </button>
+                          </div>
                         </div>
-                        <p>800.000</p>
-                      </div>
-                    </div>
-                    <div className="hospital__body_dichvu_bottom">
-                      <div className="hospital__body_dichvu_bottom_avtHosp">
-                        <img src={hospavt} alt="" />
-                      </div>
-                      <div className="hospital__body_dichvu_bottom_descrip">
-                        <a href="#">Phòng Khám ACC - Chiropractic Đà Nẵng</a>
-                        <p>
-                          112 Đường 2 Tháng 9, phường Bình Thuận, Hải Châu, Đà
-                          Nẵng, Viet Nam
-                        </p>
-                      </div>
-                      <button
-                        type="button"
-                        className="btn button hospital__body_dichvu_bottom_button"
-                      >
-                        Đặt Lịch Hẹn
-                      </button>
-                    </div>
-                  </div>
+                      );
+                    })}
                 </div>
 
                 <div
@@ -438,6 +470,9 @@ const HospitalPage = () => {
                         placeholder="Tìm kiếm..."
                         id="care__ins"
                         autoComplete="off"
+                        onChange={(e) => {
+                          setQueryDoctor(e.target.value);
+                        }}
                       ></input>
                     </div>
                   </div>
