@@ -73,7 +73,7 @@ const publicRoutes = [
     layout: null,
   },
   { path: "/care/serviceSearch", component: serviceSearch },
-  { path: "/user/information", component: userInfo },
+  { path: "/user/information/:id", component: userInfo },
   { path: "/user/history", component: userHistory },
   { path: "/user/changePassword", component: userChangePassword },
   { path: "/user/help", component: userhelp },

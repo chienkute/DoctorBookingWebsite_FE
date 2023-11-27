@@ -1,0 +1,13 @@
+@use "sass:map";
+@import "style/pages/theme";
+.help {
+  margin-top: -5px;
+  h1 {
+    font-size: $fs-normal-title;
+    font-weight: 700;
+    margin-bottom: 30px;
+  }
+}
+.accordion-header {
+  font-weight: 700 !important;
+}
