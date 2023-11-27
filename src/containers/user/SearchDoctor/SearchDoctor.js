@@ -5,7 +5,7 @@ import "../../../style/page.scss";
 import "../../user/SearchDoctor/DoctorSearchResult.scss";
 import "../../user/SearchDoctor/HospitalSearchResult.scss";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import avt from "../../../assets/avatar.png";
 import {
   fetchAllService,
@@ -18,6 +18,7 @@ import { MdLocationOn } from "react-icons/md";
 import dakhoaImages from "../../../assets/chuyenkhoa/dakhoa.png";
 import Skeleton from "react-loading-skeleton";
 function SearchDoctor() {
+  const { id } = useParams();
   const [adress, setAdress] = useState("");
   const [address, setAddress] = useState("");
   const [query, setQuery] = useState("");
@@ -70,6 +71,11 @@ function SearchDoctor() {
     }, 1000);
   }, [debouncedSearchTerm, adress, specialty, service]);
   useEffect(() => {
+    if (id >= 0) {
+      setSpecialty(id);
+    } else {
+      setSpecialty("");
+    }
     const getAllSpecialty = async () => {
       let res = await fetchAllSpecialties();
       if (res) {

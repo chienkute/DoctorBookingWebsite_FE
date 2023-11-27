@@ -12,10 +12,9 @@ import {
   getSpecialtyByNameAddress,
 } from "service/UserService";
 import { useDebounce } from "@uidotdev/usehooks";
-// import { useNavigate } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
+import { Link, useNavigate } from "react-router-dom";
 const CareSearch = () => {
-  // const navigate = useNavigate();
   const { show, setShow } = useClickOutSide();
   const [query, setQuery] = useState("");
   const [doctor, setDoctor] = useState([]);
@@ -26,6 +25,7 @@ const CareSearch = () => {
   const [service, setService] = useState("");
   const debouncedSearchTerm = useDebounce(query, 500);
   const [loadingSkeleton, SetLoadingSkeleton] = useState(true);
+  const navigate = useNavigate();
   const getDoctor = async () => {
     let res = await getDoctorByNameAddress(debouncedSearchTerm, adress);
     if (res) {
@@ -262,12 +262,11 @@ const CareSearch = () => {
                     </div>
                   ) : (
                     <div className="row">
-                      {" "}
                       {specialty && specialty.length > 0 ? (
                         specialty.map((item, index) => {
                           return (
-                            <a
-                              href="/"
+                            <Link
+                              to={`/care/searchDoctor/${item.id}`}
                               className="col-2 care__banner_menus_item_col"
                               key={index}
                             >
@@ -292,7 +291,7 @@ const CareSearch = () => {
                                   />
                                 )}
                               </p>
-                            </a>
+                            </Link>
                           );
                         })
                       ) : (

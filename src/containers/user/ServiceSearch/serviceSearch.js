@@ -7,30 +7,30 @@ import hospavt from "../../../assets/hospital.jpg";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import "../ServiceSearch/serviceSearch.scss";
 import { useEffect, useState } from "react";
-import { fetchAllService } from "service/UserService";
+import { getServiceByIdHospital } from "service/UserService";
 import { useNavigate } from "react-router-dom";
+import { useDebounce } from "@uidotdev/usehooks";
 const ServiceSearch = () => {
   const [service, setService] = useState([]);
   const [search, setSearch] = useState("");
+  const [searchCount, setSearchCount] = useState("");
   const navigate = useNavigate();
+  const queryDebounce = useDebounce(search, 500);
 
   useEffect(() => {
     const getService = async () => {
-      let res = await fetchAllService();
+      let res = await getServiceByIdHospital(queryDebounce, "");
       if (res) {
-        setService(res.results);
+        setService(res?.results);
+        setSearchCount(res?.count);
         console.log(res);
       }
     };
     getService();
-  }, []);
-  const filteredCategories = service.filter((item) =>
-    item.name.toLowerCase().includes(search.toLowerCase()),
-  );
+  }, [queryDebounce]);
   return (
     <div className="serviceSearch">
       <div className="SearchDoctorPageContent serviceSearch__page">
-        <div className="SearchDoctorInputRows"></div>
         <div className="SearchDoctorResultContainer">
           <div className="SearchDoctorResultContent">
             <div className="care__banner_button">
@@ -48,10 +48,12 @@ const ServiceSearch = () => {
             <div
               className="SearchDoctorResultLabel bold"
               style={{ marginTop: "30px" }}
-            ></div>
+            >
+              {searchCount} kết quả được tìm thấy
+            </div>
             {service &&
               service.length > 0 &&
-              filteredCategories.map((item, index) => {
+              service.map((item, index) => {
                 return (
                   <div className="hospital__body_dichvu_result" key={index}>
                     <div className="hospital__body_dichvu_info">

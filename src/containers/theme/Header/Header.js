@@ -26,7 +26,7 @@ import { BiSolidHelpCircle } from "react-icons/bi";
 import { SearchContext } from "context/SearchContext";
 import { FaCalendarAlt } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { fetchAllSpecialties } from "service/UserService";
+import { fetchAllCategories, fetchAllSpecialties } from "service/UserService";
 import { FaUserAlt } from "react-icons/fa";
 const Header = () => {
   const { setSearch } = useContext(SearchContext);
@@ -51,6 +51,7 @@ const Header = () => {
   };
   const { show, setShow, nodeRef } = useClickOutSide();
   const [specialty, setSpecialty] = useState([]);
+  const [categories, setCategories] = useState([]);
   const specialtySlice = specialty.slice(0, 5);
   const getSpecialty = async () => {
     let res = await fetchAllSpecialties();
@@ -58,9 +59,16 @@ const Header = () => {
       setSpecialty(res?.results);
     }
   };
+  const getService = async () => {
+    let res = await fetchAllCategories(1);
+    if (res) {
+      setCategories(res?.results);
+    }
+  };
   useEffect(() => {
     getSpecialty();
     getUser();
+    getService();
   }, []);
   return (
     <div>
@@ -104,72 +112,24 @@ const Header = () => {
                       Chuyên mục sức khỏe
                     </div>
                   </li>
-                  <li>
-                    <a
-                      class="dropdown-item d-flex align-items-center dropdown__item"
-                      href="/category"
-                    >
-                      <div className="header__menu_image">
-                        <img src={imageChuyenMuc1} alt="" />
-                      </div>
-                      <span>Dược liệu</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      class="dropdown-item d-flex align-items-center dropdown__item"
-                      href="#"
-                    >
-                      <div className="header__menu_image">
-                        <img src={imageChuyenMuc2} alt="" />
-                      </div>
-                      <span>Sức khỏe răng miệng</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      class="dropdown-item d-flex align-items-center dropdown__item"
-                      href="#"
-                    >
-                      <div className="header__menu_image">
-                        <img src={imageChuyenMuc3} alt="" />
-                      </div>
-                      <span>Tâm lý - Tâm thần</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      class="dropdown-item d-flex align-items-center dropdown__item"
-                      href="#"
-                    >
-                      <div className="header__menu_image">
-                        <img src={imageChuyenMuc4} alt="" />
-                      </div>
-                      <span>Thể dục thể thao</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      class="dropdown-item d-flex align-items-center dropdown__item"
-                      href="#"
-                    >
-                      <div className="header__menu_image">
-                        <img src={imageChuyenMuc5} alt="" />
-                      </div>
-                      <span> Lão hóa lành mạnh</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      class="dropdown-item d-flex align-items-center dropdown__item"
-                      href="#"
-                    >
-                      <div className="header__menu_image">
-                        <img src={imageChuyenMuc6} alt="" />
-                      </div>
-                      <span>Thói quen lành mạnh</span>
-                    </a>
-                  </li>
+                  {categories &&
+                    categories.length > 0 &&
+                    categories.map((item, index) => {
+                      return (
+                        <li>
+                          <a
+                            class="dropdown-item d-flex align-items-center dropdown__item"
+                            href="/category"
+                          >
+                            <div className="header__menu_image">
+                              <img src={imageChuyenMuc1} alt="" />
+                            </div>
+                            <span>{item.name}</span>
+                          </a>
+                        </li>
+                      );
+                    })}
+
                   <li>
                     <a className="header__menu_link" href="/categories">
                       <p>Xem tất cả chuyên mục</p>
