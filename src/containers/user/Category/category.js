@@ -10,23 +10,47 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import "../Category/CategoryListStyle.scss";
 import ReactPaginate from "react-paginate";
-import { useParams } from "react-router-dom";
-import { getBlogByIdCategory } from "service/UserService";
+import { Link, useLocation, useParams } from "react-router-dom";
+import {
+  fetchAllCategories,
+  getBlogByIdCategory,
+  getCategoryById,
+} from "service/UserService";
 import { LoadingContext } from "context/LoadingContext";
+import { MdKeyboardArrowRight } from "react-icons/md";
 const Category = () => {
   const { id } = useParams();
   const [blog, setBlog] = useState([]);
   const { loading, setLoading } = useContext(LoadingContext);
-  console.log(blog);
+  const location = useLocation();
+  const [categories, setCategories] = useState([]);
+  const [categoryy, setCategory] = useState([]);
+  const { category } = location.state;
+  const getService = async () => {
+    let res = await fetchAllCategories(1);
+    if (res) {
+      setCategories(res?.results);
+    }
+  };
+  const getCategory = async () => {
+    let res = await getCategoryById(id);
+    if (res) {
+      setLoading(false);
+      setCategory(res);
+    }
+  };
   useEffect(() => {
     const getBlog = async () => {
       let res = await getBlogByIdCategory(id);
       if (res) {
         setLoading(false);
+        console.log(res);
         setBlog(res.results);
       }
     };
     getBlog();
+    getService();
+    getCategory();
   }, []);
   return (
     <div>
@@ -48,6 +72,12 @@ const Category = () => {
             <a href="/categories" className="color-black fs-normal-text">
               Tất cả chuyên mục
             </a>
+            <div className="category__text">
+              <MdKeyboardArrowRight></MdKeyboardArrowRight>
+            </div>
+            <Link to={`/category/${id}`} className="category__text2">
+              {category}
+            </Link>
           </div>
           <div className="category__color"></div>
           <div className="caregory__banner">
@@ -56,7 +86,7 @@ const Category = () => {
                 <div className="category__banner_image_header">
                   <img src={chuyenmucImages} alt="" />
                 </div>
-                <h1>Sức khỏe răng miệng</h1>
+                <h1>{categoryy?.name}</h1>
               </div>
               <div className="category__banner_description">
                 <p>
@@ -243,7 +273,7 @@ const Category = () => {
                   </ul>
                 </div>
               </div>
-              <h3>Khám phá thêm các chuyên mục về Sức khỏe răng miệng</h3>
+              <h3>Khám phá thêm các chuyên mục khác</h3>
               <div className="category__blog_category category-list row">
                 <Swiper
                   modules={[Navigation, Pagination]}
@@ -252,78 +282,24 @@ const Category = () => {
                   grabCursor={"true"}
                   navigation
                 >
-                  <SwiperSlide>
-                    <a className="col-md-2 category-item" href="#">
-                      <div className="category-item-image">
-                        <img src={chuyenmucImages} alt="" />
-                      </div>
-                      <p>Viêm nướu & nha chu</p>
-                    </a>
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <a className="col-md-2 category-item-image" href="#">
-                      <div>
-                        <img src={chuyenmucImages} alt="" />
-                      </div>
-                      <p>Viêm nướu & nha chu</p>
-                    </a>
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <a className="col-md-2 category-item-image" href="#">
-                      <div>
-                        <img src={chuyenmucImages} alt="" />
-                      </div>
-                      <p>Viêm nướu & nha chu</p>
-                    </a>
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <a className="col-md-2 category-item-image" href="#">
-                      <div>
-                        <img src={chuyenmucImages} alt="" />
-                      </div>
-                      <p>Viêm nướu & nha chu</p>
-                    </a>
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <a className="col-md-2 category-item-image" href="#">
-                      <div>
-                        <img src={chuyenmucImages} alt="" />
-                      </div>
-                      <p>Viêm nướu & nha chu</p>
-                    </a>
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <a className="col-md-2 category-item-image" href="#">
-                      <div>
-                        <img src={chuyenmucImages} alt="" />
-                      </div>
-                      <p>Viêm nướu & nha chu</p>
-                    </a>
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <a className="col-md-2 category-item-image" href="#">
-                      <div>
-                        <img src={chuyenmucImages} alt="" />
-                      </div>
-                      <p>Viêm nướu & nha chu</p>
-                    </a>
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <a className="col-md-2 category-item-image" href="#">
-                      <div>
-                        <img src={chuyenmucImages} alt="" />
-                      </div>
-                      <p>Viêm nướu & nha chu</p>
-                    </a>
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <a className="col-md-2 category-item-image" href="#">
-                      <div>
-                        <img src={chuyenmucImages} alt="" />
-                      </div>
-                      <p>Viêm nướu & nha chu</p>
-                    </a>
-                  </SwiperSlide>
+                  {categories &&
+                    categories.length > 0 &&
+                    categories.map((item, index) => {
+                      return (
+                        <SwiperSlide>
+                          <Link
+                            className="col-md-2 category-item"
+                            to={`/category/${item.id}`}
+                            state={{ chuyenmuc: `${item.name}` }}
+                          >
+                            <div className="category-item-image">
+                              <img src={chuyenmucImages} alt="" />
+                            </div>
+                            <p>{item.name}</p>
+                          </Link>
+                        </SwiperSlide>
+                      );
+                    })}
                 </Swiper>
               </div>
               <h3>Xem thêm về Sức khỏe răng miệng</h3>

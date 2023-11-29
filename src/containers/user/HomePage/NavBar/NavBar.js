@@ -35,7 +35,7 @@ class NavBar extends React.Component {
             </a>
           </li>
           <li className="Navigation bold">
-            <a href="#" className="flex-center clear">
+            <a href="/tool" className="flex-center clear">
               <div className="NavigationIcon flex-center">
                 <FaHeartPulse />
               </div>

@@ -5,7 +5,7 @@ import "../../../style/page.scss";
 import "../../user/SearchDoctor/DoctorSearchResult.scss";
 import "../../user/SearchDoctor/HospitalSearchResult.scss";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import avt from "../../../assets/avatar.png";
 import {
   fetchAllService,
@@ -35,7 +35,10 @@ function SearchDoctor() {
   const [count, setCount] = useState(doctorCount);
   const debouncedSearchTerm = useDebounce(query, 500);
   const [loadingSkeleton, SetLoadingSkeleton] = useState(true);
+  const [show, setShow] = useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { name } = location.state;
   const getDoctor = async () => {
     let res = await searchDoctor(
       debouncedSearchTerm,
@@ -71,6 +74,11 @@ function SearchDoctor() {
     }, 1000);
   }, [debouncedSearchTerm, adress, specialty, service]);
   useEffect(() => {
+    if (name === "empty") {
+      setSpecialtyy("");
+    } else {
+      setSpecialtyy(name);
+    }
     if (id >= 0) {
       setSpecialty(id);
     } else {
@@ -92,6 +100,9 @@ function SearchDoctor() {
     getService();
     setTimeout(() => {
       SetLoadingSkeleton(false);
+    }, 1500);
+    setTimeout(() => {
+      setShow(false);
     }, 1500);
   }, []);
   const province = [
@@ -221,141 +232,365 @@ function SearchDoctor() {
               </ul>
             </div>
             <div className="SearchResultContent">
-              <ul className="clear ListDoctorResult" id="ListDoctorResult">
-                <li className="DoctorResult">
-                  {doctor &&
-                    doctor.length > 0 &&
-                    doctor.map((item, index) => {
-                      return (
-                        <div className="DoctorSearchResultContainer">
-                          <Link
-                            className="DoctorHeader flex-center"
-                            to={`/care/doctor/${item.id}`}
-                            key={index}
-                          >
-                            <div className="DoctorAvatar">
-                              {loadingSkeleton ? (
-                                <Skeleton
-                                  height="75px"
-                                  width="75px"
-                                  circle
-                                  style={{ transform: "translateY(-10px)" }}
-                                />
-                              ) : (
-                                <img src={avt} alt="Avatar"></img>
-                              )}
-                            </div>
-                            <div className="DoctorInfo">
-                              {loadingSkeleton ? (
-                                <div className="DoctorName bold">
-                                  <Skeleton
-                                    count={1}
-                                    width="70%"
-                                    style={{ marginLeft: "10px" }}
-                                  />
-                                </div>
-                              ) : (
-                                <div className="DoctorName bold">
-                                  {item.name}
-                                </div>
-                              )}
-                              {loadingSkeleton ? (
-                                <div className="DoctorSpeicalist">
-                                  <Skeleton
-                                    count={1}
-                                    width="50%"
-                                    style={{ marginLeft: "10px" }}
-                                  />
-                                </div>
-                              ) : (
-                                <div className="DoctorSpeicalist">
-                                  Đa khoa, Nội tổng quát
-                                </div>
-                              )}
+              {show ? (
+                <ul className="clear ListDoctorResult" id="ListDoctorResult">
+                  <li className="DoctorResult">
+                    <div className="DoctorSearchResultContainer">
+                      <Link className="DoctorHeader flex-center">
+                        <div className="DoctorAvatar">
+                          <Skeleton
+                            height="75px"
+                            width="75px"
+                            circle
+                            style={{ transform: "translateY(-10px)" }}
+                          />
+                        </div>
+                        <div className="DoctorInfo">
+                          <div className="DoctorName bold">
+                            <Skeleton
+                              count={1}
+                              width="70%"
+                              style={{ marginLeft: "10px" }}
+                            />
+                          </div>
 
-                              <div className="TagContainer">
+                          <div className="DoctorSpeicalist">
+                            <Skeleton
+                              count={1}
+                              width="50%"
+                              style={{ marginLeft: "10px" }}
+                            />
+                          </div>
+
+                          <div className="TagContainer">
+                            <Skeleton
+                              count={1}
+                              width="80px"
+                              style={{ marginLeft: "10px" }}
+                            />
+
+                            <Skeleton
+                              count={1}
+                              width="80px"
+                              style={{ marginLeft: "10px" }}
+                            />
+
+                            <Skeleton
+                              count={1}
+                              width="80px"
+                              style={{ marginLeft: "10px" }}
+                            />
+                          </div>
+                        </div>
+                      </Link>
+                      <a href="/care/hospital" className="DoctorFooter">
+                        <div className="DoctorOfficeAvatar">
+                          <Skeleton circle width="45px" height="45px" />
+                        </div>
+
+                        <div className="DoctorOffice">
+                          <div className="DoctorOfficeName">
+                            <Skeleton width="400px" />
+                          </div>
+
+                          <div className="DoctorOfficeAddress">
+                            <Skeleton />
+                          </div>
+                        </div>
+                        <div className="BookDoctor">
+                          <Skeleton width={"130px"} height={"50px"} />
+                        </div>
+                      </a>
+                    </div>
+                  </li>
+                  <li className="DoctorResult">
+                    <div className="DoctorSearchResultContainer">
+                      <Link className="DoctorHeader flex-center">
+                        <div className="DoctorAvatar">
+                          <Skeleton
+                            height="75px"
+                            width="75px"
+                            circle
+                            style={{ transform: "translateY(-10px)" }}
+                          />
+                        </div>
+                        <div className="DoctorInfo">
+                          <div className="DoctorName bold">
+                            <Skeleton
+                              count={1}
+                              width="70%"
+                              style={{ marginLeft: "10px" }}
+                            />
+                          </div>
+
+                          <div className="DoctorSpeicalist">
+                            <Skeleton
+                              count={1}
+                              width="50%"
+                              style={{ marginLeft: "10px" }}
+                            />
+                          </div>
+
+                          <div className="TagContainer">
+                            <Skeleton
+                              count={1}
+                              width="80px"
+                              style={{ marginLeft: "10px" }}
+                            />
+
+                            <Skeleton
+                              count={1}
+                              width="80px"
+                              style={{ marginLeft: "10px" }}
+                            />
+
+                            <Skeleton
+                              count={1}
+                              width="80px"
+                              style={{ marginLeft: "10px" }}
+                            />
+                          </div>
+                        </div>
+                      </Link>
+                      <a href="/care/hospital" className="DoctorFooter">
+                        <div className="DoctorOfficeAvatar">
+                          <Skeleton circle width="45px" height="45px" />
+                        </div>
+
+                        <div className="DoctorOffice">
+                          <div className="DoctorOfficeName">
+                            <Skeleton width="400px" />
+                          </div>
+
+                          <div className="DoctorOfficeAddress">
+                            <Skeleton />
+                          </div>
+                        </div>
+                        <div className="BookDoctor">
+                          <Skeleton width={"130px"} height={"50px"} />
+                        </div>
+                      </a>
+                    </div>
+                  </li>
+                  <li className="DoctorResult">
+                    <div className="DoctorSearchResultContainer">
+                      <Link className="DoctorHeader flex-center">
+                        <div className="DoctorAvatar">
+                          <Skeleton
+                            height="75px"
+                            width="75px"
+                            circle
+                            style={{ transform: "translateY(-10px)" }}
+                          />
+                        </div>
+                        <div className="DoctorInfo">
+                          <div className="DoctorName bold">
+                            <Skeleton
+                              count={1}
+                              width="70%"
+                              style={{ marginLeft: "10px" }}
+                            />
+                          </div>
+
+                          <div className="DoctorSpeicalist">
+                            <Skeleton
+                              count={1}
+                              width="50%"
+                              style={{ marginLeft: "10px" }}
+                            />
+                          </div>
+
+                          <div className="TagContainer">
+                            <Skeleton
+                              count={1}
+                              width="80px"
+                              style={{ marginLeft: "10px" }}
+                            />
+
+                            <Skeleton
+                              count={1}
+                              width="80px"
+                              style={{ marginLeft: "10px" }}
+                            />
+
+                            <Skeleton
+                              count={1}
+                              width="80px"
+                              style={{ marginLeft: "10px" }}
+                            />
+                          </div>
+                        </div>
+                      </Link>
+                      <a href="/care/hospital" className="DoctorFooter">
+                        <div className="DoctorOfficeAvatar">
+                          <Skeleton circle width="45px" height="45px" />
+                        </div>
+
+                        <div className="DoctorOffice">
+                          <div className="DoctorOfficeName">
+                            <Skeleton width="400px" />
+                          </div>
+
+                          <div className="DoctorOfficeAddress">
+                            <Skeleton />
+                          </div>
+                        </div>
+                        <div className="BookDoctor">
+                          <Skeleton width={"130px"} height={"50px"} />
+                        </div>
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              ) : (
+                <ul className="clear ListDoctorResult" id="ListDoctorResult">
+                  <li className="DoctorResult">
+                    {doctor &&
+                      doctor.length > 0 &&
+                      doctor.map((item, index) => {
+                        return (
+                          <div className="DoctorSearchResultContainer">
+                            <Link
+                              className="DoctorHeader flex-center"
+                              to={`/care/doctor/${item.id}`}
+                              key={index}
+                            >
+                              <div className="DoctorAvatar">
                                 {loadingSkeleton ? (
                                   <Skeleton
-                                    count={1}
-                                    width="80px"
-                                    style={{ marginLeft: "10px" }}
+                                    height="75px"
+                                    width="75px"
+                                    circle
+                                    style={{ transform: "translateY(-10px)" }}
                                   />
                                 ) : (
-                                  <div className="DirectTag">
-                                    Tư vấn trực tiếp
+                                  <img src={avt} alt="Avatar"></img>
+                                )}
+                              </div>
+                              <div className="DoctorInfo">
+                                {loadingSkeleton ? (
+                                  <div className="DoctorName bold">
+                                    <Skeleton
+                                      count={1}
+                                      width="70%"
+                                      style={{ marginLeft: "10px" }}
+                                    />
+                                  </div>
+                                ) : (
+                                  <div className="DoctorName bold">
+                                    {item.name}
+                                  </div>
+                                )}
+                                {loadingSkeleton ? (
+                                  <div className="DoctorSpeicalist">
+                                    <Skeleton
+                                      count={1}
+                                      width="50%"
+                                      style={{ marginLeft: "10px" }}
+                                    />
+                                  </div>
+                                ) : (
+                                  <div className="DoctorSpeicalist">
+                                    Đa khoa, Nội tổng quát
                                   </div>
                                 )}
 
-                                {loadingSkeleton ? (
-                                  <Skeleton
-                                    count={1}
-                                    width="80px"
-                                    style={{ marginLeft: "10px" }}
-                                  />
-                                ) : (
-                                  <div className="ChildrenTag">
-                                    Dành cho trẻ em
-                                  </div>
-                                )}
+                                <div className="TagContainer">
+                                  {loadingSkeleton ? (
+                                    <Skeleton
+                                      count={1}
+                                      width="80px"
+                                      style={{ marginLeft: "10px" }}
+                                    />
+                                  ) : (
+                                    <div className="DirectTag">
+                                      Tư vấn trực tiếp
+                                    </div>
+                                  )}
 
+                                  {loadingSkeleton ? (
+                                    <Skeleton
+                                      count={1}
+                                      width="80px"
+                                      style={{ marginLeft: "10px" }}
+                                    />
+                                  ) : (
+                                    <div className="ChildrenTag">
+                                      Dành cho trẻ em
+                                    </div>
+                                  )}
+
+                                  {loadingSkeleton ? (
+                                    <Skeleton
+                                      count={1}
+                                      width="80px"
+                                      style={{ marginLeft: "10px" }}
+                                    />
+                                  ) : (
+                                    <div className="AdultTag">
+                                      Dành cho người lớn
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </Link>
+                            <a href="/care/hospital" className="DoctorFooter">
+                              <div className="DoctorOfficeAvatar">
                                 {loadingSkeleton ? (
-                                  <Skeleton
-                                    count={1}
-                                    width="80px"
-                                    style={{ marginLeft: "10px" }}
-                                  />
+                                  <Skeleton circle width="45px" height="45px" />
                                 ) : (
-                                  <div className="AdultTag">
-                                    Dành cho người lớn
+                                  <div className="DoctorOfficeAvatar">
+                                    <img src={avt} alt="avt img"></img>
                                   </div>
                                 )}
                               </div>
-                            </div>
-                          </Link>
-                          <a href="/care/hospital" className="DoctorFooter">
-                            <div className="DoctorOfficeAvatar">
-                              {loadingSkeleton ? (
-                                <Skeleton circle width="45px" height="45px" />
-                              ) : (
-                                <div className="DoctorOfficeAvatar">
-                                  <img src={avt} alt="avt img"></img>
-                                </div>
-                              )}
-                            </div>
 
-                            <div className="DoctorOffice">
-                              {loadingSkeleton ? (
-                                <div className="DoctorOfficeName">
-                                  <Skeleton width="400px" />
-                                </div>
-                              ) : (
-                                <div className="DoctorOfficeName">
-                                  Phòng khám Đa khoa trực tuyến BS. Nguyễn Thanh
-                                  Tâm
-                                </div>
-                              )}
+                              <div className="DoctorOffice">
+                                {loadingSkeleton ? (
+                                  <div className="DoctorOfficeName">
+                                    <Skeleton width="400px" />
+                                  </div>
+                                ) : (
+                                  <div className="DoctorOfficeName">
+                                    Phòng khám Đa khoa trực tuyến BS. Nguyễn
+                                    Thanh Tâm
+                                  </div>
+                                )}
 
+                                {loadingSkeleton ? (
+                                  <div className="DoctorOfficeAddress">
+                                    <Skeleton />
+                                  </div>
+                                ) : (
+                                  <div className="DoctorOfficeAddress">
+                                    Ho Chi Minh, Ho Chi Minh City, Vietnam
+                                  </div>
+                                )}
+                              </div>
                               {loadingSkeleton ? (
-                                <div className="DoctorOfficeAddress">
-                                  <Skeleton />
+                                <div className="BookDoctor">
+                                  <Skeleton width={"130px"} height={"50px"} />
                                 </div>
                               ) : (
-                                <div className="DoctorOfficeAddress">
-                                  Ho Chi Minh, Ho Chi Minh City, Vietnam
+                                <div className="BookDoctor">
+                                  <button
+                                    className="BookDoctorButton bold"
+                                    onClick={() => {
+                                      navigate(`/care/doctor/${item.id}`);
+                                    }}
+                                  >
+                                    Đặt lịch hẹn
+                                  </button>
                                 </div>
                               )}
-                            </div>
-                            <div className="BookDoctor">
-                              <button className="BookDoctorButton bold">
-                                Đặt lịch hẹn
-                              </button>
-                            </div>
-                          </a>
-                        </div>
-                      );
-                    })}
-                </li>
-              </ul>
+                            </a>
+                          </div>
+                        );
+                      })}
+                  </li>
+                </ul>
+              )}
+
               <ul
                 className="clear ListHospitalResult disabled"
                 id="ListHospitalResult"
@@ -423,7 +658,12 @@ function SearchDoctor() {
                             </div>
                           </div>
                           <div className="HospitalSearchResultFooter">
-                            <button className="HospitalViewButton bold">
+                            <button
+                              className="HospitalViewButton bold"
+                              onClick={() => {
+                                navigate(`/care/hospital/${item.id}`);
+                              }}
+                            >
                               Xem bệnh viện
                             </button>
                           </div>

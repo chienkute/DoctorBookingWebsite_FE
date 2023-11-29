@@ -21,12 +21,24 @@ import { BiSolidHelpCircle } from "react-icons/bi";
 import { SearchContext } from "context/SearchContext";
 import { FaCalendarAlt } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { fetchAllCategories, fetchAllSpecialties } from "service/UserService";
+import {
+  fetchAllCategories,
+  fetchAllSpecialties,
+  getUserID,
+} from "service/UserService";
 import { FaUserAlt } from "react-icons/fa";
+import { UpdateContext } from "context/UpdateContext";
+
 const Header = () => {
   const { setSearch } = useContext(SearchContext);
+  const { update } = useContext(UpdateContext);
   const [user, setUser] = useState([]);
+  const [userName, setUserName] = useState("");
   const navigate = useNavigate();
+  useEffect(() => {
+    getUser();
+    getUserByID();
+  }, [update]);
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       setSearch(e.target.value);
@@ -42,6 +54,12 @@ const Header = () => {
     const user = localStorage.getItem("user");
     if (user) {
       setUser(JSON.parse(user));
+    }
+  };
+  const getUserByID = async () => {
+    let res = await getUserID(user?.user?.id);
+    if (res) {
+      setUserName(res?.name);
     }
   };
   const { show, setShow, nodeRef } = useClickOutSide();
@@ -64,6 +82,7 @@ const Header = () => {
     getSpecialty();
     getUser();
     getService();
+    getUserByID();
   }, []);
   return (
     <div>
@@ -114,6 +133,7 @@ const Header = () => {
                           <Link
                             class="dropdown-item d-flex align-items-center dropdown__item"
                             to={`/category/${item.id}`}
+                            state={{ category: `${item.name}` }}
                           >
                             <div className="header__menu_image">
                               <img src={imageChuyenMuc1} alt="" />
@@ -250,6 +270,7 @@ const Header = () => {
                           <Link
                             class="dropdown-item d-flex align-items-center dropdown__item"
                             to={`/care/searchDoctor/${item.id}`}
+                            state={{ name: `${item.name}` }}
                             key={index}
                           >
                             <div className="header__menu_image">
@@ -298,14 +319,17 @@ const Header = () => {
                     <FaUserLarge></FaUserLarge>
                   </div>
                   <div className="HeaderItem__user_name">
-                    <h6>Phạm Sĩ Chiến</h6>
-                    <p>chienkute</p>
+                    <h6>{userName || "Họ và tên"}</h6>
+                    <p>{user?.account?.username}</p>
                   </div>
                 </div>
                 <div className="HeaderItem__list row">
                   <Link
                     to={`/user/information/${user?.user?.id}`}
                     className="HeaderItem__list_item col-6"
+                    onClick={() => {
+                      setShow(false);
+                    }}
                   >
                     <div className="HeaderItem__list_item_icon">
                       <FaUserAlt></FaUserAlt>
@@ -315,6 +339,9 @@ const Header = () => {
                   <Link
                     to={`/user/changePassword/${user?.user?.id}`}
                     className="HeaderItem__list_item col-6"
+                    onClick={() => {
+                      setShow(false);
+                    }}
                   >
                     <div className="HeaderItem__list_item_icon">
                       <RiLockPasswordFill></RiLockPasswordFill>
@@ -324,13 +351,22 @@ const Header = () => {
                   <a
                     href="/user/history"
                     className="HeaderItem__list_item col-6"
+                    onClick={() => {
+                      setShow(false);
+                    }}
                   >
                     <div className="HeaderItem__list_item_icon">
                       <FaCalendarAlt></FaCalendarAlt>
                     </div>
                     <p>Lịch sử hẹn</p>
                   </a>
-                  <a href="/user/help" className="HeaderItem__list_item col-6">
+                  <a
+                    href="/user/help"
+                    className="HeaderItem__list_item col-6"
+                    onClick={() => {
+                      setShow(false);
+                    }}
+                  >
                     <div className="HeaderItem__list_item_icon">
                       <BiSolidHelpCircle></BiSolidHelpCircle>
                     </div>

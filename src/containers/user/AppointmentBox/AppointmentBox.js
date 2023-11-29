@@ -7,6 +7,8 @@ import "../../user/AppointmentBox/AppointmentBox.scss";
 import { scheduleDoctor } from "service/UserService";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import { RiMoneyDollarCircleLine } from "react-icons/ri";
+import { FaRegCalendarAlt } from "react-icons/fa";
 const AppointmentBox = (props) => {
   const [loadingBook, setLoadingBook] = useState(true);
   const [timeMorning, setTimeMorning] = useState([]);
@@ -17,7 +19,14 @@ const AppointmentBox = (props) => {
   const [formattedDate, setFormattedDate] = useState("");
   const [dayMonth, setDayMonth] = useState([]);
   const time = "";
-  console.log(idSchedule);
+  const [user, setUser] = useState([]);
+  const [showButton, setShowbutton] = useState(false);
+  const getUser = () => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      setUser(JSON.parse(user));
+    }
+  };
   const handleSpecialtyClick = (index) => {
     setSelectedSpecialty(index);
   };
@@ -71,6 +80,7 @@ const AppointmentBox = (props) => {
   useEffect(() => {
     getIdSchedule();
     handleDayNow();
+    getUser();
   }, []);
   return (
     <div className="AppointmentBoxContainer">
@@ -213,6 +223,7 @@ const AppointmentBox = (props) => {
                             onClick={() => {
                               handleSpecialtyClick(index);
                               setIdSchedule(item.id);
+                              setShowbutton(true);
                             }}
                           >
                             {formatTime(`${item?.start}`)} -{" "}
@@ -220,6 +231,14 @@ const AppointmentBox = (props) => {
                           </div>
                         );
                     })}
+                  {timeMorning.length < 0 && (
+                    <div className="appoinment__schedule">
+                      <div className="no__schedule_icon">
+                        <FaRegCalendarAlt></FaRegCalendarAlt>
+                      </div>
+                      <p> Lịch hẹn trống</p>
+                    </div>
+                  )}
                 </div>
               </div>
               <div
@@ -243,26 +262,33 @@ const AppointmentBox = (props) => {
         </div>
         <div className="AppointmentFee">
           <span className="Icon">
-            <img src={icon} alt="Icon"></img>
+            <RiMoneyDollarCircleLine></RiMoneyDollarCircleLine>
           </span>
           <span>Phí tư vấn ban đầu từ</span>
           <span className="Fee"> 150.000đ</span>
         </div>
       </div>
       <div className="AppointmentBoxButton">
-        <button>
-          <Link
-            to={`/care/doctor/confirm/${props.id}`}
-            state={{
-              schedule: `${idSchedule}`,
-              day: `${formattedDate}`,
-              time: `${time}`,
-              days: `${days}`,
-            }}
-          >
+        {showButton ? (
+          <button>
+            <Link
+              to={`/care/doctor/confirm/${props.id}`}
+              state={{
+                schedule: `${idSchedule}`,
+                day: `${formattedDate}`,
+                time: `${time}`,
+                days: `${days}`,
+                idUser: `${user?.user?.id}`,
+              }}
+            >
+              Tiếp tục đặt lịch
+            </Link>
+          </button>
+        ) : (
+          <button type="button" disabled={true} className="button-text">
             Tiếp tục đặt lịch
-          </Link>
-        </button>
+          </button>
+        )}
       </div>
     </div>
   );

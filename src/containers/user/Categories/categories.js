@@ -71,6 +71,7 @@ const Categories = () => {
                       className="col-md-2"
                       to={`/category/${item.id}`}
                       key={index}
+                      state={{ category: `${item.name}` }}
                     >
                       <div>
                         <img src={categoriesimage1} alt="" />

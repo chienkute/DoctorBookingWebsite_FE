@@ -146,7 +146,7 @@
         }
         &_col {
           display: flex;
-          justify-content: start;
+          justify-content: flex-start;
           column-gap: 7px;
           p {
             font-size: $fs-small-text;
@@ -173,7 +173,7 @@
       font-size: $fs-normal-text;
       display: flex;
       column-gap: 5px;
-      align-items: start;
+      align-items: flex-start;
       margin-left: 900px;
       p {
         font-weight: 600;
