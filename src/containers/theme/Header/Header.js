@@ -270,7 +270,7 @@ const Header = () => {
                           <Link
                             class="dropdown-item d-flex align-items-center dropdown__item"
                             to={`/care/searchDoctor/${item.id}`}
-                            state={{ name: `${item.name}` }}
+                            state={{ name: `${item?.name}` }}
                             key={index}
                           >
                             <div className="header__menu_image">

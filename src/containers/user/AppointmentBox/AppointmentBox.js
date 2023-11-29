@@ -268,28 +268,42 @@ const AppointmentBox = (props) => {
           <span className="Fee"> 150.000đ</span>
         </div>
       </div>
-      <div className="AppointmentBoxButton">
-        {showButton ? (
-          <button>
-            <Link
-              to={`/care/doctor/confirm/${props.id}`}
-              state={{
-                schedule: `${idSchedule}`,
-                day: `${formattedDate}`,
-                time: `${time}`,
-                days: `${days}`,
-                idUser: `${user?.user?.id}`,
-              }}
-            >
+      {localStorage.getItem("token") ? (
+        <div className="AppointmentBoxButton">
+          {showButton ? (
+            <button>
+              <Link
+                to={`/care/doctor/confirm/${props.id}`}
+                state={{
+                  schedule: `${idSchedule}`,
+                  day: `${formattedDate}`,
+                  time: `${time}`,
+                  days: `${days}`,
+                  idUser: `${user?.user?.id}`,
+                }}
+              >
+                Tiếp tục đặt lịch
+              </Link>
+            </button>
+          ) : (
+            <button type="button" className="button-text">
               Tiếp tục đặt lịch
-            </Link>
-          </button>
-        ) : (
-          <button type="button" disabled={true} className="button-text">
-            Tiếp tục đặt lịch
-          </button>
-        )}
-      </div>
+            </button>
+          )}
+        </div>
+      ) : (
+        <div className="AppointmentBoxButton">
+          {showButton ? (
+            <button>
+              <Link to={"/login"}>Tiếp tục đặt lịch</Link>
+            </button>
+          ) : (
+            <button type="button" className="button-text">
+              Tiếp tục đặt lịch
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };

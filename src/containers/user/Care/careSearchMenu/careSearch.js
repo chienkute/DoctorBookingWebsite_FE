@@ -266,7 +266,7 @@ const CareSearch = () => {
                             <Link
                               to={`/care/searchDoctor/${item.id}`}
                               className="col-2 care__banner_menus_item_col"
-                              state={{ name: `${item.name}` }}
+                              state={{ name: `${item?.name}` }}
                               key={index}
                             >
                               <div>
