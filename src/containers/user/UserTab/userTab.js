@@ -43,7 +43,7 @@ const UserTab = () => {
         </NavLink>
 
         <NavLink
-          to={"/user/changePassword"}
+          to={`/user/changePassword/${user?.user?.id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive Option selected" : "Option"
           }

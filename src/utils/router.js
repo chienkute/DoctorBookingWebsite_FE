@@ -19,7 +19,7 @@ import blog from "containers/user/Blog/blog";
 import AdminPage from "admin/AdminPage";
 import userChangePassword from "containers/user/UserPage/UserChangePassword/userChangePassword";
 import userhelp from "containers/user/UserPage/UserHelp/userhelp";
-
+import tool from "containers/user/Tool/tool";
 const publicRoutes = [
   { path: "/", component: HomePage },
   { path: "/login", component: Login, layout: null },
@@ -72,9 +72,10 @@ const publicRoutes = [
   { path: "/care/serviceSearch", component: serviceSearch },
   { path: "/user/information/:id", component: userInfo },
   { path: "/user/history", component: userHistory },
-  { path: "/user/changePassword", component: userChangePassword },
+  { path: "/user/changePassword/:id", component: userChangePassword },
   { path: "/user/help", component: userhelp },
-  { path: "/care/doctor/confirm", component: confirm },
+  { path: "/care/doctor/confirm/:id", component: confirm },
   { path: "/blog/:id", component: blog },
+  { path: "/tool", component: tool, layout: null },
 ];
 export { publicRoutes };

@@ -13,7 +13,7 @@ import {
 } from "service/UserService";
 import { useDebounce } from "@uidotdev/usehooks";
 import Skeleton from "react-loading-skeleton";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 const CareSearch = () => {
   const { show, setShow } = useClickOutSide();
   const [query, setQuery] = useState("");
@@ -25,7 +25,6 @@ const CareSearch = () => {
   const [service, setService] = useState("");
   const debouncedSearchTerm = useDebounce(query, 500);
   const [loadingSkeleton, SetLoadingSkeleton] = useState(true);
-  const navigate = useNavigate();
   const getDoctor = async () => {
     let res = await getDoctorByNameAddress(debouncedSearchTerm, adress);
     if (res) {
@@ -54,7 +53,6 @@ const CareSearch = () => {
       setSpecialty(res?.results);
     }
   };
-
   useEffect(() => {
     getDoctor();
     getHospital();
@@ -165,7 +163,7 @@ const CareSearch = () => {
           ></input>
           <ul class="dropdown-menu care__banner_menu" aria-labelledby="care_in">
             <li>
-              <a
+              <Link
                 class="dropdown-item care__banner_menu_title"
                 onClick={(e) => {
                   const pValue = e.currentTarget.querySelector("p").innerText;
@@ -177,12 +175,12 @@ const CareSearch = () => {
                   <FaLocationDot></FaLocationDot>
                 </div>
                 <p>Tất cả vị trí</p>
-              </a>
+              </Link>
               <div className="care__banner_menu_title_line"></div>
             </li>
             {province.map((province, index) => (
               <li key={index}>
-                <a
+                <Link
                   class="dropdown-item care__banner_menu_title"
                   onClick={() => {
                     setAdress(province.value);
@@ -193,7 +191,7 @@ const CareSearch = () => {
                     <FaLocationDot></FaLocationDot>
                   </div>
                   <p>{province.label}</p>
-                </a>
+                </Link>
                 <div className="care__banner_menu_title_line"></div>
               </li>
             ))}
@@ -268,6 +266,7 @@ const CareSearch = () => {
                             <Link
                               to={`/care/searchDoctor/${item.id}`}
                               className="col-2 care__banner_menus_item_col"
+                              state={{ name: `${item?.name}` }}
                               key={index}
                             >
                               <div>
@@ -345,7 +344,7 @@ const CareSearch = () => {
                         service.map((item, index) => {
                           return (
                             <a
-                              href="/"
+                              href={`/care/service/${item.id}`}
                               className="col-2 care__banner_menus_item_col"
                               key={index}
                             >
@@ -386,7 +385,9 @@ const CareSearch = () => {
                     <TbBuildingHospital></TbBuildingHospital>
                   </div>
                   <p>Bệnh viện và Phòng khám</p>
-                  <a href="/care/searchDoctor">Xem tất cả</a>
+                  <Link to={"/care/searchDoctor"} state={{ name: "empty" }}>
+                    Xem tất cả
+                  </Link>
                 </div>
                 <div className="care__banner_menus_item">
                   {loadingSkeleton ? (
@@ -424,7 +425,7 @@ const CareSearch = () => {
                         hospital.map((item, index) => {
                           return (
                             <a
-                              href="/"
+                              href={`/care/hospital/${item.id}`}
                               className="col-2 care__banner_menus_item_col"
                               key={index}
                             >
@@ -465,7 +466,9 @@ const CareSearch = () => {
                     <FaUserDoctor></FaUserDoctor>
                   </div>
                   <p>Bác sĩ</p>
-                  <a href="/care/searchDoctor">Xem tất cả</a>
+                  <Link to={"/care/searchDoctor"} state={{ name: "empty" }}>
+                    Xem tất cả
+                  </Link>
                 </div>
                 <div className="care__banner_menus_item">
                   {loadingSkeleton ? (
@@ -503,7 +506,7 @@ const CareSearch = () => {
                         doctor.map((item, index) => {
                           return (
                             <a
-                              href="/"
+                              href={`/care/doctor/${item.id}`}
                               className="col-2 care__banner_menus_item_col"
                               key={index}
                             >

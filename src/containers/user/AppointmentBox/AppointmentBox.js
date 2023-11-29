@@ -4,22 +4,29 @@ import icon from "assets/icon.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import "../../user/AppointmentBox/AppointmentBox.scss";
-import { Booking, scheduleDoctor } from "service/UserService";
+import { scheduleDoctor } from "service/UserService";
 import moment from "moment";
+import { Link } from "react-router-dom";
+import { RiMoneyDollarCircleLine } from "react-icons/ri";
+import { FaRegCalendarAlt } from "react-icons/fa";
 const AppointmentBox = (props) => {
   const [loadingBook, setLoadingBook] = useState(true);
-  const [id, setId] = useState(null);
   const [timeMorning, setTimeMorning] = useState([]);
   const [selectedSpecialty, setSelectedSpecialty] = useState(null);
   const [selectedSpecialtys, setSelectedSpecialtys] = useState(null);
   const [idSchedule, setIdSchedule] = useState(null);
   const [days, setDay] = useState("");
-  console.log(days);
   const [formattedDate, setFormattedDate] = useState("");
   const [dayMonth, setDayMonth] = useState([]);
   const time = "";
-  console.log(id);
-  console.log(idSchedule);
+  const [user, setUser] = useState([]);
+  const [showButton, setShowbutton] = useState(false);
+  const getUser = () => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      setUser(JSON.parse(user));
+    }
+  };
   const handleSpecialtyClick = (index) => {
     setSelectedSpecialty(index);
   };
@@ -62,26 +69,18 @@ const AppointmentBox = (props) => {
   };
   const currentDate = new Date().toISOString().split("T")[0];
   const getIdSchedule = async () => {
-    let res = await scheduleDoctor(id);
+    let res = await scheduleDoctor(props.id);
     if (res) {
+      console.log(res);
       setLoadingBook(false);
       setTimeMorning(res?.morning);
       console.log(timeMorning);
     }
   };
-  const book = async () => {
-    let res = await Booking(id, idSchedule, formattedDate, time);
-    if (res) {
-      console.log("sucess");
-      console.log(res);
-    } else {
-      console.log("error");
-    }
-  };
   useEffect(() => {
-    setId(props.id);
     getIdSchedule();
     handleDayNow();
+    getUser();
   }, []);
   return (
     <div className="AppointmentBoxContainer">
@@ -224,6 +223,7 @@ const AppointmentBox = (props) => {
                             onClick={() => {
                               handleSpecialtyClick(index);
                               setIdSchedule(item.id);
+                              setShowbutton(true);
                             }}
                           >
                             {formatTime(`${item?.start}`)} -{" "}
@@ -231,6 +231,14 @@ const AppointmentBox = (props) => {
                           </div>
                         );
                     })}
+                  {timeMorning.length < 0 && (
+                    <div className="appoinment__schedule">
+                      <div className="no__schedule_icon">
+                        <FaRegCalendarAlt></FaRegCalendarAlt>
+                      </div>
+                      <p> Lịch hẹn trống</p>
+                    </div>
+                  )}
                 </div>
               </div>
               <div
@@ -254,15 +262,48 @@ const AppointmentBox = (props) => {
         </div>
         <div className="AppointmentFee">
           <span className="Icon">
-            <img src={icon} alt="Icon"></img>
+            <RiMoneyDollarCircleLine></RiMoneyDollarCircleLine>
           </span>
           <span>Phí tư vấn ban đầu từ</span>
           <span className="Fee"> 150.000đ</span>
         </div>
       </div>
-      <div className="AppointmentBoxButton">
-        <button onClick={book}>Tiếp tục đặt lịch</button>
-      </div>
+      {localStorage.getItem("token") ? (
+        <div className="AppointmentBoxButton">
+          {showButton ? (
+            <button>
+              <Link
+                to={`/care/doctor/confirm/${props.id}`}
+                state={{
+                  schedule: `${idSchedule}`,
+                  day: `${formattedDate}`,
+                  time: `${time}`,
+                  days: `${days}`,
+                  idUser: `${user?.user?.id}`,
+                }}
+              >
+                Tiếp tục đặt lịch
+              </Link>
+            </button>
+          ) : (
+            <button type="button" className="button-text">
+              Tiếp tục đặt lịch
+            </button>
+          )}
+        </div>
+      ) : (
+        <div className="AppointmentBoxButton">
+          {showButton ? (
+            <button>
+              <Link to={"/login"}>Tiếp tục đặt lịch</Link>
+            </button>
+          ) : (
+            <button type="button" className="button-text">
+              Tiếp tục đặt lịch
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };

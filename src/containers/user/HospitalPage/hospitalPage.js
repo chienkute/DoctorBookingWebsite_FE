@@ -15,12 +15,13 @@ import {
   getServiceByIdHospital,
   searchDoctor,
 } from "service/UserService";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { LoadingContext } from "context/LoadingContext";
 import dakhoaImages from "../../../assets/chuyenkhoa/dakhoa.png";
 import AppointmentBox from "../AppointmentBox/AppointmentBox";
 import { useDebounce } from "@uidotdev/usehooks";
 import ReactPaginate from "react-paginate";
+import Skeleton from "react-loading-skeleton";
 const HospitalPage = () => {
   const { id } = useParams();
   const { loading, setLoading } = useContext(LoadingContext);
@@ -36,6 +37,9 @@ const HospitalPage = () => {
   const [queryService, setQueryService] = useState("");
   const debouncedSearchDoctor = useDebounce(queryDoctor, 500);
   const debouncedSearchService = useDebounce(queryService, 500);
+  const [idDoctor, setIdDoctor] = useState("");
+  const [loadingSkeleton, setLoadingSkeleton] = useState(true);
+  const navigate = useNavigate();
   const getDoctor = async () => {
     let res = await searchDoctor("", "", id, specialty, "");
     if (res) {
@@ -45,12 +49,14 @@ const HospitalPage = () => {
   const getDoctorByIdHospital = async () => {
     let res = await searchDoctor(debouncedSearchDoctor, "", "", "", id);
     if (res) {
+      setLoadingSkeleton(true);
       setDoctorSearch(res?.results);
     }
   };
   const getService = async () => {
     let res = await getServiceByIdHospital(debouncedSearchService, id);
     if (res) {
+      setLoadingSkeleton(true);
       setService(res?.results);
     }
   };
@@ -77,9 +83,15 @@ const HospitalPage = () => {
   }, []);
   useEffect(() => {
     getDoctorByIdHospital();
+    setTimeout(() => {
+      setLoadingSkeleton(false);
+    }, 1500);
   }, [queryDoctor]);
   useEffect(() => {
     getService();
+    setTimeout(() => {
+      setLoadingSkeleton(false);
+    }, 1500);
   }, [queryService]);
   return (
     <div>
@@ -302,7 +314,7 @@ const HospitalPage = () => {
                               aria-labelledby="care_in"
                             >
                               <li>
-                                <a
+                                <Link
                                   class="dropdown-item care__banner_menu_title"
                                   onClick={(e) => {
                                     const pValue =
@@ -319,13 +331,13 @@ const HospitalPage = () => {
                                   <p style={{ fontSize: "14px" }}>
                                     Tất cả chuyên khoa
                                   </p>
-                                </a>
+                                </Link>
                                 <div className="care__banner_menu_title_line"></div>
                               </li>
                               {specialties &&
                                 specialties.map((item, index) => (
                                   <li key={index}>
-                                    <a
+                                    <Link
                                       class="dropdown-item care__banner_menu_title"
                                       onClick={(e) => {
                                         handleClickSpeciaylty(e);
@@ -338,7 +350,7 @@ const HospitalPage = () => {
                                       <p style={{ fontSize: "14px" }}>
                                         {item.name}
                                       </p>
-                                    </a>
+                                    </Link>
                                     <div className="care__banner_menu_title_line"></div>
                                   </li>
                                 ))}
@@ -371,11 +383,12 @@ const HospitalPage = () => {
                               {doctor &&
                                 doctor.map((item, index) => (
                                   <li key={index}>
-                                    <a
+                                    <Link
                                       class="dropdown-item care__banner_menu_title"
                                       onClick={(e) => {
                                         handleClickDoctor(e);
                                         setShow(true);
+                                        setIdDoctor(item.id);
                                       }}
                                     >
                                       <div className="img_chuyenkhoa">
@@ -384,7 +397,7 @@ const HospitalPage = () => {
                                       <p style={{ fontSize: "14px" }}>
                                         {item.name}
                                       </p>
-                                    </a>
+                                    </Link>
                                     <div className="care__banner_menu_title_line"></div>
                                   </li>
                                 ))}
@@ -394,7 +407,7 @@ const HospitalPage = () => {
                       </div>
                       {show ? (
                         <div className="hospital__schedule_day">
-                          <AppointmentBox></AppointmentBox>
+                          <AppointmentBox id={idDoctor}></AppointmentBox>
                         </div>
                       ) : (
                         <div></div>
@@ -417,6 +430,7 @@ const HospitalPage = () => {
                         onChange={(e) => {
                           setQueryService(e.target.value);
                         }}
+                        autoComplete="off"
                       ></input>
                     </div>
                   </div>
@@ -425,33 +439,79 @@ const HospitalPage = () => {
                       return (
                         <div className="hospital__body_dichvu_result">
                           <div className="hospital__body_dichvu_info">
-                            <a href="/care/dich-vu">{item.name}</a>
-                            <div className="hospital__body_dichvu_price">
-                              <div className="hospital__body_dichvu_price_icon">
-                                <RiMoneyDollarCircleLine></RiMoneyDollarCircleLine>
+                            {loadingSkeleton ? (
+                              <Skeleton width={"30%"}></Skeleton>
+                            ) : (
+                              <a href={`/care/service/${item.id}`}>
+                                {item.name}
+                              </a>
+                            )}
+                            {loadingSkeleton ? (
+                              <Skeleton
+                                width={"30%"}
+                                style={{ marginBottom: "25px" }}
+                              ></Skeleton>
+                            ) : (
+                              <div className="hospital__body_dichvu_price">
+                                <div className="hospital__body_dichvu_price_icon">
+                                  <RiMoneyDollarCircleLine></RiMoneyDollarCircleLine>
+                                </div>
+                                <p>800.000</p>
                               </div>
-                              <p>800.000</p>
-                            </div>
+                            )}
                           </div>
                           <div className="hospital__body_dichvu_bottom">
-                            <div className="hospital__body_dichvu_bottom_avtHosp">
-                              <img src={hospavt} alt="" />
-                            </div>
-                            <div className="hospital__body_dichvu_bottom_descrip">
-                              <a href="#">
-                                Phòng Khám ACC - Chiropractic Đà Nẵng
-                              </a>
-                              <p>
-                                112 Đường 2 Tháng 9, phường Bình Thuận, Hải
-                                Châu, Đà Nẵng, Viet Nam
-                              </p>
-                            </div>
-                            <button
-                              type="button"
-                              className="btn button hospital__body_dichvu_bottom_button"
-                            >
-                              Đặt Lịch Hẹn
-                            </button>
+                            {loadingSkeleton ? (
+                              <div className="hospital__body_dichvu_bottom_avtHosp">
+                                <Skeleton
+                                  circle
+                                  width={"40px"}
+                                  height={"40px"}
+                                ></Skeleton>
+                              </div>
+                            ) : (
+                              <div className="hospital__body_dichvu_bottom_avtHosp">
+                                <img src={hospavt} alt="" />
+                              </div>
+                            )}
+                            {loadingSkeleton ? (
+                              <div className="hospital__body_dichvu_bottom_descrip">
+                                <Skeleton
+                                  count={2}
+                                  width={"400px"}
+                                  height={"10px"}
+                                ></Skeleton>
+                              </div>
+                            ) : (
+                              <div className="hospital__body_dichvu_bottom_descrip">
+                                <Link>
+                                  Phòng Khám ACC - Chiropractic Đà Nẵng
+                                </Link>
+                                <p>
+                                  112 Đường 2 Tháng 9, phường Bình Thuận, Hải
+                                  Châu, Đà Nẵng, Viet Nam
+                                </p>
+                              </div>
+                            )}
+                            {loadingSkeleton ? (
+                              <div className="hospital__body_dichvu_bottom_button">
+                                <Skeleton
+                                  width={"140px"}
+                                  height={"50px"}
+                                  style={{ transform: "translateY(-5px)" }}
+                                />
+                              </div>
+                            ) : (
+                              <button
+                                type="button"
+                                className="btn button hospital__body_dichvu_bottom_button"
+                                onClick={() => {
+                                  navigate(`/care/service/${item.id}`);
+                                }}
+                              >
+                                Đặt Lịch Hẹn
+                              </button>
+                            )}
                           </div>
                         </div>
                       );
@@ -477,7 +537,6 @@ const HospitalPage = () => {
                     />
                   </div>
                 </div>
-
                 <div
                   class="tab-pane fade hospital__body_bacsi"
                   id="tabs-bacsi"
@@ -505,50 +564,103 @@ const HospitalPage = () => {
                           <div
                             role="button"
                             className="hospital__body_bacsi_content"
+                            onClick={() => {
+                              navigate(`/care/doctor/${item.id}`);
+                            }}
                           >
-                            <div className="hospital__body_bacsi_content_avt">
-                              <img src={doctorImg} alt="" />
-                            </div>
-                            <div className="hospital__body_bacsi_content_info">
-                              <p className="hospital__body_bacsi_content_info_name">
-                                {item.name}
-                              </p>
-                              <p className="hospital__body_bacsi_content_info_ck">
-                                Thần kinh, Y học phục hồi chức năng
-                              </p>
-                              <div className="hospital__body_bacsi_content_info_price">
-                                <div className="hospital__body_bacsi_content_info_icon">
-                                  <RiMoneyDollarCircleLine></RiMoneyDollarCircleLine>
-                                </div>
-                                <p>Phí tư vấn cố định</p>
-                                <p className="hospital__body_bacsi_content_info_cost">
-                                  800.000
-                                </p>
+                            {loadingSkeleton ? (
+                              <Skeleton
+                                circle
+                                width={"80px"}
+                                height={"80px"}
+                              ></Skeleton>
+                            ) : (
+                              <div className="hospital__body_bacsi_content_avt">
+                                <img src={doctorImg} alt="" />
                               </div>
-                            </div>
+                            )}
+                            {loadingSkeleton ? (
+                              <div className="hospital__body_bacsi_content_info">
+                                <Skeleton
+                                  count={3}
+                                  width={"300px"}
+                                  style={{ marginBottom: "15px" }}
+                                ></Skeleton>
+                              </div>
+                            ) : (
+                              <div className="hospital__body_bacsi_content_info">
+                                <p className="hospital__body_bacsi_content_info_name">
+                                  {item.name}
+                                </p>
+                                <p className="hospital__body_bacsi_content_info_ck">
+                                  Thần kinh, Y học phục hồi chức năng
+                                </p>
+                                <div className="hospital__body_bacsi_content_info_price">
+                                  <div className="hospital__body_bacsi_content_info_icon">
+                                    <RiMoneyDollarCircleLine></RiMoneyDollarCircleLine>
+                                  </div>
+                                  <p>Phí tư vấn cố định</p>
+                                  <p className="hospital__body_bacsi_content_info_cost">
+                                    800.000
+                                  </p>
+                                </div>
+                              </div>
+                            )}
                           </div>
                           <div
                             role="button"
                             className="hospital__body_dichvu_bottom"
                           >
-                            <div className="hospital__body_dichvu_bottom_avtHosp">
-                              <img src={hospavt} alt="" />
-                            </div>
-                            <div className="hospital__body_dichvu_bottom_descrip">
-                              <a href="#">
-                                Phòng Khám ACC - Chiropractic Đà Nẵng
-                              </a>
-                              <p>
-                                112 Đường 2 Tháng 9, phường Bình Thuận, Hải
-                                Châu, Đà Nẵng, Viet Nam
-                              </p>
-                            </div>
-                            <button
-                              type="button"
-                              className="btn button hospital__body_dichvu_bottom_button"
-                            >
-                              Đặt Lịch Hẹn
-                            </button>
+                            {loadingSkeleton ? (
+                              <div className="hospital__body_dichvu_bottom_avtHosp">
+                                <Skeleton
+                                  circle
+                                  width={"40px"}
+                                  height={"40px"}
+                                ></Skeleton>
+                              </div>
+                            ) : (
+                              <div className="hospital__body_dichvu_bottom_avtHosp">
+                                <img src={hospavt} alt="" />
+                              </div>
+                            )}
+                            {loadingSkeleton ? (
+                              <div className="hospital__body_dichvu_bottom_descrip">
+                                <Skeleton
+                                  count={2}
+                                  width={"500px"}
+                                  height={"10px"}
+                                ></Skeleton>
+                              </div>
+                            ) : (
+                              <div className="hospital__body_dichvu_bottom_descrip">
+                                <Link>
+                                  Phòng Khám ACC - Chiropractic Đà Nẵng
+                                </Link>
+                                <p>
+                                  112 Đường 2 Tháng 9, phường Bình Thuận, Hải
+                                  Châu, Đà Nẵng, Viet Nam
+                                </p>
+                              </div>
+                            )}
+                            {loadingSkeleton ? (
+                              <div className=" hospital__body_dichvu_bottom_button">
+                                <Skeleton
+                                  width={"135px"}
+                                  height={"40px"}
+                                ></Skeleton>
+                              </div>
+                            ) : (
+                              <button
+                                type="button"
+                                className="btn button hospital__body_dichvu_bottom_button"
+                                onClick={() => {
+                                  navigate(`/care/doctor/${item.id}`);
+                                }}
+                              >
+                                Đặt Lịch Hẹn
+                              </button>
+                            )}
                           </div>
                         </div>
                       );

@@ -226,7 +226,7 @@
   &__user {
     display: flex;
     column-gap: 10px;
-    align-items: start;
+    align-items: flex-start;
     &_avt {
       width: 60px;
       height: 60px;
@@ -289,7 +289,7 @@
     margin-right: 3px;
     span {
       display: flex;
-      align-items: start;
+      align-items: flex-start;
       column-gap: 10px;
       svg {
         margin-top: -2px;

@@ -5,11 +5,6 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import "./Header.scss";
 import { Link, useNavigate } from "react-router-dom";
 import imageChuyenMuc1 from "../../../assets/chuyenmuc/medical.png";
-import imageChuyenMuc2 from "../../../assets/chuyenmuc/tooth.png";
-import imageChuyenMuc3 from "../../../assets/chuyenmuc/chuyenmuc3.png";
-import imageChuyenMuc4 from "../../../assets/chuyenmuc/chuyenmuc4.png";
-import imageChuyenMuc5 from "../../../assets/chuyenmuc/chuyenmuc5.png";
-import imageChuyenMuc6 from "../../../assets/chuyenmuc/chuyenmuc6.png";
 import imageskhoe1 from "../../../assets/suckhoe/kiemtraskhoe1.png";
 import imageskhoe2 from "../../../assets/suckhoe/ktraskhoe2.png";
 import imageskhoe3 from "../../../assets/suckhoe/ktrasuckhoe3.png";
@@ -26,12 +21,24 @@ import { BiSolidHelpCircle } from "react-icons/bi";
 import { SearchContext } from "context/SearchContext";
 import { FaCalendarAlt } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { fetchAllCategories, fetchAllSpecialties } from "service/UserService";
+import {
+  fetchAllCategories,
+  fetchAllSpecialties,
+  getUserID,
+} from "service/UserService";
 import { FaUserAlt } from "react-icons/fa";
+import { UpdateContext } from "context/UpdateContext";
+
 const Header = () => {
   const { setSearch } = useContext(SearchContext);
+  const { update } = useContext(UpdateContext);
   const [user, setUser] = useState([]);
+  const [userName, setUserName] = useState("");
   const navigate = useNavigate();
+  useEffect(() => {
+    getUser();
+    getUserByID();
+  }, [update]);
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       setSearch(e.target.value);
@@ -41,12 +48,18 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/");
-    toast.success("Log out success!");
+    toast.success("Đăng xuất thành công!");
   };
   const getUser = () => {
     const user = localStorage.getItem("user");
     if (user) {
       setUser(JSON.parse(user));
+    }
+  };
+  const getUserByID = async () => {
+    let res = await getUserID(user?.user?.id);
+    if (res) {
+      setUserName(res?.name);
     }
   };
   const { show, setShow, nodeRef } = useClickOutSide();
@@ -69,6 +82,7 @@ const Header = () => {
     getSpecialty();
     getUser();
     getService();
+    getUserByID();
   }, []);
   return (
     <div>
@@ -94,15 +108,14 @@ const Header = () => {
           <ul className="HeaderListCategory flex-center clear">
             <li className="HeaderCategory">
               <div className="HeaderCategoryLink dropdown">
-                <a
-                  href="#"
+                <Link
                   className="bold"
                   id="dropdownMenuLink"
                   data-mdb-toggle="dropdown"
                   aria-expanded="true"
                 >
                   Chuyên mục
-                </a>
+                </Link>
                 <ul
                   class="dropdown-menu dropdown__menu"
                   aria-labelledby="dropdownMenuLink"
@@ -116,16 +129,17 @@ const Header = () => {
                     categories.length > 0 &&
                     categories.map((item, index) => {
                       return (
-                        <li>
-                          <a
+                        <li key={index}>
+                          <Link
                             class="dropdown-item d-flex align-items-center dropdown__item"
-                            href="/category"
+                            to={`/category/${item.id}`}
+                            state={{ category: `${item.name}` }}
                           >
                             <div className="header__menu_image">
                               <img src={imageChuyenMuc1} alt="" />
                             </div>
                             <span>{item.name}</span>
-                          </a>
+                          </Link>
                         </li>
                       );
                     })}
@@ -146,15 +160,14 @@ const Header = () => {
             </li>
             <li className="HeaderCategory">
               <div className="HeaderCategoryLink dropdown">
-                <a
-                  href="#"
+                <Link
                   className="bold"
                   id="dropdownMenuLink"
                   data-mdb-toggle="dropdown"
                   aria-expanded="true"
                 >
                   Kiểm tra sức khoẻ
-                </a>
+                </Link>
                 <ul
                   class="dropdown-menu dropdown__menu2"
                   aria-labelledby="dropdownMenuLink"
@@ -165,70 +178,52 @@ const Header = () => {
                     </div>
                   </li>
                   <li>
-                    <a
-                      class="dropdown-item d-flex align-items-center dropdown__item"
-                      href="#"
-                    >
+                    <Link class="dropdown-item d-flex align-items-center dropdown__item">
                       <div className="header__menu_image">
                         <img src={imageskhoe1} alt="" />
                       </div>
                       <span>Biểu đồ tăng trưởng của trẻ em</span>
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      class="dropdown-item d-flex align-items-center dropdown__item"
-                      href="#"
-                    >
+                    <Link class="dropdown-item d-flex align-items-center dropdown__item">
                       <div className="header__menu_image">
                         <img src={imageskhoe2} alt="" />
                       </div>
                       <span>Công cụ kiểm tra tiêm phòng vắc-xin HPV</span>
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      class="dropdown-item d-flex align-items-center dropdown__item"
-                      href="#"
-                    >
+                    <Link class="dropdown-item d-flex align-items-center dropdown__item">
                       <div className="header__menu_image">
                         <img src={imageskhoe3} alt="" />
                       </div>
                       <span>Công cụ gợi ý tiêm chủng cho người lớn</span>
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      class="dropdown-item d-flex align-items-center dropdown__item"
-                      href="#"
-                    >
+                    <Link class="dropdown-item d-flex align-items-center dropdown__item">
                       <div className="header__menu_image">
                         <img src={imageskhoe4} alt="" />
                       </div>
                       <span>Sàng lọc ung thư cổ tử cung</span>
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      class="dropdown-item d-flex align-items-center dropdown__item"
-                      href="#"
-                    >
+                    <Link class="dropdown-item d-flex align-items-center dropdown__item">
                       <div className="header__menu_image">
                         <img src={imageskhoe5} alt="" />
                       </div>
                       <span>Sàng lọc xác định giai đoạn mãn kinh của bạn</span>
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      class="dropdown-item d-flex align-items-center dropdown__item"
-                      href="#"
-                    >
+                    <Link class="dropdown-item d-flex align-items-center dropdown__item">
                       <div className="header__menu_image">
                         <img src={imageskhoe6} alt="" />
                       </div>
                       <span>Công cụ sàng lọc tầm soát bệnh tim mạch</span>
-                    </a>
+                    </Link>
                   </li>
                   <li>
                     <a
@@ -250,15 +245,14 @@ const Header = () => {
             </li>
             <li className="HeaderCategory">
               <div className="HeaderCategoryLink dropdown">
-                <a
-                  href="#"
+                <Link
                   className="bold"
                   id="dropdownMenuLink"
                   data-mdb-toggle="dropdown"
                   aria-expanded="true"
                 >
                   Đặt lịch với bác sĩ
-                </a>
+                </Link>
                 <ul
                   class="dropdown-menu dropdown__menu3"
                   aria-labelledby="dropdownMenuLink"
@@ -273,16 +267,17 @@ const Header = () => {
                     specialtySlice.map((item, index) => {
                       return (
                         <li>
-                          <a
+                          <Link
                             class="dropdown-item d-flex align-items-center dropdown__item"
-                            href="/searchDoctor"
+                            to={`/care/searchDoctor/${item.id}`}
+                            state={{ name: `${item?.name}` }}
                             key={index}
                           >
                             <div className="header__menu_image">
                               <img src={imageck1} alt="" />
                             </div>
                             <span>{item.name}</span>
-                          </a>
+                          </Link>
                         </li>
                       );
                     })}
@@ -309,14 +304,13 @@ const Header = () => {
         {localStorage.getItem("token") ? (
           <div className="HeaderDropdown" ref={nodeRef}>
             <div className="HeaderUser flex-center">
-              <a
-                href="#"
+              <Link
                 onClick={() => {
                   setShow(!show);
                 }}
               >
                 <FaUserLarge></FaUserLarge>
-              </a>
+              </Link>
             </div>
             {show && (
               <div className="HeaderItem">
@@ -325,39 +319,54 @@ const Header = () => {
                     <FaUserLarge></FaUserLarge>
                   </div>
                   <div className="HeaderItem__user_name">
-                    <h6>Phạm Sĩ Chiến</h6>
-                    <p>chienkute</p>
+                    <h6>{userName || "Họ và tên"}</h6>
+                    <p>{user?.account?.username}</p>
                   </div>
                 </div>
                 <div className="HeaderItem__list row">
                   <Link
                     to={`/user/information/${user?.user?.id}`}
                     className="HeaderItem__list_item col-6"
+                    onClick={() => {
+                      setShow(false);
+                    }}
                   >
                     <div className="HeaderItem__list_item_icon">
                       <FaUserAlt></FaUserAlt>
                     </div>
                     <p>Hồ sơ</p>
                   </Link>
-                  <a
-                    href="/user/changePassword"
+                  <Link
+                    to={`/user/changePassword/${user?.user?.id}`}
                     className="HeaderItem__list_item col-6"
+                    onClick={() => {
+                      setShow(false);
+                    }}
                   >
                     <div className="HeaderItem__list_item_icon">
                       <RiLockPasswordFill></RiLockPasswordFill>
                     </div>
                     <p>Đổi mật khẩu</p>
-                  </a>
+                  </Link>
                   <a
                     href="/user/history"
                     className="HeaderItem__list_item col-6"
+                    onClick={() => {
+                      setShow(false);
+                    }}
                   >
                     <div className="HeaderItem__list_item_icon">
                       <FaCalendarAlt></FaCalendarAlt>
                     </div>
                     <p>Lịch sử hẹn</p>
                   </a>
-                  <a href="/user/help" className="HeaderItem__list_item col-6">
+                  <a
+                    href="/user/help"
+                    className="HeaderItem__list_item col-6"
+                    onClick={() => {
+                      setShow(false);
+                    }}
+                  >
                     <div className="HeaderItem__list_item_icon">
                       <BiSolidHelpCircle></BiSolidHelpCircle>
                     </div>

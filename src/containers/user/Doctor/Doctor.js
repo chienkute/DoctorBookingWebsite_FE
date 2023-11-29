@@ -2,12 +2,12 @@ import React, { memo, useContext, useEffect, useState } from "react";
 import "./Doctor.scss";
 import AppointmentBox from "../AppointmentBox/AppointmentBox";
 import avatar from "assets/avatar.png";
-import icon from "assets/icon.png";
 import banking from "assets/ck.png";
 import VISA from "assets/VISA.jpg";
 import { getDoctorByID } from "service/UserService";
 import { useParams } from "react-router-dom";
 import { LoadingContext } from "context/LoadingContext";
+import { RiMoneyDollarCircleLine } from "react-icons/ri";
 const Doctor = () => {
   const [doctor, setDoctor] = useState([]);
   const { id } = useParams();
@@ -118,9 +118,6 @@ const Doctor = () => {
                   </div>
                   <div className="Strengths">
                     <div className="Header">
-                      <div className="HeaderIcon">
-                        <img src={icon} alt="Icon"></img>
-                      </div>
                       <div className="HeaderName">Thế mạnh chuyên môn</div>
                     </div>
                     <div className="Content">
@@ -133,9 +130,6 @@ const Doctor = () => {
                   </div>
                   <div className="Services">
                     <div className="Header">
-                      <div className="HeaderIcon">
-                        <img src={icon} alt="Icon"></img>
-                      </div>
                       <div className="HeaderName">Dịch vụ</div>
                     </div>
                     <div className="Content">
@@ -151,7 +145,7 @@ const Doctor = () => {
                           </div>
                           <div className="ServiceFee">
                             <span className="Icon">
-                              <img src={icon} alt="Icon"></img>
+                              <RiMoneyDollarCircleLine></RiMoneyDollarCircleLine>
                             </span>
                             <span>Phí tư vấn ban đầu từ</span>
                             <span className="Fee"> 150.000đ</span>
@@ -163,9 +157,6 @@ const Doctor = () => {
                   <div className="History">
                     <div className="Experiences">
                       <div className="Header">
-                        <div className="HeaderIcon">
-                          <img src={icon} alt="Icon"></img>
-                        </div>
                         <div className="HeaderName">Kinh nghiệm làm việc</div>
                       </div>
                       <div className="Content">
@@ -193,9 +184,6 @@ const Doctor = () => {
                     </div>
                     <div className="Education">
                       <div className="Header">
-                        <div className="HeaderIcon">
-                          <img src={icon} alt="Icon"></img>
-                        </div>
                         <div className="HeaderName">Quá trình đào tạo</div>
                       </div>
                       <div className="Content">
@@ -236,9 +224,6 @@ const Doctor = () => {
                   </div>
                   <div className="WorkTime">
                     <div className="Header">
-                      <div className="HeaderIcon">
-                        <img src={icon} alt="Icon"></img>
-                      </div>
                       <div className="HeaderName">Giờ làm việc</div>
                     </div>
                     <div className="Content">
@@ -288,9 +273,6 @@ const Doctor = () => {
                   </div>
                   <div className="PaymentMethod">
                     <div className="Header">
-                      <div className="HeaderIcon">
-                        <img src={icon} alt="Icon"></img>
-                      </div>
                       <div className="HeaderName">Hình thức thanh toán</div>
                     </div>
                     <div className="Content">

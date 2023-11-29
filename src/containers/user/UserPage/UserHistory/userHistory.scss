@@ -65,3 +65,17 @@
     overflow: visible !important;
   }
 }
+.no__schedule {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 20px;
+  margin-top: 70px;
+  &_icon {
+    font-size: 60px;
+  }
+  p {
+    font-size: 20px;
+    font-weight: 700;
+  }
+}

@@ -69,19 +69,13 @@
     }
     &_body {
       width: 60%;
-      h2 {
-        font-weight: 700;
-        color: $color-header;
-        font-size: $fs-small-title;
-        padding-left: 10px;
-        margin-bottom: 17px;
-        &::before {
-          content: "";
-          width: 3px;
-          height: 20px;
-          background-color: $color-blue;
-          position: absolute;
-          left: 140px;
+      .Header {
+        h2 {
+          font-weight: 700;
+          color: $color-header;
+          font-size: $fs-small-title;
+          padding-left: 10px;
+          margin-bottom: 17px;
         }
       }
       &_title {
@@ -146,4 +140,14 @@
       }
     }
   }
+}
+.Header::before {
+  content: "";
+  width: 3px;
+  height: 20px;
+  background-color: $color-blue;
+  display: block;
+  transform: translateY(20px);
+  // position: absolute;
+  // left: 140px;
 }

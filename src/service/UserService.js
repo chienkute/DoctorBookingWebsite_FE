@@ -22,6 +22,9 @@ const fetchAllSpecialties = () => {
 const fetchAllService = () => {
   return instance.get("api/services/");
 };
+const getServiceById = (id) => {
+  return instance.get(`api/services/${id}/`);
+};
 const getDoctorByID = (id) => {
   return instance.get(`api/doctors/${id}/`);
 };
@@ -47,7 +50,7 @@ const search = (service, address, specialty, name, hospital) => {
   );
 };
 const scheduleDoctor = (id) => {
-  return instance.get(`api/schedulerdoctor?doctor=${id}`);
+  return instance.get(`api/getschedulerdoctor?doctor=${id}`);
 };
 const Booking = (id_doctor, id_schedule, date, time) => {
   return instance.post("/api/booking/", { id_doctor, id_schedule, date, time });
@@ -147,4 +150,5 @@ export {
   getCategoryById,
   changePassword,
   getUserID,
+  getServiceById,
 };
