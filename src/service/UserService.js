@@ -22,6 +22,9 @@ const fetchAllSpecialties = () => {
 const fetchAllService = () => {
   return instance.get("api/services/");
 };
+const getServiceById = (id) => {
+  return instance.get(`api/services/${id}/`);
+};
 const getDoctorByID = (id) => {
   return instance.get(`api/doctors/${id}/`);
 };
@@ -147,4 +150,5 @@ export {
   getCategoryById,
   changePassword,
   getUserID,
+  getServiceById,
 };

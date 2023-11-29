@@ -38,7 +38,6 @@ function SearchDoctor() {
   const [show, setShow] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
-  const { name } = location.state;
   const getDoctor = async () => {
     let res = await searchDoctor(
       debouncedSearchTerm,
@@ -74,10 +73,15 @@ function SearchDoctor() {
     }, 1000);
   }, [debouncedSearchTerm, adress, specialty, service]);
   useEffect(() => {
-    if (name === "empty") {
-      setSpecialtyy("");
+    if (location.state && location.state.name) {
+      const { name } = location.state;
+      if (name === "empty") {
+        setSpecialtyy("");
+      } else {
+        setSpecialtyy(name);
+      }
     } else {
-      setSpecialtyy(name);
+      setSpecialtyy("");
     }
     if (id >= 0) {
       setSpecialty(id);

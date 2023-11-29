@@ -39,7 +39,7 @@ const Specialties = () => {
                     className="col-md-2"
                     to={`/care/searchDoctor/${item.id}`}
                     key={`specilaties-${index}`}
-                    state={{ name: `${item.name}` }}
+                    state={{ name: `${item?.name}` }}
                   >
                     <div>
                       <img src={specialtiesImage} alt="" />
