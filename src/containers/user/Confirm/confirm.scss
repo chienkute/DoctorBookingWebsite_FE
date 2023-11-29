@@ -68,7 +68,7 @@
       &_header {
         display: flex;
         column-gap: 17px;
-        align-items: start;
+        align-items: flex-start;
         &_image {
           img {
             width: 50px;
@@ -109,7 +109,7 @@
         padding: 8px 12px;
         &_text {
           display: flex;
-          align-items: start;
+          align-items: flex-start;
           column-gap: 8px;
           color: $color-black;
           font-size: $fs-normal-text;

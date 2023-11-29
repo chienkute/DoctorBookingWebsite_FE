@@ -8,10 +8,10 @@ import { LoadingContext } from "context/LoadingContext";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MdPhotoCamera } from "react-icons/md";
+import { UpdateContext } from "context/UpdateContext";
 const UserInfo = () => {
   const [user, setUser] = useState([]);
   const [edit, setEdit] = useState(false);
-  // const [id, setId] = useState(null);
   const { id } = useParams();
   const [nameOld, setNameOld] = useState("");
   const [nameNew, setNameNew] = useState("");
@@ -25,10 +25,7 @@ const UserInfo = () => {
   const [phoneNew, setPhoneNew] = useState("");
   const [usernameOld, setUsernameOld] = useState("");
   const { loading, setLoading } = useContext(LoadingContext);
-  console.log(birthdayNew);
-  console.log(genderNew);
-  console.log(adressNew);
-  console.log(phoneNew);
+  const { update, setUpdate } = useContext(UpdateContext);
   const editUserInfo = async () => {
     let res = await editUser(
       id,
@@ -191,7 +188,6 @@ const UserInfo = () => {
                         onChange={(e) => {
                           setGenderNew(e.target.value);
                         }}
-                        checked={genderNew ? false : true}
                       />
                       <label class="form-check-label" for="nu">
                         Nữ
@@ -234,7 +230,13 @@ const UserInfo = () => {
                   >
                     Hủy
                   </Link>
-                  <button>Lưu thay đổi</button>
+                  <button
+                    onClick={() => {
+                      setUpdate(!update);
+                    }}
+                  >
+                    Lưu thay đổi
+                  </button>
                 </div>
               </form>
             ) : (

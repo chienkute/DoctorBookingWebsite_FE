@@ -3,6 +3,7 @@ import "../../user/Specialties/specialties.scss";
 import specialtiesImage from "../../../assets/chuyenkhoa/dakhoa.png";
 import { fetchAllSpecialties } from "service/UserService";
 import { LoadingContext } from "context/LoadingContext";
+import { Link } from "react-router-dom";
 const Specialties = () => {
   const [specialty, setSpecialty] = useState([]);
   const { loading, setLoading } = useContext(LoadingContext);
@@ -34,16 +35,17 @@ const Specialties = () => {
             {specialty &&
               specialty.map((item, index) => {
                 return (
-                  <a
+                  <Link
                     className="col-md-2"
-                    href="/care/searchDoctor"
+                    to={`/care/searchDoctor/${item.id}`}
                     key={`specilaties-${index}`}
+                    state={{ name: `${item.name}` }}
                   >
                     <div>
                       <img src={specialtiesImage} alt="" />
                     </div>
                     <p>{item.name}</p>
-                  </a>
+                  </Link>
                 );
               })}
           </div>

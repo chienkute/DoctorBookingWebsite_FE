@@ -8,25 +8,35 @@ import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import "../ServiceSearch/serviceSearch.scss";
 import { useEffect, useState } from "react";
 import { getServiceByIdHospital } from "service/UserService";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDebounce } from "@uidotdev/usehooks";
+import Skeleton from "react-loading-skeleton";
 const ServiceSearch = () => {
   const [service, setService] = useState([]);
   const [search, setSearch] = useState("");
   const [searchCount, setSearchCount] = useState("");
   const navigate = useNavigate();
   const queryDebounce = useDebounce(search, 500);
+  const [loadingSkeleton, setLoadingSkeleton] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getService = async () => {
       let res = await getServiceByIdHospital(queryDebounce, "");
       if (res) {
+        setLoadingSkeleton(true);
         setService(res?.results);
         setSearchCount(res?.count);
         console.log(res);
       }
     };
     getService();
+    setTimeout(() => {
+      setLoadingSkeleton(false);
+    }, 1500);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
   }, [queryDebounce]);
   return (
     <div className="serviceSearch">
@@ -42,6 +52,7 @@ const ServiceSearch = () => {
                   onChange={(e) => {
                     setSearch(e.target.value);
                   }}
+                  autoComplete="off"
                 ></input>
               </div>
             </div>
@@ -51,48 +62,197 @@ const ServiceSearch = () => {
             >
               {searchCount} kết quả được tìm thấy
             </div>
-            {service &&
-              service.length > 0 &&
-              service.map((item, index) => {
-                return (
-                  <div className="hospital__body_dichvu_result" key={index}>
-                    <div className="hospital__body_dichvu_info">
-                      <a
-                        href=""
-                        onClick={() => {
-                          navigate(`/care/service/${item.id}`);
-                        }}
-                      >
-                        {item.name}
-                      </a>
-                      <div className="hospital__body_dichvu_price">
-                        <div className="hospital__body_dichvu_price_icon">
-                          <RiMoneyDollarCircleLine></RiMoneyDollarCircleLine>
-                        </div>
-                        <p>800.000</p>
-                      </div>
+            {loading ? (
+              <div>
+                <div className="hospital__body_dichvu_result">
+                  <div className="hospital__body_dichvu_info">
+                    <Skeleton width={"30%"}></Skeleton>
+                    <Skeleton
+                      width={"30%"}
+                      style={{ marginBottom: "25px" }}
+                    ></Skeleton>
+                  </div>
+                  <div className="hospital__body_dichvu_bottom">
+                    <div className="hospital__body_dichvu_bottom_avtHosp">
+                      <Skeleton
+                        circle
+                        width={"40px"}
+                        height={"40px"}
+                      ></Skeleton>
                     </div>
-                    <div className="hospital__body_dichvu_bottom">
-                      <div className="hospital__body_dichvu_bottom_avtHosp">
-                        <img src={hospavt} alt="" />
-                      </div>
-                      <div className="hospital__body_dichvu_bottom_descrip">
-                        <a href="#">Phòng Khám ACC - Chiropractic Đà Nẵng</a>
-                        <p>
-                          112 Đường 2 Tháng 9, phường Bình Thuận, Hải Châu, Đà
-                          Nẵng, Viet Nam
-                        </p>
-                      </div>
-                      <button
-                        type="button"
-                        className="btn button hospital__body_dichvu_bottom_button"
-                      >
-                        Đặt Lịch Hẹn
-                      </button>
+
+                    <div className="hospital__body_dichvu_bottom_descrip">
+                      <Skeleton
+                        count={2}
+                        width={"400px"}
+                        height={"10px"}
+                      ></Skeleton>
+                    </div>
+
+                    <div className="hospital__body_dichvu_bottom_button">
+                      <Skeleton
+                        width={"140px"}
+                        height={"50px"}
+                        style={{ transform: "translateY(-5px)" }}
+                      />
                     </div>
                   </div>
-                );
-              })}
+                </div>
+                <div className="hospital__body_dichvu_result">
+                  <div className="hospital__body_dichvu_info">
+                    <Skeleton width={"30%"}></Skeleton>
+                    <Skeleton
+                      width={"30%"}
+                      style={{ marginBottom: "25px" }}
+                    ></Skeleton>
+                  </div>
+                  <div className="hospital__body_dichvu_bottom">
+                    <div className="hospital__body_dichvu_bottom_avtHosp">
+                      <Skeleton
+                        circle
+                        width={"40px"}
+                        height={"40px"}
+                      ></Skeleton>
+                    </div>
+
+                    <div className="hospital__body_dichvu_bottom_descrip">
+                      <Skeleton
+                        count={2}
+                        width={"400px"}
+                        height={"10px"}
+                      ></Skeleton>
+                    </div>
+
+                    <div className="hospital__body_dichvu_bottom_button">
+                      <Skeleton
+                        width={"140px"}
+                        height={"50px"}
+                        style={{ transform: "translateY(-5px)" }}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="hospital__body_dichvu_result">
+                  <div className="hospital__body_dichvu_info">
+                    <Skeleton width={"30%"}></Skeleton>
+                    <Skeleton
+                      width={"30%"}
+                      style={{ marginBottom: "25px" }}
+                    ></Skeleton>
+                  </div>
+                  <div className="hospital__body_dichvu_bottom">
+                    <div className="hospital__body_dichvu_bottom_avtHosp">
+                      <Skeleton
+                        circle
+                        width={"40px"}
+                        height={"40px"}
+                      ></Skeleton>
+                    </div>
+
+                    <div className="hospital__body_dichvu_bottom_descrip">
+                      <Skeleton
+                        count={2}
+                        width={"400px"}
+                        height={"10px"}
+                      ></Skeleton>
+                    </div>
+
+                    <div className="hospital__body_dichvu_bottom_button">
+                      <Skeleton
+                        width={"140px"}
+                        height={"50px"}
+                        style={{ transform: "translateY(-5px)" }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div>
+                {service &&
+                  service.length > 0 &&
+                  service.map((item, index) => {
+                    return (
+                      <div className="hospital__body_dichvu_result" key={index}>
+                        <div className="hospital__body_dichvu_info">
+                          {loadingSkeleton ? (
+                            <Skeleton width={"30%"}></Skeleton>
+                          ) : (
+                            <Link to={`/care/service/${item.id}`}>
+                              {item.name}
+                            </Link>
+                          )}
+                          {loadingSkeleton ? (
+                            <Skeleton
+                              width={"30%"}
+                              style={{ marginBottom: "25px" }}
+                            ></Skeleton>
+                          ) : (
+                            <div className="hospital__body_dichvu_price">
+                              <div className="hospital__body_dichvu_price_icon">
+                                <RiMoneyDollarCircleLine></RiMoneyDollarCircleLine>
+                              </div>
+                              <p>800.000</p>
+                            </div>
+                          )}
+                        </div>
+                        <div className="hospital__body_dichvu_bottom">
+                          {loadingSkeleton ? (
+                            <div className="hospital__body_dichvu_bottom_avtHosp">
+                              <Skeleton
+                                circle
+                                width={"40px"}
+                                height={"40px"}
+                              ></Skeleton>
+                            </div>
+                          ) : (
+                            <div className="hospital__body_dichvu_bottom_avtHosp">
+                              <img src={hospavt} alt="" />
+                            </div>
+                          )}
+
+                          {loadingSkeleton ? (
+                            <div className="hospital__body_dichvu_bottom_descrip">
+                              <Skeleton
+                                count={2}
+                                width={"400px"}
+                                height={"10px"}
+                              ></Skeleton>
+                            </div>
+                          ) : (
+                            <div className="hospital__body_dichvu_bottom_descrip">
+                              <Link>Phòng Khám ACC - Chiropractic Đà Nẵng</Link>
+                              <p>
+                                112 Đường 2 Tháng 9, phường Bình Thuận, Hải
+                                Châu, Đà Nẵng, Viet Nam
+                              </p>
+                            </div>
+                          )}
+                          {loadingSkeleton ? (
+                            <div className="hospital__body_dichvu_bottom_button">
+                              <Skeleton
+                                width={"140px"}
+                                height={"50px"}
+                                style={{ transform: "translateY(-5px)" }}
+                              />
+                            </div>
+                          ) : (
+                            <button
+                              type="button"
+                              className="btn button hospital__body_dichvu_bottom_button"
+                              onClick={() => {
+                                navigate(`/care/service/${item.id}`);
+                              }}
+                            >
+                              Đặt Lịch Hẹn
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            )}
           </div>
           <div className="DoctorResultPageMonitor">
             <ReactPaginate

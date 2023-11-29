@@ -184,4 +184,14 @@
       text-align: center;
     }
   }
+  &__text {
+    svg {
+      transform: translate(-10px, -1px);
+    }
+  }
+  &__text2 {
+    color: $color-black;
+    font-size: $fs-normal-text;
+    margin-left: -20px;
+  }
 }

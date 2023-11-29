@@ -136,7 +136,13 @@
 
 .DoctorPageContent .DoctorHighlight > .DoctorHighlightHeader::before,
 .DoctorBasicInfo > .Content > .BasicInfo > .Header::before,
-.DoctorBasicInfo > .Content > .HospitalLocation > .Header::before {
+.DoctorBasicInfo > .Content > .HospitalLocation > .Header::before,
+.DoctorBasicInfo > .Content > .Strengths > .Header::before,
+.DoctorBasicInfo > .Content > .Services > .Header::before,
+.DoctorBasicInfo > .Content > .History > .Experiences > .Header::before,
+.DoctorBasicInfo > .Content > .History > .Education > .Header::before,
+.DoctorBasicInfo > .Content > .PaymentMethod > .Header::before,
+.DoctorBasicInfo > .Content > .WorkTime > .Header::before {
   content: "";
   width: 2px;
   height: 15px;

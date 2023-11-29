@@ -16,9 +16,8 @@ const Confirm = () => {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const { schedule, day, time, days } = location.state;
+  const { schedule, day, time, days, idUser } = location.state;
   const [doctor, setDoctor] = useState([]);
-  const [user, setUser] = useState([]);
   const [userInfo, setUserInfo] = useState([]);
   const { loading, setLoading } = useContext(LoadingContext);
   const book = async () => {
@@ -40,14 +39,8 @@ const Confirm = () => {
       setLoading(false);
     }
   };
-  const getUser = () => {
-    const user = localStorage.getItem("user");
-    if (user) {
-      setUser(JSON.parse(user));
-    }
-  };
   const getUserByID = async () => {
-    let res = await getUserID(user?.user?.id);
+    let res = await getUserID(idUser);
     if (res) {
       setLoading(false);
       setUserInfo(res);
@@ -56,8 +49,8 @@ const Confirm = () => {
   };
   useEffect(() => {
     getDoctor();
-    getUser();
     getUserByID();
+    setLoading(true);
   }, []);
   return (
     <div>
@@ -100,7 +93,7 @@ const Confirm = () => {
                     <img src={avtImage} alt="" />
                   </div>
                   <div className="confirm__infor_content_header_text">
-                    <p>{userInfo?.name || ""}</p>
+                    <p>{userInfo?.name || "-------"}</p>
                     <div className="confirm__infor_content_header_text2">
                       {userInfo?.gender ? <p>Nam</p> : <p>Nữ</p>}
                       <div className="dot"></div>
@@ -110,7 +103,7 @@ const Confirm = () => {
                             {userInfo?.birthday}
                           </Moment>
                         ) : (
-                          <p></p>
+                          <p>-------</p>
                         )}
                       </p>
                     </div>
@@ -124,14 +117,14 @@ const Confirm = () => {
                     <p className="confirm__infor_footer_text">
                       Số điện thoại :
                     </p>
-                    <p>{userInfo?.phone || ""}</p>
+                    <p>{userInfo?.phone || "-------"}</p>
                   </div>
                   <div className="confirm__infor_content_footer_text">
                     <div className="confirm__infor_footer_icon">
                       <MdEmail></MdEmail>
                     </div>
                     <p className="confirm__infor_footer_text">Email :</p>
-                    <p>{userInfo?.account?.email || ""}</p>
+                    <p>{userInfo?.account?.email || "--------"}</p>
                   </div>
                   <div className="confirm__infor_content_footer_warning">
                     <div className="confirm__infor_content_footer_warning_icon">
@@ -161,7 +154,7 @@ const Confirm = () => {
                     <img src={avtImage} alt="" />
                   </div>
                   <div className="confirm__schedule_content_header_text">
-                    <p>{doctor?.name || "Họ và tên bác sĩ"}</p>
+                    <p>{doctor?.name || "-------"}</p>
                     <div className="confirm__schedule_content_header_text2">
                       {doctor?.specialties &&
                         doctor?.specialties.map((item, index) => {
@@ -191,7 +184,7 @@ const Confirm = () => {
                               {day}
                             </Moment>
                           ) : (
-                            <p></p>
+                            <p>------</p>
                           )}
                         </p>
                       </div>
@@ -202,10 +195,10 @@ const Confirm = () => {
                       </div>
                       <div className="confirm__schedule_footer_info">
                         <p className="confirm__schedule_footer_info_text">
-                          {doctor?.hospital?.name}
+                          {doctor?.hospital?.name || "------"}
                         </p>
                         <p className="confirm__schedule_footer_info_text1">
-                          {doctor?.hospital?.address}
+                          {doctor?.hospital?.address || "------"}
                         </p>
                       </div>
                     </div>

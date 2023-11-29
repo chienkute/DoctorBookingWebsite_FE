@@ -17,6 +17,7 @@ import confirm from "containers/user/Confirm/confirm";
 import blog from "containers/user/Blog/blog";
 import userChangePassword from "containers/user/UserPage/UserChangePassword/userChangePassword";
 import userhelp from "containers/user/UserPage/UserHelp/userhelp";
+import tool from "containers/user/Tool/tool";
 const publicRoutes = [
   { path: "/", component: HomePage },
   { path: "/login", component: Login, layout: null },
@@ -38,5 +39,6 @@ const publicRoutes = [
   { path: "/user/help", component: userhelp },
   { path: "/care/doctor/confirm/:id", component: confirm },
   { path: "/blog/:id", component: blog },
+  { path: "/tool", component: tool, layout: null },
 ];
 export { publicRoutes };
