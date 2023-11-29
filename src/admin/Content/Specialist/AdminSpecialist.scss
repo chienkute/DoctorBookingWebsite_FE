@@ -156,3 +156,49 @@
     background-color: rgb(45, 135, 243);
     border-radius   : 4px;
 }
+
+.SIDOverlayContainer,
+.SDDOverlayContainer {
+    margin-top      : 0 !important;
+    position        : absolute;
+    width           : 100%;
+    height          : 100%;
+    top             : 0;
+    left            : 0;
+    border          : 1px solid #ccc;
+    display         : none;
+    flex-wrap       : wrap;
+    justify-content : center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.SIDOverlayContainer .SIDClose,
+.SDDOverlayContainer .SDDClose {
+    width: 100%;
+}
+
+.SIDOverlayContainer .SIDClose button,
+.SDDOverlayContainer .SDDClose button {
+    height          : 48px;
+    width           : 48px;
+    background-color: inherit;
+    border          : none;
+    color           : white;
+    float           : right;
+}
+
+.SIDOverlayContainer .SIDClose button>svg,
+.SDDOverlayContainer .SDDClose button>svg {
+    width : 36px;
+    height: 36px;
+}
+
+.SIDOverlayContainer .SIDOverlayContent,
+.SDDOverlayContainer .SDDOverlayContent {
+    position        : absolute;
+    margin-top      : 72px;
+    background-color: white;
+    height          : fit-content;
+    padding         : 32px;
+    border-radius   : 10px;
+}

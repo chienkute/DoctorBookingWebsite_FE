@@ -1,0 +1,63 @@
+@use "sass:map";
+@import "style/pages/theme";
+
+.UserDeleteDialogueContainer {
+    width : 300px;
+    height: fit-content;
+}
+
+.UDDHeader h3 {
+    margin-bottom: 16px;
+}
+
+.UDDContent .UDDField {
+    margin-bottom: 16px;
+}
+
+.UDDContent .UDDField>div {
+    margin-bottom: 8px;
+    font-weight  : 700;
+}
+
+.UDDContent input,
+.UDDContent textarea {
+    width  : 100%;
+    padding: 8px
+}
+
+.UDDContent textarea {
+    resize: vertical;
+}
+
+.UDDActions .UDDWarning {
+    margin-bottom: 8px;
+    width        : 100%;
+    text-align   : center;
+}
+
+.UDDButtons {
+    display: flex;
+    gap    : 8px;
+}
+
+
+
+.UDDButtons>button {
+    width  : 100%;
+    padding: 8px;
+}
+
+#UDDConfirmButton {
+    border-radius: 10px;
+    background   : #3A57E8;
+    color        : white;
+    font-weight  : 700;
+    border       : none;
+}
+
+#UDDCancelButton {
+    border-radius: 10px;
+    border       : 1px solid #6597DB;
+    background   : #FFF;
+    font-weight  : 700;
+}

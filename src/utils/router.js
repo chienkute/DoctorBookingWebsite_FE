@@ -19,6 +19,7 @@ import blog from "containers/user/Blog/blog";
 import AdminPage from "admin/AdminPage";
 import userChangePassword from "containers/user/UserPage/UserChangePassword/userChangePassword";
 import userhelp from "containers/user/UserPage/UserHelp/userhelp";
+
 const publicRoutes = [
   { path: "/", component: HomePage },
   { path: "/login", component: Login, layout: null },
@@ -54,11 +55,6 @@ const publicRoutes = [
   {
     path: "/admin/post",
     component: (props) => <AdminPage {...props} menuName="AdminMenuPost" />,
-    layout: null,
-  },
-  {
-    path: "/admin/tool",
-    component: (props) => <AdminPage {...props} menuName="AdminMenuTool" />,
     layout: null,
   },
   {

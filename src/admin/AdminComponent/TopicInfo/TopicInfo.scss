@@ -1,0 +1,73 @@
+@use "sass:map";
+@import "style/pages/theme";
+
+
+.TopicInfoDialogueContainer {
+    width: fit-content;
+}
+
+.TIDHeader h3 {
+    margin-bottom: 16px;
+}
+
+.TIDContent {
+    display: flex;
+    gap    : 16px;
+}
+
+.TIDContent .TIDCols {
+    width: 300px;
+}
+
+.TIDContent .TIDField {
+    margin-bottom: 16px;
+}
+
+.TIDContent .TIDField input {
+    margin-top   : 8px;
+    padding      : 8px;
+    width        : 100%;
+    border-radius: 6px;
+}
+
+.TIDContent .TIDField {
+    display    : flex;
+    flex-wrap  : wrap;
+    align-items: center;
+}
+
+.TIDContent .TIDField label,
+.TIDContent .TIDField .TIDLabel {
+
+    font-weight: 700;
+}
+
+.TIDContent .TIDField label {
+    width: 30%;
+}
+
+.TIDContent .TIDField select {
+    padding: 4px;
+}
+
+.TIDContent .TIDField input:disabled {
+    background-color: #f2f2f2;
+    color           : #999;
+}
+
+.TIDAction {
+    margin-left: auto;
+    width      : fit-content;
+}
+
+.TIDAction button {
+    display      : inline-block;
+    margin-left  : 8px;
+    padding      : 8px;
+    border       : none;
+    border-radius: 6px;
+}
+
+.TIDAction button.hidden {
+    display: none;
+}

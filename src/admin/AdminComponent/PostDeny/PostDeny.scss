@@ -1,0 +1,63 @@
+@use "sass:map";
+@import "style/pages/theme";
+
+.PostDenyDialogueContainer {
+    width : 300px;
+    height: fit-content;
+}
+
+.PdDHeader h3 {
+    margin-bottom: 16px;
+}
+
+.PdDContent .PdDField {
+    margin-bottom: 16px;
+}
+
+.PdDContent .PdDField>div {
+    margin-bottom: 8px;
+    font-weight  : 700;
+}
+
+.PdDContent input,
+.PdDContent textarea {
+    width  : 100%;
+    padding: 8px
+}
+
+.PdDContent textarea {
+    resize: vertical;
+}
+
+.PdDActions .PdDWarning {
+    margin-bottom: 8px;
+    width        : 100%;
+    text-align   : center;
+}
+
+.PdDButtons {
+    display: flex;
+    gap    : 8px;
+}
+
+
+
+.PdDButtons>button {
+    width  : 100%;
+    padding: 8px;
+}
+
+#PdDConfirmButton {
+    border-radius: 10px;
+    background   : #3A57E8;
+    color        : white;
+    font-weight  : 700;
+    border       : none;
+}
+
+#PdDCancelButton {
+    border-radius: 10px;
+    border       : 1px solid #6597DB;
+    background   : #FFF;
+    font-weight  : 700;
+}

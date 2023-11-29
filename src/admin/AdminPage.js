@@ -5,7 +5,6 @@ import AdminUser from "./Content/User/AdminUser";
 import AdminDashboard from "./Content/Dashboard/AdminDashboard";
 import AdminTopic from "./Content/Topic/AdminTopic";
 import AdminPost from "./Content/Post/AdminPost";
-import AdminTool from "./Content/Tools/AdminTools";
 import AdminHospital from "./Content/Hospital/AdminHospital";
 import AdminSpecialList from "./Content/Specialist/AdminSpecialist";
 
@@ -20,8 +19,6 @@ class AdminPage extends React.Component {
         return <AdminTopic />;
       case "AdminMenuPost":
         return <AdminPost />;
-      case "AdminMenuTool":
-        return <AdminTool />;
       case "AdminMenuHospital":
         return <AdminHospital />;
       case "AdminMenuSpecialist":

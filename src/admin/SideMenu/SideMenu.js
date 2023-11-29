@@ -59,15 +59,6 @@ class SideMenu extends React.Component {
             </li>
             <li
               className="AdminMenu"
-              id="AdminMenuTool"
-              onClick={() => {
-                this.gotoAdminFunction("/admin/tool");
-              }}
-            >
-              Quản lí công cụ
-            </li>
-            <li
-              className="AdminMenu"
               id="AdminMenuHospital"
               onClick={() => {
                 this.gotoAdminFunction("/admin/hospital");
