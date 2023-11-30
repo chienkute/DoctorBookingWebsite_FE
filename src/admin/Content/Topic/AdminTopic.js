@@ -8,7 +8,6 @@ import { IoClose } from "react-icons/io5";
 import TopicDeleteDialogue from "admin/AdminComponent/TopicDelete/TopicDelete";
 
 class AdminTopic extends React.Component {
-  //function này là Demo, mới chỉ ẩn/hiện cái dialogue
   changeState(value, field) {
     let UID = document.querySelector(field);
     if (value) UID.style.display = "flex";

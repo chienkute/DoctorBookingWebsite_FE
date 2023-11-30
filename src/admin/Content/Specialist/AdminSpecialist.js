@@ -8,7 +8,6 @@ import SpecialityInfoDialogue from "admin/AdminComponent/SpecialityInfo/Speciali
 import SpecialityDeleteDialogue from "admin/AdminComponent/SpecialityDelete/SpecialityDelete";
 
 class AdminSpecialist extends React.Component {
-  //function này là Demo, mới chỉ ẩn/hiện cái dialogue
   changeState(value, field) {
     let UID = document.querySelector(field);
     if (value) UID.style.display = "flex";
