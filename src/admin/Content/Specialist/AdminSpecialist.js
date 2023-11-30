@@ -129,16 +129,11 @@ class AdminSpecialist extends React.Component {
           </div>
         </div>
         <div className="SIDOverlayContainer">
-          <div className="SIDClose">
-            <button
-              id="SIDCloseButton"
-              onClick={() => this.changeState(false, ".SIDOverlayContainer")}
-            >
-              <IoClose />
-            </button>
-          </div>
+          <div className="SIDClose"></div>
           <div className="SIDOverlayContent">
-            <SpecialityInfoDialogue />
+            <SpecialityInfoDialogue
+              closeSIDMethod={(value, field) => this.changeState(value, field)}
+            />
           </div>
         </div>
         <div className="SDDOverlayContainer">
@@ -151,7 +146,9 @@ class AdminSpecialist extends React.Component {
             </button>
           </div>
           <div className="SDDOverlayContent">
-            <SpecialityDeleteDialogue />
+            <SpecialityDeleteDialogue
+              closeSDDMethod={(value, field) => this.changeState(value, field)}
+            />
           </div>
         </div>
       </>
