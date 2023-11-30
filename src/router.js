@@ -1,11 +1,12 @@
 import MasterLayout from "./containers/theme/masterLayout";
 import { Routes, Route } from "react-router-dom";
 import { Fragment, useState } from "react";
-import { publicRoutes, routeAdmin } from "./utils/router";
+import { publicRoutes, routeAdmin, routeHospital } from "./utils/router";
 import { SearchContext } from "context/SearchContext";
 import { LoadingContext } from "context/LoadingContext";
 import { UpdateContext } from "context/UpdateContext";
 import adminLayout from "containers/theme/adminLayout";
+import hospitalLayout from "containers/theme/hospitalLayout";
 const RouterCustom = () => {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
@@ -32,6 +33,21 @@ const RouterCustom = () => {
             })}
             {routeAdmin.map((route, index) => {
               const Layout = adminLayout;
+              const Page = route.component;
+              return (
+                <Route
+                  key={index}
+                  path={route.path}
+                  element={
+                    <Layout>
+                      <Page />
+                    </Layout>
+                  }
+                />
+              );
+            })}
+            {routeHospital.map((route, index) => {
+              const Layout = hospitalLayout;
               const Page = route.component;
               return (
                 <Route
