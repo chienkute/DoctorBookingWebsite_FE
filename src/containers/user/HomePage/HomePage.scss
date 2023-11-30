@@ -1,10 +1,12 @@
 @use "sass:map";
+// @import "~bootstrap/scss/bootstrap";
+@import "style/pages/theme";
 .App {
   min-height: 100vh;
 }
 
 .MainPageBanner {
-  height: 30vh;
+  margin-top: 70px;
 }
 
 .MainPageBanner > img {
@@ -45,4 +47,39 @@
 .Introduce {
   padding: 0 16rem;
   background-color: rgb(248, 249, 252);
+}
+.carousel-item {
+  height: 450px !important;
+}
+.image-banner {
+  // height: 300px;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+.carousel-control-next-icon:after {
+  display: none;
+}
+.carousel-control-prev-icon:after {
+  display: none;
+}
+.image_2 {
+  background-position: top;
+}
+.carousel-caption {
+  width: 500px;
+  top: 0;
+  left: 100px;
+  margin-top: 30px;
+  margin-left: 60px;
+  h1 {
+    font-size: 40px;
+    font-weight: 700 !important;
+    color: $color-title !important;
+    text-align: left;
+  }
+  p {
+    text-align: left;
+    font-size: $fs-small-title;
+  }
 }

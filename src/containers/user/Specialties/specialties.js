@@ -37,9 +37,7 @@ const Specialties = () => {
                 return (
                   <Link
                     className="col-md-2"
-                    to={`/care/searchDoctor/${item.id}`}
-                    key={`specilaties-${index}`}
-                    state={{ name: `${item?.name}` }}
+                    to={`/care/searchDoctor/${item.id}/${item.name}`}
                   >
                     <div>
                       <img src={specialtiesImage} alt="" />

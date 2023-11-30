@@ -1,5 +1,6 @@
 import React from "react";
 import "./ListTools.scss";
+import { Link } from "react-router-dom";
 
 class ListTools extends React.Component {
   render() {
@@ -11,42 +12,42 @@ class ListTools extends React.Component {
         <div className="ListToolsContent">
           <ul className="ListToolsRow clear flex-center">
             <li className="Tools col-3">
-              <a href="#" className="clear">
+              <Link className="clear">
                 <img
                   src="https://cdn.hellobacsi.com/wp-content/uploads/2017/10/BMR_new.png"
                   alt="Tools Icon"
                 ></img>
                 <div>Đo nhu cầu calo (BMR)</div>
-              </a>
+              </Link>
             </li>
             <li className="Tools col-3">
-              <a href="#" className="clear">
+              <Link className="clear">
                 <img
                   src="https://cdn.hellobacsi.com/wp-content/uploads/2022/10/bieu-do-tang-truong-cua-tre-em_featured-image.png"
                   alt="Tools Icon"
                 ></img>
                 <div>Biểu đồ tăng trưởng của trẻ em</div>
-              </a>
+              </Link>
             </li>
             <li className="Tools col-3">
-              <a href="#" className="clear">
+              <Link className="clear">
                 <img
                   src="https://cdn.hellobacsi.com/wp-content/uploads/2019/07/Target-heart-rate.png"
                   alt="Tools Icon"
                 ></img>
                 <div>Công cụ tính nhịp tim lí tưởng</div>
-              </a>
+              </Link>
             </li>
           </ul>
           <ul className="ListToolsRow clear flex-center">
             <li className="Tools col-3">
-              <a href="#" className="clear">
+              <Link className="clear">
                 <img
                   src="https://cdn.hellobacsi.com/wp-content/uploads/2017/10/Ovulation.png"
                   alt="Tools Icon"
                 ></img>
                 <div>Tính ngày rụng trứng</div>
-              </a>
+              </Link>
             </li>
             <li className="Tools col-3">
               <a href="#" className="clear">

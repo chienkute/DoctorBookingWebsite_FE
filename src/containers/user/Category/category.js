@@ -10,7 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import "../Category/CategoryListStyle.scss";
 import ReactPaginate from "react-paginate";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   fetchAllCategories,
   getBlogByIdCategory,
@@ -18,14 +18,15 @@ import {
 } from "service/UserService";
 import { LoadingContext } from "context/LoadingContext";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { UpdateContext } from "context/UpdateContext";
 const Category = () => {
-  const { id } = useParams();
+  const { id, name } = useParams();
+  console.log(name);
   const [blog, setBlog] = useState([]);
+  const { update } = useContext(UpdateContext);
   const { loading, setLoading } = useContext(LoadingContext);
-  const location = useLocation();
   const [categories, setCategories] = useState([]);
   const [categoryy, setCategory] = useState([]);
-  const { category } = location.state;
   const getService = async () => {
     let res = await fetchAllCategories(1);
     if (res) {
@@ -42,7 +43,7 @@ const Category = () => {
   useEffect(() => {
     const getBlog = async () => {
       let res = await getBlogByIdCategory(id);
-      if (res) {
+      if (res?.results) {
         setLoading(false);
         console.log(res);
         setBlog(res.results);
@@ -52,6 +53,10 @@ const Category = () => {
     getService();
     getCategory();
   }, []);
+  useEffect(() => {
+    setLoading(true);
+    getCategory();
+  }, [update]);
   return (
     <div>
       {loading ? (
@@ -76,7 +81,7 @@ const Category = () => {
               <MdKeyboardArrowRight></MdKeyboardArrowRight>
             </div>
             <Link to={`/category/${id}`} className="category__text2">
-              {category}
+              {name}
             </Link>
           </div>
           <div className="category__color"></div>

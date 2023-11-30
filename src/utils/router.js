@@ -23,12 +23,12 @@ const publicRoutes = [
   { path: "/login", component: Login, layout: null },
   { path: "/register", component: Register, layout: null },
   { path: "/care/searchDoctor", component: SearchDoctor },
-  { path: "/care/searchDoctor/:id", component: SearchDoctor },
+  { path: "/care/searchDoctor/:id/:chuyenkhoa", component: SearchDoctor },
   { path: "/search", component: Search },
   { path: "/categories", component: categories },
   { path: "/care/", component: Care },
   { path: "/care/doctor/:id", component: Doctor },
-  { path: "/category/:id", component: category },
+  { path: "/category/:id/:name", component: category },
   { path: "/care/hospital/:id", component: hospitalPage },
   { path: "/care/service/:id", component: service },
   { path: "/care/specialties", component: specialties },
@@ -41,4 +41,5 @@ const publicRoutes = [
   { path: "/blog/:id", component: blog },
   { path: "/tool", component: tool, layout: null },
 ];
+// const routeAdmin = [];
 export { publicRoutes };

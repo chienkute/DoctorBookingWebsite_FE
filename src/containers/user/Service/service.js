@@ -72,7 +72,7 @@ const Service = () => {
                 </div>
                 <div className="service__main_body_line"></div>
                 <div className="service__main_body_info">
-                  <div className="Header">
+                  <div className="servicehead">
                     <h2>Về dịch vụ</h2>
                   </div>
                   <span>
@@ -82,7 +82,7 @@ const Service = () => {
                   </span>
                 </div>
                 <div className="service__main_body_hour">
-                  <div className="Header">
+                  <div className="servicehead">
                     <h2>Giờ làm việc</h2>
                   </div>
                   <div className="service__main_body_time">
@@ -115,7 +115,7 @@ const Service = () => {
                   </div>
                 </div>
                 <div>
-                  <div className="Header">
+                  <div className="servicehead">
                     <h2>Hình thức thanh toán</h2>
                   </div>
                   <div className="service__main_body_thanhtoan">

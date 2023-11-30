@@ -33,18 +33,16 @@ const Confirm = () => {
   };
   const getDoctor = async () => {
     let res = await getDoctorByID(id);
-    if (res) {
-      console.log(res);
+    if (res && res?.name) {
       setDoctor(res);
       setLoading(false);
     }
   };
   const getUserByID = async () => {
     let res = await getUserID(idUser);
-    if (res) {
+    if (res && res?.phone) {
       setLoading(false);
       setUserInfo(res);
-      console.log(res);
     }
   };
   useEffect(() => {

@@ -5,12 +5,12 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import "./Header.scss";
 import { Link, useNavigate } from "react-router-dom";
 import imageChuyenMuc1 from "../../../assets/chuyenmuc/medical.png";
-import imageskhoe1 from "../../../assets/suckhoe/kiemtraskhoe1.png";
-import imageskhoe2 from "../../../assets/suckhoe/ktraskhoe2.png";
-import imageskhoe3 from "../../../assets/suckhoe/ktrasuckhoe3.png";
-import imageskhoe4 from "../../../assets/suckhoe/ktraskhoe4.png";
-import imageskhoe5 from "../../../assets/suckhoe/ktrasuckhoe5.png";
-import imageskhoe6 from "../../../assets/suckhoe/ktrasuckhoe6.png";
+// import imageskhoe1 from "../../../assets/suckhoe/kiemtraskhoe1.png";
+// import imageskhoe2 from "../../../assets/suckhoe/ktraskhoe2.png";
+// import imageskhoe3 from "../../../assets/suckhoe/ktrasuckhoe3.png";
+// import imageskhoe4 from "../../../assets/suckhoe/ktraskhoe4.png";
+// import imageskhoe5 from "../../../assets/suckhoe/ktrasuckhoe5.png";
+// import imageskhoe6 from "../../../assets/suckhoe/ktrasuckhoe6.png";
 import imageck1 from "../../../assets/chuyenkhoa/dakhoa.png";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { FaUserLarge } from "react-icons/fa6";
@@ -28,11 +28,11 @@ import {
 } from "service/UserService";
 import { FaUserAlt } from "react-icons/fa";
 import { UpdateContext } from "context/UpdateContext";
-
 const Header = () => {
   const { setSearch } = useContext(SearchContext);
-  const { update } = useContext(UpdateContext);
+  const { update, setUpdate } = useContext(UpdateContext);
   const [user, setUser] = useState([]);
+  console.log(user);
   const [userName, setUserName] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
@@ -59,6 +59,7 @@ const Header = () => {
   const getUserByID = async () => {
     let res = await getUserID(user?.user?.id);
     if (res) {
+      console.log(res);
       setUserName(res?.name);
     }
   };
@@ -129,11 +130,15 @@ const Header = () => {
                     categories.length > 0 &&
                     categories.map((item, index) => {
                       return (
-                        <li key={index}>
+                        <li
+                          key={index}
+                          onClick={() => {
+                            setUpdate(!update);
+                          }}
+                        >
                           <Link
                             class="dropdown-item d-flex align-items-center dropdown__item"
-                            to={`/category/${item.id}`}
-                            state={{ category: `${item.name}` }}
+                            to={`/category/${item.id}/${item.name}`}
                           >
                             <div className="header__menu_image">
                               <img src={imageChuyenMuc1} alt="" />
@@ -158,7 +163,7 @@ const Header = () => {
                 </div>
               </div>
             </li>
-            <li className="HeaderCategory">
+            {/* <li className="HeaderCategory">
               <div className="HeaderCategoryLink dropdown">
                 <Link
                   className="bold"
@@ -242,7 +247,7 @@ const Header = () => {
                   <RiArrowDropDownLine></RiArrowDropDownLine>
                 </div>
               </div>
-            </li>
+            </li> */}
             <li className="HeaderCategory">
               <div className="HeaderCategoryLink dropdown">
                 <Link
@@ -266,11 +271,14 @@ const Header = () => {
                     specialtySlice.length > 0 &&
                     specialtySlice.map((item, index) => {
                       return (
-                        <li>
+                        <li
+                          onClick={() => {
+                            setUpdate(!update);
+                          }}
+                        >
                           <Link
                             class="dropdown-item d-flex align-items-center dropdown__item"
-                            to={`/care/searchDoctor/${item.id}`}
-                            state={{ name: `${item?.name}` }}
+                            to={`/care/searchDoctor/${item.id}/${item.name}`}
                             key={index}
                           >
                             <div className="header__menu_image">
@@ -307,6 +315,7 @@ const Header = () => {
               <Link
                 onClick={() => {
                   setShow(!show);
+                  setUpdate(!update);
                 }}
               >
                 <FaUserLarge></FaUserLarge>

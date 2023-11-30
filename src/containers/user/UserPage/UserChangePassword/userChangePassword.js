@@ -13,7 +13,6 @@ const UserChangePassword = () => {
   const [isShowNewPassword, setisShowNewPassword] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
-
   const formik = useFormik({
     initialValues: {
       password: "",

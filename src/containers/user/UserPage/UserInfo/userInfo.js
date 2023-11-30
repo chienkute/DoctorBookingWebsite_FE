@@ -9,9 +9,11 @@ import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MdPhotoCamera } from "react-icons/md";
 import { UpdateContext } from "context/UpdateContext";
+import { useRef } from "react";
 const UserInfo = () => {
   const [user, setUser] = useState([]);
   const [edit, setEdit] = useState(false);
+  console.log(user);
   const { id } = useParams();
   const [nameOld, setNameOld] = useState("");
   const [nameNew, setNameNew] = useState("");
@@ -26,6 +28,16 @@ const UserInfo = () => {
   const [usernameOld, setUsernameOld] = useState("");
   const { loading, setLoading } = useContext(LoadingContext);
   const { update, setUpdate } = useContext(UpdateContext);
+  const inputRef = useRef(null);
+  const [image, setImage] = useState("");
+  const [imageUpdate, setImageUpdate] = useState("");
+  const handleImageClick = () => {
+    inputRef.current.click();
+  };
+  const handleImageChange = (event) => {
+    setImageUpdate(event.target.files[0]);
+    setImage(URL.createObjectURL(event.target.files[0]));
+  };
   const editUserInfo = async () => {
     let res = await editUser(
       id,
@@ -36,6 +48,8 @@ const UserInfo = () => {
       birthdayNew,
     );
     if (res) {
+      // localStorage.setItem("user", JSON.stringify(res));
+      toast.success("Sửa đổi thành công");
       setEdit(false);
     } else {
       toast.error("Sửa đổi thất bại");
@@ -108,9 +122,28 @@ const UserInfo = () => {
             </div>
             <div className="UserBasicInfo">
               <div className="UserAvatar">
-                <img src={avtImg} alt="BlogImg"></img>
+                {image ? (
+                  <img src={image} alt="BlogImg" className="avatarAfter"></img>
+                ) : (
+                  <img
+                    src={avtImg}
+                    alt="BlogImg"
+                    className="avatarBefore"
+                  ></img>
+                )}
+
+                <input
+                  type="file"
+                  ref={inputRef}
+                  onChange={handleImageChange}
+                  style={{ display: "none" }}
+                />
               </div>
-              <div className="upload__image" role="button">
+              <div
+                className="upload__image"
+                role="button"
+                onClick={handleImageClick}
+              >
                 <MdPhotoCamera></MdPhotoCamera>
               </div>
               <div className="UserAccount">
