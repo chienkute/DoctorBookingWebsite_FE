@@ -17,7 +17,7 @@ const Doctor = () => {
   }, []);
   const getDoctor = async () => {
     let res = await getDoctorByID(id);
-    if (res) {
+    if (res && res?.name) {
       setLoading(false);
       setDoctor(res);
     }

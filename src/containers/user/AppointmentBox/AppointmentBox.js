@@ -1,6 +1,5 @@
 import { React, useEffect, useState } from "react";
 import "./AppointmentBox.scss";
-import icon from "assets/icon.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import "../../user/AppointmentBox/AppointmentBox.scss";
@@ -9,13 +8,17 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { FaRegCalendarAlt } from "react-icons/fa";
+import { Tab, Tabs } from "react-bootstrap";
 const AppointmentBox = (props) => {
   const [loadingBook, setLoadingBook] = useState(true);
   const [timeMorning, setTimeMorning] = useState([]);
+  const [timeAfternoon, setTimeAfternoon] = useState([]);
+  const [timeNight, setTimeNight] = useState([]);
   const [selectedSpecialty, setSelectedSpecialty] = useState(null);
   const [selectedSpecialtys, setSelectedSpecialtys] = useState(null);
   const [idSchedule, setIdSchedule] = useState(null);
   const [days, setDay] = useState("");
+  console.log(days);
   const [formattedDate, setFormattedDate] = useState("");
   const [dayMonth, setDayMonth] = useState([]);
   const time = "";
@@ -34,14 +37,18 @@ const AppointmentBox = (props) => {
     const formatted = moment(date, "YYYY-MM-DD").format("YYYY/MM/DD");
     setFormattedDate(formatted);
   };
-  console.log(formattedDate);
   const handleSpecialtyClicks = (index) => {
     setSelectedSpecialtys(index);
   };
   const handleDay = (index) => {
     const dayName = dayMonth[index];
+
     const dayNumber = parseInt(dayName.replace("Thứ ", "")); // Lấy số từ tên thứ
-    setDay(dayNumber);
+    if (dayNumber) {
+      setDay(dayNumber);
+    } else {
+      setDay(0);
+    }
   };
   const formatTime = (time) => {
     if (time) {
@@ -60,8 +67,8 @@ const AppointmentBox = (props) => {
     "Thứ 7",
   ];
   const handleDayNow = () => {
-    const todayIndex = moment().day(); // Lấy vị trí của ngày hiện tại trong tuần (0 là Chủ nhật)
-    const currentDayIndex = todayIndex === 0 ? 7 : todayIndex; // Chuyển vị trí từ 0 (Chủ nhật) sang 7
+    const todayIndex = moment().day();
+    const currentDayIndex = todayIndex === 0 ? 7 : todayIndex;
     const nextDays = daysOfWeek
       .slice(currentDayIndex)
       .concat(daysOfWeek.slice(0, currentDayIndex));
@@ -70,10 +77,12 @@ const AppointmentBox = (props) => {
   const currentDate = new Date().toISOString().split("T")[0];
   const getIdSchedule = async () => {
     let res = await scheduleDoctor(props.id);
-    if (res) {
+    if (res?.morning) {
       console.log(res);
       setLoadingBook(false);
       setTimeMorning(res?.morning);
+      setTimeAfternoon(res?.afternoon);
+      setTimeNight(res?.evening);
       console.log(timeMorning);
     }
   };
@@ -137,101 +146,58 @@ const AppointmentBox = (props) => {
           </div>
         </div>
         <div className="AppointmentHourSelect">
-          <ul
-            class="nav nav-tabs mb-3 ListPartOfDay clear"
-            id="ex1"
-            role="tablist"
+          <Tabs
+            defaultActiveKey="home"
+            id="uncontrolled-tab-example"
+            className="mb-3 ListPartOfDay clear"
           >
-            <li class="nav-item PartOfDay day-item" role="presentation">
-              <a
-                class="nav-link active"
-                id="tab-morning"
-                data-mdb-toggle="tab"
-                href="#tabs-morning"
-                role="tab"
-                aria-controls="tabs-morning"
-                aria-selected="true"
-              >
-                Sáng
-              </a>
-            </li>
-            <li class="nav-item PartOfDay day-item" role="presentation">
-              <a
-                class="nav-link"
-                id="tab-afternoon"
-                data-mdb-toggle="tab"
-                href="#tabs-afternoon"
-                role="tab"
-                aria-controls="tabs-afternoon"
-                aria-selected="false"
-              >
-                Chiều
-              </a>
-            </li>
-            <li class="nav-item PartOfDay day-item" role="presentation">
-              <a
-                class="nav-link nav-night hospital-night"
-                id="tab-noon"
-                data-mdb-toggle="tab"
-                href="#tabs-noon"
-                role="tab"
-                aria-controls="tabs-noon"
-                aria-selected="false"
-              >
-                Tối
-              </a>
-            </li>
-          </ul>
-          {loadingBook ? (
-            <div className="lds-booking">
-              <div class="lds-spinner">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-              <div className="text-loading">Đang lấy lịch hẹn</div>
-            </div>
-          ) : (
-            <div class="tab-content" id="ex2-content">
-              <div
-                class="tab-pane fade show active clear"
-                id="tabs-morning"
-                role="tabpanel"
-                aria-labelledby="tab-morning"
-              >
-                <div className="ListTime morning">
-                  {timeMorning &&
-                    timeMorning.length > 0 &&
-                    timeMorning.map((item, index) => {
-                      if (item.days_of_week === days)
-                        return (
-                          <div
-                            className={`Time selected ${
-                              index === selectedSpecialty ? "selects" : ""
-                            }`}
-                            role="button"
-                            key={index}
-                            onClick={() => {
-                              handleSpecialtyClick(index);
-                              setIdSchedule(item.id);
-                              setShowbutton(true);
-                            }}
-                          >
-                            {formatTime(`${item?.start}`)} -{" "}
-                            {formatTime(`${item?.end}`)}
-                          </div>
-                        );
-                    })}
-                  {timeMorning.length < 0 && (
+            <Tab eventKey="home" title="Sáng" className="PartOfDay day-item">
+              {loadingBook ? (
+                <div className="lds-booking">
+                  <div class="lds-spinner">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <div className="text-loading">Đang lấy lịch hẹn</div>
+                </div>
+              ) : (
+                <div>
+                  {timeMorning.length > 0 ? (
+                    <div className="ListTime morning">
+                      {timeMorning &&
+                        timeMorning.length > 0 &&
+                        timeMorning.map((item, index) => {
+                          if (item.days_of_week === days)
+                            return (
+                              <div
+                                className={`Time selected ${
+                                  index === selectedSpecialty ? "selects" : ""
+                                }`}
+                                role="button"
+                                key={index}
+                                onClick={() => {
+                                  handleSpecialtyClick(index);
+                                  setIdSchedule(item.id);
+                                  setShowbutton(true);
+                                }}
+                              >
+                                {formatTime(`${item?.start}`)} -{" "}
+                                {formatTime(`${item?.end}`)}
+                              </div>
+                            );
+                        })}
+                    </div>
+                  ) : (
                     <div className="appoinment__schedule">
                       <div className="no__schedule_icon">
                         <FaRegCalendarAlt></FaRegCalendarAlt>
@@ -240,25 +206,130 @@ const AppointmentBox = (props) => {
                     </div>
                   )}
                 </div>
-              </div>
-              <div
-                class="tab-pane fade show active clear"
-                id="tabs-afternoon"
-                role="tabpanel"
-                aria-labelledby="tab-afternoon"
-              >
-                <div className="LisTime afternoon"></div>
-              </div>
-              <div
-                class="tab-pane fade show active clear ListTime night"
-                id="tabs-noon"
-                role="tabpanel"
-                aria-labelledby="tab-noon"
-              >
-                <div className="ListTime night"></div>
-              </div>
-            </div>
-          )}
+              )}
+            </Tab>
+            <Tab
+              eventKey="schedule"
+              title="Chiều"
+              className="PartOfDay day-item"
+            >
+              {loadingBook ? (
+                <div className="lds-booking">
+                  <div class="lds-spinner">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <div className="text-loading">Đang lấy lịch hẹn</div>
+                </div>
+              ) : (
+                <div>
+                  {timeAfternoon.length > 0 ? (
+                    <div className="LisTime afternoon">
+                      {timeAfternoon &&
+                        timeAfternoon.map((item, index) => {
+                          if (item.days_of_week === days)
+                            return (
+                              <div
+                                className={`Time selected ${
+                                  index === selectedSpecialty ? "selects" : ""
+                                }`}
+                                role="button"
+                                key={index}
+                                onClick={() => {
+                                  handleSpecialtyClick(index);
+                                  setIdSchedule(item.id);
+                                  setShowbutton(true);
+                                }}
+                              >
+                                {formatTime(`${item?.start}`)} -{" "}
+                                {formatTime(`${item?.end}`)}
+                              </div>
+                            );
+                        })}
+                    </div>
+                  ) : (
+                    <div className="LisTime afternoon">
+                      <div className="appoinment__schedule">
+                        <div className="no__schedule_icon">
+                          <FaRegCalendarAlt></FaRegCalendarAlt>
+                        </div>
+                        <p> Lịch hẹn trống</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </Tab>
+            <Tab eventKey="profile" title="Tối" className="PartOfDay day-item">
+              {loadingBook ? (
+                <div className="lds-booking">
+                  <div class="lds-spinner">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <div className="text-loading">Đang lấy lịch hẹn</div>
+                </div>
+              ) : (
+                <div>
+                  {" "}
+                  {timeNight.length > 0 ? (
+                    <div className="ListTime night">
+                      {timeNight &&
+                        timeNight.map((item, index) => {
+                          if (item.days_of_week === days)
+                            return (
+                              <div
+                                className={`Time selected ${
+                                  index === selectedSpecialty ? "selects" : ""
+                                }`}
+                                role="button"
+                                key={index}
+                                onClick={() => {
+                                  handleSpecialtyClick(index);
+                                  setIdSchedule(item.id);
+                                  setShowbutton(true);
+                                }}
+                              >
+                                {formatTime(`${item?.start}`)} -{" "}
+                                {formatTime(`${item?.end}`)}
+                              </div>
+                            );
+                        })}
+                    </div>
+                  ) : (
+                    <div className="ListTime night">
+                      <div className="appoinment__schedule">
+                        <div className="no__schedule_icon">
+                          <FaRegCalendarAlt></FaRegCalendarAlt>
+                        </div>
+                        <p> Lịch hẹn trống</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </Tab>
+          </Tabs>
         </div>
         <div className="AppointmentFee">
           <span className="Icon">

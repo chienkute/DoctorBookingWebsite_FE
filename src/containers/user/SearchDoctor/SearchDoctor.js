@@ -5,7 +5,7 @@ import "../../../style/page.scss";
 import "../../user/SearchDoctor/DoctorSearchResult.scss";
 import "../../user/SearchDoctor/HospitalSearchResult.scss";
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import avt from "../../../assets/avatar.png";
 import {
   fetchAllService,
@@ -17,8 +17,10 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { MdLocationOn } from "react-icons/md";
 import dakhoaImages from "../../../assets/chuyenkhoa/dakhoa.png";
 import Skeleton from "react-loading-skeleton";
+import { useContext } from "react";
+import { UpdateContext } from "context/UpdateContext";
 function SearchDoctor() {
-  const { id } = useParams();
+  const { id, chuyenkhoa } = useParams();
   const [adress, setAdress] = useState("");
   const [address, setAddress] = useState("");
   const [query, setQuery] = useState("");
@@ -36,8 +38,8 @@ function SearchDoctor() {
   const debouncedSearchTerm = useDebounce(query, 500);
   const [loadingSkeleton, SetLoadingSkeleton] = useState(true);
   const [show, setShow] = useState(true);
+  const { update } = useContext(UpdateContext);
   const navigate = useNavigate();
-  const location = useLocation();
   const getDoctor = async () => {
     let res = await searchDoctor(
       debouncedSearchTerm,
@@ -73,13 +75,8 @@ function SearchDoctor() {
     }, 1000);
   }, [debouncedSearchTerm, adress, specialty, service]);
   useEffect(() => {
-    if (location.state && location.state.name) {
-      const { name } = location.state;
-      if (name === "empty") {
-        setSpecialtyy("");
-      } else {
-        setSpecialtyy(name);
-      }
+    if (chuyenkhoa) {
+      setSpecialtyy(chuyenkhoa);
     } else {
       setSpecialtyy("");
     }
@@ -109,6 +106,13 @@ function SearchDoctor() {
       setShow(false);
     }, 1500);
   }, []);
+  useEffect(() => {
+    getDoctor();
+    getHospital();
+    setTimeout(() => {
+      SetLoadingSkeleton(false);
+    }, 1500);
+  }, [update]);
   const province = [
     { value: "Danang", label: "Đà Nẵng" },
     { value: "Hanoi", label: "Hà Nội" },
@@ -155,7 +159,7 @@ function SearchDoctor() {
                 id="care__in"
                 data-mdb-toggle="dropdown"
                 value={`${address}`}
-                autoComplete="off "
+                autoComplete="off"
               ></input>
               <ul
                 class="dropdown-menu care__banner_menu"

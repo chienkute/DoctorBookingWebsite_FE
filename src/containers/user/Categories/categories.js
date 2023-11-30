@@ -13,7 +13,7 @@ const Categories = () => {
   const { loading, setLoading } = useContext(LoadingContext);
   const getAllCategories = async () => {
     let res = await fetchAllCategories();
-    if (res) {
+    if (res?.results) {
       setLoading(false);
       setCategory(res?.results);
     }
@@ -69,9 +69,8 @@ const Categories = () => {
                   return (
                     <Link
                       className="col-md-2"
-                      to={`/category/${item.id}`}
+                      to={`/category/${item.id}/${item.name}`}
                       key={index}
-                      state={{ category: `${item.name}` }}
                     >
                       <div>
                         <img src={categoriesimage1} alt="" />

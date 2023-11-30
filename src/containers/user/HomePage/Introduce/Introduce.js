@@ -1,6 +1,9 @@
 import React from "react";
 import "./Introduce.scss";
-
+import researchImage from "../../../../assets/Research.png";
+import reviewImage from "../../../../assets/Reviewed.png";
+import monitorImage from "../../../../assets/Monitored.png";
+import Image from "../../../../assets/Trustworthy.png";
 class Introduce extends React.Component {
   render() {
     return (
@@ -10,10 +13,7 @@ class Introduce extends React.Component {
         </div>
         <div className="IntroduceContentContainer">
           <div className="IntroduceContent col-4">
-            <img
-              src="https://cdn.hellobacsi.com/wp-content/uploads/2022/06/Research.png"
-              alt="Img"
-            ></img>
+            <img src={researchImage} alt="Img"></img>
             <div className="IntroduceText">
               <h3>Dựa trên nguồn thông tin xác thực</h3>
               <p>
@@ -24,10 +24,7 @@ class Introduce extends React.Component {
             </div>
           </div>
           <div className="IntroduceContent col-4">
-            <img
-              src="https://cdn.hellobacsi.com/wp-content/uploads/2022/06/Reviewed.png"
-              alt="Img"
-            ></img>
+            <img src={reviewImage} alt="Img"></img>
             <div className="IntroduceText">
               <h3>Được tham vấn y khoa</h3>
               <p>
@@ -37,10 +34,7 @@ class Introduce extends React.Component {
             </div>
           </div>
           <div className="IntroduceContent col-4">
-            <img
-              src="https://cdn.hellobacsi.com/wp-content/uploads/2022/06/Monitored.png"
-              alt="Img"
-            ></img>
+            <img src={monitorImage} alt="Img"></img>
             <div className="IntroduceText">
               <h3>Được cập nhật thường xuyên</h3>
               <p>
@@ -50,10 +44,7 @@ class Introduce extends React.Component {
             </div>
           </div>
           <div className="IntroduceContent col-4">
-            <img
-              src="https://cdn.hellobacsi.com/wp-content/uploads/2022/06/Trustworthy.png"
-              alt="Img"
-            ></img>
+            <img src={Image} alt="Img"></img>
             <div className="IntroduceText">
               <h3>Đáng tin cậy</h3>
               <p>
