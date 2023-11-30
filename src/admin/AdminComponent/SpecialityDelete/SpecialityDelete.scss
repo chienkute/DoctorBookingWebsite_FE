@@ -1,0 +1,56 @@
+@use "sass:map";
+@import "style/pages/theme";
+
+.SpecialityDeleteDialogueContainer {
+    width : 300px;
+    height: fit-content;
+}
+
+.SDDHeader h3 {
+    margin-bottom: 16px;
+}
+
+.SDDContent .SDDField {
+    margin-bottom: 16px;
+}
+
+.SDDContent .SDDField>div {
+    margin-bottom: 8px;
+    font-weight  : 700;
+}
+
+.SDDContent input {
+    width  : 100%;
+    padding: 8px
+}
+
+.SDDActions .SDDWarning {
+    margin-bottom: 8px;
+    width        : 100%;
+    text-align   : center;
+}
+
+.SDDButtons {
+    display: flex;
+    gap    : 8px;
+}
+
+.SDDButtons>button {
+    width  : 100%;
+    padding: 8px;
+}
+
+#SDDConfirmButton {
+    border-radius: 10px;
+    background   : #3A57E8;
+    color        : white;
+    font-weight  : 700;
+    border       : none;
+}
+
+#SDDCancelButton {
+    border-radius: 10px;
+    border       : 1px solid #6597DB;
+    background   : #FFF;
+    font-weight  : 700;
+}

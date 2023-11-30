@@ -1,0 +1,36 @@
+@use "sass:map";
+@import "style/pages/theme";
+
+.AdminSideMenuContainer {
+    margin-bottom: 100px;
+}
+
+.AdminSideMenuLogo {
+    width         : 100%;
+    padding-bottom: 48px;
+    border-bottom : 1px solid #ccc;
+}
+
+.AdminSideMenuLogo img {
+    width     : 100%;
+    max-width : 120px;
+    height    : 100%;
+    max-height: 120px;
+    object-fit: cover;
+}
+
+.AdminListMenu {
+    margin-top: 32px;
+}
+
+.AdminMenu ul.AdminListMenu li.AdminMenu {
+    padding      : 16px 32px;
+    margin       : 16px 0;
+    border-radius: 10px;
+    cursor       : pointer;
+}
+
+.AdminMenu ul.AdminListMenu li.AdminMenu.selected {
+    color           : white;
+    background-color: #3A57E8;
+}

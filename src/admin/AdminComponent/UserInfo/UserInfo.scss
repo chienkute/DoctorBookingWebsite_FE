@@ -1,0 +1,69 @@
+@use "sass:map";
+@import "style/pages/theme";
+
+
+.UserInfoDialogueContainer {
+    width: 600px;
+}
+
+.UIDHeader h3 {
+    margin-bottom: 16px;
+}
+
+.UIDContent {
+    display: flex;
+    gap    : 16px;
+}
+
+.UIDContent .UIDField {
+    margin-bottom: 16px;
+}
+
+.UIDContent .UIDField input {
+    margin-top   : 8px;
+    padding      : 8px;
+    width        : 100%;
+    border-radius: 6px;
+}
+
+.UIDContent .UIDField {
+    display    : flex;
+    flex-wrap  : wrap;
+    align-items: center;
+}
+
+.UIDContent .UIDField label,
+.UIDContent .UIDField .UIDLabel {
+
+    font-weight: 700;
+}
+
+.UIDContent .UIDField label {
+    width: 30%;
+}
+
+.UIDContent .UIDField select {
+    padding: 4px;
+}
+
+.UIDContent .UIDField input:disabled {
+    background-color: #f2f2f2;
+    color           : #999;
+}
+
+.UIDAction {
+    margin-left: auto;
+    width      : fit-content;
+}
+
+.UIDAction button {
+    display      : inline-block;
+    margin-left  : 8px;
+    padding      : 8px;
+    border       : none;
+    border-radius: 6px;
+}
+
+.UIDAction button.hidden {
+    display: none;
+}

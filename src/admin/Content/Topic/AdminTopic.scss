@@ -1,0 +1,203 @@
+@use "sass:map";
+@import "style/pages/theme";
+
+.AdminTopicContainer {
+    margin: 32px;
+}
+
+.AdminTopicFilter {
+    display      : flex;
+    flex-wrap    : wrap;
+    margin-bottom: 32px;
+}
+
+.AdminTopicFilter>h3 {
+    width      : 100%;
+    font-weight: 700;
+}
+
+.AdminTopicFilter .FilterRow {
+    display: flex;
+    width  : 100%;
+}
+
+.AdminTopicFilter .FilterLabel {
+    font-weight: 700;
+}
+
+.AdminTopicFilter .FilterRow .Filter {
+    margin-bottom: 24px;
+}
+
+.AdminTopicFilter .FilterRow .Filter .FilterLabel {
+    margin-bottom: 8px;
+}
+
+.AdminTopicFilter .FilterRow .Filter .FilterTextInput input {
+    border-radius: 10px;
+    border       : 1px solid #B6A5A5;
+    padding      : 8px;
+    width        : 40%;
+}
+
+.AdminTopicFilter .FilterRow .Filter .FilterTextInput input::placeholder {
+    color     : #00000059;
+    font-style: italic;
+}
+
+.AdminTopicResult .ResultPerTable {
+    margin-bottom: 16px;
+}
+
+.AdminTopicResult .ResultPerTable label {
+    margin-right: 16px
+}
+
+.AdminTopicResult .Table {
+    display        : flex;
+    justify-content: center;
+    width          : 100%;
+    flex-wrap      : wrap;
+}
+
+.AdminTopicResult .Table table {
+    width: 100%;
+}
+
+.AdminTopicResult tr:nth-child(odd) {
+    background-color: #F1F0F0;
+}
+
+.AdminTopicResult tr:nth-child(even) {
+    background-color: #FFFFFF;
+}
+
+.AdminTopicResult th,
+.AdminTopicResult td {
+    padding   : 16px 8px;
+    text-align: center;
+}
+
+.AdminTopicResult th {
+    font-weight     : 700;
+    background-color: #D9D9D9;
+}
+
+.AdminTopicResult td div.Action {
+    display        : flex;
+    gap            : 16px;
+    justify-content: center;
+}
+
+.AdminTopicResult td div.Action button {
+    border : none;
+    padding: 2px;
+}
+
+.AdminTopicResult td div.Action button svg {
+    width: 22px;
+}
+
+.AdminTopicResult td div.Action button.EditButton {
+
+    background-color: #ADF4BD;
+    color           : #209C43;
+}
+
+.AdminTopicResult td div.Action button.DeleteButton {
+    background-color: #E21C1C78;
+    color           : #BE2424;
+}
+
+.AdminTopicResult .PageMonitor {
+    margin-left: auto;
+    margin-top : 32px;
+}
+
+.AdminTopicResult .PageMonitor,
+.AdminTopicResult .PageMonitor>.Pages {
+    display: flex;
+    gap    : 4px;
+}
+
+.AdminTopicResult .PageMonitor {
+    margin-left: auto;
+    width      : fit-content;
+}
+
+.AdminTopicResult .PageMonitor>div,
+.AdminTopicResult .PageMonitor>.Pages>li {
+    width : 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+.AdminTopicResult .PageMonitor>.PrevPage,
+.AdminTopicResult .PageMonitor>.NextPage {
+    border       : 1px solid rgb(217, 217, 217);
+    border-radius: 4px;
+}
+
+.AdminTopicResult .PageMonitor>.PrevPage.disabled,
+.AdminTopicResult .PageMonitor>.NextPage.disabled {
+    background-color: rgb(242, 242, 242);
+    cursor          : not-allowed;
+    border          : none;
+}
+
+.AdminTopicResult .PageMonitor>.PrevPage.disabled>svg>polygon,
+.AdminTopicResult .PageMonitor>.NextPage.disabled>svg>polygon {
+    fill: #c5c5c5;
+}
+
+.AdminTopicResult .PageMonitor>.Pages>li.selected {
+    color           : rgb(255, 255, 255);
+    background-color: rgb(45, 135, 243);
+    border-radius   : 4px;
+}
+
+.TIDOverlayContainer,
+.TDDOverlayContainer {
+    margin-top      : 0 !important;
+    position        : absolute;
+    width           : 100%;
+    height          : 100%;
+    top             : 0;
+    left            : 0;
+    border          : 1px solid #ccc;
+    display         : none;
+    flex-wrap       : wrap;
+    justify-content : center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.TIDOverlayContainer .TIDClose,
+.TDDOverlayContainer .TDDClose {
+    width: 100%;
+}
+
+.TIDOverlayContainer .TIDClose button,
+.TDDOverlayContainer .TDDClose button {
+    height          : 48px;
+    width           : 48px;
+    background-color: inherit;
+    border          : none;
+    color           : white;
+    float           : right;
+}
+
+.TIDOverlayContainer .TIDClose button>svg,
+.TDDOverlayContainer .TDDClose button>svg {
+    width : 36px;
+    height: 36px;
+}
+
+.TIDOverlayContainer .TIDOverlayContent,
+.TDDOverlayContainer .TDDOverlayContent {
+    position        : absolute;
+    margin-top      : 72px;
+    background-color: white;
+    height          : fit-content;
+    padding         : 32px;
+    border-radius   : 10px;
+}

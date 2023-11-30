@@ -1,0 +1,63 @@
+@use "sass:map";
+@import "style/pages/theme";
+
+.HospitalDeleteDialogueContainer {
+    width : 300px;
+    height: fit-content;
+}
+
+.HDDHeader h3 {
+    margin-bottom: 16px;
+}
+
+.HDDContent .HDDField {
+    margin-bottom: 16px;
+}
+
+.HDDContent .HDDField>div {
+    margin-bottom: 8px;
+    font-weight  : 700;
+}
+
+.HDDContent input,
+.HDDContent textarea {
+    width  : 100%;
+    padding: 8px
+}
+
+.HDDContent textarea {
+    resize: vertical;
+}
+
+.HDDActions .HDDWarning {
+    margin-bottom: 8px;
+    width        : 100%;
+    text-align   : center;
+}
+
+.HDDButtons {
+    display: flex;
+    gap    : 8px;
+}
+
+
+
+.HDDButtons>button {
+    width  : 100%;
+    padding: 8px;
+}
+
+#HDDConfirmButton {
+    border-radius: 10px;
+    background   : #3A57E8;
+    color        : white;
+    font-weight  : 700;
+    border       : none;
+}
+
+#HDDCancelButton {
+    border-radius: 10px;
+    border       : 1px solid #6597DB;
+    background   : #FFF;
+    font-weight  : 700;
+}

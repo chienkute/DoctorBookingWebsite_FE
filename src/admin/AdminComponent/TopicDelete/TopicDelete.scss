@@ -1,0 +1,56 @@
+@use "sass:map";
+@import "style/pages/theme";
+
+.TopicDeleteDialogueContainer {
+    width : 300px;
+    height: fit-content;
+}
+
+.TDDHeader h3 {
+    margin-bottom: 16px;
+}
+
+.TDDContent .TDDField {
+    margin-bottom: 16px;
+}
+
+.TDDContent .TDDField>div {
+    margin-bottom: 8px;
+    font-weight  : 700;
+}
+
+.TDDContent input {
+    width  : 100%;
+    padding: 8px
+}
+
+.TDDActions .TDDWarning {
+    margin-bottom: 8px;
+    width        : 100%;
+    text-align   : center;
+}
+
+.TDDButtons {
+    display: flex;
+    gap    : 8px;
+}
+
+.TDDButtons>button {
+    width  : 100%;
+    padding: 8px;
+}
+
+#TDDConfirmButton {
+    border-radius: 10px;
+    background   : #3A57E8;
+    color        : white;
+    font-weight  : 700;
+    border       : none;
+}
+
+#TDDCancelButton {
+    border-radius: 10px;
+    border       : 1px solid #6597DB;
+    background   : #FFF;
+    font-weight  : 700;
+}

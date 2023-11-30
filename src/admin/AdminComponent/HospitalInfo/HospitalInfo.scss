@@ -1,0 +1,74 @@
+@use "sass:map";
+@import "style/pages/theme";
+
+
+.HospitalInfoDialogueContainer {
+    width: 700px;
+}
+
+.HIDHeader h3 {
+    margin-bottom: 16px;
+}
+
+.HIDContent {
+    display: flex;
+    gap    : 16px;
+}
+
+.HIDContent .HIDField {
+    margin-bottom: 16px;
+}
+
+.HIDContent .HIDField input {
+    margin-top   : 8px;
+    padding      : 8px;
+    width        : 100%;
+    border-radius: 6px;
+}
+
+.HIDContent .HIDField {
+    display    : flex;
+    flex-wrap  : wrap;
+    align-items: center;
+}
+
+.HIDContent .HIDField label,
+.HIDContent .HIDField .HIDLabel {
+
+    font-weight: 700;
+}
+
+.HIDContent .HIDField label {
+    width: 30%;
+}
+
+.HIDContent .HIDField select {
+    padding: 4px;
+}
+
+.HIDContent .HIDField textarea {
+    width : 100%;
+    resize: vertical;
+}
+
+.HIDContent .HIDField input:disabled {
+    background-color: #f2f2f2;
+    color           : #999;
+}
+
+.HIDAction {
+    margin-left: auto;
+    width      : fit-content;
+}
+
+.HIDAction button {
+    display      : inline-block;
+    margin-left  : 8px;
+    padding      : 8px;
+    border       : none;
+    border-radius: 6px;
+}
+
+.HIDAction button.hidden {
+    display: none;
+}
