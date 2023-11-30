@@ -24,6 +24,8 @@ import AdminTopic from "admin/Content/Topic/AdminTopic";
 import AdminPost from "admin/Content/Post/AdminPost";
 import AdminHospital from "admin/Content/Hospital/AdminHospital";
 import AdminSpecialist from "admin/Content/Specialist/AdminSpecialist";
+import infoHospital from "containers/Hospital/InfoHospital/infoHospital";
+import doctorManagement from "containers/Hospital/DoctorManagement/doctorManagement";
 const publicRoutes = [
   { path: "/", component: HomePage },
   { path: "/login", component: Login, layout: null },
@@ -73,4 +75,8 @@ const routeAdmin = [
     component: AdminSpecialist,
   },
 ];
-export { publicRoutes, routeAdmin };
+const routeHospital = [
+  { path: "/hospital/information", component: infoHospital },
+  { path: "/hospital/doctormanagement", component: doctorManagement },
+];
+export { publicRoutes, routeAdmin, routeHospital };
