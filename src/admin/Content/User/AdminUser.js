@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./AdminUser.scss";
 import { FaRegCheckSquare, FaEraser } from "react-icons/fa";
 import { FcPrevious, FcNext } from "react-icons/fc";
@@ -8,6 +8,10 @@ import UserInfoDialogue from "admin/AdminComponent/UserInfo/UserInfo";
 import UserDeleteDialogue from "admin/AdminComponent/UserDelete/UserDelete";
 
 class AdminUser extends React.Component {
+  // const [isShowModalEditUser, setIsShowModalEditUser] = useState(false);
+  // const handleCloseModalEdit = () => {
+  //   setIsShowModalEditUser(false);
+  // };
   constructor(props) {
     super(props);
     this.state = {
@@ -31,10 +35,11 @@ class AdminUser extends React.Component {
                 <div className="FilterInput FilterTextInput">
                   <input
                     type="text"
-                    placeholder="Nhập tên người dùng"
-                    id="usernameInput"
-                    name="usernameInput"
-                  ></input>
+                    className="form-control"
+                    id="name"
+                    placeholder="Nhập họ và tên người dùng"
+                    autoComplete="off"
+                  />
                 </div>
               </div>
               <div className="Filter col-2">
@@ -65,23 +70,18 @@ class AdminUser extends React.Component {
                 <div className="FilterInput FilterTextInput">
                   <input
                     type="text"
-                    placeholder="Nhập tên tài khoản"
-                    id="accountnameInput"
-                    name="accountnameInput"
-                  ></input>
+                    className="form-control"
+                    id="username"
+                    placeholder="Nhập tên tài khoản của bạn"
+                    autoComplete="off"
+                  />
                 </div>
               </div>
             </div>
           </div>
           <div className="AdminUserResult">
             <div className="ResultPerTable">
-              <label for="dropdown">Số kết quả mỗi trang:</label>
-              <select id="dropdown">
-                <option value="5">5</option>
-                <option value="20">20</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-              </select>
+              <label for="dropdown">Có 5 kết quả tìm được</label>
             </div>
             <div className="Table">
               <table>
@@ -115,49 +115,17 @@ class AdminUser extends React.Component {
                       </button>
                       <button
                         className="ChangeInfoButton"
+                        // onClick={() => setIsShowModalEditUser(true)}
                         onClick={() =>
                           this.changeState(true, ".UIDOverlayContainer")
                         }
                       >
                         <FiEdit3 />
                       </button>
-                      <button
-                        className="DeleteAccount"
-                        onClick={() =>
-                          this.changeState(true, ".UDDOverlayContainer")
-                        }
-                      >
-                        <FaEraser />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td>2</td>
-                  <td>Nguyễn Hoàng Anh</td>
-                  <td>hoanganh07</td>
-                  <td>Thành viên</td>
-                  <td>
-                    <div className="Action">
-                      <button
-                        className="InfoButton"
-                        onClick={() =>
-                          this.changeState(true, ".UIDOverlayContainer")
-                        }
-                      >
-                        <IoInformation />
-                      </button>
-                      <button
-                        className="ChangeInfoButton"
-                        onClick={() =>
-                          this.changeState(true, ".UIDOverlayContainer")
-                        }
-                      >
-                        <FiEdit3 />
-                      </button>
+                      {/* <UserInfoDialogue
+                      show={isShowModalEditUser}
+                      handleClose={handleCloseModalEdit}
+                    ></UserInfoDialogue> */}
                       <button
                         className="DeleteAccount"
                         onClick={() =>

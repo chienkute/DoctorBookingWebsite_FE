@@ -8,7 +8,6 @@ import HospitalInfoDialogue from "admin/AdminComponent/HospitalInfo/HospitalInfo
 import HospitalDeleteDialogue from "admin/AdminComponent/HospitalDelete/HospitalDelete";
 
 class AdminHospital extends React.Component {
-  //function này là Demo, mới chỉ ẩn/hiện cái dialogue
   changeState(value, field) {
     let UID = document.querySelector(field);
     if (value) UID.style.display = "flex";

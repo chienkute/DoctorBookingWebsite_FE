@@ -13,7 +13,6 @@ import PostDenyDialogue from "admin/AdminComponent/PostDeny/PostDeny";
 import PostDeleteDialogue from "admin/AdminComponent/PostDelete/PostDelete";
 
 class AdminPost extends React.Component {
-  //function này là Demo, mới chỉ ẩn/hiện cái dialogue
   changeState(value, field) {
     let UID = document.querySelector(field);
     if (value) UID.style.display = "flex";

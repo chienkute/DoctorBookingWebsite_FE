@@ -2,211 +2,205 @@
 @import "style/pages/theme";
 
 .AdminUserContainer {
-    position: relative;
-    padding : 0 32px;
+  position: relative;
+  padding: 0 32px;
 }
 
 .AdminUserFilter {
-    display      : flex;
-    flex-wrap    : wrap;
-    margin-bottom: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
 }
 
-.AdminUserFilter>h3 {
-    width      : 100%;
-    font-weight: 700;
+.AdminUserFilter > h3 {
+  width: 100%;
+  font-weight: 700;
 }
 
 .AdminUserFilter .FilterRow {
-    display: flex;
-    width  : 100%;
+  display: flex;
+  width: 100%;
 }
 
 .AdminUserFilter .FilterLabel {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .AdminUserFilter .FilterRow .Filter {
-    margin-bottom: 24px;
+  margin-bottom: 24px;
 }
 
 .AdminUserFilter .FilterRow .Filter .FilterLabel {
-    margin-bottom: 8px;
+  margin-bottom: 8px;
 }
 
 .AdminUserFilter .FilterRow .Filter .FilterTextInput input {
-    border-radius: 10px;
-    border       : 1px solid #B6A5A5;
-    padding      : 8px;
-    width        : 80%;
-}
-
-.AdminUserFilter .FilterRow .Filter .FilterTextInput input::placeholder {
-    color     : #00000059;
-    font-style: italic;
+  border-radius: 10px;
+  padding: 8px;
+  width: 80%;
 }
 
 .AdminUserFilter .FilterRow .Filter .RadioButton label {
-    margin-left: 8px;
+  margin-left: 8px;
 }
 
 .AdminUserResult .ResultPerTable {
-    margin-bottom: 16px;
+  margin-bottom: 16px;
 }
 
 .AdminUserResult .ResultPerTable label {
-    margin-right: 16px
+  margin-right: 16px;
 }
 
 .AdminUserResult .Table {
-    display        : flex;
-    justify-content: center;
-    width          : 100%;
-    flex-wrap      : wrap;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
 .AdminUserResult .Table table {
-    width: 100%;
+  width: 100%;
 }
 
 .AdminUserResult tr:nth-child(odd) {
-    background-color: #F1F0F0;
+  background-color: #f1f0f0;
 }
 
 .AdminUserResult tr:nth-child(even) {
-    background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .AdminUserResult th,
 .AdminUserResult td {
-    padding   : 16px 8px;
-    text-align: center;
+  padding: 16px 8px;
+  text-align: center;
 }
 
 .AdminUserResult th {
-    font-weight     : 700;
-    background-color: #D9D9D9;
+  font-weight: 700;
+  background-color: #d9d9d9;
 }
 
 .AdminUserResult td div.Action {
-    display        : flex;
-    gap            : 4px;
-    justify-content: center;
+  display: flex;
+  gap: 4px;
+  justify-content: center;
 }
 
 .AdminUserResult td div.Action button {
-    border : none;
-    padding: 2px;
+  border: none;
+  padding: 2px;
 }
 
 .AdminUserResult td div.Action button svg {
-    width: 22px;
+  width: 22px;
 }
 
 .AdminUserResult td div.Action button.InfoButton {
-    background-color: #ADF4BD;
-    color           : #209C43;
+  background-color: #adf4bd;
+  color: #209c43;
 }
 
 .AdminUserResult td div.Action button.ChangeInfoButton {
-    background-color: #00000038;
-    color           : #000000BF;
+  background-color: #00000038;
+  color: #000000bf;
 }
 
 .AdminUserResult td div.Action button.DeleteAccount {
-    background-color: #E21C1C78;
-    color           : #BE2424;
+  background-color: #e21c1c78;
+  color: #be2424;
 }
 
 .AdminUserResult .PageMonitor {
-    margin-left: auto;
-    margin-top : 32px;
+  margin-left: auto;
+  margin-top: 32px;
 }
 
 .AdminUserResult .PageMonitor,
-.AdminUserResult .PageMonitor>.Pages {
-    display: flex;
-    gap    : 4px;
+.AdminUserResult .PageMonitor > .Pages {
+  display: flex;
+  gap: 4px;
 }
 
 .AdminUserResult .PageMonitor {
-    margin-left: auto;
-    width      : fit-content;
+  margin-left: auto;
+  width: fit-content;
 }
 
-.AdminUserResult .PageMonitor>div,
-.AdminUserResult .PageMonitor>.Pages>li {
-    width : 32px;
-    height: 32px;
-    cursor: pointer;
+.AdminUserResult .PageMonitor > div,
+.AdminUserResult .PageMonitor > .Pages > li {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
 }
 
-.AdminUserResult .PageMonitor>.PrevPage,
-.AdminUserResult .PageMonitor>.NextPage {
-    border       : 1px solid rgb(217, 217, 217);
-    border-radius: 4px;
+.AdminUserResult .PageMonitor > .PrevPage,
+.AdminUserResult .PageMonitor > .NextPage {
+  border: 1px solid rgb(217, 217, 217);
+  border-radius: 4px;
 }
 
-.AdminUserResult .PageMonitor>.PrevPage.disabled,
-.AdminUserResult .PageMonitor>.NextPage.disabled {
-    background-color: rgb(242, 242, 242);
-    cursor          : not-allowed;
-    border          : none;
+.AdminUserResult .PageMonitor > .PrevPage.disabled,
+.AdminUserResult .PageMonitor > .NextPage.disabled {
+  background-color: rgb(242, 242, 242);
+  cursor: not-allowed;
+  border: none;
 }
 
-.AdminUserResult .PageMonitor>.PrevPage.disabled>svg>polygon,
-.AdminUserResult .PageMonitor>.NextPage.disabled>svg>polygon {
-    fill: #c5c5c5;
+.AdminUserResult .PageMonitor > .PrevPage.disabled > svg > polygon,
+.AdminUserResult .PageMonitor > .NextPage.disabled > svg > polygon {
+  fill: #c5c5c5;
 }
 
-.AdminUserResult .PageMonitor>.Pages>li.selected {
-    color           : rgb(255, 255, 255);
-    background-color: rgb(45, 135, 243);
-    border-radius   : 4px;
+.AdminUserResult .PageMonitor > .Pages > li.selected {
+  color: rgb(255, 255, 255);
+  background-color: rgb(45, 135, 243);
+  border-radius: 4px;
 }
 
 .UIDOverlayContainer,
 .UDDOverlayContainer {
-    margin-top      : 0 !important;
-    position        : absolute;
-    width           : 100%;
-    height          : 100%;
-    top             : 0;
-    left            : 0;
-    border          : 1px solid #ccc;
-    display         : none;
-    flex-wrap       : wrap;
-    justify-content : center;
-    background-color: rgba(0, 0, 0, 0.5);
+  margin-top: 0 !important;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border: 1px solid #ccc;
+  display: none;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .UIDOverlayContainer .UIDClose,
 .UDDOverlayContainer .UDDClose {
-    width: 100%;
+  width: 100%;
 }
 
 .UIDOverlayContainer .UIDClose button,
 .UDDOverlayContainer .UDDClose button {
-    height          : 48px;
-    width           : 48px;
-    background-color: inherit;
-    border          : none;
-    color           : white;
-    float           : right;
+  height: 48px;
+  width: 48px;
+  background-color: inherit;
+  border: none;
+  color: white;
+  float: right;
 }
 
-.UIDOverlayContainer .UIDClose button>svg,
-.UDDOverlayContainer .UDDClose button>svg {
-    width : 36px;
-    height: 36px;
+.UIDOverlayContainer .UIDClose button > svg,
+.UDDOverlayContainer .UDDClose button > svg {
+  width: 36px;
+  height: 36px;
 }
 
 .UIDOverlayContainer .UIDOverlayContent,
 .UDDOverlayContainer .UDDOverlayContent {
-    position        : absolute;
-    margin-top      : 72px;
-    background-color: white;
-    height          : fit-content;
-    padding         : 32px;
-    border-radius   : 10px;
+  position: absolute;
+  margin-top: 72px;
+  background-color: white;
+  height: fit-content;
+  padding: 32px;
+  border-radius: 10px;
 }
