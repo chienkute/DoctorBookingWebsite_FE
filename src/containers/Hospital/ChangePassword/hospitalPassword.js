@@ -4,10 +4,14 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { AiFillEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import "./hospitalPassword.scss";
+import { useNavigate, useParams } from "react-router-dom";
+import { changePassword } from "service/UserService";
 const HospitalPassword = () => {
+  const { id } = useParams();
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowConfPassword, setIsShowConfPassword] = useState(false);
   const [isShowNewPassword, setisShowNewPassword] = useState(false);
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       password: "",
@@ -29,7 +33,15 @@ const HospitalPassword = () => {
           "Mật khẩu phải trùng khớp với nhau",
         ),
     }),
-    onSubmit: async (values) => {},
+    onSubmit: async (values) => {
+      const res = await changePassword(values.password, values.newpasswd, id);
+      if (res) {
+        toast.success("Đổi mật khẩu thành công");
+        navigate(`/hospital/information/${id}`);
+      } else {
+        toast.error("Đổi mật khẩu thất bại");
+      }
+    },
   });
   return (
     <div className="hospital__changepassword">

@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./hospitalSide.scss";
 import logo from "assets/logo.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { UpdateContext } from "context/UpdateContext";
 
 const HospitalSide = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { update, setUpdate } = useContext(UpdateContext);
+  const handleLogout = () => {
+    localStorage.removeItem("hospital_token");
+    navigate("/login");
+    toast.success("Đăng xuất thành công!");
+  };
+  const handleCallAPI = () => {
+    setUpdate(!update);
+  };
   return (
     <div className="AdminSideMenuContainer">
       <div className="AdminSideMenuLogo">
@@ -13,30 +26,33 @@ const HospitalSide = () => {
       </div>
       <div className="AdminMenu">
         <NavLink
-          to={"/hospital/information"}
+          to={`/hospital/information/${id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive AdminMenu" : "AdminMenu"
           }
+          onClick={handleCallAPI}
         >
           Hồ sơ
         </NavLink>
         <NavLink
-          to={"/hospital/doctormanagement"}
+          to={`/hospital/doctormanagement/${id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive AdminMenu" : "AdminMenu"
           }
+          onClick={handleCallAPI}
         >
           Quản lí bác sĩ
         </NavLink>
         <NavLink
-          to={"/hospital/changepassword"}
+          to={`/hospital/changepassword/${id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive AdminMenu" : "AdminMenu"
           }
+          onClick={handleCallAPI}
         >
           Đổi mật khẩu
         </NavLink>
-        <NavLink to={"/login"} className="AdminMenu">
+        <NavLink to={"/login"} className="AdminMenu" onClick={handleLogout}>
           Đăng xuất
         </NavLink>
       </div>

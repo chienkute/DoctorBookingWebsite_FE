@@ -84,8 +84,8 @@ const routeAdmin = [
   },
 ];
 const routeHospital = [
-  { path: "/hospital/information", component: infoHospital },
-  { path: "/hospital/doctormanagement", component: doctorManagement },
-  { path: "/hospital/changepassword", component: hospitalPassword },
+  { path: "/hospital/information/:id", component: infoHospital },
+  { path: "/hospital/doctormanagement/:id", component: doctorManagement },
+  { path: "/hospital/changepassword/:id", component: hospitalPassword },
 ];
 export { publicRoutes, routeAdmin, routeHospital };

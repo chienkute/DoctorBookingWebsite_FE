@@ -40,10 +40,24 @@ const Login = () => {
     }),
     onSubmit: async (values) => {
       const res = await login(values.username, values.password);
-      if (res && res.access_token) {
+      if (res?.account?.role === "user" && res.access_token) {
         localStorage.setItem("token", res.access_token);
         localStorage.setItem("user", JSON.stringify(res));
         navigate("/");
+        toast.success("Đăng nhập thành công");
+      } else if (res?.account?.role === "hospital" && res.access_token) {
+        localStorage.setItem("hospital_token", res.access_token);
+        localStorage.setItem("hospital", JSON.stringify(res));
+        navigate(`/hospital/information/${res?.hospital?.id}`);
+        toast.success("Đăng nhập thành công");
+      } else if (res?.account?.role === "admin" && res.access_token) {
+        localStorage.setItem("admin_token", res.access_token);
+        localStorage.setItem("admin", JSON.stringify(res));
+        navigate("/admin/dashboard");
+        toast.success("Đăng nhập thành công");
+      } else if (res?.account?.role === "doctor" && res.access_token) {
+        localStorage.setItem("doctor_token", res.access_token);
+        localStorage.setItem("doctor", JSON.stringify(res));
         toast.success("Đăng nhập thành công");
       } else {
         toast.error("Lỗi đăng nhập");
