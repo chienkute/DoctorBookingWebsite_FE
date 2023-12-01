@@ -28,6 +28,14 @@ const HospitalSide = () => {
         >
           Quản lí bác sĩ
         </NavLink>
+        <NavLink
+          to={"/hospital/changepassword"}
+          className={({ isActive }) =>
+            isActive ? "sideBarActive AdminMenu" : "AdminMenu"
+          }
+        >
+          Đổi mật khẩu
+        </NavLink>
         <NavLink to={"/login"} className="AdminMenu">
           Đăng xuất
         </NavLink>
