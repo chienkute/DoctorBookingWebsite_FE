@@ -1,0 +1,165 @@
+
+.ShowDateButton {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+// Datebox: 7 date có width: 14.28% (100/7)
+.DateBoxGroup {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-left: 0;
+    margin-right: auto;
+}
+
+// .DateBox {
+//     height: 50px;
+//     border-radius: 5px;
+//     background-color: #fff;
+//     display: flex;
+//     flex-direction: column;
+//     flex-wrap: wrap;
+//     justify-content: center;
+//     align-items: center;
+//     cursor: pointer;
+//     transition: all 0.3s ease-in-out;
+// }
+// DateBox.scss
+
+.DateBox {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    p {
+      margin: 0;
+    }
+  
+    p:first-child {
+      font-weight: bold;
+      color: #333;
+      font-size: 1.2em;
+    }
+  
+    p:last-child {
+      color: #777;
+      font-size: 1em;
+    }
+}
+
+.DateBox:hover {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.activeDateBox {
+  background-color: rgb(200, 200, 255);
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+// Session box
+
+.SessionBoxGroup {
+  background-color: #f5f5f5;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  padding-left: 20px;
+  gap: 12px;
+  font-size: 1.2em;
+}
+
+.SessionBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px auto;
+  margin: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  p:first-child {
+    font-weight: bold;
+    padding-top: 20px;
+    margin: 0;
+  }
+  p:last-child {
+    padding-bottom: 20px;
+    margin: 0;
+  }
+}
+
+.activeSessionBox {
+  background-color: rgb(200, 200, 255);
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+  
+// Timebox ở dạng ẩn
+.TimeBoxGroup {
+    // display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-left: 0;
+    margin-right: auto;
+    display: none;
+}
+.TimeBoxGroupShow {
+  display: flex;
+}
+
+// không xuống dòng
+.TimeBox {
+  display: flex;
+  flex-direction: row;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px 25px;
+  margin: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  font-size: 1.2em;
+
+  p {
+    margin: 0;
+  }
+
+  span {
+    margin: 0 15px;
+  }
+}
+
+.chooseTimeBox {
+  background-color: rgb(182, 244, 165);
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.notChooseTimeBox {
+  background-color: #f5a0a0;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+  
