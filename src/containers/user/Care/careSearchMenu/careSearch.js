@@ -343,7 +343,7 @@ const CareSearch = () => {
                         service.map((item, index) => {
                           return (
                             <a
-                              href={`/care/service/${item.id}`}
+                              href={`/care/service/${item.id}/${item.name}`}
                               className="col-2 care__banner_menus_item_col"
                               key={index}
                             >
@@ -422,7 +422,7 @@ const CareSearch = () => {
                         hospital.map((item, index) => {
                           return (
                             <a
-                              href={`/care/hospital/${item.id}`}
+                              href={`/care/hospital/${item.id}/${item.name}`}
                               className="col-2 care__banner_menus_item_col"
                               key={index}
                             >

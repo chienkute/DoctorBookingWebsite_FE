@@ -2,6 +2,10 @@ import React from "react";
 import "./UserDelete.scss";
 
 class UserDeleteDialogue extends React.Component {
+  handleCloseUPD = () => {
+    const { closeUDDMethod } = this.props;
+    closeUDDMethod(false, ".UDDOverlayContainer");
+  };
   render() {
     return (
       <div className="UserDeleteDialogueContainer">
@@ -26,7 +30,9 @@ class UserDeleteDialogue extends React.Component {
             </span>
           </div>
           <div className="UDDButtons">
-            <button id="UDDCancelButton">Huỷ</button>
+            <button id="UDDCancelButton" onClick={this.handleCloseUPD}>
+              Huỷ
+            </button>
             <button id="UDDConfirmButton">Xác nhận</button>
           </div>
         </div>

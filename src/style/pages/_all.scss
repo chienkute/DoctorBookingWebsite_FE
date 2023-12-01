@@ -267,3 +267,6 @@ a.clear {
   font-weight: 700;
   font-size: 16px;
 }
+.carousel-indicators {
+  z-index: -2 !important;
+}

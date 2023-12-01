@@ -21,3 +21,9 @@
     font-weight: 700;
   }
 }
+.active-pagination {
+  a {
+    color: white !important;
+    background: $color-blue !important;
+  }
+}

@@ -41,8 +41,9 @@
 }
 
 .AdminTopicFilter .FilterRow .Filter .FilterTextInput input::placeholder {
-    color     : #00000059;
-    font-style: italic;
+    color      : #00000059;
+    font-style : italic;
+    font-weight: 700;
 }
 
 .AdminTopicResult .ResultPerTable {

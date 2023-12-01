@@ -353,7 +353,7 @@ const AppointmentBox = (props) => {
           {showButton ? (
             <button>
               <Link
-                to={`/care/doctor/confirm/${props.id}`}
+                to={`/care/doctor/confirm/${props.id}${props.name}`}
                 state={{
                   schedule: `${idSchedule}`,
                   day: `${formattedDate}`,

@@ -611,7 +611,7 @@ function SearchDoctor() {
                         className="HospitalResult"
                         role="button"
                         onClick={() => {
-                          navigate(`/care/hospital/${item.id}`);
+                          navigate(`/care/hospital/${item.id}/${item.name}`);
                         }}
                       >
                         <div className="HospitalSearchResultContainer">
@@ -697,7 +697,7 @@ function SearchDoctor() {
                   breakClassName="page-item"
                   breakLinkClassName="page-link"
                   containerClassName="pagination"
-                  activeClassName="active"
+                  activeClassName="active active-pagination"
                 />
               </div>
             </div>

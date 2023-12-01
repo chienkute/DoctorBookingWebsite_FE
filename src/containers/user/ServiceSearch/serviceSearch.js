@@ -178,7 +178,7 @@ const ServiceSearch = () => {
                           {loadingSkeleton ? (
                             <Skeleton width={"30%"}></Skeleton>
                           ) : (
-                            <Link to={`/care/service/${item.id}`}>
+                            <Link to={`/care/service/${item.id}/${item.name}`}>
                               {item.name}
                             </Link>
                           )}
@@ -271,7 +271,7 @@ const ServiceSearch = () => {
               breakClassName="page-item"
               breakLinkClassName="page-link"
               containerClassName="pagination"
-              activeClassName="active"
+              activeClassName="active active-pagination"
             />
           </div>
         </div>
