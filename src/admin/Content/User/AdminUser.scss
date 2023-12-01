@@ -74,7 +74,7 @@
 .AdminUserResult th,
 .AdminUserResult td {
   padding: 16px 8px;
-  text-align: center;
+  text-align: left;
 }
 
 .AdminUserResult th {
@@ -85,7 +85,6 @@
 .AdminUserResult td div.Action {
   display: flex;
   gap: 4px;
-  justify-content: center;
 }
 
 .AdminUserResult td div.Action button {
