@@ -23,6 +23,7 @@ const Category = () => {
   const { id, name } = useParams();
   console.log(name);
   const [blog, setBlog] = useState([]);
+  console.log(blog);
   const { update } = useContext(UpdateContext);
   const { loading, setLoading } = useContext(LoadingContext);
   const [categories, setCategories] = useState([]);
@@ -110,23 +111,17 @@ const Category = () => {
                   <ul className="clear NewsLarge2Items flex-center">
                     <li className="NewsItem col-2">
                       <div className="NewsImage">
-                        <a href="#" className="clear">
+                        <Link className="clear">
                           <img src={blogImages} alt="Blog Img"></img>
-                        </a>
+                        </Link>
                       </div>
                       <div className="NewsCategory">
-                        <a
-                          href="#"
-                          className="clear bold"
-                          style={{ color: "red" }}
-                        >
+                        <Link className="clear bold" style={{ color: "red" }}>
                           Chuyên mục
-                        </a>
+                        </Link>
                       </div>
                       <div className="NewsTitle">
-                        <a href="#" className="clear bold">
-                          Tiêu đề bài viết
-                        </a>
+                        <Link className="clear bold">Tiêu đề bài viết</Link>
                       </div>
                       <div className="NewsContent">
                         <span>
@@ -138,33 +133,27 @@ const Category = () => {
                         </span>
                       </div>
                       <div className="NewsAuthorAndTime">
-                        <a href="#" className="clear">
-                          <img src={avtImg} placeholder="Avatar"></img>
+                        <Link className="clear">
+                          <img src={avtImg} placeholder="Avatar" alt=""></img>
                           <span>
                             Được viết bởi <b>Lorem ipsum</b> - 01/01/1990
                           </span>
-                        </a>
+                        </Link>
                       </div>
                     </li>
                     <li className="NewsItem col-2">
                       <div className="NewsImage">
-                        <a href="#" className="clear">
+                        <Link className="clear">
                           <img src={blogImages} alt="Blog Img"></img>
-                        </a>
+                        </Link>
                       </div>
                       <div className="NewsCategory">
-                        <a
-                          href="#"
-                          className="clear bold"
-                          style={{ color: "blue" }}
-                        >
+                        <Link className="clear bold" style={{ color: "blue" }}>
                           Chuyên mục
-                        </a>
+                        </Link>
                       </div>
                       <div className="NewsTitle">
-                        <a href="#" className="clear bold">
-                          Tiêu đề bài viết
-                        </a>
+                        <Link className="clear bold">Tiêu đề bài viết</Link>
                       </div>
                       <div className="NewsContent">
                         <span>
@@ -176,12 +165,12 @@ const Category = () => {
                         </span>
                       </div>
                       <div className="NewsAuthorAndTime">
-                        <a href="#" className="clear">
-                          <img src={avtImg} placeholder="Avatar"></img>
+                        <Link className="clear">
+                          <img src={avtImg} placeholder="Avatar" alt=""></img>
                           <span>
                             Được viết bởi <b>Lorem ipsum</b> - 01/01/1990
                           </span>
-                        </a>
+                        </Link>
                       </div>
                     </li>
                   </ul>
@@ -190,89 +179,71 @@ const Category = () => {
                   <ul className="clear NewsLarge3Items flex-center">
                     <li className="NewsItem col-3">
                       <div className="NewsImage">
-                        <a href="#" className="clear">
+                        <Link className="clear">
                           <img src={blogImages} alt="Blog Img"></img>
-                        </a>
+                        </Link>
                       </div>
                       <div className="NewsCategory">
-                        <a
-                          href="#"
-                          className="clear bold"
-                          style={{ color: "green" }}
-                        >
+                        <Link className="clear bold" style={{ color: "green" }}>
                           Chuyên mục
-                        </a>
+                        </Link>
                       </div>
                       <div className="NewsTitle">
-                        <a href="#" className="clear bold">
-                          Tiêu đề bài viết
-                        </a>
+                        <Link className="clear bold">Tiêu đề bài viết</Link>
                       </div>
                       <div className="NewsAuthorAndTime">
-                        <a href="#" className="clear">
-                          <img src={avtImg} placeholder="Avatar"></img>
+                        <Link className="clear">
+                          <img src={avtImg} placeholder="Avatar" alt=""></img>
                           <span>
                             Được viết bởi <b>Lorem ipsum</b> - 01/01/1990
                           </span>
-                        </a>
+                        </Link>
                       </div>
                     </li>
                     <li className="NewsItem col-3">
                       <div className="NewsImage">
-                        <a href="#" className="clear">
+                        <Link className="clear">
                           <img src={blogImages} alt="Blog Img"></img>
-                        </a>
+                        </Link>
                       </div>
                       <div className="NewsCategory">
-                        <a
-                          href="#"
-                          className="clear bold"
-                          style={{ color: "cyan" }}
-                        >
+                        <Link className="clear bold" style={{ color: "cyan" }}>
                           Chuyên mục
-                        </a>
+                        </Link>
                       </div>
                       <div className="NewsTitle">
-                        <a href="#" className="clear bold">
-                          Tiêu đề bài viết
-                        </a>
+                        <Link className="clear bold">Tiêu đề bài viết</Link>
                       </div>
                       <div className="NewsAuthorAndTime">
-                        <a href="#" className="clear">
-                          <img src={avtImg} placeholder="Avatar"></img>
+                        <Link className="clear">
+                          <img src={avtImg} placeholder="Avatar" alt=""></img>
                           <span>
                             Được viết bởi <b>Lorem ipsum</b> - 01/01/1990
                           </span>
-                        </a>
+                        </Link>
                       </div>
                     </li>
                     <li className="NewsItem col-3">
                       <div className="NewsImage">
-                        <a href="#" className="clear">
+                        <Link className="clear">
                           <img src={blogImages} alt="Blog Img"></img>
-                        </a>
+                        </Link>
                       </div>
                       <div className="NewsCategory">
-                        <a
-                          href="#"
-                          className="clear bold"
-                          style={{ color: "red" }}
-                        >
+                        <Link className="clear bold" style={{ color: "red" }}>
                           Chuyên mục
-                        </a>
+                        </Link>
                       </div>
                       <div className="NewsTitle">
-                        <a href="#" className="clear bold">
-                          Tiêu đề bài viết
-                        </a>
+                        <Link className="clear bold">Tiêu đề bài viết</Link>
                       </div>
                       <div className="NewsAuthorAndTime">
-                        <a href="#" className="clear">
-                          <img src={avtImg} placeholder="Avatar"></img>
+                        <Link className="clear">
+                          <img src={avtImg} placeholder="Avatar" alt=""></img>
                           <span>
                             Được viết bởi <b>Lorem ipsum</b> - 01/01/1990
                           </span>
-                        </a>
+                        </Link>
                       </div>
                     </li>
                   </ul>
@@ -428,7 +399,7 @@ const Category = () => {
                     breakClassName="page-item"
                     breakLinkClassName="page-link"
                     containerClassName="pagination"
-                    activeClassName="active"
+                    activeClassName="active active-pagination"
                   />
                 </div>
               </div>

@@ -23,7 +23,7 @@ import { useDebounce } from "@uidotdev/usehooks";
 import ReactPaginate from "react-paginate";
 import Skeleton from "react-loading-skeleton";
 const HospitalPage = () => {
-  const { id } = useParams();
+  const { id, namehospital } = useParams();
   const { loading, setLoading } = useContext(LoadingContext);
   const [specialty, setSpecialty] = useState("");
   const [specialtyy, setSpecialtyy] = useState("");
@@ -115,7 +115,7 @@ const HospitalPage = () => {
                 <MdKeyboardArrowRight></MdKeyboardArrowRight>
               </div>
               <a href="/hospital" className="hospital__header_head_text2">
-                <p>Phòng Khám ACC - Chiropractic Đà Nẵng</p>
+                <p>{namehospital || "......"}</p>
               </a>
             </div>
           </div>
@@ -407,7 +407,10 @@ const HospitalPage = () => {
                       </div>
                       {show ? (
                         <div className="hospital__schedule_day">
-                          <AppointmentBox id={idDoctor}></AppointmentBox>
+                          <AppointmentBox
+                            id={idDoctor}
+                            name={specialtyy}
+                          ></AppointmentBox>
                         </div>
                       ) : (
                         <div></div>
@@ -442,7 +445,7 @@ const HospitalPage = () => {
                             {loadingSkeleton ? (
                               <Skeleton width={"30%"}></Skeleton>
                             ) : (
-                              <a href={`/care/service/${item.id}`}>
+                              <a href={`/care/service/${item.id}/${item.name}`}>
                                 {item.name}
                               </a>
                             )}

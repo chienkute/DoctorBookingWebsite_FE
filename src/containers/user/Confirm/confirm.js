@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import Moment from "react-moment";
 import { LoadingContext } from "context/LoadingContext";
 const Confirm = () => {
-  const { id } = useParams();
+  const { id, namedoctor } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const { schedule, day, time, days, idUser } = location.state;
@@ -65,19 +65,19 @@ const Confirm = () => {
         <div className="confirm">
           <div className="confirm__header">
             <div className="confirm__header_head">
-              <a href="/care" className="confirm__header_head_text">
+              <a href="/care/" className="confirm__header_head_text">
                 Tìm kiếm
               </a>
               <div className="confirm__header_head_icon">
                 <MdKeyboardArrowRight></MdKeyboardArrowRight>
               </div>
-              <a href="/care/doctor" className="confirm__header_head_text">
-                BS. Phạm Sĩ Chiến
+              <a href="/care/" className="confirm__header_head_text">
+                {namedoctor}
               </a>
               <div className="confirm__header_head_icon">
                 <MdKeyboardArrowRight></MdKeyboardArrowRight>
               </div>
-              <a href="/confirm" className="confirm__header_head_text2">
+              <a href="/care/" className="confirm__header_head_text2">
                 <p>Đặt lịch hẹn</p>
               </a>
             </div>
