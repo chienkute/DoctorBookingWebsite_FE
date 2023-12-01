@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 const Service = () => {
-  const { id } = useParams();
+  const { id, nameservice } = useParams();
   const { loading, setLoading } = useContext(LoadingContext);
   const [service, setService] = useState([]);
   const getService = async () => {
@@ -46,7 +46,7 @@ const Service = () => {
                 <MdKeyboardArrowRight></MdKeyboardArrowRight>
               </div>
               <a href="/service" className="service__header_head_text2">
-                <p>Gói khám phụ khoa</p>
+                <p>{nameservice || "...."}</p>
               </a>
             </div>
           </div>
