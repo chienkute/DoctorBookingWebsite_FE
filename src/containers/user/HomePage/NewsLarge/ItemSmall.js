@@ -4,6 +4,7 @@ import "./NewsLarge.scss";
 import blogImg from "assets/blog-img.png";
 import avtImg from "assets/avatar.png";
 import Skeleton from "react-loading-skeleton";
+import { Link } from "react-router-dom";
 const ItemSmall = () => {
   const [loadingSkeleton, SetLoadingSkeleton] = useState(true);
   useEffect(() => {
@@ -18,39 +19,37 @@ const ItemSmall = () => {
         {loadingSkeleton ? (
           <Skeleton width="300px" height="185px"></Skeleton>
         ) : (
-          <a href="#" className="clear">
+          <Link className="clear">
             <img src={blogImg} alt="Blog Img"></img>
-          </a>
+          </Link>
         )}
       </div>
       <div className="NewsCategory">
         {loadingSkeleton ? (
           <Skeleton count={1} width="94%"></Skeleton>
         ) : (
-          <a href="#" className="clear bold" style={{ color: "green" }}>
+          <Link className="clear bold" style={{ color: "green" }}>
             Chuyên mục
-          </a>
+          </Link>
         )}
       </div>
       <div className="NewsTitle">
         {loadingSkeleton ? (
           <Skeleton count={1} width="94%"></Skeleton>
         ) : (
-          <a href="#" className="clear bold">
-            Tiêu đề bài viết
-          </a>
+          <Link className="clear bold">Tiêu đề bài viết</Link>
         )}
       </div>
       <div className="NewsAuthorAndTime">
         {loadingSkeleton ? (
           <Skeleton count={1} width="301px" height="15px"></Skeleton>
         ) : (
-          <a href="#" className="clear">
+          <Link className="clear">
             <img src={avtImg} placeholder="Avatar"></img>
             <span>
               Được viết bởi <b>Lorem ipsum</b> - 01/01/1990
             </span>
-          </a>
+          </Link>
         )}
       </div>
     </li>

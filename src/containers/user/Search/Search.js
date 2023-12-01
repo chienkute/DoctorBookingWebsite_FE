@@ -322,7 +322,7 @@ const Search = () => {
             breakClassName="page-item"
             breakLinkClassName="page-link"
             containerClassName="pagination"
-            activeClassName="active"
+            activeClassName="active active-pagination"
           />
         </div>
       </div>

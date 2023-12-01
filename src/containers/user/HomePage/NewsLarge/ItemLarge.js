@@ -4,6 +4,7 @@ import "./NewsLarge.scss";
 import blogImg from "assets/blog-img.png";
 import avtImg from "assets/avatar.png";
 import Skeleton from "react-loading-skeleton";
+import { Link } from "react-router-dom";
 const ItemLarge = () => {
   const [loadingSkeleton, SetLoadingSkeleton] = useState(true);
   useEffect(() => {
@@ -20,9 +21,9 @@ const ItemLarge = () => {
         </div>
       ) : (
         <div className="NewsImage">
-          <a href="#" className="clear">
+          <Link className="clear">
             <img src={blogImg} alt="Blog Img"></img>
-          </a>
+          </Link>
         </div>
       )}
 

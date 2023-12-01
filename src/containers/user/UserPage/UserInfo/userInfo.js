@@ -25,7 +25,6 @@ const UserInfo = () => {
   const [genderNew, setGenderNew] = useState("");
   const [phoneOld, setPhoneOld] = useState("");
   const [phoneNew, setPhoneNew] = useState("");
-  const [usernameOld, setUsernameOld] = useState("");
   const { loading, setLoading } = useContext(LoadingContext);
   const { update, setUpdate } = useContext(UpdateContext);
   const inputRef = useRef(null);
@@ -69,7 +68,6 @@ const UserInfo = () => {
       setGenderOld(res?.gender);
       setPhoneOld(res?.phone);
       setAdressOld(res?.address);
-      setUsernameOld(res?.account?.username);
       setNameNew(res?.name);
       setBirthdayNew(res?.birthday);
       setGenderNew(res?.gender);
@@ -279,7 +277,9 @@ const UserInfo = () => {
                     <p className="PersonalInfoHeader">
                       <b>Tên truy cập</b>
                     </p>
-                    <p className="PersonalInfoData">{usernameOld}</p>
+                    <p className="PersonalInfoData">
+                      {user?.account?.username}
+                    </p>
                   </div>
                   <li className="PersonalInfo">
                     <p className="PersonalInfoHeader">

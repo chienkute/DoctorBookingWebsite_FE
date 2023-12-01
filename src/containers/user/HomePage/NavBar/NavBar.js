@@ -1,6 +1,6 @@
 import React from "react";
 import "./NavBar.scss";
-import { FaFileLines, FaHeartPulse, FaNewspaper } from "react-icons/fa6";
+import { FaFileLines, FaHeartPulse } from "react-icons/fa6";
 import { GrSchedules } from "react-icons/gr";
 
 class NavBar extends React.Component {
