@@ -1,0 +1,21 @@
+@use "sass:map";
+@import "style/pages/theme";
+
+.AdminPageContainer {
+  display: flex;
+}
+
+.AdminPageSideMenu {
+  width: 14%;
+}
+
+.AdminPageContent {
+  width: 77%;
+  background-color: #e9ecef;
+  border-radius: 10px;
+  margin: 40px auto;
+}
+
+.AdminPageContent {
+  padding: 16px;
+}

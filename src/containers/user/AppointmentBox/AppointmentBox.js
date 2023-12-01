@@ -48,7 +48,16 @@ const AppointmentBox = (props) => {
       setDay(dayNumber);
     } else {
       setDay(0);
-    }
+    }const handleDay = (index) => {
+      const dayName = dayMonth[index];
+  
+      const dayNumber = parseInt(dayName.replace("Thứ ", "")); // Lấy số từ tên thứ
+      if (dayNumber) {
+        setDay(dayNumber);
+      } else {
+        setDay(0);
+      }
+    };
   };
   const formatTime = (time) => {
     if (time) {
