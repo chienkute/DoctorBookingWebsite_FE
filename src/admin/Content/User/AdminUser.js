@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./AdminUser.scss";
 import { FaRegCheckSquare, FaEraser } from "react-icons/fa";
 import { FcPrevious, FcNext } from "react-icons/fc";
@@ -9,10 +9,6 @@ import UserDeleteDialogue from "admin/AdminComponent/UserDelete/UserDelete";
 import AdminChangePasswordDialogue from "admin/AdminComponent/AdminChangePassword/AdminChangePassword";
 
 class AdminUser extends React.Component {
-  // const [isShowModalEditUser, setIsShowModalEditUser] = useState(false);
-  // const handleCloseModalEdit = () => {
-  //   setIsShowModalEditUser(false);
-  // };
   constructor(props) {
     super(props);
     this.state = {
@@ -146,17 +142,12 @@ class AdminUser extends React.Component {
                       </button>
                       <button
                         className="ChangeInfoButton"
-                        // onClick={() => setIsShowModalEditUser(true)}
                         onClick={() =>
                           this.changeEditable(true, ".UIDOverlayContainer")
                         }
                       >
                         <FiEdit3 />
                       </button>
-                      {/* <UserInfoDialogue
-                      show={isShowModalEditUser}
-                      handleClose={handleCloseModalEdit}
-                    ></UserInfoDialogue> */}
                       <button
                         className="DeleteAccount"
                         onClick={() =>

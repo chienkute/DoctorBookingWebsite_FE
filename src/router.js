@@ -7,6 +7,7 @@ import { LoadingContext } from "context/LoadingContext";
 import { UpdateContext } from "context/UpdateContext";
 import adminLayout from "containers/theme/adminLayout";
 import hospitalLayout from "containers/theme/hospitalLayout";
+import HospitalPrivate from "routes/HospitalPrivate";
 import DoctorLayout from "containers/theme/doctorLayout";
 const RouterCustom = () => {
   const [search, setSearch] = useState("");
@@ -55,9 +56,11 @@ const RouterCustom = () => {
                   key={index}
                   path={route.path}
                   element={
-                    <Layout>
-                      <Page />
-                    </Layout>
+                    <HospitalPrivate>
+                      <Layout>
+                        <Page />
+                      </Layout>
+                    </HospitalPrivate>
                   }
                 />
               );
