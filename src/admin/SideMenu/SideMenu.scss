@@ -1,31 +1,40 @@
 @use "sass:map";
 @import "style/pages/theme";
 
-.AdminSideMenuLogo {
-  margin-top: 20px;
-  width: 100%;
-  padding-bottom: 30px;
-  border-bottom: 1px solid #ccc;
-  transform: translateX(20px);
+.AdminSideMenuContainer .AdminSideMenuLogo {
+  display        : flex;
+  justify-content: center;
+  margin-top     : 20px;
+  width          : 100%;
+  padding-bottom : 30px;
+  border-bottom  : 1px solid #ccc;
+  transform      : translateX(20px);
 }
 
-.AdminSideMenuLogo img {
+.AdminSideMenuContainer .AdminSideMenuLogo a {
+  display        : flex;
+  justify-content: center;
+}
+
+.AdminSideMenuContainer .AdminSideMenuLogo img {
   object-fit: cover;
-  width: 70px;
-  height: 70px;
-  margin-left: 40px;
+  width     : 70px;
+  height    : 70px;
+  margin    : 0;
 }
 
-.sideBarActive {
+.AdminSideMenuContainer .sideBarActive {
   color: $color-blue !important;
 }
-.AdminMenu {
-  display: flex;
-  flex-direction: column;
-  row-gap: 30px;
+
+.AdminSideMenuContainer .AdminMenu {
+  display        : flex;
+  flex-direction : column;
+  row-gap        : 30px;
   justify-content: center;
-  margin-left: 20px;
-  margin-top: 20px;
+  margin-left    : 20px;
+  margin-top     : 20px;
+
   a {
     color: $color-title;
   }

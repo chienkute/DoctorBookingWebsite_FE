@@ -2,6 +2,10 @@ import React from "react";
 import "./TopicDelete.scss";
 
 class TopicDeleteDialogue extends React.Component {
+  handleTDDClose = () => {
+    const { closeTDDMethod } = this.props;
+    closeTDDMethod(false, ".TDDOverlayContainer");
+  };
   render() {
     return (
       <div className="TopicDeleteDialogueContainer">
@@ -22,7 +26,9 @@ class TopicDeleteDialogue extends React.Component {
             </span>
           </div>
           <div className="TDDButtons">
-            <button id="TDDCancelButton">Huỷ</button>
+            <button id="TDDCancelButton" onClick={this.handleTDDClose}>
+              Huỷ
+            </button>
             <button id="TDDConfirmButton">Xác nhận</button>
           </div>
         </div>

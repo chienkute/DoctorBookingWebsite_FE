@@ -3,23 +3,23 @@
 
 .AdminUserContainer {
   position: relative;
-  padding: 0 32px;
+  margin  : 32px;
 }
 
 .AdminUserFilter {
-  display: flex;
-  flex-wrap: wrap;
+  display      : flex;
+  flex-wrap    : wrap;
   margin-bottom: 32px;
 }
 
-.AdminUserFilter > h3 {
-  width: 100%;
+.AdminUserFilter>h3 {
+  width      : 100%;
   font-weight: 700;
 }
 
 .AdminUserFilter .FilterRow {
   display: flex;
-  width: 100%;
+  width  : 100%;
 }
 
 .AdminUserFilter .FilterLabel {
@@ -36,12 +36,20 @@
 
 .AdminUserFilter .FilterRow .Filter .FilterTextInput input {
   border-radius: 10px;
-  padding: 8px;
-  width: 80%;
+  padding      : 8px;
+  width        : 80%;
 }
 
-.AdminUserFilter .FilterRow .Filter .RadioButton label {
-  margin-left: 8px;
+.AdminUserFilter .FilterRow .Filter .FilterTextInput input::placeholder {
+  color      : #00000059;
+  font-style : italic;
+  font-weight: 700;
+}
+
+.AdminUserFilter .FilterRow .Filter select {
+  padding      : 8px;
+  border-radius: 4px;
+  border       : 1px solid #bdbdbd;
 }
 
 .AdminUserResult .ResultPerTable {
@@ -53,10 +61,10 @@
 }
 
 .AdminUserResult .Table {
-  display: flex;
+  display        : flex;
   justify-content: center;
-  width: 100%;
-  flex-wrap: wrap;
+  width          : 100%;
+  flex-wrap      : wrap;
 }
 
 .AdminUserResult .Table table {
@@ -73,22 +81,23 @@
 
 .AdminUserResult th,
 .AdminUserResult td {
-  padding: 16px 8px;
-  text-align: left;
+  padding   : 16px 8px;
+  text-align: center;
 }
 
 .AdminUserResult th {
-  font-weight: 700;
+  font-weight     : 700;
   background-color: #d9d9d9;
 }
 
 .AdminUserResult td div.Action {
-  display: flex;
-  gap: 4px;
+  display        : flex;
+  gap            : 4px;
+  justify-content: center;
 }
 
 .AdminUserResult td div.Action button {
-  border: none;
+  border : none;
   padding: 2px;
 }
 
@@ -98,108 +107,113 @@
 
 .AdminUserResult td div.Action button.InfoButton {
   background-color: #adf4bd;
-  color: #209c43;
+  color           : #209c43;
 }
 
 .AdminUserResult td div.Action button.ChangeInfoButton {
   background-color: #00000038;
-  color: #000000bf;
+  color           : #000000bf;
 }
 
 .AdminUserResult td div.Action button.DeleteAccount {
   background-color: #e21c1c78;
-  color: #be2424;
+  color           : #be2424;
 }
 
 .AdminUserResult .PageMonitor {
   margin-left: auto;
-  margin-top: 32px;
+  margin-top : 32px;
 }
 
 .AdminUserResult .PageMonitor,
-.AdminUserResult .PageMonitor > .Pages {
+.AdminUserResult .PageMonitor>.Pages {
   display: flex;
-  gap: 4px;
+  gap    : 4px;
 }
 
 .AdminUserResult .PageMonitor {
   margin-left: auto;
-  width: fit-content;
+  width      : fit-content;
 }
 
-.AdminUserResult .PageMonitor > div,
-.AdminUserResult .PageMonitor > .Pages > li {
-  width: 32px;
+.AdminUserResult .PageMonitor>div,
+.AdminUserResult .PageMonitor>.Pages>li {
+  width : 32px;
   height: 32px;
   cursor: pointer;
 }
 
-.AdminUserResult .PageMonitor > .PrevPage,
-.AdminUserResult .PageMonitor > .NextPage {
-  border: 1px solid rgb(217, 217, 217);
+.AdminUserResult .PageMonitor>.PrevPage,
+.AdminUserResult .PageMonitor>.NextPage {
+  border       : 1px solid rgb(217, 217, 217);
   border-radius: 4px;
 }
 
-.AdminUserResult .PageMonitor > .PrevPage.disabled,
-.AdminUserResult .PageMonitor > .NextPage.disabled {
+.AdminUserResult .PageMonitor>.PrevPage.disabled,
+.AdminUserResult .PageMonitor>.NextPage.disabled {
   background-color: rgb(242, 242, 242);
-  cursor: not-allowed;
-  border: none;
+  cursor          : not-allowed;
+  border          : none;
 }
 
-.AdminUserResult .PageMonitor > .PrevPage.disabled > svg > polygon,
-.AdminUserResult .PageMonitor > .NextPage.disabled > svg > polygon {
+.AdminUserResult .PageMonitor>.PrevPage.disabled>svg>polygon,
+.AdminUserResult .PageMonitor>.NextPage.disabled>svg>polygon {
   fill: #c5c5c5;
 }
 
-.AdminUserResult .PageMonitor > .Pages > li.selected {
-  color: rgb(255, 255, 255);
+.AdminUserResult .PageMonitor>.Pages>li.selected {
+  color           : rgb(255, 255, 255);
   background-color: rgb(45, 135, 243);
-  border-radius: 4px;
+  border-radius   : 4px;
 }
 
 .UIDOverlayContainer,
-.UDDOverlayContainer {
-  margin-top: 0 !important;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  border: 1px solid #ccc;
-  display: none;
-  flex-wrap: wrap;
-  justify-content: center;
+.UDDOverlayContainer,
+.CPDOverlayContainer {
+  margin-top      : 0 !important;
+  position        : absolute;
+  width           : 100%;
+  height          : 100%;
+  top             : 0;
+  left            : 0;
+  border          : 1px solid #ccc;
+  display         : none;
+  flex-wrap       : wrap;
+  justify-content : center;
   background-color: rgba(0, 0, 0, 0.5);
 }
 
 .UIDOverlayContainer .UIDClose,
-.UDDOverlayContainer .UDDClose {
+.UDDOverlayContainer .UDDClose,
+.CPDOverlayContainer .CPDClose {
   width: 100%;
 }
 
 .UIDOverlayContainer .UIDClose button,
-.UDDOverlayContainer .UDDClose button {
-  height: 48px;
-  width: 48px;
+.UDDOverlayContainer .UDDClose button,
+.CPDOverlayContainer .CPDClose button {
+  height          : 48px;
+  width           : 48px;
   background-color: inherit;
-  border: none;
-  color: white;
-  float: right;
+  border          : none;
+  color           : white;
+  float           : right;
 }
 
-.UIDOverlayContainer .UIDClose button > svg,
-.UDDOverlayContainer .UDDClose button > svg {
-  width: 36px;
+.UIDOverlayContainer .UIDClose button>svg,
+.UDDOverlayContainer .UDDClose button>svg,
+.CPDOverlayContainer .CPDClose button>svg {
+  width : 36px;
   height: 36px;
 }
 
 .UIDOverlayContainer .UIDOverlayContent,
-.UDDOverlayContainer .UDDOverlayContent {
-  position: absolute;
-  margin-top: 72px;
+.UDDOverlayContainer .UDDOverlayContent,
+.CPDOverlayContainer .CPDOverlayContent {
+  position        : absolute;
+  margin-top      : 72px;
   background-color: white;
-  height: fit-content;
-  padding: 32px;
-  border-radius: 10px;
+  height          : fit-content;
+  padding         : 32px;
+  border-radius   : 10px;
 }

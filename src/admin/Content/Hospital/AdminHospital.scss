@@ -41,8 +41,9 @@
 }
 
 .AdminHospitalFilter .FilterRow .Filter .FilterTextInput input::placeholder {
-    color     : #00000059;
-    font-style: italic;
+    color      : #00000059;
+    font-style : italic;
+    font-weight: 700;
 }
 
 .AdminHospitalResult .ResultPerTable {
@@ -162,7 +163,8 @@
 }
 
 .HIDOverlayContainer,
-.HDDOverlayContainer {
+.HDDOverlayContainer,
+.CPDOverlayContainer {
     margin-top      : 0 !important;
     position        : absolute;
     width           : 100%;
@@ -177,12 +179,14 @@
 }
 
 .HIDOverlayContainer .HIDClose,
-.HDDOverlayContainer .HDDClose {
+.HDDOverlayContainer .HDDClose,
+.CPDOverlayContainer .CPDClose {
     width: 100%;
 }
 
 .HIDOverlayContainer .HIDClose button,
-.HDDOverlayContainer .HDDClose button {
+.HDDOverlayContainer .HDDClose button,
+.CPDOverlayContainer .CPDClose button {
     height          : 48px;
     width           : 48px;
     background-color: inherit;
@@ -192,13 +196,15 @@
 }
 
 .HIDOverlayContainer .HIDClose button>svg,
-.HDDOverlayContainer .HDDClose button>svg {
+.HDDOverlayContainer .HDDClose button>svg,
+.CPDOverlayContainer .CPDClose button>svg {
     width : 36px;
     height: 36px;
 }
 
 .HIDOverlayContainer .HIDOverlayContent,
-.HDDOverlayContainer .HDDOverlayContent {
+.HDDOverlayContainer .HDDOverlayContent,
+.CPDOverlayContainer .CPDOverlayContent {
     position        : absolute;
     margin-top      : 72px;
     background-color: white;

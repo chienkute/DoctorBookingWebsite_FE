@@ -2,6 +2,10 @@ import React from "react";
 import "./PostDeny.scss";
 
 class PostDenyDialogue extends React.Component {
+  handlePdDClose = () => {
+    const { closePdDMethod } = this.props;
+    closePdDMethod(false, ".PdDOverlayContainer");
+  };
   render() {
     return (
       <div className="PostDenyDialogueContainer">
@@ -31,7 +35,9 @@ class PostDenyDialogue extends React.Component {
 
         <div className="PdDActions">
           <div className="PdDButtons">
-            <button id="PdDCancelButton">Huỷ</button>
+            <button id="PdDCancelButton" onClick={this.handlePdDClose}>
+              Huỷ
+            </button>
             <button id="PdDConfirmButton">Từ chối</button>
           </div>
         </div>

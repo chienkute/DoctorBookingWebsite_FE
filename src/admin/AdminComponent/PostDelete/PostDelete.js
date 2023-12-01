@@ -2,6 +2,10 @@ import React from "react";
 import "./PostDelete.scss";
 
 class PostDeleteDialogue extends React.Component {
+  handlePDDClose = () => {
+    const { closePDDMethod } = this.props;
+    closePDDMethod(false, ".PDDOverlayContainer");
+  };
   render() {
     return (
       <div className="PostDeleteDialogueContainer">
@@ -36,7 +40,9 @@ class PostDeleteDialogue extends React.Component {
             </span>
           </div>
           <div className="PDDButtons">
-            <button id="PDDCancelButton">Huỷ</button>
+            <button id="PDDCancelButton" onClick={this.handlePDDClose}>
+              Huỷ
+            </button>
             <button id="PDDConfirmButton">Xác nhận</button>
           </div>
         </div>

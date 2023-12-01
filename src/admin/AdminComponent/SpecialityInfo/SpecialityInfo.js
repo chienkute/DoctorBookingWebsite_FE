@@ -1,8 +1,13 @@
 import React from "react";
 import "./SpecialityInfo.scss";
 import { IoIosSave } from "react-icons/io";
+import { MdCancel } from "react-icons/md";
 
 class SpecialityInfoDialogue extends React.Component {
+  handleSIDClose = () => {
+    const { closeSIDMethod } = this.props;
+    closeSIDMethod(false, ".SIDOverlayContainer");
+  };
   render() {
     return (
       <div className="SpecialityInfoDialogueContainer">
@@ -18,6 +23,9 @@ class SpecialityInfoDialogue extends React.Component {
           </div>
         </div>
         <div className="SIDAction">
+          <button id="CancelButton" onClick={this.handleSIDClose}>
+            <MdCancel /> Huỷ
+          </button>
           <button className="button" id="SaveButton">
             <IoIosSave /> Lưu
           </button>

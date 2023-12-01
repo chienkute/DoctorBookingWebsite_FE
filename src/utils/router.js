@@ -26,6 +26,8 @@ import AdminHospital from "admin/Content/Hospital/AdminHospital";
 import AdminSpecialist from "admin/Content/Specialist/AdminSpecialist";
 import infoHospital from "containers/Hospital/InfoHospital/infoHospital";
 import doctorManagement from "containers/Hospital/DoctorManagement/doctorManagement";
+import AdminStatistic from "admin/Content/Statistic/AdminStatistic";
+import AdminChangePasswordDialogue from "admin/AdminComponent/AdminChangePassword/AdminChangePassword";
 import hospitalPassword from "containers/Hospital/ChangePassword/hospitalPassword";
 const publicRoutes = [
   { path: "/", component: HomePage },
@@ -49,6 +51,7 @@ const publicRoutes = [
   { path: "/care/doctor/confirm/:id", component: confirm },
   { path: "/blog/:id", component: blog },
   { path: "/tool", component: tool, layout: null },
+  { path: "/test", component: AdminChangePasswordDialogue, layout: null },
 ];
 const routeAdmin = [
   {
@@ -74,6 +77,10 @@ const routeAdmin = [
   {
     path: "/admin/specialist",
     component: AdminSpecialist,
+  },
+  {
+    path: "/admin/statistic",
+    component: AdminStatistic,
   },
 ];
 const routeHospital = [
