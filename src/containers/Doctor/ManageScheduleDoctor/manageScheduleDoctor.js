@@ -1,6 +1,6 @@
 import { React, memo, useState, useContext, useEffect } from "react";
 import { addDays, addMinutes, format } from 'date-fns';
-import { convertDayOfWeek } from "tool/DataTimeTool";
+import { convertDayOfWeek, convertDayOfWeektoNumber } from "tool/DataTimeTool";
 import { fetchAllSchedule } from "service/DoctorService.js";
 import { LoadingContext } from "context/LoadingContext";
 import "./manageScheduleDoctor.scss";
@@ -16,16 +16,25 @@ const ManageScheduleDoctor = () => {
     const [timeAfternoon, setTimeAfternoon] = useState([]);
     const [timeEvening, setTimeEvening] = useState([]);
 
+    const startDate = new Date();
+    const endDate = addDays(startDate, 6);
+
     const getAllSchedule = async () => {
         try {
-          setLoading(true);
-          let res = await fetchAllSchedule();
-          console.log("res", res);
-          if (res) {
-            setSchedules(res.results);
+            setLoading(true);
+            let schedules = [];
+            while (true) {
+                let res = await fetchAllSchedule(100, schedules.length);
+                schedules = schedules.concat(res.results);
+                if (res.count === schedules.length) {
+                    break;
+                }
+            }
+        //   let res = await fetchAllSchedule();
+        //   console.log("res", res);
+            setSchedules(schedules);
             setLoading(false);
-            console.log("schedule", res.results);
-          }
+            console.log("schedule", schedules);   
         }
         catch (error) {
           console.log(error);
@@ -35,128 +44,44 @@ const ManageScheduleDoctor = () => {
     useEffect(() => {
         getAllSchedule();
         
-        // Lọc các lịch trong buổi sáng
-        const morningSchedules = schedules.filter(schedule => {
-            const startTime = parseTime(schedule.start);
-            const endTime = parseTime(schedule.end);
-        
-            return startTime.getHours() >= 8 && endTime.getHours() < 12;
-        });
-        
-        // Lọc các lịch trong buổi trưa
-        const afternoonSchedules = schedules.filter(schedule => {
-            const startTime = parseTime(schedule.start);
-            const endTime = parseTime(schedule.end);
-        
-            return startTime.getHours() >= 12 && endTime.getHours() < 17;
-        });
-        
-        // Lọc các lịch trong buổi tối
-        const eveningSchedules = schedules.filter(schedule => {
-            const startTime = parseTime(schedule.start);
-            const endTime = parseTime(schedule.end);
-        
-            return startTime.getHours() >= 17 && endTime.getHours() < 21;
-        });
-        
-        // Hàm chuyển đổi chuỗi thời gian HH:mm:ss thành đối tượng Date
-        function parseTime(timeString) {
-            const [hours, minutes, seconds] = timeString.split(':').map(Number);
-            const date = new Date();
-            date.setHours(hours);
-            date.setMinutes(minutes);
-            date.setSeconds(seconds || 0);
-            return date;
-        }
-        
-        setTimeMorning(morningSchedules);
-        setTimeAfternoon(afternoonSchedules);
-        setTimeEvening(eveningSchedules);
-        console.log("timeMorning", timeMorning);
-        console.log("timeAfternoon", timeAfternoon);
-        console.log("timeEvening", timeEvening);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+    useEffect(() => {
+        console.log("schedules New", schedules);
+        handleClickDate(startDate);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [schedules]);
 
-    const startDate = new Date();
-    const endDate = addDays(startDate, 6);
-
-    // // tạo danh sách các khoảng thời gian trong buổi sáng từ 8h đến 12h mỗi khoảng 30p
-    // const timeMorning = [];
-    // let currentTime = new Date();
-    // currentTime.setHours(8);
-    // currentTime.setMinutes(0);
-    // currentTime.setSeconds(0);
-    // currentTime.setMilliseconds(0);
-    // while (currentTime.getHours() < 12) {
-    //     timeMorning.push(currentTime);
-    //     currentTime = addMinutes(currentTime, 30);
-    // }
-    // // tạo danh sách các khoảng thời gian trong buổi chiều từ 12h đến 17h mỗi khoảng 30p
-    // const timeAfternoon = [];
-    // currentTime = new Date();
-    // currentTime.setHours(12);
-    // currentTime.setMinutes(0);
-    // currentTime.setSeconds(0);
-    // currentTime.setMilliseconds(0);
-    // while (currentTime.getHours() < 17) {
-    //     timeAfternoon.push(currentTime);
-    //     currentTime = addMinutes(currentTime, 30);
-    // }
-    // // tạo danh sách các khoảng thời gian trong buổi tối từ 17h đến 21h mỗi khoảng 30p
-    // const timeEvening = [];
-    // currentTime = new Date();
-    // currentTime.setHours(17);
-    // currentTime.setMinutes(0);
-    // currentTime.setSeconds(0);
-    // currentTime.setMilliseconds(0);
-    // while (currentTime.getHours() < 21) {
-    //     timeEvening.push(currentTime);
-    //     currentTime = addMinutes(currentTime, 30);
-    // }
-
-    // const renderTimeMorningDivs = () => {
-    //     const timeDivs = [];
-    //     for (let i = 0; i < timeMorning.length; i++) {
-    //         timeDivs.push(
-    //             <div className="TimeBox" key={timeMorning[i].toISOString()}>
-    //                 <p>{format(timeMorning[i], 'HH:mm')}</p>
-    //                 <span> - </span>
-    //                 <p>{format(addMinutes(timeMorning[i], 30), 'HH:mm')}</p>
-    //             </div>
-    //         );
-    //     }
-    //     return timeDivs;
-    // };
     const renderTimeMorningDivs = () => {
         // console.log(choosedTimes.length);
         // console.log(choosedTimes);
         const timeDivs = [];
+        console.log("timeMorning.length", timeMorning.length);
         for (let i = 0; i < timeMorning.length; i++) {
+            // console.log("timeMorning[i]['start']", timeMorning[i]['start']);
+            // console.log("format(timeMorning[i]['start'], 'HH:mm')", format(timeMorning[i]['start'], 'HH:mm'));
             const isTimeChosen = choosedTimes.some(
-                chosenTime => chosenTime.getTime() === timeMorning[i].getTime()
+                chosenTime => chosenTime.getTime() === timeMorning[i]['start'].getTime()
             );
             timeDivs.push(
                 <div
                     className={`TimeBox ${isTimeChosen ? 'chooseTimeBox' : 'notChooseTimeBox'}`}
-                    key={timeMorning[i].toISOString()}
+                    key={timeMorning[i]['id']}
                     onClick={() => {
-                        console.log("timemorning[i]", timeMorning[i]);
-                        // chuyển className từ chooseTimeBox thành notChooseTimeBox
-                        // chuyển className từ notChooseTimeBox thành chooseTimeBox
-                        // thêm timeMorning[i] vào choosedTimes
-                        // xóa timeMorning[i] khỏi choosedTimes
+                        console.log("timemorning[i]['start']", timeMorning[i]['start']);
                         if (isTimeChosen) {
-                            setChoosedTimes(prevChoosedTimes => prevChoosedTimes.filter(
-                                choosedTime => choosedTime.getTime() !== timeMorning[i].getTime()
-                            ));
+                            setChoosedTimes(prevChoosedTimes => {
+                                console.log("prevChoosedTimes", prevChoosedTimes);
+                                prevChoosedTimes.filter(
+                                choosedTime => choosedTime.getTime() !== timeMorning[i]['start'].getTime()
+                            )});
                         }
-                        else setChoosedTimes(prevChoosedTimes => [...prevChoosedTimes, timeMorning[i]]);
+                        else setChoosedTimes(prevChoosedTimes => [...prevChoosedTimes, timeMorning[i]['start']]);
                     }}
                 >
-                    <p>{format(timeMorning[i], 'HH:mm')}</p>
+                    <p>{format(timeMorning[i]['start'], 'HH:mm')}</p>
                     <span> - </span>
-                    <p>{format(addMinutes(timeMorning[i], 30), 'HH:mm')}</p>
+                    <p>{format(addMinutes(timeMorning[i]['start'], 30), 'HH:mm')}</p>
                 </div>
             );
         }
@@ -169,29 +94,25 @@ const ManageScheduleDoctor = () => {
         const timeDivs = [];
         for (let i = 0; i < timeAfternoon.length; i++) {
             const isTimeChosen = choosedTimes.some(
-                chosenTime => chosenTime.getTime() === timeAfternoon[i].getTime()
+                chosenTime => chosenTime.getTime() === timeAfternoon[i]['start'].getTime()
             );
             timeDivs.push(
                 <div 
                     className={`TimeBox ${isTimeChosen ? 'chooseTimeBox' : 'notChooseTimeBox'}`} 
-                    key={timeAfternoon[i].toISOString()}
+                    key={timeAfternoon[i]['id']}
                     onClick={() => {
-                        console.log(timeAfternoon[i]);
-                        // chuyển className từ chooseTimeBox thành notChooseTimeBox
-                        // chuyển className từ notChooseTimeBox thành chooseTimeBox
-                        // thêm timeAfternoon[i] vào choosedTimes
-                        // xóa timeAfternoon[i] khỏi choosedTimes
+                        console.log(timeAfternoon[i]['start']);
                         if (isTimeChosen) {
                             setChoosedTimes(prevChoosedTimes => prevChoosedTimes.filter(
-                                choosedTime => choosedTime.getTime() !== timeAfternoon[i].getTime()
+                                choosedTime => choosedTime.getTime() !== timeAfternoon[i]['start'].getTime()
                             ));
                         }
-                        else setChoosedTimes(prevChoosedTimes => [...prevChoosedTimes, timeAfternoon[i]]);
+                        else setChoosedTimes(prevChoosedTimes => [...prevChoosedTimes, timeAfternoon[i]['start']]);
                     }}
                 >
-                    <p>{format(timeAfternoon[i], 'HH:mm')}</p>
+                    <p>{format(timeAfternoon[i]['start'], 'HH:mm')}</p>
                     <span> - </span>
-                    <p>{format(addMinutes(timeAfternoon[i], 30), 'HH:mm')}</p>
+                    <p>{format(addMinutes(timeAfternoon[i]['start'], 30), 'HH:mm')}</p>
                 </div>
             );
         }
@@ -203,50 +124,78 @@ const ManageScheduleDoctor = () => {
         const timeDivs = [];
         for (let i = 0; i < timeEvening.length; i++) {
             const isTimeChosen = choosedTimes.some(
-                chosenTime => chosenTime.getTime() === timeEvening[i].getTime()
+                chosenTime => chosenTime.getTime() === timeEvening[i]['start'].getTime()
             );
             timeDivs.push(
                 <div
                     className={`TimeBox ${isTimeChosen ? 'chooseTimeBox' : 'notChooseTimeBox'}`}
-                    key={timeEvening[i].toISOString()}
+                    key={timeEvening[i]['id']}
                     onClick={() => {
-                        console.log(timeEvening[i]);
-                        // chuyển className từ chooseTimeBox thành notChooseTimeBox
-                        // chuyển className từ notChooseTimeBox thành chooseTimeBox
-                        // thêm timeEvening[i] vào choosedTimes
-                        // xóa timeEvening[i] khỏi choosedTimes
+                        console.log(timeEvening[i]['start']);
                         if (isTimeChosen) {
                             setChoosedTimes(prevChoosedTimes => prevChoosedTimes.filter(
-                                choosedTime => choosedTime.getTime() !== timeEvening[i].getTime()
+                                choosedTime => choosedTime.getTime() !== timeEvening[i]['start'].getTime()
                             ));
                         }
-                        else setChoosedTimes(prevChoosedTimes => [...prevChoosedTimes, timeEvening[i]]);
+                        else setChoosedTimes(prevChoosedTimes => [...prevChoosedTimes, timeEvening[i]['start']]);
                     }}
                 >
-                    <p>{format(timeEvening[i], 'HH:mm')}</p>
+                    <p>{format(timeEvening[i]['start'], 'HH:mm')}</p>
                     <span> - </span>
-                    <p>{format(addMinutes(timeEvening[i], 30), 'HH:mm')}</p>
+                    <p>{format(addMinutes(timeEvening[i]['start'], 30), 'HH:mm')}</p>
                 </div>
             );
         }
         return timeDivs;
     };
-    // const renderTimeEveningDivs = () => {
-    //     const timeDivs = [];
-    //     for (let i = 0; i < timeEvening.length; i++) {
-    //         timeDivs.push(
-    //             <div className="TimeBox" key={timeEvening[i].toISOString()}>
-    //                 <p>{format(timeEvening[i], 'HH:mm')}</p>
-    //                 <span> - </span>
-    //                 <p>{format(addMinutes(timeEvening[i], 30), 'HH:mm')}</p>
-    //             </div>
-    //         );
-    //     }
-    //     return timeDivs;
-    // };
     
     const handleClickDate = (date) => {
         setChoosedDate(date);
+        // lấy thứ của date
+        const choosedDayOfWeek = format(date, 'EEEE');
+        console.log("choosedDayOfWeek", choosedDayOfWeek);
+        const choosedDayOfWeekNumber = convertDayOfWeektoNumber(choosedDayOfWeek);
+
+        // thay đổi timeMorning, timeAfternoon, timeEvening
+        // Các mảng lưu trữ thời gian cho từng buổi trong ngày
+        const timeMorningNew = [];
+        const timeAfternoonNew = [];
+        const timeEveningNew = [];
+
+        // Lặp qua từng phần tử trong mảng schedules
+        schedules.forEach(schedule => {
+            // Lấy giá trị "start" và "end" và dayOfWeek của schedule
+            const { id, start, end, days_of_week} = schedule;
+            // console.log(days_of_week !== choosedDayOfWeekNumber);
+            // console.log(days_of_week);
+            // console.log(choosedDayOfWeekNumber);
+            if (days_of_week !== choosedDayOfWeekNumber) {
+                // tiếp tục vòng lặp
+                return;
+            }
+            // Chuyển đổi "start" và "end" thành đối tượng Date
+            const startDate = new Date(`2000-01-01T${start}`);
+            const endDate = new Date(`2000-01-01T${end}`);
+
+            // Kiểm tra buổi nào và thêm vào mảng tương ứng
+            if (startDate.getHours() >= 8 && endDate.getHours() < 12) {
+                timeMorningNew.push({'start': startDate, 'id': id});
+                console.log("log", id, start, end, days_of_week);
+            } else if (startDate.getHours() >= 12 && endDate.getHours() < 17) {
+                timeAfternoonNew.push({'start': startDate, 'id': id});
+            } else if (startDate.getHours() >= 17 && endDate.getHours() < 21) {
+                timeEveningNew.push({'start': startDate, 'id': id});
+            }
+        });
+
+        // Hiển thị kết quả
+        console.log("Morning:", timeMorningNew);
+        console.log("Afternoon:", timeAfternoonNew);
+        console.log("Evening:", timeEveningNew);
+
+        setTimeMorning(timeMorningNew);
+        setTimeAfternoon(timeAfternoonNew);
+        setTimeEvening(timeEveningNew);
     };
 
     const renderDateDivs = () => {

@@ -1,5 +1,8 @@
-const fetchAllSchedule = () => {
-    return instance.get("api/schedules/?limit=1000&offset=0");
+const { default: instance } = require("utils/axiosCutomize");
+const fetchAllSchedule = (limit = 100, offset = 0) => {
+    return instance.get("api/schedules/?limit=" + limit + "&offset=" + offset);
 };
-
-export { fetchAllSchedule };
+const fetchAllScheduleByDoctorId = (doctorId) => {
+    return instance.get("api/getschedulerdoctor/?doctor=" + doctorId);
+};
+export { fetchAllSchedule, fetchAllScheduleByDoctorId };
