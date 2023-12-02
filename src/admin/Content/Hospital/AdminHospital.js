@@ -6,6 +6,7 @@ import { FiEdit3 } from "react-icons/fi";
 import { IoClose, IoInformation } from "react-icons/io5";
 import HospitalInfoDialogue from "admin/AdminComponent/HospitalInfo/HospitalInfo";
 import HospitalDeleteDialogue from "admin/AdminComponent/HospitalDelete/HospitalDelete";
+import AdminChangePasswordDialogue from "admin/AdminComponent/AdminChangePassword/AdminChangePassword";
 
 class AdminHospital extends React.Component {
   changeState(value, field) {
@@ -157,20 +158,25 @@ class AdminHospital extends React.Component {
             </button>
           </div>
           <div className="HIDOverlayContent">
-            <HospitalInfoDialogue />
+            <HospitalInfoDialogue
+              openCPDmethod={(value, field) => this.changeState(value, field)}
+            />
           </div>
         </div>
         <div className="HDDOverlayContainer">
-          <div className="HDDClose">
-            <button
-              id="HDDCloseButton"
-              onClick={() => this.changeState(false, ".HDDOverlayContainer")}
-            >
-              <IoClose />
-            </button>
-          </div>
+          <div className="HDDClose"></div>
           <div className="HDDOverlayContent">
-            <HospitalDeleteDialogue />
+            <HospitalDeleteDialogue
+              closeHDDMethod={(value, field) => this.changeState(value, field)}
+            />
+          </div>
+        </div>
+        <div className="CPDOverlayContainer">
+          <div className="CPDClose"></div>
+          <div className="CPDOverlayContent">
+            <AdminChangePasswordDialogue
+              closeCPDmethod={(value, field) => this.changeState(value, field)}
+            />
           </div>
         </div>
       </>

@@ -1,8 +1,13 @@
 import React from "react";
 import "./TopicInfo.scss";
 import { IoIosSave } from "react-icons/io";
+import { MdCancel } from "react-icons/md";
 
 class TopicInfoDialogue extends React.Component {
+  handleTIDClose = () => {
+    const { closeTIDMethod } = this.props;
+    closeTIDMethod(false, ".TIDOverlayContainer");
+  };
   render() {
     return (
       <div className="TopicInfoDialogueContainer">
@@ -18,6 +23,9 @@ class TopicInfoDialogue extends React.Component {
           </div>
         </div>
         <div className="TIDAction">
+          <button id="CancelButton" onClick={this.handleTIDClose}>
+            <MdCancel /> Huỷ
+          </button>
           <button className="button" id="SaveButton">
             <IoIosSave /> Lưu
           </button>

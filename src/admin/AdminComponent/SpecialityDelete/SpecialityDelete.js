@@ -2,6 +2,10 @@ import React from "react";
 import "./SpecialityDelete.scss";
 
 class SpecialityDeleteDialogue extends React.Component {
+  handleSDDClose = () => {
+    const { closeSDDMethod } = this.props;
+    closeSDDMethod(false, ".SDDOverlayContainer");
+  };
   render() {
     return (
       <div className="SpecialityDeleteDialogueContainer">
@@ -22,7 +26,9 @@ class SpecialityDeleteDialogue extends React.Component {
             </span>
           </div>
           <div className="SDDButtons">
-            <button id="SDDCancelButton">Huỷ</button>
+            <button id="SDDCancelButton" onClick={this.handleSDDClose}>
+              Huỷ
+            </button>
             <button id="SDDConfirmButton">Xác nhận</button>
           </div>
         </div>

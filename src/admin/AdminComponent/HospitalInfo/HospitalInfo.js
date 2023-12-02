@@ -17,6 +17,12 @@ class HospitalInfoDialogue extends React.Component {
       isEditable: value,
     });
   }
+
+  handleOpenCPD = () => {
+    const { openCPDmethod } = this.props;
+    openCPDmethod(true, ".CPDOverlayContainer");
+  };
+
   render() {
     return (
       <div className="HospitalInfoDialogueContainer">
@@ -66,9 +72,6 @@ class HospitalInfoDialogue extends React.Component {
           </div>
         </div>
         <div className="HIDAction">
-          <button className="button" id="ChangePasswordButton">
-            <BiSolidEditAlt /> Đổi mật khẩu
-          </button>
           {!this.state.isEditable && (
             <button
               className="button"
@@ -79,13 +82,22 @@ class HospitalInfoDialogue extends React.Component {
             </button>
           )}
           {this.state.isEditable && (
-            <button
-              className="button"
-              id="HIDSaveButton"
-              onClick={() => this.changeState(false)}
-            >
-              <IoIosSave /> Lưu thông tin
-            </button>
+            <>
+              <button
+                className="button"
+                id="ChangePasswordButton"
+                onClick={this.handleOpenCPD}
+              >
+                <BiSolidEditAlt /> Đổi mật khẩu
+              </button>
+              <button
+                className="button"
+                id="HIDSaveButton"
+                onClick={() => this.changeState(false)}
+              >
+                <IoIosSave /> Lưu thông tin
+              </button>
+            </>
           )}
         </div>
       </div>

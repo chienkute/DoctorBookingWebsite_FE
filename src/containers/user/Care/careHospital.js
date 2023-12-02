@@ -25,7 +25,7 @@ const CareHospital = () => {
     <div className="care__hospital">
       <div className="care__hospital_banner">
         <h2>Top Bệnh viện/Phòng Khám Nổi Bật</h2>
-        <a href="#">
+        <a href="/care/searchDoctor">
           <p>Xem tất cả</p>
           <div>
             <MdKeyboardArrowRight></MdKeyboardArrowRight>
@@ -55,7 +55,7 @@ const CareHospital = () => {
                       type="button"
                       class="btn button care__hospital_button"
                       onClick={() => {
-                        navigate(`/care/hospital/${item.id}`);
+                        navigate(`/care/hospital/${item.id}/${item.name}`);
                       }}
                     >
                       Đặt lịch bệnh viện

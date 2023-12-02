@@ -130,29 +130,19 @@ class AdminTopic extends React.Component {
           </div>
         </div>
         <div className="TIDOverlayContainer">
-          <div className="TIDClose">
-            <button
-              id="TIDCloseButton"
-              onClick={() => this.changeState(false, ".TIDOverlayContainer")}
-            >
-              <IoClose />
-            </button>
-          </div>
+          <div className="TIDClose"></div>
           <div className="TIDOverlayContent">
-            <TopicInfoDialogue />
+            <TopicInfoDialogue
+              closeTIDMethod={(value, field) => this.changeState(value, field)}
+            />
           </div>
         </div>
         <div className="TDDOverlayContainer">
-          <div className="TDDClose">
-            <button
-              id="TDDCloseButton"
-              onClick={() => this.changeState(false, ".TDDOverlayContainer")}
-            >
-              <IoClose />
-            </button>
-          </div>
+          <div className="TDDClose"></div>
           <div className="TDDOverlayContent">
-            <TopicDeleteDialogue />
+            <TopicDeleteDialogue
+              closeTDDMethod={(value, field) => this.changeState(value, field)}
+            />
           </div>
         </div>
       </>

@@ -60,6 +60,14 @@ const SideMenu = () => {
         >
           Quản lí chuyên khoa
         </NavLink>
+        <NavLink
+          to={"/admin/statistic"}
+          className={({ isActive }) =>
+            isActive ? "sideBarActive AdminMenu" : "AdminMenu"
+          }
+        >
+          Thống kê
+        </NavLink>
       </div>
     </div>
   );

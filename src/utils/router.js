@@ -28,7 +28,10 @@ import infoHospital from "containers/Hospital/InfoHospital/infoHospital";
 import doctorManagement from "containers/Hospital/DoctorManagement/doctorManagement";
 import InfoDoctor from "containers/Doctor/InfoDoctor.js/infoDoctor";
 import ManageScheduleDoctor from "containers/Doctor/ManageScheduleDoctor/manageScheduleDoctor";
-
+import AdminStatistic from "admin/Content/Statistic/AdminStatistic";
+import AdminChangePasswordDialogue from "admin/AdminComponent/AdminChangePassword/AdminChangePassword";
+import hospitalPassword from "containers/Hospital/ChangePassword/hospitalPassword";
+import dashboardHospital from "containers/Hospital/DashboardHospital/dashboardHospital";
 const publicRoutes = [
   { path: "/", component: HomePage },
   { path: "/login", component: Login, layout: null },
@@ -40,17 +43,18 @@ const publicRoutes = [
   { path: "/care/", component: Care },
   { path: "/care/doctor/:id", component: Doctor },
   { path: "/category/:id/:name", component: category },
-  { path: "/care/hospital/:id", component: hospitalPage },
-  { path: "/care/service/:id", component: service },
+  { path: "/care/hospital/:id/:namehospital", component: hospitalPage },
+  { path: "/care/service/:id/:nameservice", component: service },
   { path: "/care/specialties", component: specialties },
   { path: "/care/serviceSearch", component: serviceSearch },
   { path: "/user/information/:id", component: userInfo },
   { path: "/user/history", component: userHistory },
   { path: "/user/changePassword/:id", component: userChangePassword },
   { path: "/user/help", component: userhelp },
-  { path: "/care/doctor/confirm/:id", component: confirm },
+  { path: "/care/doctor/confirm/:id/:namedoctor", component: confirm },
   { path: "/blog/:id", component: blog },
   { path: "/tool", component: tool, layout: null },
+  { path: "/test", component: AdminChangePasswordDialogue, layout: null },
 ];
 const routeAdmin = [
   {
@@ -77,15 +81,21 @@ const routeAdmin = [
     path: "/admin/specialist",
     component: AdminSpecialist,
   },
+  {
+    path: "/admin/statistic",
+    component: AdminStatistic,
+  },
 ];
 const routeHospital = [
-  { path: "/hospital/information", component: infoHospital },
-  { path: "/hospital/doctormanagement", component: doctorManagement },
+  { path: "/hospital/information/:id", component: infoHospital },
+  { path: "/hospital/doctormanagement/:id", component: doctorManagement },
+  { path: "/hospital/changepassword/:id", component: hospitalPassword },
+  { path: "/hospital/dashboard/", component: dashboardHospital },
 ];
 
 const routeDoctor = [
   { path: "/doctor/dashboard", component: AdminDashboard },
   { path: "/doctor/information", component: InfoDoctor },
   { path: "/doctor/manageSchedule", component: ManageScheduleDoctor },
-];  
-export { publicRoutes, routeAdmin, routeHospital, routeDoctor};
+];
+export { publicRoutes, routeAdmin, routeHospital, routeDoctor };

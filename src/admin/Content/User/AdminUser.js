@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./AdminUser.scss";
 import { FaRegCheckSquare, FaEraser } from "react-icons/fa";
 import { FcPrevious, FcNext } from "react-icons/fc";
@@ -6,24 +6,27 @@ import { IoInformation, IoClose } from "react-icons/io5";
 import { FiEdit3 } from "react-icons/fi";
 import UserInfoDialogue from "admin/AdminComponent/UserInfo/UserInfo";
 import UserDeleteDialogue from "admin/AdminComponent/UserDelete/UserDelete";
+import AdminChangePasswordDialogue from "admin/AdminComponent/AdminChangePassword/AdminChangePassword";
 
 class AdminUser extends React.Component {
-  // const [isShowModalEditUser, setIsShowModalEditUser] = useState(false);
-  // const handleCloseModalEdit = () => {
-  //   setIsShowModalEditUser(false);
-  // };
   constructor(props) {
     super(props);
     this.state = {
       editable: false,
+      filterType: 0,
     };
   }
   //function này là Demo, mới chỉ ẩn/hiện cái dialogue
-  changeState(value, field) {
-    let UID = document.querySelector(field);
-    if (value) UID.style.display = "flex";
-    else UID.style.display = "none";
+  changeEditable(value, field) {
+    let f = document.querySelector(field);
+    if (value) f.style.display = "flex";
+    else f.style.display = "none";
   }
+
+  changeFilterType(value) {
+    this.setState({ filterType: value });
+  }
+
   render() {
     return (
       <>
@@ -44,23 +47,18 @@ class AdminUser extends React.Component {
               </div>
               <div className="Filter col-2">
                 <div className="FilterLabel">Vai trò</div>
-                <div className="FilterInput FilterRadioInput">
-                  <div className="RadioButton">
-                    <input
-                      type="checkbox"
-                      id="UserRole"
-                      value="UserRole"
-                    ></input>
-                    <label htmlFor="UserRole">Thành viên</label>
-                  </div>
-                  <div className="RadioButton">
-                    <input
-                      type="checkbox"
-                      id="DoctorRole"
-                      value="DoctorRole"
-                    ></input>
-                    <label htmlFor="DoctorRole">Bác sĩ</label>
-                  </div>
+                <div className="FilterInput FilterSelectInput">
+                  <select
+                    className="RoleSelect"
+                    id="role"
+                    onChange={(event) =>
+                      this.changeFilterType(event.target.value)
+                    }
+                  >
+                    <option value="0">Tất cả</option>
+                    <option value="1">Người dùng</option>
+                    <option value="2">Bác sĩ</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -72,12 +70,41 @@ class AdminUser extends React.Component {
                     type="text"
                     className="form-control"
                     id="username"
-                    placeholder="Nhập tên tài khoản của bạn"
+                    placeholder="Nhập tên tài khoản"
                     autoComplete="off"
                   />
                 </div>
               </div>
+              {!(this.state.filterType == 1) && (
+                <div className="Filter col-2">
+                  <div className="FilterLabel">Tên cơ sở KCB </div>
+                  <div className="FilterInput FilterTextInput">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="kcbname"
+                      placeholder="Nhập tên cơ sở KCB"
+                      autoComplete="off"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
+            {!(this.state.filterType == 1) && (
+              <div className="FilterRow">
+                <div className="Filter col-2"></div>
+                <div className="Filter col-2">
+                  <div className="FilterLabel">Chuyên khoa</div>
+                  <div className="FilterInput FilterSelectInput">
+                    <select className="RoleSelect" id="specialist">
+                      <option value="0">Tất cả</option>
+                      <option value="1">Chuyên khoa 1</option>
+                      <option value="2">Chuyên khoa 2</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
           <div className="AdminUserResult">
             <div className="ResultPerTable">
@@ -108,28 +135,23 @@ class AdminUser extends React.Component {
                       <button
                         className="InfoButton"
                         onClick={() =>
-                          this.changeState(true, ".UIDOverlayContainer")
+                          this.changeEditable(true, ".UIDOverlayContainer")
                         }
                       >
                         <IoInformation />
                       </button>
                       <button
                         className="ChangeInfoButton"
-                        // onClick={() => setIsShowModalEditUser(true)}
                         onClick={() =>
-                          this.changeState(true, ".UIDOverlayContainer")
+                          this.changeEditable(true, ".UIDOverlayContainer")
                         }
                       >
                         <FiEdit3 />
                       </button>
-                      {/* <UserInfoDialogue
-                      show={isShowModalEditUser}
-                      handleClose={handleCloseModalEdit}
-                    ></UserInfoDialogue> */}
                       <button
                         className="DeleteAccount"
                         onClick={() =>
-                          this.changeState(true, ".UDDOverlayContainer")
+                          this.changeEditable(true, ".UDDOverlayContainer")
                         }
                       >
                         <FaEraser />
@@ -160,26 +182,37 @@ class AdminUser extends React.Component {
           <div className="UIDClose">
             <button
               id="UIDCloseButton"
-              onClick={() => this.changeState(false, ".UIDOverlayContainer")}
+              onClick={() => this.changeEditable(false, ".UIDOverlayContainer")}
             >
               <IoClose />
             </button>
           </div>
           <div className="UIDOverlayContent">
-            <UserInfoDialogue />
+            <UserInfoDialogue
+              openCPDmethod={(value, field) =>
+                this.changeEditable(value, field)
+              }
+            />
           </div>
         </div>
         <div className="UDDOverlayContainer">
-          <div className="UDDClose">
-            <button
-              id="UDDCloseButton"
-              onClick={() => this.changeState(false, ".UDDOverlayContainer")}
-            >
-              <IoClose />
-            </button>
-          </div>
+          <div className="UDDClose"></div>
           <div className="UDDOverlayContent">
-            <UserDeleteDialogue />
+            <UserDeleteDialogue
+              closeUDDMethod={(value, field) =>
+                this.changeEditable(value, field)
+              }
+            />
+          </div>
+        </div>
+        <div className="CPDOverlayContainer">
+          <div className="CPDClose"></div>
+          <div className="CPDOverlayContent">
+            <AdminChangePasswordDialogue
+              closeCPDmethod={(value, field) =>
+                this.changeEditable(value, field)
+              }
+            />
           </div>
         </div>
       </>

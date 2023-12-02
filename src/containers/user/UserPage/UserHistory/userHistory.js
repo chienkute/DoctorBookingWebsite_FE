@@ -83,7 +83,6 @@ const UserHistory = () => {
                 <Tab eventKey="home" title="Lịch sử đặt hẹn">
                   {scheduleBook.length > 0 ? (
                     <div>
-                      {" "}
                       <table class="table align-middle mb-0 bg-white history__tab_table">
                         <thead class="bg-light">
                           <tr>
@@ -268,7 +267,7 @@ const UserHistory = () => {
                           breakClassName="page-item"
                           breakLinkClassName="page-link"
                           containerClassName="pagination"
-                          activeClassName="active"
+                          activeClassName="active active-pagination"
                         />
                       </div>
                     </div>
@@ -432,7 +431,7 @@ const UserHistory = () => {
                           breakClassName="page-item"
                           breakLinkClassName="page-link"
                           containerClassName="pagination"
-                          activeClassName="active"
+                          activeClassName="active active-pagination"
                         />
                       </div>
                     </div>
@@ -625,7 +624,7 @@ const UserHistory = () => {
                           breakClassName="page-item"
                           breakLinkClassName="page-link"
                           containerClassName="pagination"
-                          activeClassName="active"
+                          activeClassName="active active-pagination"
                         />
                       </div>
                     </div>

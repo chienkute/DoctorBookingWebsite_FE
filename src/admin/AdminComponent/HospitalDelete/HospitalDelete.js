@@ -2,6 +2,10 @@ import React from "react";
 import "./HospitalDelete.scss";
 
 class HospitalDeleteDialogue extends React.Component {
+  handleHDDClose = () => {
+    const { closeHDDMethod } = this.props;
+    closeHDDMethod(false, ".HDDOverlayContainer");
+  };
   render() {
     return (
       <div className="HospitalDeleteDialogueContainer">
@@ -30,7 +34,9 @@ class HospitalDeleteDialogue extends React.Component {
             </span>
           </div>
           <div className="HDDButtons">
-            <button id="HDDCancelButton">Huỷ</button>
+            <button id="HDDCancelButton" onClick={this.handleHDDClose}>
+              Huỷ
+            </button>
             <button id="HDDConfirmButton">Xác nhận</button>
           </div>
         </div>

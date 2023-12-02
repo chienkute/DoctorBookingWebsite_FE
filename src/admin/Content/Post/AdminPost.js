@@ -188,16 +188,11 @@ class AdminPost extends React.Component {
           </div>
         </div>
         <div className="PdDOverlayContainer">
-          <div className="PdDClose">
-            <button
-              id="PdDCloseButton"
-              onClick={() => this.changeState(false, ".PdDOverlayContainer")}
-            >
-              <IoClose />
-            </button>
-          </div>
+          <div className="PdDClose"></div>
           <div className="PdDOverlayContent">
-            <PostDenyDialogue />
+            <PostDenyDialogue
+              closePdDMethod={(value, field) => this.changeState(value, field)}
+            />
           </div>
         </div>
         <div className="PDDOverlayContainer">
@@ -210,7 +205,9 @@ class AdminPost extends React.Component {
             </button>
           </div>
           <div className="PDDOverlayContent">
-            <PostDeleteDialogue />
+            <PostDeleteDialogue
+              closePDDMethod={(value, field) => this.changeState(value, field)}
+            />
           </div>
         </div>
       </>

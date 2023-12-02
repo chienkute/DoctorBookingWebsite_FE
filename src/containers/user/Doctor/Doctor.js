@@ -296,7 +296,7 @@ const Doctor = () => {
               </div>
             </div>
             <div className="DoctorPageAppointmentBox">
-              <AppointmentBox id={id} />
+              <AppointmentBox id={id} name={doctor.name} />
             </div>
           </div>
         </div>

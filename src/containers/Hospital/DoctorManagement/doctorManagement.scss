@@ -1,3 +1,79 @@
 @use "sass:map";
 @import "style/pages/theme";
 @import "~mdb-ui-kit/css/mdb.min.css";
+.management {
+  &__search {
+    height: 42px;
+    width: 41%;
+    border: 1px solid rgb(217, 217, 217);
+    display: flex;
+    border-radius: 10px;
+    position: relative;
+    background-color: white;
+  }
+  &__input {
+    width: 100%;
+    height: 100%;
+  }
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    width: 91%;
+  }
+  &__content {
+    margin-top: 40px;
+  }
+  &__pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+}
+.form {
+  &__avatar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    label {
+      span {
+        color: red;
+      }
+    }
+  }
+  &__image {
+    img {
+      width: 120px;
+      height: 120px;
+    }
+  }
+  &__col {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+  &__select {
+    height: 40px !important;
+  }
+}
+#care__ins {
+  margin-left: 20px;
+  width: 99%;
+  height: 50%;
+  border: none;
+  outline-color: transparent;
+}
+.table__image {
+  img {
+    width: 45px;
+    height: 45px;
+  }
+}
+.name__row {
+  display: flex;
+  column-gap: 10px;
+  p {
+    transform: translateY(10px);
+  }
+}

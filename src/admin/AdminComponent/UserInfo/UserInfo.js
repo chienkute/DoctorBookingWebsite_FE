@@ -10,12 +10,24 @@ class UserInfoDialogue extends React.Component {
 
     this.state = {
       isEditable: props.editable,
+      accType: false,
     };
   }
 
-  changeState(value) {
+  handleOpenCPD = () => {
+    const { openCPDmethod } = this.props;
+    openCPDmethod(true, ".CPDOverlayContainer");
+  };
+
+  changeEditable(value) {
     this.setState({
       isEditable: value,
+    });
+  }
+
+  changeType(value) {
+    this.setState({
+      accType: !(value == 0),
     });
   }
   render() {
@@ -48,11 +60,27 @@ class UserInfoDialogue extends React.Component {
             </div>
             <div className="UIDRole UIDField">
               <label htmlFor="UIDRoleSelect">Vai trò:</label>
-              <select id="UIDRoleSelect" disabled={!this.state.isEditable}>
-                <option value="user">Thành viên</option>
-                <option value="doctor">Bác sĩ</option>
+              <select
+                id="UIDRoleSelect"
+                disabled={!this.state.isEditable}
+                onChange={(event) => this.changeType(event.target.value)}
+              >
+                <option value="0">Thành viên</option>
+                <option value="1">Bác sĩ</option>
               </select>
             </div>
+            {this.state.accType && (
+              <div className="UIDKCBAddress UIDField">
+                <div className="UIDKCBAddressLabel UIDLabel">
+                  Đơn vị công tác
+                </div>
+                <input
+                  type="text"
+                  id="UIDKCBAddressInput"
+                  disabled={!this.state.isEditable}
+                ></input>
+              </div>
+            )}
           </div>
           <div className="UIDCols col-2">
             <div className="UIDBirthday UIDField">
@@ -72,6 +100,7 @@ class UserInfoDialogue extends React.Component {
                 disabled={!this.state.isEditable}
               ></input>
             </div>
+
             <div className="UIDPhone UIDField">
               <div className="UIDPhoneLabel UIDLabel">SĐT</div>
               <input
@@ -88,29 +117,47 @@ class UserInfoDialogue extends React.Component {
                 disabled={!this.state.isEditable}
               ></input>
             </div>
+            {this.state.accType && (
+              <div className="UIDSpeciality UIDField">
+                <label htmlFor="UIDSpecialitySelect">Chuyên khoa:</label>
+                <select
+                  id="UIDSpecialitySelect"
+                  disabled={!this.state.isEditable}
+                >
+                  <option value="0">Chuyên khoa 0</option>
+                  <option value="1">Chuyên khoa 1</option>
+                </select>
+              </div>
+            )}
           </div>
         </div>
         <div className="UIDAction">
-          <button className="button" id="ChangePasswordButton">
-            <BiSolidEditAlt /> Đổi mật khẩu
-          </button>
           {!this.state.isEditable && (
             <button
               className="button"
               id="UIDEditButton"
-              onClick={() => this.changeState(true)}
+              onClick={() => this.changeEditable(true)}
             >
               <BiSolidEditAlt /> Chỉnh sửa thông tin
             </button>
           )}
           {this.state.isEditable && (
-            <button
-              className="button"
-              id="UIDSaveButton"
-              onClick={() => this.changeState(false)}
-            >
-              <IoIosSave /> Lưu thông tin
-            </button>
+            <>
+              <button
+                className="button"
+                id="ChangePasswordButton"
+                onClick={this.handleOpenCPD}
+              >
+                <BiSolidEditAlt /> Đổi mật khẩu
+              </button>
+              <button
+                className="button"
+                id="UIDSaveButton"
+                onClick={() => this.changeEditable(false)}
+              >
+                <IoIosSave /> Lưu thông tin
+              </button>
+            </>
           )}
         </div>
       </div>
