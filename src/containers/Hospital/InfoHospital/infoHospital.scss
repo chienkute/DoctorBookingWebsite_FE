@@ -8,9 +8,13 @@
     font-weight: 600;
     font-size: $fs-normal-title;
   }
+  &__hospital {
+    &_header {
+      display: flex;
+      column-gap: 170px;
+    }
+  }
   &__header {
-    display: flex;
-    column-gap: 170px;
     &_content {
       display: flex;
       column-gap: 20px;

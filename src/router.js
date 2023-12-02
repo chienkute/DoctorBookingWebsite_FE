@@ -1,14 +1,19 @@
 import MasterLayout from "./containers/theme/masterLayout";
 import { Routes, Route } from "react-router-dom";
 import { Fragment, useState } from "react";
-import { publicRoutes, routeAdmin, routeHospital, routeDoctor } from "./utils/router";
+import {
+  publicRoutes,
+  routeAdmin,
+  routeHospital,
+  routeDoctor,
+} from "./utils/router";
 import { SearchContext } from "context/SearchContext";
 import { LoadingContext } from "context/LoadingContext";
 import { UpdateContext } from "context/UpdateContext";
 import adminLayout from "containers/theme/adminLayout";
 import hospitalLayout from "containers/theme/hospitalLayout";
-import HospitalPrivate from "routes/HospitalPrivate";
 import DoctorLayout from "containers/theme/doctorLayout";
+import AdminPrivate from "routes/AdminPrivate";
 const RouterCustom = () => {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
@@ -41,9 +46,11 @@ const RouterCustom = () => {
                   key={index}
                   path={route.path}
                   element={
+                    // <AdminPrivate>
                     <Layout>
                       <Page />
                     </Layout>
+                    // </AdminPrivate>
                   }
                 />
               );
@@ -56,11 +63,11 @@ const RouterCustom = () => {
                   key={index}
                   path={route.path}
                   element={
-                    <HospitalPrivate>
+                    <AdminPrivate>
                       <Layout>
                         <Page />
                       </Layout>
-                    </HospitalPrivate>
+                    </AdminPrivate>
                   }
                 />
               );

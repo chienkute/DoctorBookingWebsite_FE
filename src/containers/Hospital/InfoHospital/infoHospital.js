@@ -86,26 +86,29 @@ const InfoHospital = () => {
           "Vui lòng nhập đúng địa chỉ email",
         ),
     }),
-    onSubmit: async (values) => {
-      let res = await editHospital(
-        id,
-        values.name,
-        values.email,
-        values.address,
-        "Bệnh viện tư nhân",
-      );
-      if (res) {
-        console.log(res);
-        toast.success("Sửa thành công");
-      } else {
-        toast.error("Sửa thất bại");
-      }
+    onSubmit: (values) => {
+      const Edit = async () => {
+        let res = await editHospital(
+          id,
+          values.name,
+          values.email,
+          values.address,
+          "Bệnh viện tư nhân",
+        );
+        if (res) {
+          console.log(res);
+          toast.success("Sửa thành công");
+        } else {
+          toast.error("Sửa thất bại");
+        }
+      };
+      Edit();
     },
   });
   return (
     <div className="information">
       <h1>Hồ sơ cá nhân</h1>
-      <div className="information__header">
+      <div className="information__hospital_header">
         <div className="information__header_content">
           <div className="information__avatar">
             <img src={avatar} alt="" />
@@ -133,7 +136,7 @@ const InfoHospital = () => {
           </div>
         </div>
       </div>
-      <form onSubmit={formik.handleSubmit}>
+      <form>
         <div className="information__content">
           <div className="information__content1">
             <div className="information__name">
@@ -227,7 +230,7 @@ const InfoHospital = () => {
             </div>
             <div className="information__name">
               <label htmlFor="">Chuyên khoa</label>
-              <ReactQuill
+              {/* <ReactQuill
                 // modules={module}
                 theme="snow"
                 value={value}
@@ -236,7 +239,7 @@ const InfoHospital = () => {
                 placeholder={"Thêm chuyên khoa của bạn ....."}
                 readOnly={edit ? true : false}
                 // {...formik.getFieldProps("info")}
-              />
+              /> */}
             </div>
           </div>
         </div>
@@ -244,6 +247,7 @@ const InfoHospital = () => {
           <div className="information__button">
             <button
               className="btn button"
+              type="button"
               onClick={() => {
                 setEdit(false);
               }}
@@ -254,7 +258,8 @@ const InfoHospital = () => {
         ) : (
           <div className="information__button">
             <button
-              className="btn "
+              className="btn"
+              type="button"
               onClick={() => {
                 setEdit(true);
                 handleCallAPI();
@@ -267,6 +272,7 @@ const InfoHospital = () => {
               type="submit"
               onClick={() => {
                 setEdit(true);
+                formik.handleSubmit();
               }}
             >
               Lưu
