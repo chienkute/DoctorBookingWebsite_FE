@@ -1,14 +1,17 @@
 import { React, memo, useState, useContext, useEffect } from "react";
 import { addDays, addMinutes, format } from "date-fns";
 import { convertDayOfWeek, convertDayOfWeektoNumber } from "tool/DataTimeTool";
-import { fetchAllSchedule } from "service/DoctorService.js";
+import { fetchAllSchedule, fetchAllScheduleByDoctorId, addScheduleDoctor, deleteScheduleDoctor } from "service/DoctorService.js";
 import { LoadingContext } from "context/LoadingContext";
 import "./manageScheduleDoctor.scss";
+
 const ManageScheduleDoctor = () => {
   const { setLoading } = useContext(LoadingContext);
   const [choosedDate, setChoosedDate] = useState(new Date());
   const [choosedSession, setCurrentSession] = useState(0);
-  const [choosedTimes, setChoosedTimes] = useState([]);
+  const [beginChoosedIdSchedules, setBeginChoosedIdSchedules] = useState([]);
+  const [choosedIdSchedules, setChoosedIdSchedules] = useState([]);
+  const [oldScheduleDoctor, setOldScheduleDoctor] = useState([]);
   const [schedules, setSchedules] = useState([]);
   const [timeMorning, setTimeMorning] = useState([]);
   const [timeAfternoon, setTimeAfternoon] = useState([]);
@@ -38,9 +41,39 @@ const ManageScheduleDoctor = () => {
     }
   };
 
+    const getOldSchedules = async () => {
+        try {
+            setLoading(true);
+            let oldSchedules = [];
+            while (true) {
+                let res = await fetchAllScheduleByDoctorId(3, 10, oldSchedules.length);
+                console.log("res", res);
+                oldSchedules = oldSchedules.concat(res.results);
+                if (res.count === oldSchedules.length) {
+                    break;
+                }
+            }
+            //   let res = await fetchAllSchedule();
+            //   console.log("res", res);
+            setOldScheduleDoctor(oldSchedules.map((oldSchedule) => {
+                return {
+                    id: oldSchedule.id,
+                    id_schedule: oldSchedule.schedule.id
+                }
+            }));
+            const oldIdSchedules = oldSchedules.map((oldSchedule) => oldSchedule.schedule.id);
+            setChoosedIdSchedules(oldIdSchedules);
+            setBeginChoosedIdSchedules(oldIdSchedules);
+            setLoading(false);
+            console.log("oldSchedules", oldSchedules);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
   useEffect(() => {
     getAllSchedule();
-
+    getOldSchedules();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
@@ -50,16 +83,16 @@ const ManageScheduleDoctor = () => {
   }, [schedules]);
 
   const renderTimeMorningDivs = () => {
-    // console.log(choosedTimes.length);
-    // console.log(choosedTimes);
+    // console.log(choosedIdSchedules.length);
+    // console.log(choosedIdSchedules);
     const timeDivs = [];
-    console.log("timeMorning.length", timeMorning.length);
+    console.log("choosedIdSchedules.length", choosedIdSchedules.length);
     for (let i = 0; i < timeMorning.length; i++) {
       // console.log("timeMorning[i]['start']", timeMorning[i]['start']);
       // console.log("format(timeMorning[i]['start'], 'HH:mm')", format(timeMorning[i]['start'], 'HH:mm'));
-      const isTimeChosen = choosedTimes.some(
-        (chosenTime) =>
-          chosenTime.getTime() === timeMorning[i]["start"].getTime(),
+      const isTimeChosen = choosedIdSchedules.some(
+        (choosedIdSchedule) =>
+        choosedIdSchedule === timeMorning[i]["id"],
       );
       timeDivs.push(
         <div
@@ -68,19 +101,19 @@ const ManageScheduleDoctor = () => {
           }`}
           key={timeMorning[i]["id"]}
           onClick={() => {
-            console.log("timemorning[i]['start']", timeMorning[i]["start"]);
+            console.log("timemorning[i]['id']", timeMorning[i]["id"]);
             if (isTimeChosen) {
-              setChoosedTimes((prevChoosedTimes) => {
-                console.log("prevChoosedTimes", prevChoosedTimes);
-                prevChoosedTimes.filter(
-                  (choosedTime) =>
-                    choosedTime.getTime() !== timeMorning[i]["start"].getTime(),
+              setChoosedIdSchedules((prevChoosedIdSchedules) => {
+                console.log("prevChoosedIdSchedules", prevChoosedIdSchedules);
+                return prevChoosedIdSchedules.filter(
+                  (choosedIdSchedule) =>
+                  choosedIdSchedule !== timeMorning[i]["id"],
                 );
               });
             } else
-              setChoosedTimes((prevChoosedTimes) => [
-                ...prevChoosedTimes,
-                timeMorning[i]["start"],
+              setChoosedIdSchedules((prevChoosedIdSchedules) => [
+                ...prevChoosedIdSchedules,
+                timeMorning[i]["id"],
               ]);
           }}
         >
@@ -94,13 +127,13 @@ const ManageScheduleDoctor = () => {
   };
 
   const renderTimeAfternoonDivs = () => {
-    // console.log(choosedTimes.length);
-    // console.log(choosedTimes);
+    // console.log(choosedIdSchedules.length);
+    // console.log(choosedIdSchedules);
     const timeDivs = [];
     for (let i = 0; i < timeAfternoon.length; i++) {
-      const isTimeChosen = choosedTimes.some(
-        (chosenTime) =>
-          chosenTime.getTime() === timeAfternoon[i]["start"].getTime(),
+      const isTimeChosen = choosedIdSchedules.some(
+        (choosedIdSchedule) =>
+        choosedIdSchedule === timeAfternoon[i]["id"],
       );
       timeDivs.push(
         <div
@@ -109,19 +142,19 @@ const ManageScheduleDoctor = () => {
           }`}
           key={timeAfternoon[i]["id"]}
           onClick={() => {
-            console.log(timeAfternoon[i]["start"]);
+            console.log(timeAfternoon[i]["id"]);
             if (isTimeChosen) {
-              setChoosedTimes((prevChoosedTimes) =>
-                prevChoosedTimes.filter(
-                  (choosedTime) =>
-                    choosedTime.getTime() !==
-                    timeAfternoon[i]["start"].getTime(),
+              setChoosedIdSchedules((prevChoosedIdSchedules) =>
+                prevChoosedIdSchedules.filter(
+                  (choosedIdSchedule) =>
+                  choosedIdSchedule !==
+                    timeAfternoon[i]["id"],
                 ),
               );
             } else
-              setChoosedTimes((prevChoosedTimes) => [
-                ...prevChoosedTimes,
-                timeAfternoon[i]["start"],
+              setChoosedIdSchedules((prevChoosedIdSchedules) => [
+                ...prevChoosedIdSchedules,
+                timeAfternoon[i]["id"],
               ]);
           }}
         >
@@ -134,13 +167,13 @@ const ManageScheduleDoctor = () => {
     return timeDivs;
   };
   const renderTimeEveningDivs = () => {
-    // console.log(choosedTimes.length);
-    // console.log(choosedTimes);
+    // console.log(choosedIdSchedules.length);
+    // console.log(choosedIdSchedules);
     const timeDivs = [];
     for (let i = 0; i < timeEvening.length; i++) {
-      const isTimeChosen = choosedTimes.some(
-        (chosenTime) =>
-          chosenTime.getTime() === timeEvening[i]["start"].getTime(),
+      const isTimeChosen = choosedIdSchedules.some(
+        (choosedIdSchedule) =>
+        choosedIdSchedule === timeEvening[i]["id"],
       );
       timeDivs.push(
         <div
@@ -149,18 +182,18 @@ const ManageScheduleDoctor = () => {
           }`}
           key={timeEvening[i]["id"]}
           onClick={() => {
-            console.log(timeEvening[i]["start"]);
+            console.log(timeEvening[i]["id"]);
             if (isTimeChosen) {
-              setChoosedTimes((prevChoosedTimes) =>
-                prevChoosedTimes.filter(
-                  (choosedTime) =>
-                    choosedTime.getTime() !== timeEvening[i]["start"].getTime(),
+              setChoosedIdSchedules((prevChoosedIdSchedules) =>
+                prevChoosedIdSchedules.filter(
+                  (choosedIdSchedule) =>
+                  choosedIdSchedule !== timeEvening[i]["id"],
                 ),
               );
             } else
-              setChoosedTimes((prevChoosedTimes) => [
-                ...prevChoosedTimes,
-                timeEvening[i]["start"],
+              setChoosedIdSchedules((prevChoosedIdSchedules) => [
+                ...prevChoosedIdSchedules,
+                timeEvening[i]["id"],
               ]);
           }}
         >
@@ -318,6 +351,42 @@ const ManageScheduleDoctor = () => {
           {renderTimeEveningDivs()}
         </div>
       </div>
+      <button className={`saveScheduleBtn ${
+        choosedIdSchedules.length === 0 ? "disableBtn" : "" }`}
+        onClick={async () => {
+          try {
+            setLoading(true);
+            // tìm id ScheduleDoctor cần thêm
+            const AddIdSchedules = choosedIdSchedules.filter(
+              (choosedIdSchedule) =>
+              !beginChoosedIdSchedules.includes(choosedIdSchedule),
+            );
+            const DeleteIdSchedules = beginChoosedIdSchedules.filter(
+              (beginChoosedIdSchedule) =>
+              !choosedIdSchedules.includes(beginChoosedIdSchedule),
+            );
+            for (let i = 0; i < AddIdSchedules.length; i++) {
+              await addScheduleDoctor(3, AddIdSchedules[i]);
+            }
+            for (let i = 0; i < DeleteIdSchedules.length; i++) {
+              for (let j = 0; j < oldScheduleDoctor.length; j++) {
+                if (DeleteIdSchedules[i] === oldScheduleDoctor[j].id_schedule) {
+                  console.log("oldScheduleDoctor[j].id", oldScheduleDoctor[j].id);
+                  await deleteScheduleDoctor(oldScheduleDoctor[j].id);
+                    break;
+                }
+              }
+            }
+            // load lại oldScheduleDoctor
+            getOldSchedules();
+            setLoading(false);
+          } catch (error) {
+            console.log(error);
+          }
+        }}
+      >
+        <p>Lưu lịch làm việc</p>
+      </button>
     </div>
   );
 };
