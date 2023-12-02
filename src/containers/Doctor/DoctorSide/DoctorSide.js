@@ -10,7 +10,7 @@ const DoctorSide = () => {
         <a href="/doctor" alt="DoctorPageLink">
           <img src={logo} alt="Logo"></img>
         </a>
-      </div>    
+      </div>
       <div className="DoctorMenu">
         <NavLink
           to={"/doctor/information"}
@@ -27,6 +27,30 @@ const DoctorSide = () => {
           }
         >
           Quản lí lịch làm việc
+        </NavLink>
+        <NavLink
+          to={"/doctor/manageSchedule"}
+          className={({ isActive }) =>
+            isActive ? "sideBarActive DoctorMenu" : "DoctorMenu"
+          }
+        >
+          Quản lí lịch hẹn
+        </NavLink>
+        <NavLink
+          to={"/doctor/manageSchedule"}
+          className={({ isActive }) =>
+            isActive ? "sideBarActive DoctorMenu" : "DoctorMenu"
+          }
+        >
+          Đổi mật khẩu
+        </NavLink>
+        <NavLink
+          to={"/doctor/manageSchedule"}
+          className={({ isActive }) =>
+            isActive ? "sideBarActive DoctorMenu" : "DoctorMenu"
+          }
+        >
+          Quản lý blog
         </NavLink>
         <NavLink to={"/login"} className="DoctorMenu">
           Đăng xuất

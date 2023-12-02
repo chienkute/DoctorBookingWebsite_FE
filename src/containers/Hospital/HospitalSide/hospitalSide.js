@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import "./hospitalSide.scss";
 import logo from "assets/logo.png";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
@@ -10,13 +10,16 @@ const HospitalSide = () => {
   const navigate = useNavigate();
   const { update, setUpdate } = useContext(UpdateContext);
   const handleLogout = () => {
-    localStorage.removeItem("hospital_token");
+    localStorage.removeItem("token");
     navigate("/login");
     toast.success("Đăng xuất thành công!");
   };
   const handleCallAPI = () => {
     setUpdate(!update);
   };
+  useEffect(() => {
+    if (!localStorage.getItem("hospital")) return navigate("/login");
+  }, []);
   return (
     <div className="AdminSideMenuContainer">
       <div className="AdminSideMenuLogo">
@@ -54,6 +57,9 @@ const HospitalSide = () => {
         </NavLink>
         <NavLink to={"/login"} className="AdminMenu" onClick={handleLogout}>
           Đăng xuất
+        </NavLink>
+        <NavLink to={"/hospital/dashboard"} className="AdminMenu">
+          Thống kê
         </NavLink>
       </div>
     </div>

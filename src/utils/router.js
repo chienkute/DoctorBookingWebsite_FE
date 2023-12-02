@@ -31,6 +31,7 @@ import ManageScheduleDoctor from "containers/Doctor/ManageScheduleDoctor/manageS
 import AdminStatistic from "admin/Content/Statistic/AdminStatistic";
 import AdminChangePasswordDialogue from "admin/AdminComponent/AdminChangePassword/AdminChangePassword";
 import hospitalPassword from "containers/Hospital/ChangePassword/hospitalPassword";
+import dashboardHospital from "containers/Hospital/DashboardHospital/dashboardHospital";
 const publicRoutes = [
   { path: "/", component: HomePage },
   { path: "/login", component: Login, layout: null },
@@ -89,11 +90,12 @@ const routeHospital = [
   { path: "/hospital/information/:id", component: infoHospital },
   { path: "/hospital/doctormanagement/:id", component: doctorManagement },
   { path: "/hospital/changepassword/:id", component: hospitalPassword },
+  { path: "/hospital/dashboard/", component: dashboardHospital },
 ];
 
 const routeDoctor = [
   { path: "/doctor/dashboard", component: AdminDashboard },
   { path: "/doctor/information", component: InfoDoctor },
   { path: "/doctor/manageSchedule", component: ManageScheduleDoctor },
-];  
-export { publicRoutes, routeAdmin, routeHospital, routeDoctor};
+];
+export { publicRoutes, routeAdmin, routeHospital, routeDoctor };

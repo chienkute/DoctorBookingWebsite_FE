@@ -46,18 +46,19 @@ const Login = () => {
         navigate("/");
         toast.success("Đăng nhập thành công");
       } else if (res?.account?.role === "hospital" && res.access_token) {
-        localStorage.setItem("hospital_token", res.access_token);
+        localStorage.setItem("token", res.access_token);
         localStorage.setItem("hospital", JSON.stringify(res));
         navigate(`/hospital/information/${res?.hospital?.id}`);
         toast.success("Đăng nhập thành công");
       } else if (res?.account?.role === "admin" && res.access_token) {
-        localStorage.setItem("admin_token", res.access_token);
+        localStorage.setItem("token", res.access_token);
         localStorage.setItem("admin", JSON.stringify(res));
         navigate("/admin/dashboard");
         toast.success("Đăng nhập thành công");
       } else if (res?.account?.role === "doctor" && res.access_token) {
-        localStorage.setItem("doctor_token", res.access_token);
+        localStorage.setItem("token", res.access_token);
         localStorage.setItem("doctor", JSON.stringify(res));
+        navigate("/doctor/dashboard");
         toast.success("Đăng nhập thành công");
       } else {
         toast.error("Lỗi đăng nhập");
