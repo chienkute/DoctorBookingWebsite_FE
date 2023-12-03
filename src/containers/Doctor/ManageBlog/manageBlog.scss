@@ -1,0 +1,12 @@
+@use "sass:map";
+@import "style/pages/theme";
+@import "~mdb-ui-kit/css/mdb.min.css";
+.name__blog_row {
+  display: block !important;
+}
+.quill__content {
+  margin-top: -10px !important;
+}
+.modal-backdrop.show {
+  opacity: 0.1 !important;
+}

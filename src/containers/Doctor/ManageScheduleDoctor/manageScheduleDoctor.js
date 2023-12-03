@@ -1,7 +1,7 @@
 import { React, memo, useState, useContext, useEffect } from "react";
 import { addDays, addMinutes, format } from "date-fns";
 import { convertDayOfWeek } from "tool/DataTimeTool";
-import { fetchAllSchedule } from "service/DoctorService.js";
+// import { fetchAllSchedule } from "service/DoctorService.js";
 import { LoadingContext } from "context/LoadingContext";
 import "./manageScheduleDoctor.scss";
 const ManageScheduleDoctor = () => {
@@ -13,23 +13,23 @@ const ManageScheduleDoctor = () => {
   const [timeMorning, setTimeMorning] = useState([]);
   const [timeAfternoon, setTimeAfternoon] = useState([]);
   const [timeEvening, setTimeEvening] = useState([]);
-  const getAllSchedule = async () => {
-    try {
-      setLoading(true);
-      let res = await fetchAllSchedule();
-      console.log("res", res);
-      if (res) {
-        setSchedules(res.results);
-        setLoading(false);
-        console.log("schedule", res.results);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getAllSchedule = async () => {
+  //   try {
+  //     setLoading(true);
+  //     let res = await fetchAllSchedule();
+  //     console.log("res", res);
+  //     if (res) {
+  //       setSchedules(res.results);
+  //       setLoading(false);
+  //       console.log("schedule", res.results);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
-    getAllSchedule();
+    // getAllSchedule();
     const morningSchedules = schedules.filter((schedule) => {
       const startTime = parseTime(schedule.start);
       const endTime = parseTime(schedule.end);

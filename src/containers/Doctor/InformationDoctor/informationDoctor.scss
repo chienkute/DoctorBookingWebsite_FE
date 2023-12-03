@@ -1,0 +1,59 @@
+@use "sass:map";
+@import "style/pages/theme";
+@import "~mdb-ui-kit/css/mdb.min.css";
+.information {
+  margin-left: 20px;
+  h1 {
+    color: $color-title;
+    font-weight: 600;
+    font-size: $fs-normal-title;
+  }
+  &__header {
+    display: flex;
+    align-items: center;
+    column-gap: 30px;
+  }
+  &__avatar {
+    img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+    }
+  }
+  &__upload {
+    div {
+      font-size: $fs-small-text;
+    }
+    button {
+      margin-bottom: 8px;
+      img {
+        width: 20px;
+        height: 20px;
+        transform: translate(-5px, -2px);
+      }
+    }
+  }
+  &__content {
+    display: flex;
+    column-gap: 20px;
+    margin-top: 20px;
+  }
+}
+.doctor {
+  &__info {
+    &_input {
+      width: 100%;
+      height: 47px;
+      border-radius: 6px;
+      border: 1px solid $border;
+      padding: 12px;
+      background-color: #fff;
+      input {
+        width: 100%;
+        height: 100%;
+        border: none;
+        outline-color: transparent;
+      }
+    }
+  }
+}

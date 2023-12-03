@@ -30,6 +30,7 @@ const UserInfo = () => {
   const inputRef = useRef(null);
   const [image, setImage] = useState("");
   const [imageUpdate, setImageUpdate] = useState("");
+  console.log(imageUpdate);
   const handleImageClick = () => {
     inputRef.current.click();
   };
@@ -178,7 +179,7 @@ const UserInfo = () => {
                 </div>
                 <div className="user__info">
                   <label htmlFor="">Ngày sinh</label>
-                  <div className="user__info_input">
+                  <div className="doctor__info_input">
                     <input
                       type="date"
                       name=""

@@ -162,6 +162,22 @@ const DoctorManagement = () => {
                     </div>
                   </div>
                   <div className="col-6 form__col">
+                    <label htmlFor="">Email</label>
+                    <input
+                      type="text"
+                      id="email"
+                      placeholder="Nhập email của bác sĩ"
+                      class="form-control"
+                      value={formik.values.email}
+                      onChange={formik.handleChange}
+                      {...formik.getFieldProps("email")}
+                      autoComplete="off"
+                    />
+                    <div className="form__error">
+                      {formik.touched.email && formik.errors.email}
+                    </div>
+                  </div>
+                  <div className="col-6 form__col">
                     <label htmlFor="">Tên bác sĩ</label>
                     <input
                       type="text"
@@ -177,7 +193,7 @@ const DoctorManagement = () => {
                       {formik.touched.name && formik.errors.name}
                     </div>
                   </div>
-                  <div className="col-6 form__col">
+                  {/* <div className="col-6 form__col">
                     <label htmlFor="">Số năm làm việc</label>
                     <input
                       type="number"
@@ -192,8 +208,8 @@ const DoctorManagement = () => {
                     <div className="form__error">
                       {formik.touched.year && formik.errors.year}
                     </div>
-                  </div>
-                  <div className="col-6 form__col">
+                  </div> */}
+                  {/* <div className="col-6 form__col">
                     <label htmlFor="">Chuyên khoa</label>
                     <Form.Select
                       aria-label="Default select example"
@@ -204,15 +220,15 @@ const DoctorManagement = () => {
                       <option value="2">Nha khoa</option>
                       <option value="3">Y học</option>
                     </Form.Select>
-                  </div>
-                  <div className="col-6 form__col">
+                  </div> */}
+                  {/* <div className="col-6 form__col">
                     <label htmlFor="">Kinh nghiệm</label>
                     <ReactQuill
                       value={value}
                       onChange={setValue}
                       placeholder={"Mô tả sơ qua kinh nghiệm của bác sĩ"}
                     />
-                  </div>
+                  </div> */}
                 </div>
               </form>
             </div>
@@ -241,8 +257,8 @@ const DoctorManagement = () => {
                 <th>STT</th>
                 <th>Họ tên bác sĩ</th>
                 <th>Tài khoản</th>
+                <th>Email</th>
                 <th>Chuyên khoa</th>
-                <th>SĐT</th>
                 <th>Hành động</th>
               </tr>
               {doctor &&
@@ -258,8 +274,8 @@ const DoctorManagement = () => {
                         <p>{item.name}</p>
                       </td>
                       <td>hoanganh07</td>
-                      <td>Thành viên</td>
-                      <td>{item.phone}</td>
+                      <td>doctor1@gmail.com</td>
+                      <td>Nha khoa</td>
                       <td>
                         <div className="Action">
                           <button
