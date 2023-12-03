@@ -1,0 +1,23 @@
+@use "sass:map";
+@import "style/pages/theme";
+@import "~mdb-ui-kit/css/mdb.min.css";
+.DenyButton {
+  background-color: #d9a1117a;
+  color: #ff8000;
+}
+.ApproveButton {
+  background-color: #adf4bd;
+  color: #209c43;
+}
+.approvedPost {
+  svg {
+    color: #33e423;
+    margin-right: 5px;
+  }
+}
+.waitingPost {
+  svg {
+    color: #00c2ff;
+    margin-right: 4px;
+  }
+}

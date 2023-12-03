@@ -16,7 +16,6 @@ const ManageScheduleDoctor = () => {
   const [timeMorning, setTimeMorning] = useState([]);
   const [timeAfternoon, setTimeAfternoon] = useState([]);
   const [timeEvening, setTimeEvening] = useState([]);
-
   const startDate = new Date();
   const endDate = addDays(startDate, 6);
 
@@ -40,8 +39,7 @@ const ManageScheduleDoctor = () => {
       console.log(error);
     }
   };
-
-    const getOldSchedules = async () => {
+  const getOldSchedules = async () => {
         try {
             setLoading(true);
             let oldSchedules = [];
@@ -72,6 +70,41 @@ const ManageScheduleDoctor = () => {
     };
 
   useEffect(() => {
+//     // getAllSchedule();
+//     const morningSchedules = schedules.filter((schedule) => {
+//       const startTime = parseTime(schedule.start);
+//       const endTime = parseTime(schedule.end);
+//       return startTime.getHours() >= 8 && endTime.getHours() < 12;
+//     });
+//     // Lọc các lịch trong buổi trưa
+//     const afternoonSchedules = schedules.filter((schedule) => {
+//       const startTime = parseTime(schedule.start);
+//       const endTime = parseTime(schedule.end);
+
+//       return startTime.getHours() >= 12 && endTime.getHours() < 17;
+//     });
+//     // Lọc các lịch trong buổi tối
+//     const eveningSchedules = schedules.filter((schedule) => {
+//       const startTime = parseTime(schedule.start);
+//       const endTime = parseTime(schedule.end);
+
+//       return startTime.getHours() >= 17 && endTime.getHours() < 21;
+//     });
+//     // Hàm chuyển đổi chuỗi thời gian HH:mm:ss thành đối tượng Date
+//     function parseTime(timeString) {
+//       const [hours, minutes, seconds] = timeString.split(":").map(Number);
+//       const date = new Date();
+//       date.setHours(hours);
+//       date.setMinutes(minutes);
+//       date.setSeconds(seconds || 0);
+//       return date;
+//     }
+//     setTimeMorning(morningSchedules);
+//     setTimeAfternoon(afternoonSchedules);
+//     setTimeEvening(eveningSchedules);
+//     console.log("timeMorning", timeMorning);
+//     console.log("timeAfternoon", timeAfternoon);
+//     console.log("timeEvening", timeEvening);
     getAllSchedule();
     getOldSchedules();
     // eslint-disable-next-line react-hooks/exhaustive-deps

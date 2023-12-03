@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./DoctorSide.scss";
 import logo from "assets/logo.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const DoctorSide = () => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+    toast.success("Đăng xuất thành công!");
+  };
+  const { id } = useParams();
+  useEffect(() => {
+    if (!localStorage.getItem("hospital")) return navigate("/login");
+  }, []);
   return (
     <div className="DoctorSideMenuContainer">
       <div className="DoctorSideMenuLogo">
@@ -13,7 +24,7 @@ const DoctorSide = () => {
       </div>
       <div className="DoctorMenu">
         <NavLink
-          to={"/doctor/information"}
+          to={`/doctor/information/${id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive DoctorMenu" : "DoctorMenu"
           }
@@ -21,7 +32,7 @@ const DoctorSide = () => {
           Hồ sơ
         </NavLink>
         <NavLink
-          to={"/doctor/manageSchedule"}
+          to={`/doctor/manage-schedule/${id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive DoctorMenu" : "DoctorMenu"
           }
@@ -29,7 +40,7 @@ const DoctorSide = () => {
           Quản lí lịch làm việc
         </NavLink>
         <NavLink
-          to={"/doctor/manageSchedule"}
+          to={`/doctor/appointment/${id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive DoctorMenu" : "DoctorMenu"
           }
@@ -37,7 +48,7 @@ const DoctorSide = () => {
           Quản lí lịch hẹn
         </NavLink>
         <NavLink
-          to={"/doctor/manageSchedule"}
+          to={`/doctor/change-password/${id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive DoctorMenu" : "DoctorMenu"
           }
@@ -45,14 +56,14 @@ const DoctorSide = () => {
           Đổi mật khẩu
         </NavLink>
         <NavLink
-          to={"/doctor/manageSchedule"}
+          to={`/doctor/blog/${id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive DoctorMenu" : "DoctorMenu"
           }
         >
           Quản lý blog
         </NavLink>
-        <NavLink to={"/login"} className="DoctorMenu">
+        <NavLink to={"/login"} className="DoctorMenu" onClick={handleLogout}>
           Đăng xuất
         </NavLink>
       </div>

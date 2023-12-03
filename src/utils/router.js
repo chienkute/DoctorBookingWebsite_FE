@@ -26,12 +26,15 @@ import AdminHospital from "admin/Content/Hospital/AdminHospital";
 import AdminSpecialist from "admin/Content/Specialist/AdminSpecialist";
 import infoHospital from "containers/Hospital/InfoHospital/infoHospital";
 import doctorManagement from "containers/Hospital/DoctorManagement/doctorManagement";
-import InfoDoctor from "containers/Doctor/InfoDoctor.js/infoDoctor";
 import ManageScheduleDoctor from "containers/Doctor/ManageScheduleDoctor/manageScheduleDoctor";
 import AdminStatistic from "admin/Content/Statistic/AdminStatistic";
 import AdminChangePasswordDialogue from "admin/AdminComponent/AdminChangePassword/AdminChangePassword";
 import hospitalPassword from "containers/Hospital/ChangePassword/hospitalPassword";
 import dashboardHospital from "containers/Hospital/DashboardHospital/dashboardHospital";
+import changePasswordDoctor from "containers/Doctor/ChangePasswordDoctor/changePasswordDoctor";
+import manageAppointment from "containers/Doctor/ManageAppointment/manageAppointment";
+import manageBlog from "containers/Doctor/ManageBlog/manageBlog";
+import informationDoctor from "containers/Doctor/InformationDoctor/informationDoctor";
 const publicRoutes = [
   { path: "/", component: HomePage },
   { path: "/login", component: Login, layout: null },
@@ -95,7 +98,10 @@ const routeHospital = [
 
 const routeDoctor = [
   { path: "/doctor/dashboard", component: AdminDashboard },
-  { path: "/doctor/information", component: InfoDoctor },
-  { path: "/doctor/manageSchedule", component: ManageScheduleDoctor },
+  { path: "/doctor/information/:id", component: informationDoctor },
+  { path: "/doctor/manage-schedule/:id", component: ManageScheduleDoctor },
+  { path: "/doctor/change-password/:id", component: changePasswordDoctor },
+  { path: "/doctor/appointment/:id", component: manageAppointment },
+  { path: "/doctor/blog/:id", component: manageBlog },
 ];
 export { publicRoutes, routeAdmin, routeHospital, routeDoctor };

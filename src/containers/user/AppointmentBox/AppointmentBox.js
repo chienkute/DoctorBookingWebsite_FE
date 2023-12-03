@@ -48,9 +48,10 @@ const AppointmentBox = (props) => {
       setDay(dayNumber);
     } else {
       setDay(0);
-    }const handleDay = (index) => {
+    }
+    const handleDay = (index) => {
       const dayName = dayMonth[index];
-  
+
       const dayNumber = parseInt(dayName.replace("Thứ ", "")); // Lấy số từ tên thứ
       if (dayNumber) {
         setDay(dayNumber);
@@ -243,7 +244,7 @@ const AppointmentBox = (props) => {
               ) : (
                 <div>
                   {timeAfternoon.length > 0 ? (
-                    <div className="LisTime afternoon">
+                    <div className="ListTime afternoon">
                       {timeAfternoon &&
                         timeAfternoon.map((item, index) => {
                           if (item.days_of_week === days)
@@ -267,7 +268,7 @@ const AppointmentBox = (props) => {
                         })}
                     </div>
                   ) : (
-                    <div className="LisTime afternoon">
+                    <div className="ListTime afternoon">
                       <div className="appoinment__schedule">
                         <div className="no__schedule_icon">
                           <FaRegCalendarAlt></FaRegCalendarAlt>
@@ -353,7 +354,7 @@ const AppointmentBox = (props) => {
           {showButton ? (
             <button>
               <Link
-                to={`/care/doctor/confirm/${props.id}${props.name}`}
+                to={`/care/doctor/confirm/${props.id}/${props.name}`}
                 state={{
                   schedule: `${idSchedule}`,
                   day: `${formattedDate}`,

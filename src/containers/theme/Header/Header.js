@@ -309,7 +309,98 @@ const Header = () => {
             </li>
           </ul>
         </div>
-        {localStorage.getItem("token") ? (
+        {/* {localStorage.getItem("user") ? (
+          <div className="HeaderDropdown" ref={nodeRef}>
+            <div className="HeaderUser flex-center">
+              <Link
+                onClick={() => {
+                  setShow(!show);
+                  setUpdate(!update);
+                }}
+              >
+                <FaUserLarge></FaUserLarge>
+              </Link>
+            </div>
+            {show && (
+              <div className="HeaderItem">
+                <div className="HeaderItem__user">
+                  <div className="HeaderItem__user_avt">
+                    <FaUserLarge></FaUserLarge>
+                  </div>
+                  <div className="HeaderItem__user_name">
+                    <h6>{userName || "Họ và tên"}</h6>
+                    <p>{user?.account?.username}</p>
+                  </div>
+                </div>
+                <div className="HeaderItem__list row">
+                  <Link
+                    to={`/user/information/${user?.user?.id}`}
+                    className="HeaderItem__list_item col-6"
+                    onClick={() => {
+                      setShow(false);
+                    }}
+                  >
+                    <div className="HeaderItem__list_item_icon">
+                      <FaUserAlt></FaUserAlt>
+                    </div>
+                    <p>Hồ sơ</p>
+                  </Link>
+                  <Link
+                    to={`/user/changePassword/${user?.user?.id}`}
+                    className="HeaderItem__list_item col-6"
+                    onClick={() => {
+                      setShow(false);
+                    }}
+                  >
+                    <div className="HeaderItem__list_item_icon">
+                      <RiLockPasswordFill></RiLockPasswordFill>
+                    </div>
+                    <p>Đổi mật khẩu</p>
+                  </Link>
+                  <a
+                    href="/user/history"
+                    className="HeaderItem__list_item col-6"
+                    onClick={() => {
+                      setShow(false);
+                    }}
+                  >
+                    <div className="HeaderItem__list_item_icon">
+                      <FaCalendarAlt></FaCalendarAlt>
+                    </div>
+                    <p>Lịch sử hẹn</p>
+                  </a>
+                  <a
+                    href="/user/help"
+                    className="HeaderItem__list_item col-6"
+                    onClick={() => {
+                      setShow(false);
+                    }}
+                  >
+                    <div className="HeaderItem__list_item_icon">
+                      <BiSolidHelpCircle></BiSolidHelpCircle>
+                    </div>
+                    <p>Trợ giúp</p>
+                  </a>
+                </div>
+                <button className="HeaderItem__button" onClick={handleLogout}>
+                  <span>
+                    <div className="HeaderItem__button_icon">
+                      <AiOutlineLogout></AiOutlineLogout>
+                    </div>
+                    <p>Đăng xuất</p>
+                  </span>
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="HeaderUserContainer flex-center">
+            <Link to={"/login"} className="LoginButtonContainer bold">
+              Đăng nhập
+            </Link>
+          </div>
+        )} */}
+        {!localStorage.getItem("user") ? (
           <div className="HeaderDropdown" ref={nodeRef}>
             <div className="HeaderUser flex-center">
               <Link
