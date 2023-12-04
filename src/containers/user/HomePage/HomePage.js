@@ -9,7 +9,20 @@ import Carousel from "react-bootstrap/Carousel";
 import banner2 from "../../../assets/banner5.png";
 import ItemLarge from "./NewsLarge/ItemLarge";
 import ItemSmall from "./NewsLarge/ItemSmall";
+import { fecthAllBlog } from "service/UserService";
+import { useEffect, useState } from "react";
 function App() {
+  const [blog, setBlog] = useState([]);
+  console.log(blog);
+  const getBlog = async () => {
+    let res = await fecthAllBlog(1);
+    if (res) {
+      setBlog(res?.results);
+    }
+  };
+  useEffect(() => {
+    getBlog();
+  }, []);
   return (
     <div className="MainPage">
       <div className="MainPageContentContainer">
@@ -59,8 +72,22 @@ function App() {
               </div>
               <div className="NewsLarge2ItemsContainer">
                 <ul className="clear NewsLarge2Items flex-center">
-                  <ItemLarge></ItemLarge>
-                  <ItemLarge></ItemLarge>
+                  {blog &&
+                    blog.slice(0, 2).map((item, index) => {
+                      return (
+                        <ItemLarge
+                          key={index}
+                          title={item?.title}
+                          id_blog={item?.id}
+                          category={item?.id_category?.name}
+                          id_category={item?.id_category?.id}
+                          date={item?.created_at}
+                          doctor={item?.id_doctor?.name}
+                          id_doctor={item?.id_doctor?.id}
+                          content={item?.content}
+                        ></ItemLarge>
+                      );
+                    })}
                 </ul>
               </div>
               <div className="NewsLarge3ItemsContainer">

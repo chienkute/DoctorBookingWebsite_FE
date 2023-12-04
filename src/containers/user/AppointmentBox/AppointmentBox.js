@@ -18,12 +18,12 @@ const AppointmentBox = (props) => {
   const [selectedSpecialtys, setSelectedSpecialtys] = useState(null);
   const [idSchedule, setIdSchedule] = useState(null);
   const [days, setDay] = useState("");
-  console.log(days);
   const [formattedDate, setFormattedDate] = useState("");
   const [dayMonth, setDayMonth] = useState([]);
   const time = "";
   const [user, setUser] = useState([]);
   const [showButton, setShowbutton] = useState(false);
+  console.log(idSchedule);
   const getUser = () => {
     const user = localStorage.getItem("user");
     if (user) {
@@ -42,23 +42,12 @@ const AppointmentBox = (props) => {
   };
   const handleDay = (index) => {
     const dayName = dayMonth[index];
-
     const dayNumber = parseInt(dayName.replace("Thứ ", "")); // Lấy số từ tên thứ
     if (dayNumber) {
       setDay(dayNumber);
     } else {
-      setDay(0);
+      setDay(1);
     }
-    const handleDay = (index) => {
-      const dayName = dayMonth[index];
-
-      const dayNumber = parseInt(dayName.replace("Thứ ", "")); // Lấy số từ tên thứ
-      if (dayNumber) {
-        setDay(dayNumber);
-      } else {
-        setDay(0);
-      }
-    };
   };
   const formatTime = (time) => {
     if (time) {
@@ -93,7 +82,6 @@ const AppointmentBox = (props) => {
       setTimeMorning(res?.morning);
       setTimeAfternoon(res?.afternoon);
       setTimeNight(res?.evening);
-      console.log(timeMorning);
     }
   };
   useEffect(() => {
@@ -185,9 +173,8 @@ const AppointmentBox = (props) => {
                   {timeMorning.length > 0 ? (
                     <div className="ListTime morning">
                       {timeMorning &&
-                        timeMorning.length > 0 &&
                         timeMorning.map((item, index) => {
-                          if (item.days_of_week === days)
+                          if (item.days_of_week === `${days}`)
                             return (
                               <div
                                 className={`Time selected ${
@@ -197,11 +184,11 @@ const AppointmentBox = (props) => {
                                 key={index}
                                 onClick={() => {
                                   handleSpecialtyClick(index);
-                                  setIdSchedule(item.id);
+                                  setIdSchedule(item?.id);
                                   setShowbutton(true);
                                 }}
                               >
-                                {formatTime(`${item?.start}`)} -{" "}
+                                {formatTime(`${item?.start}`)} -
                                 {formatTime(`${item?.end}`)}
                               </div>
                             );
@@ -247,7 +234,7 @@ const AppointmentBox = (props) => {
                     <div className="ListTime afternoon">
                       {timeAfternoon &&
                         timeAfternoon.map((item, index) => {
-                          if (item.days_of_week === days)
+                          if (item.days_of_week === `${days}`)
                             return (
                               <div
                                 className={`Time selected ${
@@ -257,7 +244,7 @@ const AppointmentBox = (props) => {
                                 key={index}
                                 onClick={() => {
                                   handleSpecialtyClick(index);
-                                  setIdSchedule(item.id);
+                                  setIdSchedule(item?.id);
                                   setShowbutton(true);
                                 }}
                               >
@@ -306,7 +293,7 @@ const AppointmentBox = (props) => {
                     <div className="ListTime night">
                       {timeNight &&
                         timeNight.map((item, index) => {
-                          if (item.days_of_week === days)
+                          if (item.days_of_week === `${days}`)
                             return (
                               <div
                                 className={`Time selected ${
@@ -316,7 +303,7 @@ const AppointmentBox = (props) => {
                                 key={index}
                                 onClick={() => {
                                   handleSpecialtyClick(index);
-                                  setIdSchedule(item.id);
+                                  setIdSchedule(item?.id);
                                   setShowbutton(true);
                                 }}
                               >

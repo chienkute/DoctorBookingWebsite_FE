@@ -35,6 +35,9 @@ import changePasswordDoctor from "containers/Doctor/ChangePasswordDoctor/changeP
 import manageAppointment from "containers/Doctor/ManageAppointment/manageAppointment";
 import manageBlog from "containers/Doctor/ManageBlog/manageBlog";
 import informationDoctor from "containers/Doctor/InformationDoctor/informationDoctor";
+import manageService from "containers/Doctor/ManageService/manageService";
+import manageSpecialty from "containers/Doctor/ManageSpecialty/manageSpecialty";
+import Chatbot from "containers/theme/ChatBox/ChatBoxMain/Chatbot";
 const publicRoutes = [
   { path: "/", component: HomePage },
   { path: "/login", component: Login, layout: null },
@@ -58,6 +61,7 @@ const publicRoutes = [
   { path: "/blog/:id", component: blog },
   { path: "/tool", component: tool, layout: null },
   { path: "/test", component: AdminChangePasswordDialogue, layout: null },
+  { path: "/chatbox", component: Chatbot, layout: null },
 ];
 const routeAdmin = [
   {
@@ -103,5 +107,7 @@ const routeDoctor = [
   { path: "/doctor/change-password/:id", component: changePasswordDoctor },
   { path: "/doctor/appointment/:id", component: manageAppointment },
   { path: "/doctor/blog/:id", component: manageBlog },
+  { path: "/doctor/service/:id", component: manageService },
+  { path: "/doctor/specialty/:id", component: manageSpecialty },
 ];
 export { publicRoutes, routeAdmin, routeHospital, routeDoctor };

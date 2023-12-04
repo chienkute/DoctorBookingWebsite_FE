@@ -57,6 +57,9 @@ const DoctorManagement = () => {
     validationSchema: Yup.object({
       name: Yup.string().required("Bạn chưa nhập tên bệnh viện"),
       year: Yup.string().required("Bạn chưa nhập số năm làm việc"),
+      username: Yup.string()
+        .required("Bạn chưa nhập tài khoản")
+        .min(6, "Tên tài khoản ít nhất phải chứa 6 ký tự hoặc hơn"),
       password: Yup.string()
         .required("Bạn chưa nhập mật khẩu")
         .min(6, "Mật khẩu không được ít hơn 6 ký tự"),
@@ -108,7 +111,6 @@ const DoctorManagement = () => {
           show={showAddNewDoctor}
           onHide={handleCloseAddNewDoctor}
           centered
-          size="lg"
         >
           <Modal.Header closeButton>
             <Modal.Title>Thêm mới bác sĩ</Modal.Title>
@@ -116,8 +118,8 @@ const DoctorManagement = () => {
           <Modal.Body>
             <div className="add__form">
               <form action="">
-                <div className="row">
-                  <div className="col-6 form__col">
+                <div>
+                  <div className="form__col">
                     <label htmlFor="">Tài khoản</label>
                     <input
                       type="text"
@@ -133,7 +135,7 @@ const DoctorManagement = () => {
                       {formik.touched.username && formik.errors.username}
                     </div>
                   </div>
-                  <div className="col-6 form__col">
+                  <div className="form__col">
                     <label htmlFor="">Mật khẩu</label>
                     <div className="form__login_in">
                       <input
@@ -161,7 +163,7 @@ const DoctorManagement = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-6 form__col">
+                  <div className="form__col">
                     <label htmlFor="">Email</label>
                     <input
                       type="text"
@@ -177,7 +179,7 @@ const DoctorManagement = () => {
                       {formik.touched.email && formik.errors.email}
                     </div>
                   </div>
-                  <div className="col-6 form__col">
+                  <div className="form__col">
                     <label htmlFor="">Tên bác sĩ</label>
                     <input
                       type="text"
@@ -193,42 +195,6 @@ const DoctorManagement = () => {
                       {formik.touched.name && formik.errors.name}
                     </div>
                   </div>
-                  {/* <div className="col-6 form__col">
-                    <label htmlFor="">Số năm làm việc</label>
-                    <input
-                      type="number"
-                      id="year"
-                      placeholder="Nhập số năm làm việc"
-                      class="form-control"
-                      value={formik.values.year}
-                      onChange={formik.handleChange}
-                      {...formik.getFieldProps("year")}
-                      autoComplete="off"
-                    />
-                    <div className="form__error">
-                      {formik.touched.year && formik.errors.year}
-                    </div>
-                  </div> */}
-                  {/* <div className="col-6 form__col">
-                    <label htmlFor="">Chuyên khoa</label>
-                    <Form.Select
-                      aria-label="Default select example"
-                      className="form__select"
-                    >
-                      <option>Chọn chuyên khoa</option>
-                      <option value="1">Đa khoa</option>
-                      <option value="2">Nha khoa</option>
-                      <option value="3">Y học</option>
-                    </Form.Select>
-                  </div> */}
-                  {/* <div className="col-6 form__col">
-                    <label htmlFor="">Kinh nghiệm</label>
-                    <ReactQuill
-                      value={value}
-                      onChange={setValue}
-                      placeholder={"Mô tả sơ qua kinh nghiệm của bác sĩ"}
-                    />
-                  </div> */}
                 </div>
               </form>
             </div>
@@ -258,7 +224,6 @@ const DoctorManagement = () => {
                 <th>Họ tên bác sĩ</th>
                 <th>Tài khoản</th>
                 <th>Email</th>
-                <th>Chuyên khoa</th>
                 <th>Hành động</th>
               </tr>
               {doctor &&
@@ -270,12 +235,16 @@ const DoctorManagement = () => {
                         <input type="checkbox"></input>
                       </td>
                       <td>1</td>
-                      <td className="name__row">
+                      <td
+                        style={{
+                          transform: "translateY(10px)",
+                          display: "block",
+                        }}
+                      >
                         <p>{item.name}</p>
                       </td>
                       <td>hoanganh07</td>
                       <td>doctor1@gmail.com</td>
-                      <td>Nha khoa</td>
                       <td>
                         <div className="Action">
                           <button

@@ -48,7 +48,6 @@ const UserInfo = () => {
       birthdayNew,
     );
     if (res) {
-      // localStorage.setItem("user", JSON.stringify(res));
       toast.success("Sửa đổi thành công");
       setEdit(false);
     } else {
