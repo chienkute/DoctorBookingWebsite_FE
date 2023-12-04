@@ -1,5 +1,4 @@
 import "./HomePage.scss";
-
 import NavBar from "./NavBar/NavBar";
 import NewsSmall from "./NewsSmall/NewsSmall";
 import Introduce from "./Introduce/Introduce";
@@ -65,10 +64,8 @@ function App() {
             <div className="NewsLargeContainer">
               <div className="NewsLargeOptionsContainer">
                 <div className="bold">Sắp xếp theo</div>
-                <div className="NewsLargeOption bold selected">
-                  Phổ biến nhất
-                </div>
-                <div className="NewsLargeOption bold">Mới nhất</div>
+                <div className="NewsLargeOption bold selected">Mới nhất</div>
+                {/* <div className="NewsLargeOption bold">Mới nhất</div> */}
               </div>
               <div className="NewsLarge2ItemsContainer">
                 <ul className="clear NewsLarge2Items flex-center">

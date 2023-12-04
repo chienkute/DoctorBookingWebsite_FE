@@ -1,4 +1,4 @@
-import { memo, useContext, useState } from "react";
+import { memo, useContext } from "react";
 import CareSearch from "./careSearchMenu/careSearch";
 import CareHospital from "./careHospital";
 import { LoadingContext } from "context/LoadingContext";

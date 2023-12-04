@@ -24,16 +24,26 @@ const UserHelp = () => {
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey="1">
-                <Accordion.Header>Accordion Item #2</Accordion.Header>
+                <Accordion.Header>
+                  Vì sao tôi nên đăng ký tài khoản?
+                </Accordion.Header>
                 <Accordion.Body>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
+                  Đăng ký tài khoản thành viên ở HiBacsi đem lại cho bạn nhiều
+                  lợi ích hơn như giúp bạn lưu trữ các thông tin sức khỏe cá
+                  nhân, đặt lịch khám với bác sĩ, tham gia các cộng đồng sức
+                  khỏe của HiBacsi cũng như hỗ trợ HiBacsi cá nhân hóa trải
+                  nghiệm sử dụng nền tảng của bạn.
+                </Accordion.Body>
+              </Accordion.Item>
+              <Accordion.Item eventKey="2">
+                <Accordion.Header>
+                  Đăng ký ở Hello Bacsi có mất phí không?
+                </Accordion.Header>
+                <Accordion.Body>
+                  Miễn phí và luôn luôn miễn phí! Tuy nhiên, một số dịch vụ giúp
+                  bạn kết nối với bên thứ ba có thể tính phí nhất định cho bạn.
+                  Để biết thêm thông tin, vui lòng xem thêm tại chính sách Quảng
+                  cáo & Tài trợ của chúng tôi
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>

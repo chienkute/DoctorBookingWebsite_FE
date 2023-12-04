@@ -38,6 +38,14 @@ const ManageAppointment = () => {
   const [query, setQuery] = useState("");
   const [count, setCount] = useState("");
   const [appointment, setAppoinment] = useState([]);
+  const [userName, setUserName] = useState("");
+  const [gender, setGender] = useState("");
+  const [birhtday, setBirthday] = useState("");
+  const [phone, setPhone] = useState("");
+  const [adress, setAddress] = useState("");
+  const [timeStart, setTimeStart] = useState("");
+  const [timeEnd, setTimeEnd] = useState("");
+  const [date, setDate] = useState("");
   console.log(appointment);
   const queryDebounce = useDebounce(query, 500);
   const getAppoinment = async () => {
@@ -171,6 +179,16 @@ const ManageAppointment = () => {
                             onClick={() => {
                               handleShowAppointmentInfor();
                               setEdit(true);
+                              setUserName(item?.user?.name);
+                              setPhone(item?.user?.phone);
+                              setGender(item?.user?.gender);
+                              setBirthday(item?.user?.birthday);
+                              setAddress(item?.user?.address);
+                              setTimeStart(
+                                item?.schedule_doctor?.schedule.start,
+                              );
+                              setTimeEnd(item?.schedule_doctor?.schedule?.end);
+                              setDate(item?.date);
                             }}
                           >
                             <IoInformation />
@@ -215,13 +233,13 @@ const ManageAppointment = () => {
                                     </div>
                                     <div className="appointmentManage_info">
                                       <span>Họ và tên : </span>
-                                      <p>{item?.user?.name}</p>
+                                      <p>{userName}</p>
                                     </div>
                                     <div className="appointmentManage_info">
                                       <span>Giới tính : </span>
-                                      {item?.user?.gender === true ? (
+                                      {gender === true ? (
                                         <p>Nam</p>
-                                      ) : item?.user?.gender === false ? (
+                                      ) : gender === false ? (
                                         <p>Nữ</p>
                                       ) : (
                                         <p></p>
@@ -229,11 +247,11 @@ const ManageAppointment = () => {
                                     </div>
                                     <div className="appointmentManage_info">
                                       <span>Ngày sinh : </span>
-                                      <p>{item?.user?.birthday}</p>
+                                      <p>{birhtday}</p>
                                     </div>
                                     <div className="appointmentManage_info">
                                       <span>Số điện thoại : </span>
-                                      <p>{item?.user?.phone}</p>
+                                      <p>{phone}</p>
                                     </div>
                                     <div className="appointmentManage_info">
                                       <span>Email : </span>
@@ -241,7 +259,7 @@ const ManageAppointment = () => {
                                     </div>
                                     <div className="appointmentManage_info">
                                       <span>Địa điểm : </span>
-                                      <p>{item?.user?.address}</p>
+                                      <p>{adress}</p>
                                     </div>
                                   </div>
                                   <div className="appointmentManage">
@@ -255,18 +273,13 @@ const ManageAppointment = () => {
                                     <div className="appointmentManage_info">
                                       <span>Thời gian : </span>
                                       <p>
-                                        {formatTime(
-                                          `${item?.schedule_doctor?.schedule.start}`,
-                                        )}
-                                        -
-                                        {formatTime(
-                                          `${item?.schedule_doctor?.schedule?.end}`,
-                                        )}
+                                        {formatTime(timeStart)}-
+                                        {formatTime(timeEnd)}
                                       </p>
                                     </div>
                                     <div className="appointmentManage_info">
                                       <span>Ngày : </span>
-                                      <p>{item?.date}</p>
+                                      <p>{date}</p>
                                     </div>
                                   </div>
                                 </div>

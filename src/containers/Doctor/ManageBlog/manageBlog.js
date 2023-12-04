@@ -1,4 +1,4 @@
-import { memo, useContext, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import "./manageBlog.scss";
 import { FaEraser } from "react-icons/fa6";
 import { FiEdit3 } from "react-icons/fi";
@@ -40,6 +40,7 @@ const ManageBlog = () => {
   const [titleAdd, setTitleAdd] = useState("");
   const [value, setValue] = useState("");
   const [defaultSelect, setDefaultSelect] = useState("");
+  const [idEdit, setIdEdit] = useState("");
   console.log(titleAdd);
   console.log(idCategory);
   var toolbarOptions = [
@@ -319,6 +320,8 @@ const ManageBlog = () => {
                               setValue(`${item?.content}`);
                               setTitleAdd(`${item?.title}`);
                               setDefaultSelect(`${item?.id_category?.id}`);
+                              setIdCategory(`${item?.id_category?.id}`);
+                              setIdEdit(`${item?.id}`);
                             }}
                           >
                             <FiEdit3 />
@@ -330,7 +333,7 @@ const ManageBlog = () => {
                             size="xl"
                           >
                             <Modal.Header closeButton>
-                              <Modal.Title>Thông tin bác sĩ</Modal.Title>
+                              <Modal.Title>Thông tin bài viết</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                               <div className="add__form">
@@ -450,7 +453,7 @@ const ManageBlog = () => {
                                   variant="primary"
                                   onClick={() => {
                                     handleCloseEditBlog();
-                                    fixBlog(item?.id);
+                                    fixBlog(idEdit);
                                     setUpdate(!update);
                                     setQuery("");
                                   }}
