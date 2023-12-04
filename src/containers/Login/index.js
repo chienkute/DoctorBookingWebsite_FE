@@ -31,9 +31,8 @@ const Login = () => {
       //     /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
       //     "Vui lòng nhập đúng địa chỉ email"
       //   ),
-      username: Yup.string()
-        .required("Bạn chưa nhập tài khoản")
-        .min(6, "Tên tài khoản ít nhất phải chứa 6 ký tự hoặc hơn"),
+      username: Yup.string().required("Bạn chưa nhập tài khoản"),
+      // .min(6, "Tên tài khoản ít nhất phải chứa 6 ký tự hoặc hơn"),
       password: Yup.string()
         .required("Bạn chưa nhập mật khẩu")
         .min(6, "Mật khẩu không được ít hơn 6 ký tự"),
