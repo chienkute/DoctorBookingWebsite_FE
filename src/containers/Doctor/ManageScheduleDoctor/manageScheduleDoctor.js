@@ -4,8 +4,10 @@ import { convertDayOfWeek, convertDayOfWeektoNumber } from "tool/DataTimeTool";
 import {
   fetchAllSchedule,
   fetchAllScheduleByDoctorId,
-  addScheduleDoctor,
-  deleteScheduleDoctor,
+  // addScheduleDoctor,
+  // deleteScheduleDoctor,
+  addSomeScheduleDoctor,
+  deleteSomeScheduleDoctor,
 } from "service/DoctorService.js";
 import { LoadingContext } from "context/LoadingContext";
 import "./manageScheduleDoctor.scss";
@@ -341,7 +343,7 @@ const ManageScheduleDoctor = () => {
             onClick={() => setCurrentSession(0)}
           >
             <p>Sáng</p>
-            <p>(8 khung giờ)</p>
+            <p>({ timeMorning.length } khung giờ)</p>
           </div>
           <div
             className={`SessionBox ${
@@ -350,7 +352,7 @@ const ManageScheduleDoctor = () => {
             onClick={() => setCurrentSession(1)}
           >
             <p>Chiều</p>
-            <p>(10 khung giờ)</p>
+            <p>({timeAfternoon.length} khung giờ)</p>
           </div>
           <div
             className={`SessionBox ${
@@ -359,7 +361,7 @@ const ManageScheduleDoctor = () => {
             onClick={() => setCurrentSession(2)}
           >
             <p>Tối</p>
-            <p>(8 khung giờ)</p>
+            <p>({timeEvening.length} khung giờ)</p>
           </div>
         </div>
       </div>
@@ -404,9 +406,12 @@ const ManageScheduleDoctor = () => {
                 (beginChoosedIdSchedule) =>
                   !choosedIdSchedules.includes(beginChoosedIdSchedule),
               );
-              for (let i = 0; i < AddIdSchedules.length; i++) {
-                await addScheduleDoctor(3, AddIdSchedules[i]);
-              }
+              if (AddIdSchedules.length !== 0)
+                await addSomeScheduleDoctor(3, AddIdSchedules);
+              // for (let i = 0; i < AddIdSchedules.length; i++) {
+              //   await addScheduleDoctor(3, AddIdSchedules[i]);
+              // }
+              const deleteScheduleDoctorIds = [];
               for (let i = 0; i < DeleteIdSchedules.length; i++) {
                 for (let j = 0; j < oldScheduleDoctor.length; j++) {
                   if (
@@ -416,11 +421,14 @@ const ManageScheduleDoctor = () => {
                       "oldScheduleDoctor[j].id",
                       oldScheduleDoctor[j].id,
                     );
-                    await deleteScheduleDoctor(oldScheduleDoctor[j].id);
+                    deleteScheduleDoctorIds.push(oldScheduleDoctor[j].id);
+                    // await deleteScheduleDoctor(oldScheduleDoctor[j].id);
                     break;
                   }
                 }
               }
+              if (deleteScheduleDoctorIds.length !== 0)
+                await deleteSomeScheduleDoctor(deleteScheduleDoctorIds);
               // load lại oldScheduleDoctor
               getOldSchedules();
               setLoading(false);

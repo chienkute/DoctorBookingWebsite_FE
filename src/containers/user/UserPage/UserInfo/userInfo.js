@@ -84,6 +84,7 @@ const UserInfo = () => {
     };
     loadUser();
     getUserByID();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   if (user === null) {
     return <div className="UserPageContainer"></div>;
