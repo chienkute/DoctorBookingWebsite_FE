@@ -12,7 +12,8 @@ import { useParams } from "react-router";
 import { toast } from "react-toastify";
 import { UpdateContext } from "context/UpdateContext";
 import { fetchAllSpecialties } from "service/UserService";
-import { addSpecialty, getSpecialtyByName } from "service/DoctorService";
+import { addSpecialty, deleteSomeSpecialtyDoctor, getSpecialtyByDoctorId } from "service/DoctorService";
+
 const ManageSpecialty = () => {
   const { id } = useParams();
   const { update, setUpdate } = useContext(UpdateContext);
@@ -23,18 +24,22 @@ const ManageSpecialty = () => {
   const handleCloseDeleteBlog = () => setShowDeleteBlog(false);
   const handleShowDeleteBlog = () => setShowDeleteBlog(true);
   const [query, setQuery] = useState("");
-  const [specialty, setspecialty] = useState([]);
+  // const [specialty, setspecialty] = useState([]);
+  const [specialtyDoctor, setSpecialtyDoctor] = useState([]);
   const [allSpecialty, setAllSpecialty] = useState([]);
   const [selectSpecialty, setSelectSpecialty] = useState("");
   const [count, setCount] = useState("");
   const [defaultValue, setDefaultValue] = useState("");
   const [defaultDescribe, setDefaultDescribe] = useState("");
+  const [choosedCheckboxs, setChoosedCheckboxs] = useState([]);
   const queryDebounce = useDebounce(query, 500);
   const searchSpecialty = async () => {
-    let res = await getSpecialtyByName(queryDebounce, id);
+    // let res = await getSpecialtyByName(queryDebounce, id);
+    let res = await getSpecialtyByDoctorId(id);
     if (res) {
       console.log(res);
-      setspecialty(res?.results);
+      // setspecialty(res?.results);
+      setSpecialtyDoctor(res?.results);
       setCount(res?.count);
     }
   };
@@ -49,16 +54,29 @@ const ManageSpecialty = () => {
     if (res) {
       console.log(res);
       toast.success("Thêm chuyên khoa thành công");
+      searchSpecialty();
     } else {
       toast.error("Thêm thất bại");
     }
   };
+  const deleteSpecialtyDoctors = async (specialtyDoctorIds) => {
+    let res = await deleteSomeSpecialtyDoctor(specialtyDoctorIds);
+    if (res) {
+      console.log(res);
+      toast.success("Xoá thành công");
+      searchSpecialty();
+    } else {
+      toast.error("Xoá thất bại");
+    }
+  };
   useEffect(() => {
     searchSpecialty();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryDebounce]);
   useEffect(() => {
     searchSpecialty();
     getAllService();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div>
@@ -121,17 +139,36 @@ const ManageSpecialty = () => {
                   <th>Thông tin</th>
                   <th>Hành động</th>
                 </tr>
-                {specialty &&
-                  specialty.length > 0 &&
-                  specialty.map((item, index) => {
+                {specialtyDoctor &&
+                  specialtyDoctor.length > 0 &&
+                  specialtyDoctor.map((item, index) => {
                     return (
-                      <tr key={index}>
+                      <tr key={item.id}>
                         <td>
-                          <input type="checkbox"></input>
+                          <input type="checkbox"
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setChoosedCheckboxs((prevChoosedCheckboxs) => {
+                                  console.log("prevChoosedCheckboxs", prevChoosedCheckboxs);
+                                  return [
+                                  ...prevChoosedCheckboxs,
+                                  item.id,
+                                ]});
+                              } else {
+                                setChoosedCheckboxs((prevChoosedCheckboxs) => {
+                                  console.log("prevChoosedCheckboxs", prevChoosedCheckboxs);
+                                  return prevChoosedCheckboxs.filter(
+                                    (prevChoosedCheckbox) =>
+                                      prevChoosedCheckbox !== item.id
+                                  );
+                                });
+                              }
+                            }}
+                          ></input>
                         </td>
                         <td>{index}</td>
                         <td style={{ transform: "translateY(10px)" }}>
-                          <p>{item?.name}</p>
+                          <p>{item?.specialty.name}</p>
                         </td>
                         <td>
                           <img
@@ -147,8 +184,8 @@ const ManageSpecialty = () => {
                               className="InfoButton"
                               onClick={() => {
                                 handleShowEditBlog();
-                                setDefaultValue(item?.name);
-                                setDefaultDescribe(item?.describe);
+                                setDefaultValue(item?.specialty.name);
+                                setDefaultDescribe(item?.specialty.describe);
                               }}
                             >
                               <IoInformation />
@@ -239,6 +276,7 @@ const ManageSpecialty = () => {
                                   variant="primary"
                                   onClick={() => {
                                     handleCloseDeleteBlog();
+                                    deleteSpecialtyDoctors([item.id]);
                                     setUpdate(!update);
                                   }}
                                 >
@@ -254,6 +292,15 @@ const ManageSpecialty = () => {
               </table>
             </div>
           </div>
+          <button
+            className="btn button mt-4"
+            onClick={ async () => {
+              console.log(choosedCheckboxs);
+              deleteSpecialtyDoctors(choosedCheckboxs);
+            }}
+          >
+            Xoá các mục đã chọn
+          </button>
         </div>
         <div className="management__pagination">
           <ReactPaginate
