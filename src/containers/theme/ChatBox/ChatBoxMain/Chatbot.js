@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, memo } from "react";
 import UserMessage from "../component/UserMessage.js";
 import Messages from "../component/Messages.js";
 import Input from "../component/Input.js";
@@ -8,23 +8,16 @@ import Header from "../component/Header";
 import BotMessage from "../component/BotMessage.js";
 function Chatbot(props) {
   const [messages, setMessages] = useState([]);
-  // useEffect(() => {
-  //   async function loadWelcomeMessage() {
-  //     setMessages([
-  //       <BotMessage
-  //         key="0"
-  //         fetchMessage={async () => await API.GetChatbotResponse("hi")}
-  //       />,
-  //     ]);
-  //   }
-  //   loadWelcomeMessage();
-  // }, []);
   const send = async (text) => {
     const newMessages = messages.concat(
       <UserMessage key={messages.length + 1} text={text} />,
       <BotMessage
         key={messages.length + 2}
-        fetchMessage={async () => await API.GetChatbotResponse(text)}
+        fetchMessage={async () => await API.GetChatbotResponseG2(text)}
+      />,
+      <BotMessage
+        key={messages.length + 2}
+        fetchMessage={async () => await API.GetChatbotResponseT5(text)}
       />,
     );
     setMessages(newMessages);

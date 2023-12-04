@@ -15,6 +15,8 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { searchDoctor } from "service/UserService";
 import { useParams } from "react-router";
 import { AiFillEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { addDoctor } from "service/HospitalService";
+import { toast } from "react-toastify";
 const DoctorManagement = () => {
   const { id } = useParams();
   const [showAddNewDoctor, setShowAddNewDoctor] = useState(false);
@@ -27,15 +29,19 @@ const DoctorManagement = () => {
   const handleCloseDeleteDoctor = () => setShowDeleteDoctor(false);
   const handleShowDeleteDoctor = () => setShowDeleteDoctor(true);
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const [isShowConfPassword, setIsShowConfPassword] = useState(false);
   const [edit, setEdit] = useState(false);
   const [doctor, setDoctor] = useState([]);
-  console.log(doctor);
+  const [cout, setCount] = useState("");
   const [query, setQuery] = useState("");
   const queryDebounce = useDebounce(query, 500);
+  const [usernameDefault, setUsernameDefault] = useState("");
   const getDoctorById = async () => {
     let res = await searchDoctor(queryDebounce, "", id, "", "");
     if (res) {
+      console.log(res);
       setDoctor(res?.results);
+      setCount(res?.count);
     }
   };
   useEffect(() => {
@@ -43,26 +49,30 @@ const DoctorManagement = () => {
   }, []);
   useEffect(() => {
     getDoctorById();
-  }, [queryDebounce]);
+  }, [queryDebounce, edit]);
   const handleImageClick = () => {
     inputRef.current.click();
   };
   const formik = useFormik({
     initialValues: {
       username: "",
-      name: "",
       password: "",
       email: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Bạn chưa nhập tên bệnh viện"),
-      year: Yup.string().required("Bạn chưa nhập số năm làm việc"),
       username: Yup.string()
         .required("Bạn chưa nhập tài khoản")
         .min(6, "Tên tài khoản ít nhất phải chứa 6 ký tự hoặc hơn"),
       password: Yup.string()
         .required("Bạn chưa nhập mật khẩu")
         .min(6, "Mật khẩu không được ít hơn 6 ký tự"),
+      confirmpasswd: Yup.string()
+        .required("Bạn chưa nhập lại mật khẩu")
+        .min(6, "Mật khẩu không được ít hơn 6 ký tự")
+        .oneOf(
+          [Yup.ref("password"), null],
+          "Mật khẩu phải trùng khớp với nhau",
+        ),
       email: Yup.string()
         .required("Bạn chưa nhập email")
         .matches(
@@ -70,7 +80,20 @@ const DoctorManagement = () => {
           "Vui lòng nhập đúng địa chỉ email",
         ),
     }),
-    onSubmit: async (values) => {},
+    onSubmit: async (values) => {
+      let res = await addDoctor(values.username, values.password, values.email);
+      if (res) {
+        console.log(res);
+        formik.setValues({
+          username: "",
+          email: "",
+          password: "",
+        });
+        toast.success("Thêm thành công");
+      } else {
+        toast.success("Thêm thất bại");
+      }
+    },
   });
   const inputRef = useRef(null);
   const [value, setValue] = useState("");
@@ -89,20 +112,6 @@ const DoctorManagement = () => {
               }}
             />
           </div>
-        </div>
-        <div className="">
-          <Form.Select
-            aria-label="Default select example"
-            className="form__select"
-            onChange={(e) => {
-              console.log(e.target.value);
-            }}
-          >
-            <option>Chọn chuyên khoa</option>
-            <option value="Đa khoa">Đa khoa</option>
-            <option value="2">Nha khoa</option>
-            <option value="3">Y học</option>
-          </Form.Select>
         </div>
         <button className="btn button" onClick={handleShowAddNewDoctor}>
           Thêm
@@ -164,6 +173,35 @@ const DoctorManagement = () => {
                     </div>
                   </div>
                   <div className="form__col">
+                    <label htmlFor="confirmpasswd">Nhập lại mật khẩu</label>
+                    <div className="forms__register_in">
+                      <input
+                        type={`${isShowConfPassword ? "text" : "password"}`}
+                        className="form-control"
+                        id="confirmpasswd"
+                        placeholder="Nhập lại mật khẩu của bạn"
+                        value={formik.values.confirmpasswd}
+                        onChange={formik.handleChange}
+                        {...formik.getFieldProps("confirmpasswd")}
+                      />
+                      <div
+                        onClick={() =>
+                          setIsShowConfPassword(!isShowConfPassword)
+                        }
+                      >
+                        {isShowConfPassword ? (
+                          <AiFillEye />
+                        ) : (
+                          <AiOutlineEyeInvisible />
+                        )}
+                      </div>
+                      <div className="forms__register_error">
+                        {formik.touched.confirmpasswd &&
+                          formik.errors.confirmpasswd}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form__col">
                     <label htmlFor="">Email</label>
                     <input
                       type="text"
@@ -179,22 +217,6 @@ const DoctorManagement = () => {
                       {formik.touched.email && formik.errors.email}
                     </div>
                   </div>
-                  <div className="form__col">
-                    <label htmlFor="">Tên bác sĩ</label>
-                    <input
-                      type="text"
-                      id="name"
-                      placeholder="Nhập tên bệnh viện"
-                      class="form-control"
-                      value={formik.values.name}
-                      onChange={formik.handleChange}
-                      {...formik.getFieldProps("name")}
-                      autoComplete="off"
-                    />
-                    <div className="form__error">
-                      {formik.touched.name && formik.errors.name}
-                    </div>
-                  </div>
                 </div>
               </form>
             </div>
@@ -203,7 +225,13 @@ const DoctorManagement = () => {
             <Button variant="secondary" onClick={handleCloseAddNewDoctor}>
               Đóng
             </Button>
-            <Button variant="primary" onClick={handleCloseAddNewDoctor}>
+            <Button
+              variant="primary"
+              onClick={() => {
+                handleCloseAddNewDoctor();
+                formik.handleSubmit();
+              }}
+            >
               Lưu
             </Button>
           </Modal.Footer>
@@ -212,7 +240,7 @@ const DoctorManagement = () => {
       <div className="management__content">
         <div className="AdminUserResult">
           <div className="ResultPerTable">
-            <label for="dropdown">Có 5 kết quả tìm được</label>
+            <label for="dropdown">Có {cout || "0"} kết quả tìm được</label>
           </div>
           <div className="Table">
             <table>
@@ -234,14 +262,14 @@ const DoctorManagement = () => {
                       <td>
                         <input type="checkbox"></input>
                       </td>
-                      <td>1</td>
+                      <td>{index}</td>
                       <td
                         style={{
                           transform: "translateY(10px)",
                           display: "block",
                         }}
                       >
-                        <p>{item.name}</p>
+                        <p>{item.name || "Chưa có tên"}</p>
                       </td>
                       <td>hoanganh07</td>
                       <td>doctor1@gmail.com</td>
@@ -256,7 +284,7 @@ const DoctorManagement = () => {
                           >
                             <IoInformation />
                           </button>
-                          <button
+                          {/* <button
                             className="ChangeInfoButton"
                             onClick={() => {
                               handleShowEditDoctor();
@@ -264,20 +292,19 @@ const DoctorManagement = () => {
                             }}
                           >
                             <FiEdit3 />
-                          </button>
+                          </button> */}
                           <Modal
                             show={showEditDoctor}
                             onHide={handleCloseEditDoctor}
                             centered
-                            size="lg"
                           >
                             <Modal.Header closeButton>
-                              <Modal.Title>Thông tin bác sĩ</Modal.Title>
+                              <Modal.Title>Thông tin tài khoản sĩ</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                               <div className="add__form">
                                 <form action="">
-                                  <div className="form__avatar">
+                                  {/* <div className="form__avatar">
                                     <label htmlFor="">
                                       Ảnh đại diện <span>*</span>
                                     </label>
@@ -300,68 +327,52 @@ const DoctorManagement = () => {
                                       style={{ display: "none" }}
                                       ref={inputRef}
                                     />
+                                  </div> */}
+                                  <div className="form__col">
+                                    <label htmlFor="">Tài khoản</label>
+                                    <input
+                                      type="text"
+                                      id="username"
+                                      class="form-control"
+                                      autoComplete="off"
+                                      disabled
+                                    />
                                   </div>
-                                  <div className="row">
-                                    <div className="col-6 form__col">
-                                      <label htmlFor="">Tên bác sĩ</label>
+                                  <div className="form__col">
+                                    <label htmlFor="">Mật khẩu</label>
+                                    <div className="form__login_in">
                                       <input
-                                        type="text"
-                                        id="nameEdit"
-                                        placeholder="Nhập tên bệnh viện"
-                                        class="form-control"
-                                        value={formik.values.nameEdit}
-                                        onChange={formik.handleChange}
-                                        {...formik.getFieldProps("nameEdit")}
+                                        id="password"
+                                        type={`${
+                                          isShowPassword ? "text" : "password"
+                                        }`}
+                                        class="form-control changePassword__form_input"
                                         autoComplete="off"
-                                        disabled={edit ? true : false}
+                                        disabled
                                       />
-                                      <div className="form__error">
-                                        {formik.touched.nameEdit &&
-                                          formik.errors.nameEdit}
-                                      </div>
-                                    </div>
-                                    <div className="col-6 form__col">
-                                      <label htmlFor="">Số năm làm việc</label>
-                                      <input
-                                        type="number"
-                                        id="yearEdit"
-                                        placeholder="Nhập số năm làm việc"
-                                        class="form-control"
-                                        disabled={edit ? true : false}
-                                        value={formik.values.yearEdit}
-                                        onChange={formik.handleChange}
-                                        {...formik.getFieldProps("yearEdit")}
-                                        autoComplete="off"
-                                      />
-                                      <div className="form__error">
-                                        {formik.touched.yearEdit &&
-                                          formik.errors.yearEdit}
-                                      </div>
-                                    </div>
-                                    <div className="col-6 form__col">
-                                      <label htmlFor="">Chuyên khoa</label>
-                                      <Form.Select
-                                        aria-label="Default select example"
-                                        className="form__select"
-                                        disabled={edit ? true : false}
-                                      >
-                                        <option>Chọn chuyên khoa</option>
-                                        <option value="1">Đa khoa</option>
-                                        <option value="2">Nha khoa</option>
-                                        <option value="3">Y học</option>
-                                      </Form.Select>
-                                    </div>
-                                    <div className="col-6 form__col">
-                                      <label htmlFor="">Kinh nghiệm</label>
-                                      <ReactQuill
-                                        value={value}
-                                        onChange={setValue}
-                                        placeholder={
-                                          "Mô tả sơ qua kinh nghiệm của bác sĩ"
+                                      <div
+                                        onClick={() =>
+                                          setIsShowPassword(!isShowPassword)
                                         }
-                                        readOnly={edit ? true : false}
-                                      />
+                                        className="changePassword__form_icon"
+                                      >
+                                        {isShowPassword ? (
+                                          <AiFillEye />
+                                        ) : (
+                                          <AiOutlineEyeInvisible />
+                                        )}
+                                      </div>
                                     </div>
+                                  </div>
+                                  <div className="form__col">
+                                    <label htmlFor="">Email</label>
+                                    <input
+                                      type="text"
+                                      id="email"
+                                      class="form-control"
+                                      autoComplete="off"
+                                      disabled
+                                    />
                                   </div>
                                 </form>
                               </div>

@@ -41,6 +41,7 @@ const InfoHospital = () => {
   const getInfoHospital = async () => {
     let res = await getHospitalByID(id);
     if (res && res?.account) {
+      console.log(res);
       setName(res?.name);
       setAdress(res?.address);
       setPhone(res?.phone);
