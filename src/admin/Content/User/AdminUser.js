@@ -2,11 +2,12 @@ import React from "react";
 import "./AdminUser.scss";
 import { FaRegCheckSquare, FaEraser } from "react-icons/fa";
 import { FcPrevious, FcNext } from "react-icons/fc";
-import { IoInformation, IoClose } from "react-icons/io5";
-import { FiEdit3 } from "react-icons/fi";
+import { IoInformation } from "react-icons/io5";
 import UserInfoDialogue from "admin/AdminComponent/UserInfo/UserInfo";
 import UserDeleteDialogue from "admin/AdminComponent/UserDelete/UserDelete";
 import AdminChangePasswordDialogue from "admin/AdminComponent/AdminChangePassword/AdminChangePassword";
+import { FaLock, FaUnlock } from "react-icons/fa6";
+import UserLockAccountDialogue from "admin/AdminComponent/UserLockAccount/UserLockAccount";
 
 class AdminUser extends React.Component {
   constructor(props) {
@@ -14,14 +15,47 @@ class AdminUser extends React.Component {
     this.state = {
       editable: false,
       filterType: 0,
+      dialogueList: [],
     };
   }
-  //function này là Demo, mới chỉ ẩn/hiện cái dialogue
-  changeEditable(value, field) {
-    let f = document.querySelector(field);
-    if (value) f.style.display = "flex";
-    else f.style.display = "none";
-  }
+
+  addUID = () => {
+    this.setState({
+      dialogueList: [
+        ...this.state.dialogueList,
+        <UserInfoDialogue key="UID" close={(key) => this.closeD(key)} />,
+      ],
+    });
+  };
+
+  addUDD = () => {
+    this.setState({
+      dialogueList: [
+        ...this.state.dialogueList,
+        <UserDeleteDialogue key="UDD" close={(key) => this.closeD(key)} />,
+      ],
+    });
+  };
+
+  addULD = (value) => {
+    this.setState({
+      dialogueList: [
+        ...this.state.dialogueList,
+        <UserLockAccountDialogue
+          key="ULD"
+          type={value}
+          close={(key) => this.closeD(key)}
+        />,
+      ],
+    });
+  };
+
+  closeD = (key) => {
+    const newLD = this.state.dialogueList.filter(
+      (dialogue) => dialogue.key !== key,
+    );
+    this.setState({ dialogueList: newLD });
+  };
 
   changeFilterType(value) {
     this.setState({ filterType: value });
@@ -122,7 +156,7 @@ class AdminUser extends React.Component {
                   <th>Vai trò</th>
                   <th>Hành động</th>
                 </tr>
-                <tr>
+                <tr className="UnlockedAccount">
                   <td>
                     <input type="checkbox"></input>
                   </td>
@@ -134,25 +168,25 @@ class AdminUser extends React.Component {
                     <div className="Action">
                       <button
                         className="InfoButton"
-                        onClick={() =>
-                          this.changeEditable(true, ".UIDOverlayContainer")
-                        }
+                        onClick={() => this.addUID()}
                       >
                         <IoInformation />
                       </button>
                       <button
-                        className="ChangeInfoButton"
-                        onClick={() =>
-                          this.changeEditable(true, ".UIDOverlayContainer")
-                        }
+                        className="UnlockButton"
+                        onClick={() => this.addULD(1)}
                       >
-                        <FiEdit3 />
+                        <FaUnlock />
+                      </button>
+                      <button
+                        className="LockButton"
+                        onClick={() => this.addULD(0)}
+                      >
+                        <FaLock />
                       </button>
                       <button
                         className="DeleteAccount"
-                        onClick={() =>
-                          this.changeEditable(true, ".UDDOverlayContainer")
-                        }
+                        onClick={() => this.addUDD()}
                       >
                         <FaEraser />
                       </button>
@@ -178,33 +212,6 @@ class AdminUser extends React.Component {
             </div>
           </div>
         </div>
-        <div className="UIDOverlayContainer">
-          <div className="UIDClose">
-            <button
-              id="UIDCloseButton"
-              onClick={() => this.changeEditable(false, ".UIDOverlayContainer")}
-            >
-              <IoClose />
-            </button>
-          </div>
-          <div className="UIDOverlayContent">
-            <UserInfoDialogue
-              openCPDmethod={(value, field) =>
-                this.changeEditable(value, field)
-              }
-            />
-          </div>
-        </div>
-        <div className="UDDOverlayContainer">
-          <div className="UDDClose"></div>
-          <div className="UDDOverlayContent">
-            <UserDeleteDialogue
-              closeUDDMethod={(value, field) =>
-                this.changeEditable(value, field)
-              }
-            />
-          </div>
-        </div>
         <div className="CPDOverlayContainer">
           <div className="CPDClose"></div>
           <div className="CPDOverlayContent">
@@ -215,6 +222,7 @@ class AdminUser extends React.Component {
             />
           </div>
         </div>
+        {this.state.dialogueList}
       </>
     );
   }

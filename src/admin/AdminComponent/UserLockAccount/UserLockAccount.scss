@@ -1,47 +1,48 @@
 @use "sass:map";
 @import "style/pages/theme";
 
-
-.TopicDeleteDialogueContainer {
+.UserLockAccountDialogueContainer {
     width : 300px;
     height: fit-content;
 }
 
-.TDDHeader h3 {
+.ULDHeader h3 {
     margin-bottom: 16px;
 }
 
-.TDDContent .TDDField {
+.ULDContent .ULDField {
     margin-bottom: 16px;
 }
 
-.TDDContent .TDDField>div {
+.ULDContent .ULDField>div {
     margin-bottom: 8px;
     font-weight  : 700;
 }
 
-.TDDContent input {
+.ULDContent input {
     width  : 100%;
     padding: 8px
 }
 
-.TDDActions .TDDWarning {
+.ULDActions .ULDWarning {
     margin-bottom: 8px;
     width        : 100%;
     text-align   : center;
 }
 
-.TDDButtons {
+.ULDButtons {
     display: flex;
     gap    : 8px;
 }
 
-.TDDButtons>button {
+
+
+.ULDButtons>button {
     width  : 100%;
     padding: 8px;
 }
 
-#TDDConfirmButton {
+#ULDConfirmButton {
     border-radius: 10px;
     background   : #3A57E8;
     color        : white;
@@ -49,7 +50,7 @@
     border       : none;
 }
 
-#TDDCancelButton {
+#ULDCancelButton {
     border-radius: 10px;
     border       : 1px solid #6597DB;
     background   : #FFF;

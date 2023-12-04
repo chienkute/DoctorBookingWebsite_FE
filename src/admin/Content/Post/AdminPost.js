@@ -7,12 +7,43 @@ import {
   FaRegTimesCircle,
 } from "react-icons/fa";
 import { FcPrevious, FcNext } from "react-icons/fc";
-import { IoClose } from "react-icons/io5";
 import { MdOutlinePending } from "react-icons/md";
 import PostDenyDialogue from "admin/AdminComponent/PostDeny/PostDeny";
 import PostDeleteDialogue from "admin/AdminComponent/PostDelete/PostDelete";
 
 class AdminPost extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dialogueList: [],
+    };
+  }
+
+  addPdD = () => {
+    this.setState({
+      dialogueList: [
+        ...this.state.dialogueList,
+        <PostDenyDialogue key="PdD" close={(key) => this.closeD(key)} />,
+      ],
+    });
+  };
+
+  addPDD = () => {
+    this.setState({
+      dialogueList: [
+        ...this.state.dialogueList,
+        <PostDeleteDialogue key="PDD" close={(key) => this.closeD(key)} />,
+      ],
+    });
+  };
+
+  closeD = (key) => {
+    const newLD = this.state.dialogueList.filter(
+      (dialogue) => dialogue.key !== key,
+    );
+    this.setState({ dialogueList: newLD });
+  };
+
   changeState(value, field) {
     let UID = document.querySelector(field);
     if (value) UID.style.display = "flex";
@@ -118,17 +149,13 @@ class AdminPost extends React.Component {
                       </button>
                       <button
                         className="DenyButton"
-                        onClick={() =>
-                          this.changeState(true, ".PdDOverlayContainer")
-                        }
+                        onClick={() => this.addPdD()}
                       >
                         <FaRegTimesCircle />
                       </button>
                       <button
                         className="DeleteButton"
-                        onClick={() =>
-                          this.changeState(true, ".PDDOverlayContainer")
-                        }
+                        onClick={() => this.addPDD()}
                       >
                         <FaEraser />
                       </button>
@@ -151,7 +178,11 @@ class AdminPost extends React.Component {
                   </td>
                   <td>
                     <div className="Action">
-                      <button className="ApproveButton disabled">
+                      <button
+                        className="ApproveButton disabled"
+                        onClick={() => this.addPdD()}
+                        disabled
+                      >
                         <FaRegCheckCircle />
                       </button>
                       <button className="DenyButton disabled">
@@ -159,9 +190,7 @@ class AdminPost extends React.Component {
                       </button>
                       <button
                         className="DeleteButton"
-                        onClick={() =>
-                          this.changeState(true, ".PDDOverlayContainer")
-                        }
+                        onClick={() => this.addPDD()}
                       >
                         <FaEraser />
                       </button>
@@ -187,29 +216,7 @@ class AdminPost extends React.Component {
             </div>
           </div>
         </div>
-        <div className="PdDOverlayContainer">
-          <div className="PdDClose"></div>
-          <div className="PdDOverlayContent">
-            <PostDenyDialogue
-              closePdDMethod={(value, field) => this.changeState(value, field)}
-            />
-          </div>
-        </div>
-        <div className="PDDOverlayContainer">
-          <div className="PDDClose">
-            <button
-              id="PDDCloseButton"
-              onClick={() => this.changeState(false, ".PDDOverlayContainer")}
-            >
-              <IoClose />
-            </button>
-          </div>
-          <div className="PDDOverlayContent">
-            <PostDeleteDialogue
-              closePDDMethod={(value, field) => this.changeState(value, field)}
-            />
-          </div>
-        </div>
+        {this.state.dialogueList}
       </>
     );
   }

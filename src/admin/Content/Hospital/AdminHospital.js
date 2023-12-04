@@ -9,6 +9,29 @@ import HospitalDeleteDialogue from "admin/AdminComponent/HospitalDelete/Hospital
 import AdminChangePasswordDialogue from "admin/AdminComponent/AdminChangePassword/AdminChangePassword";
 
 class AdminHospital extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dialogueList: [],
+    };
+  }
+
+  addHID = () => {
+    this.setState({
+      dialogueList: [
+        ...this.state.dialogueList,
+        <HospitalInfoDialogue key="HID" close={(key) => this.closeD(key)} />,
+      ],
+    });
+  };
+
+  closeD = (key) => {
+    const newLD = this.state.dialogueList.filter(
+      (dialogue) => dialogue.key !== key,
+    );
+    this.setState({ dialogueList: newLD });
+  };
+
   changeState(value, field) {
     let UID = document.querySelector(field);
     if (value) UID.style.display = "flex";
@@ -67,19 +90,9 @@ class AdminHospital extends React.Component {
                     <div className="Action">
                       <button
                         className="ViewButton"
-                        onClick={() =>
-                          this.changeState(true, ".HIDOverlayContainer")
-                        }
+                        onClick={() => this.addHID()}
                       >
                         <IoInformation />
-                      </button>
-                      <button
-                        className="ChangeInfoButton"
-                        onClick={() =>
-                          this.changeState(true, ".HIDOverlayContainer")
-                        }
-                      >
-                        <FiEdit3 />
                       </button>
                       <button
                         className="DeleteButton"
@@ -104,19 +117,9 @@ class AdminHospital extends React.Component {
                     <div className="Action">
                       <button
                         className="ViewButton"
-                        onClick={() =>
-                          this.changeState(true, ".HIDOverlayContainer")
-                        }
+                        onClick={() => this.addHID()}
                       >
                         <IoInformation />
-                      </button>
-                      <button
-                        className="ChangeInfoButton"
-                        onClick={() =>
-                          this.changeState(true, ".HIDOverlayContainer")
-                        }
-                      >
-                        <FiEdit3 />
                       </button>
                       <button
                         className="DeleteButton"
@@ -148,21 +151,6 @@ class AdminHospital extends React.Component {
             </div>
           </div>
         </div>
-        <div className="HIDOverlayContainer">
-          <div className="HIDClose">
-            <button
-              id="HIDCloseButton"
-              onClick={() => this.changeState(false, ".HIDOverlayContainer")}
-            >
-              <IoClose />
-            </button>
-          </div>
-          <div className="HIDOverlayContent">
-            <HospitalInfoDialogue
-              openCPDmethod={(value, field) => this.changeState(value, field)}
-            />
-          </div>
-        </div>
         <div className="HDDOverlayContainer">
           <div className="HDDClose"></div>
           <div className="HDDOverlayContent">
@@ -179,6 +167,7 @@ class AdminHospital extends React.Component {
             />
           </div>
         </div>
+        {this.state.dialogueList}
       </>
     );
   }

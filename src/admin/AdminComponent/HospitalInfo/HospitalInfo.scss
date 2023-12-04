@@ -67,6 +67,18 @@
     padding      : 8px;
     border       : none;
     border-radius: 6px;
+    font-weight  : 700;
+    font-size    : 14px;
+    color        : white;
+}
+
+.HIDAction #HIDChangePasswordButton {
+
+    background-color: #2d87f3;
+}
+
+.HIDAction #HIDDeleteButton {
+    background-color: #BE2424;
 }
 
 .HIDAction button.hidden {
