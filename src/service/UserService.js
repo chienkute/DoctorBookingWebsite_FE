@@ -18,7 +18,9 @@ const login = (username, password) => {
 const fetchAllSpecialties = () => {
   return instance.get("api/specialties/");
 };
-
+const fecthAllBlog = (page) => {
+  return instance.get(`/api/blogs/?current_page=${page}`);
+};
 const fetchAllService = () => {
   return instance.get("api/services/");
 };
@@ -50,7 +52,7 @@ const search = (service, address, specialty, name, hospital) => {
   );
 };
 const scheduleDoctor = (id) => {
-  return instance.get(`api/getschedulerdoctor?doctor=${id}`);
+  return instance.get(`/api/getschedulerdoctor?doctor=${id}`);
 };
 const Booking = (id_doctor, id_schedule, date, time) => {
   return instance.post("/api/booking/", { id_doctor, id_schedule, date, time });
@@ -151,4 +153,5 @@ export {
   changePassword,
   getUserID,
   getServiceById,
+  fecthAllBlog,
 };

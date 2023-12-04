@@ -11,6 +11,7 @@ const HospitalSide = () => {
   const { update, setUpdate } = useContext(UpdateContext);
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("hospital");
     navigate("/login");
     toast.success("Đăng xuất thành công!");
   };

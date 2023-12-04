@@ -7,5 +7,12 @@ const editHospital = (id, name, email, address, info) => {
     info,
   });
 };
+const addDoctor = (username, password, email) => {
+  return instance.post(`/api/auth/register/doctor/`, {
+    username,
+    password,
+    email,
+  });
+};
 
-export { editHospital };
+export { editHospital, addDoctor };

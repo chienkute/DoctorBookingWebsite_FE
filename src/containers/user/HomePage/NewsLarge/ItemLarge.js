@@ -4,8 +4,18 @@ import "./NewsLarge.scss";
 import blogImg from "assets/blog-img.png";
 import avtImg from "assets/avatar.png";
 import Skeleton from "react-loading-skeleton";
-import { Link } from "react-router-dom";
-const ItemLarge = () => {
+import { Link, useNavigate } from "react-router-dom";
+const ItemLarge = (props) => {
+  const {
+    key,
+    id_blog,
+    category,
+    date,
+    id_category,
+    doctor,
+    id_doctor,
+    content,
+  } = props;
   const [loadingSkeleton, SetLoadingSkeleton] = useState(true);
   useEffect(() => {
     SetLoadingSkeleton(true);
@@ -13,15 +23,16 @@ const ItemLarge = () => {
       SetLoadingSkeleton(false);
     }, 2000);
   }, []);
+  const navigate = useNavigate();
   return (
-    <li className="NewsItem col-2">
+    <li className="NewsItem col-2" key={key}>
       {loadingSkeleton ? (
         <div className="NewsImage">
           <Skeleton width="490px" height="275px"></Skeleton>
         </div>
       ) : (
         <div className="NewsImage">
-          <Link className="clear">
+          <Link to={`/blog/${id_blog}`} className="clear">
             <img src={blogImg} alt="Blog Img"></img>
           </Link>
         </div>
@@ -33,9 +44,13 @@ const ItemLarge = () => {
         </div>
       ) : (
         <div className="NewsCategory">
-          <a href="#" className="clear bold" style={{ color: "red" }}>
-            Chuyên mục
-          </a>
+          <Link
+            to={`/category/${id_category}/${category}`}
+            className="clear bold"
+            style={{ color: "red" }}
+          >
+            {category}
+          </Link>
         </div>
       )}
       {loadingSkeleton ? (
@@ -43,24 +58,21 @@ const ItemLarge = () => {
           <Skeleton count={1} width="490px"></Skeleton>
         </div>
       ) : (
-        <div className="NewsTitle">
-          <a href="#" className="clear bold">
-            Tiêu đề bài viết
-          </a>
-        </div>
+        <div className="NewsTitle"></div>
       )}
       {loadingSkeleton ? (
         <div className="NewsContent">
           <Skeleton count={4} width="490px"></Skeleton>
         </div>
       ) : (
-        <div className="NewsContent">
-          <span>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar
-            pellentesque habitant morbi tristique senectus et. Libero id
-            faucibus nisl tincidunt eget nullam non nisi est...
-          </span>
+        <div
+          onClick={() => {
+            navigate(`/blog/${id_blog}`);
+          }}
+          className="NewsContent"
+          role="button"
+        >
+          <span dangerouslySetInnerHTML={{ __html: content }}></span>
         </div>
       )}
       {loadingSkeleton ? (
@@ -69,12 +81,12 @@ const ItemLarge = () => {
         </div>
       ) : (
         <div className="NewsAuthorAndTime">
-          <a href="#" className="clear">
-            <img src={avtImg} placeholder="Avatar"></img>
+          <Link to={`/care/doctor/${id_doctor}`} className="clear">
+            <img src={avtImg} placeholder="Avatar" alt=""></img>
             <span>
-              Được viết bởi <b>Lorem ipsum</b> - 01/01/1990
+              Được viết bởi <b>{doctor}</b> - {date}
             </span>
-          </a>
+          </Link>
         </div>
       )}
     </li>

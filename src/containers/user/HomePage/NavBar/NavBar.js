@@ -34,14 +34,14 @@ class NavBar extends React.Component {
               <div className="NavigationName">Đặt lịch hẹn</div>
             </a>
           </li>
-          <li className="Navigation bold">
+          {/* <li className="Navigation bold">
             <a href="/tool" className="flex-center clear">
               <div className="NavigationIcon flex-center">
                 <FaHeartPulse />
               </div>
               <div className="NavigationName">Kiểm tra sức khoẻ</div>
             </a>
-          </li>
+          </li> */}
         </ul>
       </div>
     );

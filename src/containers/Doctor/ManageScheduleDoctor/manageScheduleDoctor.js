@@ -1,10 +1,16 @@
 import { React, memo, useState, useContext, useEffect } from "react";
 import { addDays, addMinutes, format } from "date-fns";
 import { convertDayOfWeek, convertDayOfWeektoNumber } from "tool/DataTimeTool";
-import { fetchAllSchedule, fetchAllScheduleByDoctorId, addScheduleDoctor, deleteScheduleDoctor } from "service/DoctorService.js";
+import {
+  fetchAllSchedule,
+  fetchAllScheduleByDoctorId,
+  // addScheduleDoctor,
+  // deleteScheduleDoctor,
+  addSomeScheduleDoctor,
+  deleteSomeScheduleDoctor,
+} from "service/DoctorService.js";
 import { LoadingContext } from "context/LoadingContext";
 import "./manageScheduleDoctor.scss";
-
 const ManageScheduleDoctor = () => {
   const { setLoading } = useContext(LoadingContext);
   const [choosedDate, setChoosedDate] = useState(new Date());
@@ -18,7 +24,6 @@ const ManageScheduleDoctor = () => {
   const [timeEvening, setTimeEvening] = useState([]);
   const startDate = new Date();
   const endDate = addDays(startDate, 6);
-
   const getAllSchedule = async () => {
     try {
       setLoading(true);
@@ -40,71 +45,75 @@ const ManageScheduleDoctor = () => {
     }
   };
   const getOldSchedules = async () => {
-        try {
-            setLoading(true);
-            let oldSchedules = [];
-            while (true) {
-                let res = await fetchAllScheduleByDoctorId(3, 10, oldSchedules.length);
-                console.log("res", res);
-                oldSchedules = oldSchedules.concat(res.results);
-                if (res.count === oldSchedules.length) {
-                    break;
-                }
-            }
-            //   let res = await fetchAllSchedule();
-            //   console.log("res", res);
-            setOldScheduleDoctor(oldSchedules.map((oldSchedule) => {
-                return {
-                    id: oldSchedule.id,
-                    id_schedule: oldSchedule.schedule.id
-                }
-            }));
-            const oldIdSchedules = oldSchedules.map((oldSchedule) => oldSchedule.schedule.id);
-            setChoosedIdSchedules(oldIdSchedules);
-            setBeginChoosedIdSchedules(oldIdSchedules);
-            setLoading(false);
-            console.log("oldSchedules", oldSchedules);
-        } catch (error) {
-            console.log(error);
+    try {
+      setLoading(true);
+      let oldSchedules = [];
+      while (true) {
+        let res = await fetchAllScheduleByDoctorId(3, 10, oldSchedules.length);
+        console.log("res", res);
+        oldSchedules = oldSchedules.concat(res.results);
+        if (res.count === oldSchedules.length) {
+          break;
         }
-    };
+      }
+      //   let res = await fetchAllSchedule();
+      //   console.log("res", res);
+      setOldScheduleDoctor(
+        oldSchedules.map((oldSchedule) => {
+          return {
+            id: oldSchedule.id,
+            id_schedule: oldSchedule.schedule.id,
+          };
+        }),
+      );
+      const oldIdSchedules = oldSchedules.map(
+        (oldSchedule) => oldSchedule.schedule.id,
+      );
+      setChoosedIdSchedules(oldIdSchedules);
+      setBeginChoosedIdSchedules(oldIdSchedules);
+      setLoading(false);
+      console.log("oldSchedules", oldSchedules);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-//     // getAllSchedule();
-//     const morningSchedules = schedules.filter((schedule) => {
-//       const startTime = parseTime(schedule.start);
-//       const endTime = parseTime(schedule.end);
-//       return startTime.getHours() >= 8 && endTime.getHours() < 12;
-//     });
-//     // Lọc các lịch trong buổi trưa
-//     const afternoonSchedules = schedules.filter((schedule) => {
-//       const startTime = parseTime(schedule.start);
-//       const endTime = parseTime(schedule.end);
+    //     // getAllSchedule();
+    //     const morningSchedules = schedules.filter((schedule) => {
+    //       const startTime = parseTime(schedule.start);
+    //       const endTime = parseTime(schedule.end);
+    //       return startTime.getHours() >= 8 && endTime.getHours() < 12;
+    //     });
+    //     // Lọc các lịch trong buổi trưa
+    //     const afternoonSchedules = schedules.filter((schedule) => {
+    //       const startTime = parseTime(schedule.start);
+    //       const endTime = parseTime(schedule.end);
 
-//       return startTime.getHours() >= 12 && endTime.getHours() < 17;
-//     });
-//     // Lọc các lịch trong buổi tối
-//     const eveningSchedules = schedules.filter((schedule) => {
-//       const startTime = parseTime(schedule.start);
-//       const endTime = parseTime(schedule.end);
+    //       return startTime.getHours() >= 12 && endTime.getHours() < 17;
+    //     });
+    //     // Lọc các lịch trong buổi tối
+    //     const eveningSchedules = schedules.filter((schedule) => {
+    //       const startTime = parseTime(schedule.start);
+    //       const endTime = parseTime(schedule.end);
 
-//       return startTime.getHours() >= 17 && endTime.getHours() < 21;
-//     });
-//     // Hàm chuyển đổi chuỗi thời gian HH:mm:ss thành đối tượng Date
-//     function parseTime(timeString) {
-//       const [hours, minutes, seconds] = timeString.split(":").map(Number);
-//       const date = new Date();
-//       date.setHours(hours);
-//       date.setMinutes(minutes);
-//       date.setSeconds(seconds || 0);
-//       return date;
-//     }
-//     setTimeMorning(morningSchedules);
-//     setTimeAfternoon(afternoonSchedules);
-//     setTimeEvening(eveningSchedules);
-//     console.log("timeMorning", timeMorning);
-//     console.log("timeAfternoon", timeAfternoon);
-//     console.log("timeEvening", timeEvening);
+    //       return startTime.getHours() >= 17 && endTime.getHours() < 21;
+    //     });
+    //     // Hàm chuyển đổi chuỗi thời gian HH:mm:ss thành đối tượng Date
+    //     function parseTime(timeString) {
+    //       const [hours, minutes, seconds] = timeString.split(":").map(Number);
+    //       const date = new Date();
+    //       date.setHours(hours);
+    //       date.setMinutes(minutes);
+    //       date.setSeconds(seconds || 0);
+    //       return date;
+    //     }
+    //     setTimeMorning(morningSchedules);
+    //     setTimeAfternoon(afternoonSchedules);
+    //     setTimeEvening(eveningSchedules);
+    //     console.log("timeMorning", timeMorning);
+    //     console.log("timeAfternoon", timeAfternoon);
+    //     console.log("timeEvening", timeEvening);
     getAllSchedule();
     getOldSchedules();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -124,8 +133,7 @@ const ManageScheduleDoctor = () => {
       // console.log("timeMorning[i]['start']", timeMorning[i]['start']);
       // console.log("format(timeMorning[i]['start'], 'HH:mm')", format(timeMorning[i]['start'], 'HH:mm'));
       const isTimeChosen = choosedIdSchedules.some(
-        (choosedIdSchedule) =>
-        choosedIdSchedule === timeMorning[i]["id"],
+        (choosedIdSchedule) => choosedIdSchedule === timeMorning[i]["id"],
       );
       timeDivs.push(
         <div
@@ -140,7 +148,7 @@ const ManageScheduleDoctor = () => {
                 console.log("prevChoosedIdSchedules", prevChoosedIdSchedules);
                 return prevChoosedIdSchedules.filter(
                   (choosedIdSchedule) =>
-                  choosedIdSchedule !== timeMorning[i]["id"],
+                    choosedIdSchedule !== timeMorning[i]["id"],
                 );
               });
             } else
@@ -165,8 +173,7 @@ const ManageScheduleDoctor = () => {
     const timeDivs = [];
     for (let i = 0; i < timeAfternoon.length; i++) {
       const isTimeChosen = choosedIdSchedules.some(
-        (choosedIdSchedule) =>
-        choosedIdSchedule === timeAfternoon[i]["id"],
+        (choosedIdSchedule) => choosedIdSchedule === timeAfternoon[i]["id"],
       );
       timeDivs.push(
         <div
@@ -180,8 +187,7 @@ const ManageScheduleDoctor = () => {
               setChoosedIdSchedules((prevChoosedIdSchedules) =>
                 prevChoosedIdSchedules.filter(
                   (choosedIdSchedule) =>
-                  choosedIdSchedule !==
-                    timeAfternoon[i]["id"],
+                    choosedIdSchedule !== timeAfternoon[i]["id"],
                 ),
               );
             } else
@@ -205,8 +211,7 @@ const ManageScheduleDoctor = () => {
     const timeDivs = [];
     for (let i = 0; i < timeEvening.length; i++) {
       const isTimeChosen = choosedIdSchedules.some(
-        (choosedIdSchedule) =>
-        choosedIdSchedule === timeEvening[i]["id"],
+        (choosedIdSchedule) => choosedIdSchedule === timeEvening[i]["id"],
       );
       timeDivs.push(
         <div
@@ -220,7 +225,7 @@ const ManageScheduleDoctor = () => {
               setChoosedIdSchedules((prevChoosedIdSchedules) =>
                 prevChoosedIdSchedules.filter(
                   (choosedIdSchedule) =>
-                  choosedIdSchedule !== timeEvening[i]["id"],
+                    choosedIdSchedule !== timeEvening[i]["id"],
                 ),
               );
             } else
@@ -315,7 +320,7 @@ const ManageScheduleDoctor = () => {
     return dateDivs;
   };
   return (
-    <div>
+    <div className="managedoctor__content">
       <div>
         <label>Khoảng thời gian:</label>
         <button className="ShowDateButton">
@@ -338,7 +343,7 @@ const ManageScheduleDoctor = () => {
             onClick={() => setCurrentSession(0)}
           >
             <p>Sáng</p>
-            <p>(8 khung giờ)</p>
+            <p>({ timeMorning.length } khung giờ)</p>
           </div>
           <div
             className={`SessionBox ${
@@ -347,7 +352,7 @@ const ManageScheduleDoctor = () => {
             onClick={() => setCurrentSession(1)}
           >
             <p>Chiều</p>
-            <p>(10 khung giờ)</p>
+            <p>({timeAfternoon.length} khung giờ)</p>
           </div>
           <div
             className={`SessionBox ${
@@ -356,7 +361,7 @@ const ManageScheduleDoctor = () => {
             onClick={() => setCurrentSession(2)}
           >
             <p>Tối</p>
-            <p>(8 khung giờ)</p>
+            <p>({timeEvening.length} khung giờ)</p>
           </div>
         </div>
       </div>
@@ -384,42 +389,57 @@ const ManageScheduleDoctor = () => {
           {renderTimeEveningDivs()}
         </div>
       </div>
-      <button className={`saveScheduleBtn ${
-        choosedIdSchedules.length === 0 ? "disableBtn" : "" }`}
-        onClick={async () => {
-          try {
-            setLoading(true);
-            // tìm id ScheduleDoctor cần thêm
-            const AddIdSchedules = choosedIdSchedules.filter(
-              (choosedIdSchedule) =>
-              !beginChoosedIdSchedules.includes(choosedIdSchedule),
-            );
-            const DeleteIdSchedules = beginChoosedIdSchedules.filter(
-              (beginChoosedIdSchedule) =>
-              !choosedIdSchedules.includes(beginChoosedIdSchedule),
-            );
-            for (let i = 0; i < AddIdSchedules.length; i++) {
-              await addScheduleDoctor(3, AddIdSchedules[i]);
-            }
-            for (let i = 0; i < DeleteIdSchedules.length; i++) {
-              for (let j = 0; j < oldScheduleDoctor.length; j++) {
-                if (DeleteIdSchedules[i] === oldScheduleDoctor[j].id_schedule) {
-                  console.log("oldScheduleDoctor[j].id", oldScheduleDoctor[j].id);
-                  await deleteScheduleDoctor(oldScheduleDoctor[j].id);
+      <div className="manage_button">
+        <button
+          className={`saveScheduleBtn ${
+            choosedIdSchedules.length === 0 ? "disableBtn" : ""
+          }`}
+          onClick={async () => {
+            try {
+              setLoading(true);
+              // tìm id ScheduleDoctor cần thêm
+              const AddIdSchedules = choosedIdSchedules.filter(
+                (choosedIdSchedule) =>
+                  !beginChoosedIdSchedules.includes(choosedIdSchedule),
+              );
+              const DeleteIdSchedules = beginChoosedIdSchedules.filter(
+                (beginChoosedIdSchedule) =>
+                  !choosedIdSchedules.includes(beginChoosedIdSchedule),
+              );
+              if (AddIdSchedules.length !== 0)
+                await addSomeScheduleDoctor(3, AddIdSchedules);
+              // for (let i = 0; i < AddIdSchedules.length; i++) {
+              //   await addScheduleDoctor(3, AddIdSchedules[i]);
+              // }
+              const deleteScheduleDoctorIds = [];
+              for (let i = 0; i < DeleteIdSchedules.length; i++) {
+                for (let j = 0; j < oldScheduleDoctor.length; j++) {
+                  if (
+                    DeleteIdSchedules[i] === oldScheduleDoctor[j].id_schedule
+                  ) {
+                    console.log(
+                      "oldScheduleDoctor[j].id",
+                      oldScheduleDoctor[j].id,
+                    );
+                    deleteScheduleDoctorIds.push(oldScheduleDoctor[j].id);
+                    // await deleteScheduleDoctor(oldScheduleDoctor[j].id);
                     break;
+                  }
                 }
               }
+              if (deleteScheduleDoctorIds.length !== 0)
+                await deleteSomeScheduleDoctor(deleteScheduleDoctorIds);
+              // load lại oldScheduleDoctor
+              getOldSchedules();
+              setLoading(false);
+            } catch (error) {
+              console.log(error);
             }
-            // load lại oldScheduleDoctor
-            getOldSchedules();
-            setLoading(false);
-          } catch (error) {
-            console.log(error);
-          }
-        }}
-      >
-        <p>Lưu lịch làm việc</p>
-      </button>
+          }}
+        >
+          <p>Lưu lịch làm việc</p>
+        </button>
+      </div>
     </div>
   );
 };

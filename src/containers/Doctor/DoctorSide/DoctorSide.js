@@ -8,12 +8,13 @@ const DoctorSide = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("doctor");
     navigate("/login");
     toast.success("Đăng xuất thành công!");
   };
   const { id } = useParams();
   useEffect(() => {
-    if (!localStorage.getItem("hospital")) return navigate("/login");
+    if (!localStorage.getItem("doctor")) return navigate("/login");
   }, []);
   return (
     <div className="DoctorSideMenuContainer">
@@ -48,20 +49,36 @@ const DoctorSide = () => {
           Quản lí lịch hẹn
         </NavLink>
         <NavLink
-          to={`/doctor/change-password/${id}`}
-          className={({ isActive }) =>
-            isActive ? "sideBarActive DoctorMenu" : "DoctorMenu"
-          }
-        >
-          Đổi mật khẩu
-        </NavLink>
-        <NavLink
           to={`/doctor/blog/${id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive DoctorMenu" : "DoctorMenu"
           }
         >
           Quản lý blog
+        </NavLink>
+        <NavLink
+          to={`/doctor/service/${id}`}
+          className={({ isActive }) =>
+            isActive ? "sideBarActive DoctorMenu" : "DoctorMenu"
+          }
+        >
+          Quản lý dịch vụ
+        </NavLink>
+        <NavLink
+          to={`/doctor/specialty/${id}`}
+          className={({ isActive }) =>
+            isActive ? "sideBarActive DoctorMenu" : "DoctorMenu"
+          }
+        >
+          Quản lý chuyên khoa
+        </NavLink>
+        <NavLink
+          to={`/doctor/change-password/${id}`}
+          className={({ isActive }) =>
+            isActive ? "sideBarActive DoctorMenu" : "DoctorMenu"
+          }
+        >
+          Đổi mật khẩu
         </NavLink>
         <NavLink to={"/login"} className="DoctorMenu" onClick={handleLogout}>
           Đăng xuất

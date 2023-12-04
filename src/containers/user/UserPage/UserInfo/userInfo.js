@@ -30,6 +30,8 @@ const UserInfo = () => {
   const inputRef = useRef(null);
   const [image, setImage] = useState("");
   const [imageUpdate, setImageUpdate] = useState("");
+  const [imageOld, setImageOld] = useState("");
+  console.log(imageOld);
   console.log(imageUpdate);
   const handleImageClick = () => {
     inputRef.current.click();
@@ -48,7 +50,6 @@ const UserInfo = () => {
       birthdayNew,
     );
     if (res) {
-      // localStorage.setItem("user", JSON.stringify(res));
       toast.success("Sửa đổi thành công");
       setEdit(false);
     } else {
@@ -64,6 +65,7 @@ const UserInfo = () => {
   const getUserByID = async () => {
     let res = await getUserID(id);
     if (res) {
+      console.log(res);
       setNameOld(res?.name);
       setBirthdayOld(res?.birthday);
       setGenderOld(res?.gender);
@@ -80,11 +82,13 @@ const UserInfo = () => {
     getUser();
     const loadUser = () => {
       if (user) {
+        setImageOld(user?.account?.avatar);
         setLoading(false);
       }
     };
     loadUser();
     getUserByID();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   if (user === null) {
     return <div className="UserPageContainer"></div>;
@@ -121,18 +125,24 @@ const UserInfo = () => {
             </div>
             <div className="UserBasicInfo">
               <div className="UserAvatar">
-                {image ? (
-                  <img src={image} alt="BlogImg" className="avatarAfter"></img>
+                {/* {image ? (
+                  <img
+                    src={imageOld}
+                    alt="BlogImg"
+                    className="avatarAfter"
+                  ></img>
                 ) : (
                   <img
                     src={avtImg}
                     alt="BlogImg"
                     className="avatarBefore"
                   ></img>
-                )}
+                )} */}
+                <img src={imageOld} alt="BlogImg" className="avatarAfter"></img>
 
                 <input
                   type="file"
+                  accept="image/*"
                   ref={inputRef}
                   onChange={handleImageChange}
                   style={{ display: "none" }}

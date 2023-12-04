@@ -23,10 +23,6 @@ const InfoHospital = () => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [info, setInfo] = useState("");
-  // var toolbarOptions = [
-  //   ["bold", "italic", "underline", "strike"], // toggled buttons
-  //   ["blockquote", "code-block"],
-
   //   [{ header: 1 }, { header: 2 }], // custom button values
   //   [{ list: "ordered" }, { list: "bullet" }],
   //   [{ script: "sub" }, { script: "super" }], // superscript/subscript
@@ -45,6 +41,7 @@ const InfoHospital = () => {
   const getInfoHospital = async () => {
     let res = await getHospitalByID(id);
     if (res && res?.account) {
+      console.log(res);
       setName(res?.name);
       setAdress(res?.address);
       setPhone(res?.phone);
@@ -222,9 +219,9 @@ const InfoHospital = () => {
                 {formik.touched.email && formik.errors.email}
               </div>
             </div>
-            <div className="information__name">
+            {/* <div className="information__name">
               <label htmlFor="">Chuyên khoa</label>
-              {/* <ReactQuill
+              <ReactQuill
                 // modules={module}
                 theme="snow"
                 value={value}
@@ -233,8 +230,8 @@ const InfoHospital = () => {
                 placeholder={"Thêm chuyên khoa của bạn ....."}
                 readOnly={edit ? true : false}
                 // {...formik.getFieldProps("info")}
-              /> */}
-            </div>
+              />
+            </div> */}
           </div>
         </div>
         {edit ? (

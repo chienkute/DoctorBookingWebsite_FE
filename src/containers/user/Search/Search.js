@@ -64,6 +64,7 @@ const Search = () => {
                 setSearchBlog(e.target.value);
               }}
               defaultValue={searchBlog}
+              autoComplete="off"
             ></input>
           </div>
         </div>
@@ -212,7 +213,7 @@ const Search = () => {
                           )}
                         </div>
                         <div className="search__summary d-flex flex-column">
-                          <a
+                          <Link
                             className="search__category"
                             onClick={() => {
                               navigate(`/category/${item.id_category}`);
@@ -226,18 +227,18 @@ const Search = () => {
                             ) : (
                               <span> Chuyên mục</span>
                             )}
-                          </a>
+                          </Link>
                           {loadingSkeleton ? (
                             <Skeleton count={1} width="80%" />
                           ) : (
-                            <a
+                            <Link
                               className="search__titles"
                               onClick={() => {
                                 navigate(`/blog/${item.id}`);
                               }}
                             >
                               {item.title}
-                            </a>
+                            </Link>
                           )}
                           {loadingSkeleton ? (
                             <p className="search__text">
