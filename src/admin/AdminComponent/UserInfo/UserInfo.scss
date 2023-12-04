@@ -1,6 +1,47 @@
 @use "sass:map";
 @import "style/pages/theme";
 
+.OverlayContainer {
+    margin-top      : 0 !important;
+    position        : absolute;
+    width           : 100%;
+    height          : 100%;
+    top             : 0;
+    left            : 0;
+    border          : 1px solid #ccc;
+    display         : flex;
+    flex-wrap       : wrap;
+    justify-content : center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.OverlayContainer .Close {
+    width: 100%;
+}
+
+.OverlayContainer .Close button {
+    height          : 48px;
+    width           : 48px;
+    background-color: inherit;
+    border          : none;
+    color           : white;
+    float           : right;
+}
+
+.OverlayContainer .Close button>svg {
+    width : 36px;
+    height: 36px;
+}
+
+.OverlayContainer .OverlayContent {
+    position        : absolute;
+    margin-top      : 72px;
+    background-color: white;
+    height          : fit-content;
+    padding         : 32px;
+    border-radius   : 10px;
+}
+
 
 .UserInfoDialogueContainer {
     width: 600px;
@@ -17,6 +58,19 @@
 
 .UIDContent .UIDField {
     margin-bottom: 16px;
+}
+
+.UIDContent .UIDField span {
+    margin-right: 16px;
+    font-weight : 700;
+}
+
+.UIDContent .UIDField span#SpanUnlocked {
+    color: #209C43;
+}
+
+.UIDContent .UIDField span#SpanLocked {
+    color: #BE2424;
 }
 
 .UIDContent .UIDField input {
@@ -63,6 +117,28 @@
     padding      : 8px;
     border       : none;
     border-radius: 6px;
+    font-weight  : 700;
+    font-size    : 14px;
+}
+
+.UIDAction button svg {
+    margin-right: 4px;
+}
+
+.UIDAction #ChangePasswordButton {
+    color           : white;
+    background-color: #2d87f3;
+}
+
+.UIDAction #UIDLockButton,
+.UIDAction #UIDUnlockButton {
+    background-color: #D9A1117A;
+    color           : #FF8000;
+}
+
+.UIDAction #UIDDeleteButton {
+    background-color: #BE2424;
+    color           : white;
 }
 
 .UIDAction button.hidden {

@@ -1,46 +1,47 @@
 @use "sass:map";
 @import "style/pages/theme";
 
-.SpecialityDeleteDialogueContainer {
+
+.AdminAddAccountDialogueContainer {
     width : 300px;
     height: fit-content;
 }
 
-.SpDDHeader h3 {
+.AADHeader h3 {
     margin-bottom: 16px;
 }
 
-.SpDDContent .SpDDField {
+.AADContent .AADField {
     margin-bottom: 16px;
 }
 
-.SpDDContent .SpDDField>div {
+.AADContent .AADField>div {
     margin-bottom: 8px;
     font-weight  : 700;
 }
 
-.SpDDContent input {
+.AADContent input {
     width  : 100%;
     padding: 8px
 }
 
-.SpDDActions .SpDDWarning {
+.AADActions .AADWarning {
     margin-bottom: 8px;
     width        : 100%;
     text-align   : center;
 }
 
-.SpDDButtons {
+.AADButtons {
     display: flex;
     gap    : 8px;
 }
 
-.SpDDButtons>button {
+.AADButtons>button {
     width  : 100%;
     padding: 8px;
 }
 
-#SpDDConfirmButton {
+#AADConfirmButton {
     border-radius: 10px;
     background   : #3A57E8;
     color        : white;
@@ -48,7 +49,7 @@
     border       : none;
 }
 
-#SpDDCancelButton {
+#AADCancelButton {
     border-radius: 10px;
     border       : 1px solid #6597DB;
     background   : #FFF;

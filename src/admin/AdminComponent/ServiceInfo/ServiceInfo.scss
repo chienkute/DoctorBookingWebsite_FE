@@ -2,37 +2,37 @@
 @import "style/pages/theme";
 
 
-.SpecialityInfoDialogueContainer {
+.ServiceInfoDialogueContainer {
     width: fit-content;
 }
 
-.SpIDHeader h3 {
+.SIDHeader h3 {
     margin-bottom: 16px;
 }
 
-.SpIDContent {
+.SIDContent {
     display: flex;
     gap    : 16px;
 }
 
-.SpIDContent .SpIDCols {
+.SIDContent .SIDCols {
     width: 300px;
 }
 
-.SpIDContent .SpIDField {
+.SIDContent .SIDField {
     margin-bottom: 16px;
 }
 
-.SpIDContent .SpIDField .SpIDLabel {
+.SIDContent .SIDField .SIDLabel {
     width: 100%;
 }
 
-.SpIDContent .SpIDField .SpIDAvtInput {
+.SIDContent .SIDField .SIDAvtInput {
     display    : flex;
     align-items: center;
 }
 
-.SpIDContent .SpIDField .SpIDAvtInput .SpIDAvtDisplay {
+.SIDContent .SIDField .SIDAvtInput .SIDAvtDisplay {
     width        : 96px;
     height       : 96px;
     margin       : 8px 32px 8px 0;
@@ -41,49 +41,54 @@
     padding      : 16px;
 }
 
-.SpIDContent .SpIDField .SpIDAvtInput .SpIDAvtDisplay img {
+.SIDContent .SIDField .SIDAvtInput .SIDAvtDisplay img {
     width: 64px;
 }
 
-.SpIDContent .SpIDField input {
+.SIDContent .SIDField input,
+.SIDContent .SIDField textarea {
     margin-top   : 8px;
     padding      : 8px;
     width        : 100%;
     border-radius: 6px;
 }
 
-.SpIDContent .SpIDField {
+.SIDContent .SIDField textarea {
+    resize: vertical;
+}
+
+.SIDContent .SIDField {
     display    : flex;
     flex-wrap  : wrap;
     align-items: center;
 }
 
-.SpIDContent .SpIDField label,
-.SpIDContent .SpIDField .SpIDLabel {
+.SIDContent .SIDField label,
+.SIDContent .SIDField .SIDLabel {
 
     font-weight: 700;
 }
 
-.SpIDContent .SpIDField label {
+.SIDContent .SIDField label {
     width: 30%;
 }
 
-.SpIDContent .SpIDField select {
+.SIDContent .SIDField select {
     padding: 4px;
 }
 
-.SpIDContent .SpIDField input:disabled {
+.SIDContent .SIDField input:disabled {
     background-color: #f2f2f2;
     color           : #999;
 }
 
-.SpIDAction {
+.SIDAction {
     display: flex;
     gap    : 8px;
 }
 
-.SpIDAction button,
-.SpIDContent .SpIDField .SpIDAvtInput .SpIDAvtChangeInput button {
+.SIDAction button,
+.SIDContent .SIDField .SIDAvtInput .SIDAvtChangeInput button {
     display      : inline-block;
     width        : 100%;
     padding      : 8px;
@@ -92,17 +97,17 @@
     font-weight  : 700;
 }
 
-.SpIDAction #SaveButton,
-.SpIDContent #SpIDAvtChangeButton {
+.SIDAction #SaveButton,
+.SIDContent #SIDAvtChangeButton {
     background-color: #3A57E8;
     color           : white;
 }
 
 
-.SpIDAction #CancelButton {
+.SIDAction #CancelButton {
     border: 1px solid #3a75e8;
 }
 
-.SpIDAction button.hidden {
+.SIDAction button.hidden {
     display: none;
 }

@@ -1,53 +1,48 @@
 @use "sass:map";
 @import "style/pages/theme";
 
-.PostDenyDialogueContainer {
+.UserLockAccountDialogueContainer {
     width : 300px;
     height: fit-content;
 }
 
-.PdDHeader h3 {
+.ULDHeader h3 {
     margin-bottom: 16px;
 }
 
-.PdDContent .PdDField {
+.ULDContent .ULDField {
     margin-bottom: 16px;
 }
 
-.PdDContent .PdDField>div {
+.ULDContent .ULDField>div {
     margin-bottom: 8px;
     font-weight  : 700;
 }
 
-.PdDContent input,
-.PdDContent textarea {
+.ULDContent input {
     width  : 100%;
     padding: 8px
 }
 
-.PdDContent textarea {
-    resize: vertical;
-}
-
-.PdDActions .PdDWarning {
+.ULDActions .ULDWarning {
     margin-bottom: 8px;
     width        : 100%;
     text-align   : center;
 }
 
-.PdDButtons {
+.ULDButtons {
     display: flex;
     gap    : 8px;
 }
 
 
 
-.PdDButtons>button {
+.ULDButtons>button {
     width  : 100%;
     padding: 8px;
 }
 
-#PdDConfirmButton {
+#ULDConfirmButton {
     border-radius: 10px;
     background   : #3A57E8;
     color        : white;
@@ -55,7 +50,7 @@
     border       : none;
 }
 
-#PdDCancelButton {
+#ULDCancelButton {
     border-radius: 10px;
     border       : 1px solid #6597DB;
     background   : #FFF;

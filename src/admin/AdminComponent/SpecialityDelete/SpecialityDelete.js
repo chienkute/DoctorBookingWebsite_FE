@@ -2,34 +2,39 @@ import React from "react";
 import "./SpecialityDelete.scss";
 
 class SpecialityDeleteDialogue extends React.Component {
-  handleSDDClose = () => {
-    const { closeSDDMethod } = this.props;
-    closeSDDMethod(false, ".SDDOverlayContainer");
+  closeSpDD = () => {
+    const { close } = this.props;
+    close("SpDD");
   };
   render() {
     return (
-      <div className="SpecialityDeleteDialogueContainer">
-        <div className="SDDHeader">
-          <h3 className="bold">Xoá chuyên môn</h3>
-        </div>
-        <div className="SDDContent">
-          <div className="SDDField SDDName">
-            <div className="SDDNameLabel">Tên chuyên môn</div>
-            <input type="text" id="SDDNameInput" disabled></input>
-          </div>
-        </div>
-        <div className="SDDActions">
-          <div className="SDDWarning bold">
-            Bạn chắc chắn muốn xoá chuyên môn này chứ?{" "}
-            <span className="bold" style={{ color: "red" }}>
-              Hành động này không thể hoàn tác
-            </span>
-          </div>
-          <div className="SDDButtons">
-            <button id="SDDCancelButton" onClick={this.handleSDDClose}>
-              Huỷ
-            </button>
-            <button id="SDDConfirmButton">Xác nhận</button>
+      <div className="OverlayContainer">
+        <div className="Close"></div>
+        <div className="OverlayContent">
+          <div className="SpecialityDeleteDialogueContainer">
+            <div className="SpDDHeader">
+              <h3 className="bold">Xoá chuyên khoa</h3>
+            </div>
+            <div className="SpDDContent">
+              <div className="SpDDField SpDDName">
+                <div className="SpDDNameLabel">Tên chuyên khoa</div>
+                <input type="text" id="SpDDNameInput" disabled></input>
+              </div>
+            </div>
+            <div className="SpDDActions">
+              <div className="SpDDWarning bold">
+                Bạn chắc chắn muốn xoá chuyên môn này chứ?{" "}
+                <span className="bold" style={{ color: "red" }}>
+                  Hành động này không thể hoàn tác
+                </span>
+              </div>
+              <div className="SpDDButtons">
+                <button id="SpDDCancelButton" onClick={this.closeSpDD}>
+                  Huỷ
+                </button>
+                <button id="SpDDConfirmButton">Xác nhận</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

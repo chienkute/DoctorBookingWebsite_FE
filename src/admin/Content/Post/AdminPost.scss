@@ -92,23 +92,6 @@
     background-color: #D9D9D9;
 }
 
-.AdminPostResult td.waitingPost,
-.AdminPostResult td.approvedPost {
-    display        : flex;
-    justify-content: center;
-    align-items    : center;
-}
-
-.AdminPostResult td.waitingPost svg {
-    color       : #00C2FF;
-    margin-right: 4px;
-}
-
-.AdminPostResult td.approvedPost svg {
-    color       : #33E423;
-    margin-right: 4px;
-}
-
 
 .AdminPostResult td div.Action {
     display        : flex;
@@ -125,15 +108,10 @@
     width: 22px;
 }
 
-.AdminPostResult td div.Action button.ApproveButton {
+.AdminPostResult td div.Action button.InfoButton {
 
     background-color: #ADF4BD;
     color           : #209C43;
-}
-
-.AdminPostResult td div.Action button.DenyButton {
-    background-color: #D9A1117A;
-    color           : #FF8000;
 }
 
 .AdminPostResult td div.Action button.DeleteButton {

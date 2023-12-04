@@ -52,6 +52,23 @@
   border       : 1px solid #bdbdbd;
 }
 
+.AdminUserFunction {
+  width      : fit-content;
+  margin-left: auto;
+}
+
+.AdminUserFunction #AdminUserAddAccount {
+  border-radius: 10px;
+  background   : #3A57E8;
+  color        : white;
+  font-weight  : 700;
+  border       : none;
+  gap          : 8px;
+  padding      : 12px 8px;
+  display      : flex;
+  align-items  : center;
+}
+
 .AdminUserResult .ResultPerTable {
   margin-bottom: 16px;
 }
@@ -110,15 +127,23 @@
   color           : #209c43;
 }
 
-.AdminUserResult td div.Action button.ChangeInfoButton {
-  background-color: #00000038;
-  color           : #000000bf;
+.AdminUserResult td div.Action button.UnlockButton,
+.AdminUserResult td div.Action button.LockButton {
+  background-color: #D9A1117A;
+  color           : #FF8000;
+}
+
+.AdminUserResult tr.UnlockedAccount td div.Action button.UnlockButton,
+.AdminUserResult tr.LockedAccount td div.Action button.LockButton {
+  display: none;
 }
 
 .AdminUserResult td div.Action button.DeleteAccount {
   background-color: #e21c1c78;
   color           : #be2424;
 }
+
+
 
 .AdminUserResult .PageMonitor {
   margin-left: auto;

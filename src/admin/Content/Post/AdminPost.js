@@ -1,18 +1,48 @@
 import React from "react";
 import "./AdminPost.scss";
-import {
-  FaRegCheckSquare,
-  FaEraser,
-  FaRegCheckCircle,
-  FaRegTimesCircle,
-} from "react-icons/fa";
+import { FaRegCheckSquare, FaEraser } from "react-icons/fa";
 import { FcPrevious, FcNext } from "react-icons/fc";
-import { IoClose } from "react-icons/io5";
-import { MdOutlinePending } from "react-icons/md";
-import PostDenyDialogue from "admin/AdminComponent/PostDeny/PostDeny";
 import PostDeleteDialogue from "admin/AdminComponent/PostDelete/PostDelete";
+import { IoInformation } from "react-icons/io5";
+import PostViewDialogue from "admin/AdminComponent/PostView/PostView";
 
 class AdminPost extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dialogueList: [],
+    };
+  }
+
+  addPWD = () => {
+    this.setState({
+      dialogueList: [
+        ...this.state.dialogueList,
+        <PostViewDialogue
+          key="PWD"
+          close={(key) => this.closeD(key)}
+          openPDD={() => this.addPDD()}
+        />,
+      ],
+    });
+  };
+
+  addPDD = () => {
+    this.setState({
+      dialogueList: [
+        ...this.state.dialogueList,
+        <PostDeleteDialogue key="PDD" close={(key) => this.closeD(key)} />,
+      ],
+    });
+  };
+
+  closeD = (key) => {
+    const newLD = this.state.dialogueList.filter(
+      (dialogue) => dialogue.key !== key,
+    );
+    this.setState({ dialogueList: newLD });
+  };
+
   changeState(value, field) {
     let UID = document.querySelector(field);
     if (value) UID.style.display = "flex";
@@ -35,30 +65,7 @@ class AdminPost extends React.Component {
                   ></input>
                 </div>
               </div>
-              <div className="Filter col-2">
-                <div className="FilterLabel">Trạng thái</div>
-                <div className="FilterInput FilterRadioInput">
-                  <div className="RadioButton">
-                    <input
-                      type="radio"
-                      name="postStatus"
-                      id="pendingPost"
-                      value="pendingPost"
-                      checked="true"
-                    ></input>
-                    <label htmlFor="pendingPost">Đang chờ duyệt</label>
-                  </div>
-                  <div className="RadioButton">
-                    <input
-                      type="radio"
-                      name="postStatus"
-                      id="approvedPost"
-                      value="approvedPost"
-                    ></input>
-                    <label htmlFor="approvedPost">Đã duyệt</label>
-                  </div>
-                </div>
-              </div>
+              <div className="Filter col-2"></div>
             </div>
             <div className="FilterRow">
               <div className="Filter col">
@@ -94,7 +101,6 @@ class AdminPost extends React.Component {
                   <th>Tiêu đề bài viết</th>
                   <th>Tác giả bài viết</th>
                   <th>Link bài viết</th>
-                  <th>Tình trạng</th>
                   <th>Hành động</th>
                 </tr>
                 <tr>
@@ -107,28 +113,17 @@ class AdminPost extends React.Component {
                   <td>
                     <a href="#">hibacsi.com/post/.....</a>
                   </td>
-                  <td className="waitingPost">
-                    <MdOutlinePending />
-                    <span>Đang chờ duyệt</span>
-                  </td>
                   <td>
                     <div className="Action">
-                      <button className="ApproveButton ">
-                        <FaRegCheckCircle />
-                      </button>
                       <button
-                        className="DenyButton"
-                        onClick={() =>
-                          this.changeState(true, ".PdDOverlayContainer")
-                        }
+                        className="InfoButton "
+                        onClick={() => this.addPWD()}
                       >
-                        <FaRegTimesCircle />
+                        <IoInformation />
                       </button>
                       <button
                         className="DeleteButton"
-                        onClick={() =>
-                          this.changeState(true, ".PDDOverlayContainer")
-                        }
+                        onClick={() => this.addPDD()}
                       >
                         <FaEraser />
                       </button>
@@ -145,23 +140,17 @@ class AdminPost extends React.Component {
                   <td>
                     <a href="#">hibacsi.com/post/.....</a>
                   </td>
-                  <td className="approvedPost">
-                    <FaRegCheckCircle />
-                    <span>Đã duyệt bài</span>
-                  </td>
                   <td>
                     <div className="Action">
-                      <button className="ApproveButton disabled">
-                        <FaRegCheckCircle />
-                      </button>
-                      <button className="DenyButton disabled">
-                        <FaRegTimesCircle />
+                      <button
+                        className="InfoButton "
+                        onClick={() => this.addPWD()}
+                      >
+                        <IoInformation />
                       </button>
                       <button
                         className="DeleteButton"
-                        onClick={() =>
-                          this.changeState(true, ".PDDOverlayContainer")
-                        }
+                        onClick={() => this.addPDD()}
                       >
                         <FaEraser />
                       </button>
@@ -187,29 +176,7 @@ class AdminPost extends React.Component {
             </div>
           </div>
         </div>
-        <div className="PdDOverlayContainer">
-          <div className="PdDClose"></div>
-          <div className="PdDOverlayContent">
-            <PostDenyDialogue
-              closePdDMethod={(value, field) => this.changeState(value, field)}
-            />
-          </div>
-        </div>
-        <div className="PDDOverlayContainer">
-          <div className="PDDClose">
-            <button
-              id="PDDCloseButton"
-              onClick={() => this.changeState(false, ".PDDOverlayContainer")}
-            >
-              <IoClose />
-            </button>
-          </div>
-          <div className="PDDOverlayContent">
-            <PostDeleteDialogue
-              closePDDMethod={(value, field) => this.changeState(value, field)}
-            />
-          </div>
-        </div>
+        {this.state.dialogueList}
       </>
     );
   }

@@ -4,15 +4,44 @@ import { FaRegCheckSquare, FaEraser } from "react-icons/fa";
 import { FcPrevious, FcNext } from "react-icons/fc";
 import { FiEdit3 } from "react-icons/fi";
 import TopicInfoDialogue from "admin/AdminComponent/TopicInfo/TopicInfo";
-import { IoClose } from "react-icons/io5";
 import TopicDeleteDialogue from "admin/AdminComponent/TopicDelete/TopicDelete";
-
+import { FaPlus } from "react-icons/fa6";
 class AdminTopic extends React.Component {
-  changeState(value, field) {
-    let UID = document.querySelector(field);
-    if (value) UID.style.display = "flex";
-    else UID.style.display = "none";
+  constructor(props) {
+    super(props);
+    this.state = {
+      dialogueList: [],
+    };
   }
+
+  addTID = (data = null) => {
+    this.setState({
+      dialogueList: [
+        ...this.state.dialogueList,
+        <TopicInfoDialogue
+          key="TID"
+          data={data}
+          close={(key) => this.closeD(key)}
+        />,
+      ],
+    });
+  };
+
+  addTDD = () => {
+    this.setState({
+      dialogueList: [
+        ...this.state.dialogueList,
+        <TopicDeleteDialogue key="TDD" close={(key) => this.closeD(key)} />,
+      ],
+    });
+  };
+
+  closeD = (key) => {
+    const newLD = this.state.dialogueList.filter(
+      (dialogue) => dialogue.key !== key,
+    );
+    this.setState({ dialogueList: newLD });
+  };
 
   render() {
     return (
@@ -32,6 +61,11 @@ class AdminTopic extends React.Component {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="AdminTopicFunction">
+            <button id="AdminTopicAddTopic" onClick={() => this.addTID()}>
+              <FaPlus /> Thêm chuyên mục...
+            </button>
           </div>
           <div className="AdminTopicResult">
             <div className="ResultPerTable">
@@ -65,17 +99,13 @@ class AdminTopic extends React.Component {
                     <div className="Action">
                       <button
                         className="EditButton"
-                        onClick={() =>
-                          this.changeState(true, ".TIDOverlayContainer")
-                        }
+                        onClick={() => this.addTID({ name: "Chuyên đề 01" })}
                       >
                         <FiEdit3 />
                       </button>
                       <button
                         className="DeleteButton"
-                        onClick={() =>
-                          this.changeState(true, ".TDDOverlayContainer")
-                        }
+                        onClick={() => this.addTDD()}
                       >
                         <FaEraser />
                       </button>
@@ -93,17 +123,13 @@ class AdminTopic extends React.Component {
                     <div className="Action">
                       <button
                         className="EditButton"
-                        onClick={() =>
-                          this.changeState(true, ".TIDOverlayContainer")
-                        }
+                        onClick={() => this.addTID({ name: "Chuyên đề 02" })}
                       >
                         <FiEdit3 />
                       </button>
                       <button
                         className="DeleteButton"
-                        onClick={() =>
-                          this.changeState(true, ".TDDOverlayContainer")
-                        }
+                        onClick={() => this.addTDD()}
                       >
                         <FaEraser />
                       </button>
@@ -129,22 +155,7 @@ class AdminTopic extends React.Component {
             </div>
           </div>
         </div>
-        <div className="TIDOverlayContainer">
-          <div className="TIDClose"></div>
-          <div className="TIDOverlayContent">
-            <TopicInfoDialogue
-              closeTIDMethod={(value, field) => this.changeState(value, field)}
-            />
-          </div>
-        </div>
-        <div className="TDDOverlayContainer">
-          <div className="TDDClose"></div>
-          <div className="TDDOverlayContent">
-            <TopicDeleteDialogue
-              closeTDDMethod={(value, field) => this.changeState(value, field)}
-            />
-          </div>
-        </div>
+        {this.state.dialogueList}
       </>
     );
   }

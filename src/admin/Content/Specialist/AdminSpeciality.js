@@ -1,13 +1,52 @@
 import React from "react";
-import "./AdminSpecialist.scss";
+import "./AdminSpeciality.scss";
 import { FaRegCheckSquare, FaEraser } from "react-icons/fa";
 import { FcPrevious, FcNext } from "react-icons/fc";
 import { FiEdit3 } from "react-icons/fi";
-import { IoClose } from "react-icons/io5";
 import SpecialityInfoDialogue from "admin/AdminComponent/SpecialityInfo/SpecialityInfo";
 import SpecialityDeleteDialogue from "admin/AdminComponent/SpecialityDelete/SpecialityDelete";
+import { FaPlus } from "react-icons/fa6";
+import spe_avt from "assets/service.png";
 
-class AdminSpecialist extends React.Component {
+class AdminSpeciality extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dialogueList: [],
+    };
+  }
+
+  addSpID = (data = null) => {
+    this.setState({
+      dialogueList: [
+        ...this.state.dialogueList,
+        <SpecialityInfoDialogue
+          key="SpID"
+          data={data}
+          close={(key) => this.closeD(key)}
+        />,
+      ],
+    });
+  };
+
+  addSpDD = () => {
+    this.setState({
+      dialogueList: [
+        ...this.state.dialogueList,
+        <SpecialityDeleteDialogue
+          key="SpDD"
+          close={(key) => this.closeD(key)}
+        />,
+      ],
+    });
+  };
+
+  closeD = (key) => {
+    const newLD = this.state.dialogueList.filter(
+      (dialogue) => dialogue.key !== key,
+    );
+    this.setState({ dialogueList: newLD });
+  };
   changeState(value, field) {
     let UID = document.querySelector(field);
     if (value) UID.style.display = "flex";
@@ -16,8 +55,8 @@ class AdminSpecialist extends React.Component {
   render() {
     return (
       <>
-        <div className="AdminSpecialistContainer">
-          <div className="AdminSpecialistFilter">
+        <div className="AdminSpecialityContainer">
+          <div className="AdminSpecialityFilter">
             <div className="FilterRow">
               <div className="Filter col">
                 <div className="FilterLabel">Tên chuyên khoa</div>
@@ -25,14 +64,22 @@ class AdminSpecialist extends React.Component {
                   <input
                     type="text"
                     placeholder="Nhập tên chuyên khoa"
-                    id="SpecialistNameInput"
-                    name="SpecialistNameInput"
+                    id="SpecialityNameInput"
+                    name="SpecialityNameInput"
                   ></input>
                 </div>
               </div>
             </div>
           </div>
-          <div className="AdminSpecialistResult">
+          <div className="AdminSpecialityFunction">
+            <button
+              id="AdminSpecialityAddSpeciality"
+              onClick={() => this.addSpID()}
+            >
+              <FaPlus /> Thêm chuyên khoa...
+            </button>
+          </div>
+          <div className="AdminSpecialityResult">
             <div className="ResultPerTable">
               <label for="dropdown">Số kết quả mỗi trang:</label>
               <select id="dropdown">
@@ -58,23 +105,27 @@ class AdminSpecialist extends React.Component {
                     <input type="checkbox"></input>
                   </td>
                   <td>1</td>
-                  <td>Chuyên khoa 01</td>
+                  <td>
+                    <img src={spe_avt} alt="avt"></img>
+                    Chuyên khoa 01
+                  </td>
                   <td>565</td>
                   <td>
                     <div className="Action">
                       <button
                         className="EditButton"
                         onClick={() =>
-                          this.changeState(true, ".SIDOverlayContainer")
+                          this.addSpID({
+                            name: "Chuyên khoa 01",
+                            image: spe_avt,
+                          })
                         }
                       >
                         <FiEdit3 />
                       </button>
                       <button
                         className="DeleteButton"
-                        onClick={() =>
-                          this.changeState(true, ".SDDOverlayContainer")
-                        }
+                        onClick={() => this.addSpDD()}
                       >
                         <FaEraser />
                       </button>
@@ -86,23 +137,27 @@ class AdminSpecialist extends React.Component {
                     <input type="checkbox"></input>
                   </td>
                   <td>2</td>
-                  <td>Chuyên khoa 02</td>
+                  <td>
+                    <img src={spe_avt} alt="avt"></img>
+                    Chuyên khoa 02
+                  </td>
                   <td>534</td>
                   <td>
                     <div className="Action">
                       <button
                         className="EditButton"
                         onClick={() =>
-                          this.changeState(true, ".SIDOverlayContainer")
+                          this.addSpID({
+                            name: "Chuyên khoa 02",
+                            image: spe_avt,
+                          })
                         }
                       >
                         <FiEdit3 />
                       </button>
                       <button
                         className="DeleteButton"
-                        onClick={() =>
-                          this.changeState(true, ".SDDOverlayContainer")
-                        }
+                        onClick={() => this.addSpDD()}
                       >
                         <FaEraser />
                       </button>
@@ -128,32 +183,10 @@ class AdminSpecialist extends React.Component {
             </div>
           </div>
         </div>
-        <div className="SIDOverlayContainer">
-          <div className="SIDClose"></div>
-          <div className="SIDOverlayContent">
-            <SpecialityInfoDialogue
-              closeSIDMethod={(value, field) => this.changeState(value, field)}
-            />
-          </div>
-        </div>
-        <div className="SDDOverlayContainer">
-          <div className="SDDClose">
-            <button
-              id="SDDCloseButton"
-              onClick={() => this.changeState(false, ".SDDOverlayContainer")}
-            >
-              <IoClose />
-            </button>
-          </div>
-          <div className="SDDOverlayContent">
-            <SpecialityDeleteDialogue
-              closeSDDMethod={(value, field) => this.changeState(value, field)}
-            />
-          </div>
-        </div>
+        {this.state.dialogueList}
       </>
     );
   }
 }
 
-export default AdminSpecialist;
+export default AdminSpeciality;
