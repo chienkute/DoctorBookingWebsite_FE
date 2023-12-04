@@ -19,9 +19,24 @@ const addScheduleDoctor = (doctorId, scheduleId) => {
     schedule_id: scheduleId,
   });
 };
+
+const addSomeScheduleDoctor = (doctorId, scheduleIds) => {
+  return instance.post("api/addschedulerdoctors/", {
+    doctor_id: doctorId,
+    schedule_ids: scheduleIds,
+  });
+};
+
 const deleteScheduleDoctor = (scheduleDoctorId) => {
   return instance.delete("api/schedulerdoctor/" + scheduleDoctorId + "/");
 };
+
+const deleteSomeScheduleDoctor = (scheduleDoctorIds) => {
+  return instance.post("api/deleteschedulerdoctors/", {
+    scheduler_doctor_ids: scheduleDoctorIds, 
+  });
+};
+
 const editDoctorInformation = (
   id,
   name,
@@ -97,7 +112,9 @@ export {
   fetchAllSchedule,
   fetchAllScheduleByDoctorId,
   addScheduleDoctor,
+  addSomeScheduleDoctor,
   deleteScheduleDoctor,
+  deleteSomeScheduleDoctor,
   addSpecialty,
   getSpecialtyByName,
   getServiceByName,
