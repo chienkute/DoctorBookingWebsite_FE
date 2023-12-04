@@ -6,7 +6,7 @@ import API from "../ChatBoxMain/ChatbotAPI.js";
 import "../ChatBoxMain/style.css";
 import Header from "../component/Header";
 import BotMessage from "../component/BotMessage.js";
-function Chatbot() {
+function Chatbot(props) {
   const [messages, setMessages] = useState([]);
   // useEffect(() => {
   //   async function loadWelcomeMessage() {
@@ -31,7 +31,7 @@ function Chatbot() {
   };
   return (
     <div className="chatbot">
-      <Header />
+      <Header setUp={props.setUp} />
       <Messages messages={messages} />
       <Input onSend={send} />
     </div>

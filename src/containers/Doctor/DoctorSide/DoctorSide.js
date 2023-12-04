@@ -8,7 +8,7 @@ const DoctorSide = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("hospital");
+    localStorage.removeItem("doctor");
     navigate("/login");
     toast.success("Đăng xuất thành công!");
   };

@@ -16,10 +16,11 @@ const Confirm = () => {
   const { id, namedoctor } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const { schedule, day, time, days, idUser } = location.state;
   const [doctor, setDoctor] = useState([]);
   const [userInfo, setUserInfo] = useState([]);
-  const { loading, setLoading } = useContext(LoadingContext);
+  // const { loading, setLoading } = useContext(LoadingContext);
+  const [loading, setLoading] = useState(true);
+  const { schedule, day, time, days, idUser } = location.state;
   const book = async () => {
     let res = await Booking(id, schedule, day, time);
     if (res) {
