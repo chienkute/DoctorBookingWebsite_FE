@@ -46,6 +46,23 @@
     font-weight: 700;
 }
 
+.AdminHospitalFunction {
+    width      : fit-content;
+    margin-left: auto;
+}
+
+.AdminHospitalFunction #AdminHospitalAddAccount {
+    border-radius: 10px;
+    background   : #3A57E8;
+    color        : white;
+    font-weight  : 700;
+    border       : none;
+    gap          : 8px;
+    padding      : 12px 8px;
+    display      : flex;
+    align-items  : center;
+}
+
 .AdminHospitalResult .ResultPerTable {
     margin-bottom: 16px;
 }

@@ -5,6 +5,8 @@ import { FcPrevious, FcNext } from "react-icons/fc";
 import { FiEdit3 } from "react-icons/fi";
 import SpecialityInfoDialogue from "admin/AdminComponent/SpecialityInfo/SpecialityInfo";
 import SpecialityDeleteDialogue from "admin/AdminComponent/SpecialityDelete/SpecialityDelete";
+import { FaPlus } from "react-icons/fa6";
+import spe_avt from "assets/service.png";
 
 class AdminSpeciality extends React.Component {
   constructor(props) {
@@ -14,21 +16,25 @@ class AdminSpeciality extends React.Component {
     };
   }
 
-  addSID = () => {
+  addSpID = (data = null) => {
     this.setState({
       dialogueList: [
         ...this.state.dialogueList,
-        <SpecialityInfoDialogue key="SID" close={(key) => this.closeD(key)} />,
+        <SpecialityInfoDialogue
+          key="SpID"
+          data={data}
+          close={(key) => this.closeD(key)}
+        />,
       ],
     });
   };
 
-  addSDD = () => {
+  addSpDD = () => {
     this.setState({
       dialogueList: [
         ...this.state.dialogueList,
         <SpecialityDeleteDialogue
-          key="SDD"
+          key="SpDD"
           close={(key) => this.closeD(key)}
         />,
       ],
@@ -65,6 +71,14 @@ class AdminSpeciality extends React.Component {
               </div>
             </div>
           </div>
+          <div className="AdminSpecialityFunction">
+            <button
+              id="AdminSpecialityAddSpeciality"
+              onClick={() => this.addSpID()}
+            >
+              <FaPlus /> Thêm chuyên khoa...
+            </button>
+          </div>
           <div className="AdminSpecialityResult">
             <div className="ResultPerTable">
               <label for="dropdown">Số kết quả mỗi trang:</label>
@@ -91,19 +105,27 @@ class AdminSpeciality extends React.Component {
                     <input type="checkbox"></input>
                   </td>
                   <td>1</td>
-                  <td>Chuyên khoa 01</td>
+                  <td>
+                    <img src={spe_avt} alt="avt"></img>
+                    Chuyên khoa 01
+                  </td>
                   <td>565</td>
                   <td>
                     <div className="Action">
                       <button
                         className="EditButton"
-                        onClick={() => this.addSID()}
+                        onClick={() =>
+                          this.addSpID({
+                            name: "Chuyên khoa 01",
+                            image: spe_avt,
+                          })
+                        }
                       >
                         <FiEdit3 />
                       </button>
                       <button
                         className="DeleteButton"
-                        onClick={() => this.addSDD()}
+                        onClick={() => this.addSpDD()}
                       >
                         <FaEraser />
                       </button>
@@ -115,19 +137,27 @@ class AdminSpeciality extends React.Component {
                     <input type="checkbox"></input>
                   </td>
                   <td>2</td>
-                  <td>Chuyên khoa 02</td>
+                  <td>
+                    <img src={spe_avt} alt="avt"></img>
+                    Chuyên khoa 02
+                  </td>
                   <td>534</td>
                   <td>
                     <div className="Action">
                       <button
                         className="EditButton"
-                        onClick={() => this.addSID()}
+                        onClick={() =>
+                          this.addSpID({
+                            name: "Chuyên khoa 02",
+                            image: spe_avt,
+                          })
+                        }
                       >
                         <FiEdit3 />
                       </button>
                       <button
                         className="DeleteButton"
-                        onClick={() => this.addSDD()}
+                        onClick={() => this.addSpDD()}
                       >
                         <FaEraser />
                       </button>

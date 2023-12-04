@@ -7,19 +7,11 @@ const SideMenu = () => {
   return (
     <div className="AdminSideMenuContainer">
       <div className="AdminSideMenuLogo">
-        <a href="/admin" alt="AdminPageLink">
+        <a href="/admin/user" alt="AdminPageLink">
           <img src={logo} alt="Logo"></img>
         </a>
       </div>
       <div className="AdminMenu">
-        <NavLink
-          to={"/admin/dashboard"}
-          className={({ isActive }) =>
-            isActive ? "sideBarActive AdminMenu" : "AdminMenu"
-          }
-        >
-          Trang chủ
-        </NavLink>
         <NavLink
           to={"/admin/user"}
           className={({ isActive }) =>
@@ -59,6 +51,14 @@ const SideMenu = () => {
           }
         >
           Quản lí chuyên khoa
+        </NavLink>
+        <NavLink
+          to={"/admin/service"}
+          className={({ isActive }) =>
+            isActive ? "sideBarActive AdminMenu" : "AdminMenu"
+          }
+        >
+          Quản lí dịch vụ
         </NavLink>
       </div>
     </div>

@@ -1,15 +1,14 @@
 import React from "react";
-import "./AdminHospital.scss";
+import "./AdminService.scss";
 import { FaRegCheckSquare, FaEraser } from "react-icons/fa";
 import { FcPrevious, FcNext } from "react-icons/fc";
-import { IoInformation } from "react-icons/io5";
-import HospitalInfoDialogue from "admin/AdminComponent/HospitalInfo/HospitalInfo";
-import HospitalDeleteDialogue from "admin/AdminComponent/HospitalDelete/HospitalDelete";
-import AdminChangePasswordDialogue from "admin/AdminComponent/AdminChangePassword/AdminChangePassword";
+import { FiEdit3 } from "react-icons/fi";
+import ServiceInfoDialogue from "admin/AdminComponent/ServiceInfo/ServiceInfo";
+import ServiceDeleteDialogue from "admin/AdminComponent/ServiceDelete/ServiceDelete";
 import { FaPlus } from "react-icons/fa6";
-import AdminAddAccountDialogue from "admin/AdminComponent/AdminAddAccount/AdminAddAccount";
+import ser_avt from "assets/service.png";
 
-class AdminHospital extends React.Component {
+class AdminService extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,50 +16,24 @@ class AdminHospital extends React.Component {
     };
   }
 
-  addAAD = () => {
+  addSID = (data = null) => {
     this.setState({
       dialogueList: [
         ...this.state.dialogueList,
-        <AdminAddAccountDialogue
-          key="AAD"
-          accType={1}
+        <ServiceInfoDialogue
+          key="SID"
+          data={data}
           close={(key) => this.closeD(key)}
         />,
       ],
     });
   };
 
-  addHID = () => {
+  addSDD = () => {
     this.setState({
       dialogueList: [
         ...this.state.dialogueList,
-        <HospitalInfoDialogue
-          key="HID"
-          close={(key) => this.closeD(key)}
-          openCPD={() => this.addCPD()}
-          openHDD={() => this.addHDD()}
-        />,
-      ],
-    });
-  };
-
-  addHDD = () => {
-    this.setState({
-      dialogueList: [
-        ...this.state.dialogueList,
-        <HospitalDeleteDialogue key="HDD" close={(key) => this.closeD(key)} />,
-      ],
-    });
-  };
-
-  addCPD = () => {
-    this.setState({
-      dialogueList: [
-        ...this.state.dialogueList,
-        <AdminChangePasswordDialogue
-          key="CPD"
-          close={(key) => this.closeD(key)}
-        />,
+        <ServiceDeleteDialogue key="SDD" close={(key) => this.closeD(key)} />,
       ],
     });
   };
@@ -71,31 +44,32 @@ class AdminHospital extends React.Component {
     );
     this.setState({ dialogueList: newLD });
   };
+
   render() {
     return (
       <>
-        <div className="AdminHospitalContainer">
-          <div className="AdminHospitalFilter">
+        <div className="AdminServiceContainer">
+          <div className="AdminServiceFilter">
             <div className="FilterRow">
               <div className="Filter col">
-                <div className="FilterLabel">Tên cơ sở khám chữa bệnh</div>
+                <div className="FilterLabel">Tên dịch vụ</div>
                 <div className="FilterInput FilterTextInput">
                   <input
                     type="text"
-                    placeholder="Nhập tên cơ sở khám chữa bệnh"
-                    id="HospitalNameInput"
-                    name="HospitalNameInput"
+                    placeholder="Nhập tên dịch vụ"
+                    id="ServiceNameInput"
+                    name="ServiceNameInput"
                   ></input>
                 </div>
               </div>
             </div>
           </div>
-          <div className="AdminHospitalFunction">
-            <button id="AdminHospitalAddAccount" onClick={() => this.addAAD()}>
-              <FaPlus /> Thêm cơ sở KCB...
+          <div className="AdminServiceFunction">
+            <button id="AdminServiceAddService" onClick={() => this.addSID()}>
+              <FaPlus /> Thêm dịch vụ...
             </button>
           </div>
-          <div className="AdminHospitalResult">
+          <div className="AdminServiceResult">
             <div className="ResultPerTable">
               <label for="dropdown">Số kết quả mỗi trang:</label>
               <select id="dropdown">
@@ -112,9 +86,8 @@ class AdminHospital extends React.Component {
                     <FaRegCheckSquare />
                   </th>
                   <th>STT</th>
-                  <th>Tên cơ sở</th>
-                  <th>Tên tài khoản</th>
-                  <th>Số điện thoại liên hệ</th>
+                  <th>Tên dịch vụ</th>
+                  <th>Số lượt sử dụng</th>
                   <th>Hành động</th>
                 </tr>
                 <tr>
@@ -122,20 +95,28 @@ class AdminHospital extends React.Component {
                     <input type="checkbox"></input>
                   </td>
                   <td>1</td>
-                  <td>Bệnh viện A</td>
-                  <td>benhviena</td>
-                  <td>03 Hoà Khánh Bắc, Liên Chiểu, Đà Nẵng</td>
+                  <td>
+                    <img src={ser_avt} alt="avt"></img>
+                    Dịch vụ 01
+                  </td>
+                  <td>565</td>
                   <td>
                     <div className="Action">
                       <button
-                        className="ViewButton"
-                        onClick={() => this.addHID()}
+                        className="EditButton"
+                        onClick={() =>
+                          this.addSID({
+                            name: "Dịch vụ 01",
+                            image: ser_avt,
+                            description: "Description",
+                          })
+                        }
                       >
-                        <IoInformation />
+                        <FiEdit3 />
                       </button>
                       <button
                         className="DeleteButton"
-                        onClick={() => this.addHDD()}
+                        onClick={() => this.addSDD()}
                       >
                         <FaEraser />
                       </button>
@@ -147,20 +128,24 @@ class AdminHospital extends React.Component {
                     <input type="checkbox"></input>
                   </td>
                   <td>2</td>
-                  <td>Phòng khám B</td>
-                  <td>phongkhamb</td>
-                  <td>04 Hoà Khánh Nam, Liên Chiểu, Đà Nẵng</td>
+                  <td>
+                    <img src={ser_avt} alt="avt"></img>
+                    Dịch vụ 02
+                  </td>
+                  <td>534</td>
                   <td>
                     <div className="Action">
                       <button
-                        className="ViewButton"
-                        onClick={() => this.addHID()}
+                        className="EditButton"
+                        onClick={() =>
+                          this.addSID({ name: "Dịch vụ 02", image: ser_avt })
+                        }
                       >
-                        <IoInformation />
+                        <FiEdit3 />
                       </button>
                       <button
                         className="DeleteButton"
-                        onClick={() => this.addHDD()}
+                        onClick={() => this.addSDD()}
                       >
                         <FaEraser />
                       </button>
@@ -192,4 +177,4 @@ class AdminHospital extends React.Component {
   }
 }
 
-export default AdminHospital;
+export default AdminService;

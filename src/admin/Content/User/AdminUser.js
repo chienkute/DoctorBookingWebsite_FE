@@ -249,16 +249,6 @@ class AdminUser extends React.Component {
             </div>
           </div>
         </div>
-        <div className="CPDOverlayContainer">
-          <div className="CPDClose"></div>
-          <div className="CPDOverlayContent">
-            <AdminChangePasswordDialogue
-              closeCPDmethod={(value, field) =>
-                this.changeEditable(value, field)
-              }
-            />
-          </div>
-        </div>
         {this.state.dialogueList}
       </>
     );

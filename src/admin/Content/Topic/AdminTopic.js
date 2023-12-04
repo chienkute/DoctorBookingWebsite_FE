@@ -5,7 +5,7 @@ import { FcPrevious, FcNext } from "react-icons/fc";
 import { FiEdit3 } from "react-icons/fi";
 import TopicInfoDialogue from "admin/AdminComponent/TopicInfo/TopicInfo";
 import TopicDeleteDialogue from "admin/AdminComponent/TopicDelete/TopicDelete";
-
+import { FaPlus } from "react-icons/fa6";
 class AdminTopic extends React.Component {
   constructor(props) {
     super(props);
@@ -14,11 +14,15 @@ class AdminTopic extends React.Component {
     };
   }
 
-  addTID = () => {
+  addTID = (data = null) => {
     this.setState({
       dialogueList: [
         ...this.state.dialogueList,
-        <TopicInfoDialogue key="TID" close={(key) => this.closeD(key)} />,
+        <TopicInfoDialogue
+          key="TID"
+          data={data}
+          close={(key) => this.closeD(key)}
+        />,
       ],
     });
   };
@@ -58,6 +62,11 @@ class AdminTopic extends React.Component {
               </div>
             </div>
           </div>
+          <div className="AdminTopicFunction">
+            <button id="AdminTopicAddTopic" onClick={() => this.addTID()}>
+              <FaPlus /> Thêm chuyên mục...
+            </button>
+          </div>
           <div className="AdminTopicResult">
             <div className="ResultPerTable">
               <label for="dropdown">Số kết quả mỗi trang:</label>
@@ -90,7 +99,7 @@ class AdminTopic extends React.Component {
                     <div className="Action">
                       <button
                         className="EditButton"
-                        onClick={() => this.addTID()}
+                        onClick={() => this.addTID({ name: "Chuyên đề 01" })}
                       >
                         <FiEdit3 />
                       </button>
@@ -114,7 +123,7 @@ class AdminTopic extends React.Component {
                     <div className="Action">
                       <button
                         className="EditButton"
-                        onClick={() => this.addTID()}
+                        onClick={() => this.addTID({ name: "Chuyên đề 02" })}
                       >
                         <FiEdit3 />
                       </button>

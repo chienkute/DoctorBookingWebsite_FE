@@ -18,7 +18,6 @@ import blog from "containers/user/Blog/blog";
 import userChangePassword from "containers/user/UserPage/UserChangePassword/userChangePassword";
 import userhelp from "containers/user/UserPage/UserHelp/userhelp";
 import tool from "containers/user/Tool/tool";
-import AdminDashboard from "admin/Content/Dashboard/AdminDashboard";
 import AdminUser from "admin/Content/User/AdminUser";
 import AdminTopic from "admin/Content/Topic/AdminTopic";
 import AdminPost from "admin/Content/Post/AdminPost";
@@ -34,6 +33,7 @@ import changePasswordDoctor from "containers/Doctor/ChangePasswordDoctor/changeP
 import manageAppointment from "containers/Doctor/ManageAppointment/manageAppointment";
 import manageBlog from "containers/Doctor/ManageBlog/manageBlog";
 import informationDoctor from "containers/Doctor/InformationDoctor/informationDoctor";
+import AdminService from "admin/Content/Service/AdminService";
 const publicRoutes = [
   { path: "/", component: HomePage },
   { path: "/login", component: Login, layout: null },
@@ -60,10 +60,6 @@ const publicRoutes = [
 ];
 const routeAdmin = [
   {
-    path: "/admin/dashboard",
-    component: AdminDashboard,
-  },
-  {
     path: "/admin/user",
     component: AdminUser,
   },
@@ -83,6 +79,10 @@ const routeAdmin = [
     path: "/admin/speciality",
     component: AdminSpecialist,
   },
+  {
+    path: "/admin/service",
+    component: AdminService,
+  },
 ];
 const routeHospital = [
   { path: "/hospital/information/:id", component: infoHospital },
@@ -92,7 +92,6 @@ const routeHospital = [
 ];
 
 const routeDoctor = [
-  { path: "/doctor/dashboard", component: AdminDashboard },
   { path: "/doctor/information/:id", component: informationDoctor },
   { path: "/doctor/manage-schedule/:id", component: ManageScheduleDoctor },
   { path: "/doctor/change-password/:id", component: changePasswordDoctor },

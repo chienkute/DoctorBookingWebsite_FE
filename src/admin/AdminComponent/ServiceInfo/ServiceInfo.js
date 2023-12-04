@@ -1,11 +1,11 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import "./SpecialityInfo.scss";
-import { IoIosSave } from "react-icons/io";
+import "./ServiceInfo.scss";
 import { MdCancel } from "react-icons/md";
+import { IoIosSave } from "react-icons/io";
 
-class SpecialityInfoDialogue extends React.Component {
+class ServiceInfoDialogue extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,7 +16,7 @@ class SpecialityInfoDialogue extends React.Component {
 
   componentDidMount() {
     const { data } = this.props;
-    if (data !== null) {
+    if (data) {
       this.setState({
         isNew: false,
         data: { ...data },
@@ -24,30 +24,33 @@ class SpecialityInfoDialogue extends React.Component {
     }
   }
 
-  handleImageChange = (e) => {
+  handleImageChange = (e, setFieldValue) => {
     const file = e.target.files[0];
 
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
+        setFieldValue("image", reader.result);
         this.setState({ image: reader.result });
       };
       reader.readAsDataURL(file);
     }
   };
 
-  closeSpID = () => {
+  closeSID = () => {
     const { close } = this.props;
-    close("SpID");
+    close("SID");
   };
 
   render() {
     const initialValues = {
       name: this.state.data.name || "",
-      image: this.state.data.image || null,
+      description: this.state.data.description || "",
+      image: this.state.data.image || "",
     };
     const validationSchema = Yup.object().shape({
-      name: Yup.string().required("Tên chuyên khoa là bắt buộc"),
+      name: Yup.string().required("Tên dịch vụ là bắt buộc"),
+      description: Yup.string().required("Mô tả dịch vụ là bắt buộc"),
       image: Yup.mixed().required("Ảnh đại diện là bắt buộc"),
     });
     const onSubmit = (values) => {
@@ -63,53 +66,61 @@ class SpecialityInfoDialogue extends React.Component {
             onSubmit={onSubmit}
           >
             {({ isSubmitting, setFieldValue }) => (
-              <Form className="SpecialityInfoDialogueContainer">
-                <header className="SpIDHeader">
-                  <h3 className="bold">
-                    {this.props.isNew
-                      ? "Thêm chuyên khoa"
-                      : "Sửa đổi chuyên khoa"}
-                  </h3>
+              <Form className="ServiceInfoDialogueContainer">
+                <header className="SIDHeader">
+                  <h3 className="bold">Thông tin dịch vụ</h3>
                 </header>
-                <div className="SpIDContent">
-                  <div className="SpIDCols">
-                    <div className="SpIDAvt SpIDField">
-                      <div className="SpIDAvtLabel SpIDLabel">Ảnh đại diện</div>
-                      <div className="SpIDAvtInput">
-                        <div className="SpIDAvtDisplay">
+                <div className="SIDContent">
+                  <div className="SIDCols">
+                    <div className="SIDAvt SIDField">
+                      <div className="SIDAvtLabel SIDLabel">Ảnh đại diện</div>
+                      <div className="SIDAvtInput">
+                        <div className="SIDAvtDisplay">
                           {this.state.image && (
-                            <img src={this.state.image} alt=""></img>
+                            <img src={this.state.image} alt="" />
                           )}
                         </div>
-                        <div className="SpIDAvtChangeInput">
+                        <div className="SIDAvtChangeInput">
                           <input
                             type="file"
                             accept="image/*"
-                            onChange={(e) => {
-                              setFieldValue("image", e.currentTarget.files);
-                              this.handleImageChange(e);
-                            }}
+                            onChange={(e) =>
+                              this.handleImageChange(e, setFieldValue)
+                            }
+                          />
+                          <ErrorMessage
+                            name="image"
+                            component="div"
+                            className="error"
+                            style={{ color: "red" }}
                           />
                         </div>
                       </div>
+                    </div>
+                    <div className="SIDAccount SIDField">
+                      <div className="SIDAccountLabel SIDLabel">
+                        Tên dịch vụ
+                      </div>
+                      <Field type="text" id="SIDAccountInput" name="name" />
                       <ErrorMessage
-                        name="image"
+                        name="name"
                         component="div"
                         className="error"
                         style={{ color: "red" }}
                       />
                     </div>
-                    <div className="SpIDAccount SpIDField">
-                      <div className="SpIDAccountLabel SpIDLabel">
-                        Tên chuyên khoa
+                    <div className="SIDDescription SIDField">
+                      <div className="SIDDescriptionLabel SIDLabel">
+                        Mô tả dịch vụ
                       </div>
                       <Field
-                        type="text"
-                        id="SpIDAccountInput"
-                        name="name"
-                      ></Field>
+                        as="textarea"
+                        id="SIDDescriptioInput"
+                        rows={5}
+                        name="description"
+                      />
                       <ErrorMessage
-                        name="name"
+                        name="description"
                         component="div"
                         className="error"
                         style={{ color: "red" }}
@@ -117,11 +128,11 @@ class SpecialityInfoDialogue extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="SpIDAction">
+                <div className="SIDAction">
                   <button
                     id="CancelButton"
+                    onClick={this.closeSID}
                     type="button"
-                    onClick={this.closeSpID}
                   >
                     <MdCancel /> Huỷ
                   </button>
@@ -138,4 +149,4 @@ class SpecialityInfoDialogue extends React.Component {
   }
 }
 
-export default SpecialityInfoDialogue;
+export default ServiceInfoDialogue;

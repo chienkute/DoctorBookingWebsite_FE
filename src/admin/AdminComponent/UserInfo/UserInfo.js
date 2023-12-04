@@ -11,7 +11,7 @@ class UserInfoDialogue extends React.Component {
 
     this.state = {
       isLocked: false,
-      accType: 0,
+      accType: 1,
     };
   }
 
@@ -97,12 +97,36 @@ class UserInfoDialogue extends React.Component {
                   ></input>
                 </div>
                 {this.state.accType === 1 && (
-                  <div className="UIDKCBAddress UIDField">
-                    <div className="UIDKCBAddressLabel UIDLabel">
-                      Đơn vị công tác
+                  <>
+                    <div className="UIDKCBAddress UIDField">
+                      <div className="UIDKCBAddressLabel UIDLabel">
+                        Đơn vị công tác
+                      </div>
+                      <input
+                        type="text"
+                        id="UIDKCBAddressInput"
+                        disabled
+                      ></input>
                     </div>
-                    <input type="text" id="UIDKCBAddressInput" disabled></input>
-                  </div>
+                    <div
+                      className="UIDSpeciality UIDField"
+                      style={{ display: "block", height: "fit-content" }}
+                    >
+                      <div
+                        className="UIDSpecialityLabel UIDLabel"
+                        style={{ width: "100%" }}
+                      >
+                        Chuyên khoa
+                      </div>
+                      <ul className="UIDListSpeciality">
+                        <li className="Speicality">Đa khoa</li>
+                        <li className="Speicality">Nội tổng quát</li>
+                        <li className="Speicality">Nội tổng quát</li>
+                        <li className="Speicality">Nội tổng quát</li>
+                        <li className="Speicality">Nội tổng quát</li>
+                      </ul>
+                    </div>
+                  </>
                 )}
               </div>
               <div className="UIDCols col-2">
@@ -130,10 +154,10 @@ class UserInfoDialogue extends React.Component {
                   <input type="text" id="UIDEmailInput" disabled></input>
                 </div>
                 {this.state.accType === 1 && (
-                  <div className="UIDSpeciality UIDField">
-                    <div className="UIDSpecialityLabel UIDLabel">Email</div>
-                    <input type="text" id="UIDSpecialityInput" disabled></input>
-                  </div>
+                  <>
+                    <div className="UIDField"></div>
+                    <div className="UIDField"></div>
+                  </>
                 )}
               </div>
             </div>
