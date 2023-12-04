@@ -53,20 +53,12 @@ const SideMenu = () => {
           Quản lí cơ sở KCB
         </NavLink>
         <NavLink
-          to={"/admin/specialist"}
+          to={"/admin/speciality"}
           className={({ isActive }) =>
             isActive ? "sideBarActive AdminMenu" : "AdminMenu"
           }
         >
           Quản lí chuyên khoa
-        </NavLink>
-        <NavLink
-          to={"/admin/statistic"}
-          className={({ isActive }) =>
-            isActive ? "sideBarActive AdminMenu" : "AdminMenu"
-          }
-        >
-          Thống kê
         </NavLink>
       </div>
     </div>

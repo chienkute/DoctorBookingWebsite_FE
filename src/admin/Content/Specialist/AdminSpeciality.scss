@@ -1,158 +1,158 @@
 @use "sass:map";
 @import "style/pages/theme";
 
-.AdminSpecialistContainer {
+.AdminSpecialityContainer {
     margin: 32px;
 }
 
-.AdminSpecialistFilter {
+.AdminSpecialityFilter {
     display      : flex;
     flex-wrap    : wrap;
     margin-bottom: 32px;
 }
 
-.AdminSpecialistFilter>h3 {
+.AdminSpecialityFilter>h3 {
     width      : 100%;
     font-weight: 700;
 }
 
-.AdminSpecialistFilter .FilterRow {
+.AdminSpecialityFilter .FilterRow {
     display: flex;
     width  : 100%;
 }
 
-.AdminSpecialistFilter .FilterLabel {
+.AdminSpecialityFilter .FilterLabel {
     font-weight: 700;
 }
 
-.AdminSpecialistFilter .FilterRow .Filter {
+.AdminSpecialityFilter .FilterRow .Filter {
     margin-bottom: 24px;
 }
 
-.AdminSpecialistFilter .FilterRow .Filter .FilterLabel {
+.AdminSpecialityFilter .FilterRow .Filter .FilterLabel {
     margin-bottom: 8px;
 }
 
-.AdminSpecialistFilter .FilterRow .Filter.col .FilterTextInput input {
+.AdminSpecialityFilter .FilterRow .Filter.col .FilterTextInput input {
     border-radius: 10px;
     border       : 1px solid #B6A5A5;
     padding      : 8px;
     width        : 40%;
 }
 
-.AdminSpecialistFilter .FilterRow .Filter .FilterTextInput input::placeholder {
+.AdminSpecialityFilter .FilterRow .Filter .FilterTextInput input::placeholder {
     color      : #00000059;
     font-style : italic;
     font-weight: 700;
 }
 
-.AdminSpecialistResult .ResultPerTable {
+.AdminSpecialityResult .ResultPerTable {
     margin-bottom: 16px;
 }
 
-.AdminSpecialistResult .ResultPerTable label {
+.AdminSpecialityResult .ResultPerTable label {
     margin-right: 16px
 }
 
-.AdminSpecialistResult .Table {
+.AdminSpecialityResult .Table {
     display        : flex;
     justify-content: center;
     width          : 100%;
     flex-wrap      : wrap;
 }
 
-.AdminSpecialistResult .Table table {
+.AdminSpecialityResult .Table table {
     width: 100%;
 }
 
-.AdminSpecialistResult tr:nth-child(odd) {
+.AdminSpecialityResult tr:nth-child(odd) {
     background-color: #F1F0F0;
 }
 
-.AdminSpecialistResult tr:nth-child(even) {
+.AdminSpecialityResult tr:nth-child(even) {
     background-color: #FFFFFF;
 }
 
-.AdminSpecialistResult th,
-.AdminSpecialistResult td {
+.AdminSpecialityResult th,
+.AdminSpecialityResult td {
     padding   : 16px 8px;
     width     : fit-content;
     text-align: center;
 }
 
-.AdminSpecialistResult th {
+.AdminSpecialityResult th {
     font-weight     : 700;
     background-color: #D9D9D9;
 }
 
-.AdminSpecialistResult td div.Action {
+.AdminSpecialityResult td div.Action {
     display        : flex;
     gap            : 16px;
     justify-content: center;
 }
 
-.AdminSpecialistResult td div.Action button {
+.AdminSpecialityResult td div.Action button {
     border : none;
     padding: 2px;
 }
 
-.AdminSpecialistResult td div.Action button svg {
+.AdminSpecialityResult td div.Action button svg {
     width: 22px;
 }
 
-.AdminSpecialistResult td div.Action button.EditButton {
+.AdminSpecialityResult td div.Action button.EditButton {
 
     background-color: #ADF4BD;
     color           : #209C43;
 }
 
-.AdminSpecialistResult td div.Action button.DeleteButton {
+.AdminSpecialityResult td div.Action button.DeleteButton {
     background-color: #E21C1C78;
     color           : #BE2424;
 }
 
-.AdminSpecialistResult .PageMonitor {
+.AdminSpecialityResult .PageMonitor {
     margin-left: auto;
     margin-top : 32px;
 }
 
-.AdminSpecialistResult .PageMonitor,
-.AdminSpecialistResult .PageMonitor>.Pages {
+.AdminSpecialityResult .PageMonitor,
+.AdminSpecialityResult .PageMonitor>.Pages {
     display: flex;
     gap    : 4px;
 }
 
-.AdminSpecialistResult .PageMonitor {
+.AdminSpecialityResult .PageMonitor {
     margin-left: auto;
     width      : fit-content;
 }
 
-.AdminSpecialistResult .PageMonitor>div,
-.AdminSpecialistResult .PageMonitor>.Pages>li {
+.AdminSpecialityResult .PageMonitor>div,
+.AdminSpecialityResult .PageMonitor>.Pages>li {
     width : 32px;
     height: 32px;
     cursor: pointer;
 }
 
-.AdminSpecialistResult .PageMonitor>.PrevPage,
-.AdminSpecialistResult .PageMonitor>.NextPage {
+.AdminSpecialityResult .PageMonitor>.PrevPage,
+.AdminSpecialityResult .PageMonitor>.NextPage {
     border       : 1px solid rgb(217, 217, 217);
     border-radius: 4px;
 }
 
-.AdminSpecialistResult .PageMonitor>.PrevPage.disabled,
-.AdminSpecialistResult .PageMonitor>.NextPage.disabled {
+.AdminSpecialityResult .PageMonitor>.PrevPage.disabled,
+.AdminSpecialityResult .PageMonitor>.NextPage.disabled {
     background-color: rgb(242, 242, 242);
     cursor          : not-allowed;
     border          : none;
 }
 
-.AdminSpecialistResult .PageMonitor>.PrevPage.disabled>svg>polygon,
-.AdminSpecialistResult .PageMonitor>.NextPage.disabled>svg>polygon {
+.AdminSpecialityResult .PageMonitor>.PrevPage.disabled>svg>polygon,
+.AdminSpecialityResult .PageMonitor>.NextPage.disabled>svg>polygon {
     fill: #c5c5c5;
 }
 
-.AdminSpecialistResult .PageMonitor>.Pages>li.selected {
+.AdminSpecialityResult .PageMonitor>.Pages>li.selected {
     color           : rgb(255, 255, 255);
     background-color: rgb(45, 135, 243);
     border-radius   : 4px;

@@ -6,8 +6,9 @@ import { IoInformation } from "react-icons/io5";
 import UserInfoDialogue from "admin/AdminComponent/UserInfo/UserInfo";
 import UserDeleteDialogue from "admin/AdminComponent/UserDelete/UserDelete";
 import AdminChangePasswordDialogue from "admin/AdminComponent/AdminChangePassword/AdminChangePassword";
-import { FaLock, FaUnlock } from "react-icons/fa6";
+import { FaLock, FaPlus, FaUnlock } from "react-icons/fa6";
 import UserLockAccountDialogue from "admin/AdminComponent/UserLockAccount/UserLockAccount";
+import AdminAddAccountDialogue from "admin/AdminComponent/AdminAddAccount/AdminAddAccount";
 
 class AdminUser extends React.Component {
   constructor(props) {
@@ -19,11 +20,30 @@ class AdminUser extends React.Component {
     };
   }
 
+  addAAD = () => {
+    this.setState({
+      dialogueList: [
+        ...this.state.dialogueList,
+        <AdminAddAccountDialogue
+          key="AAD"
+          accType={0}
+          close={(key) => this.closeD(key)}
+        />,
+      ],
+    });
+  };
+
   addUID = () => {
     this.setState({
       dialogueList: [
         ...this.state.dialogueList,
-        <UserInfoDialogue key="UID" close={(key) => this.closeD(key)} />,
+        <UserInfoDialogue
+          key="UID"
+          close={(key) => this.closeD(key)}
+          openCPD={() => this.addCPD()}
+          openULD={(isLocked) => this.addULD(isLocked)}
+          openUDD={() => this.addUDD()}
+        />,
       ],
     });
   };
@@ -37,13 +57,25 @@ class AdminUser extends React.Component {
     });
   };
 
-  addULD = (value) => {
+  addULD = (isLocked) => {
     this.setState({
       dialogueList: [
         ...this.state.dialogueList,
         <UserLockAccountDialogue
           key="ULD"
-          type={value}
+          isLocked={isLocked}
+          close={(key) => this.closeD(key)}
+        />,
+      ],
+    });
+  };
+
+  addCPD = () => {
+    this.setState({
+      dialogueList: [
+        ...this.state.dialogueList,
+        <AdminChangePasswordDialogue
+          key="CPD"
           close={(key) => this.closeD(key)}
         />,
       ],
@@ -140,6 +172,11 @@ class AdminUser extends React.Component {
               </div>
             )}
           </div>
+          <div className="AdminUserFunction">
+            <button id="AdminUserAddAccount" onClick={() => this.addAAD()}>
+              <FaPlus /> Thêm tài khoản...
+            </button>
+          </div>
           <div className="AdminUserResult">
             <div className="ResultPerTable">
               <label for="dropdown">Có 5 kết quả tìm được</label>
@@ -168,19 +205,19 @@ class AdminUser extends React.Component {
                     <div className="Action">
                       <button
                         className="InfoButton"
-                        onClick={() => this.addUID()}
+                        onClick={() => this.addUID(false)}
                       >
                         <IoInformation />
                       </button>
                       <button
                         className="UnlockButton"
-                        onClick={() => this.addULD(1)}
+                        onClick={() => this.addULD(true)}
                       >
                         <FaUnlock />
                       </button>
                       <button
                         className="LockButton"
-                        onClick={() => this.addULD(0)}
+                        onClick={() => this.addULD(false)}
                       >
                         <FaLock />
                       </button>

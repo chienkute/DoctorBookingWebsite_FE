@@ -1,15 +1,10 @@
 import React from "react";
 import "./AdminPost.scss";
-import {
-  FaRegCheckSquare,
-  FaEraser,
-  FaRegCheckCircle,
-  FaRegTimesCircle,
-} from "react-icons/fa";
+import { FaRegCheckSquare, FaEraser } from "react-icons/fa";
 import { FcPrevious, FcNext } from "react-icons/fc";
-import { MdOutlinePending } from "react-icons/md";
-import PostDenyDialogue from "admin/AdminComponent/PostDeny/PostDeny";
 import PostDeleteDialogue from "admin/AdminComponent/PostDelete/PostDelete";
+import { IoInformation } from "react-icons/io5";
+import PostViewDialogue from "admin/AdminComponent/PostView/PostView";
 
 class AdminPost extends React.Component {
   constructor(props) {
@@ -19,11 +14,15 @@ class AdminPost extends React.Component {
     };
   }
 
-  addPdD = () => {
+  addPWD = () => {
     this.setState({
       dialogueList: [
         ...this.state.dialogueList,
-        <PostDenyDialogue key="PdD" close={(key) => this.closeD(key)} />,
+        <PostViewDialogue
+          key="PWD"
+          close={(key) => this.closeD(key)}
+          openPDD={() => this.addPDD()}
+        />,
       ],
     });
   };
@@ -66,30 +65,7 @@ class AdminPost extends React.Component {
                   ></input>
                 </div>
               </div>
-              <div className="Filter col-2">
-                <div className="FilterLabel">Trạng thái</div>
-                <div className="FilterInput FilterRadioInput">
-                  <div className="RadioButton">
-                    <input
-                      type="radio"
-                      name="postStatus"
-                      id="pendingPost"
-                      value="pendingPost"
-                      checked="true"
-                    ></input>
-                    <label htmlFor="pendingPost">Đang chờ duyệt</label>
-                  </div>
-                  <div className="RadioButton">
-                    <input
-                      type="radio"
-                      name="postStatus"
-                      id="approvedPost"
-                      value="approvedPost"
-                    ></input>
-                    <label htmlFor="approvedPost">Đã duyệt</label>
-                  </div>
-                </div>
-              </div>
+              <div className="Filter col-2"></div>
             </div>
             <div className="FilterRow">
               <div className="Filter col">
@@ -125,7 +101,6 @@ class AdminPost extends React.Component {
                   <th>Tiêu đề bài viết</th>
                   <th>Tác giả bài viết</th>
                   <th>Link bài viết</th>
-                  <th>Tình trạng</th>
                   <th>Hành động</th>
                 </tr>
                 <tr>
@@ -138,20 +113,13 @@ class AdminPost extends React.Component {
                   <td>
                     <a href="#">hibacsi.com/post/.....</a>
                   </td>
-                  <td className="waitingPost">
-                    <MdOutlinePending />
-                    <span>Đang chờ duyệt</span>
-                  </td>
                   <td>
                     <div className="Action">
-                      <button className="ApproveButton ">
-                        <FaRegCheckCircle />
-                      </button>
                       <button
-                        className="DenyButton"
-                        onClick={() => this.addPdD()}
+                        className="InfoButton "
+                        onClick={() => this.addPWD()}
                       >
-                        <FaRegTimesCircle />
+                        <IoInformation />
                       </button>
                       <button
                         className="DeleteButton"
@@ -172,21 +140,13 @@ class AdminPost extends React.Component {
                   <td>
                     <a href="#">hibacsi.com/post/.....</a>
                   </td>
-                  <td className="approvedPost">
-                    <FaRegCheckCircle />
-                    <span>Đã duyệt bài</span>
-                  </td>
                   <td>
                     <div className="Action">
                       <button
-                        className="ApproveButton disabled"
-                        onClick={() => this.addPdD()}
-                        disabled
+                        className="InfoButton "
+                        onClick={() => this.addPWD()}
                       >
-                        <FaRegCheckCircle />
-                      </button>
-                      <button className="DenyButton disabled">
-                        <FaRegTimesCircle />
+                        <IoInformation />
                       </button>
                       <button
                         className="DeleteButton"

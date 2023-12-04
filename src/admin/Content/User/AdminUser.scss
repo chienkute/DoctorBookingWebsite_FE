@@ -52,6 +52,23 @@
   border       : 1px solid #bdbdbd;
 }
 
+.AdminUserFunction {
+  width      : fit-content;
+  margin-left: auto;
+}
+
+.AdminUserFunction #AdminUserAddAccount {
+  border-radius: 10px;
+  background   : #3A57E8;
+  color        : white;
+  font-weight  : 700;
+  border       : none;
+  gap          : 8px;
+  padding      : 12px 8px;
+  display      : flex;
+  align-items  : center;
+}
+
 .AdminUserResult .ResultPerTable {
   margin-bottom: 16px;
 }

@@ -20,7 +20,33 @@ class AdminHospital extends React.Component {
     this.setState({
       dialogueList: [
         ...this.state.dialogueList,
-        <HospitalInfoDialogue key="HID" close={(key) => this.closeD(key)} />,
+        <HospitalInfoDialogue
+          key="HID"
+          close={(key) => this.closeD(key)}
+          openCPD={() => this.addCPD()}
+          openHDD={() => this.addHDD()}
+        />,
+      ],
+    });
+  };
+
+  addHDD = () => {
+    this.setState({
+      dialogueList: [
+        ...this.state.dialogueList,
+        <HospitalDeleteDialogue key="HDD" close={(key) => this.closeD(key)} />,
+      ],
+    });
+  };
+
+  addCPD = () => {
+    this.setState({
+      dialogueList: [
+        ...this.state.dialogueList,
+        <AdminChangePasswordDialogue
+          key="CPD"
+          close={(key) => this.closeD(key)}
+        />,
       ],
     });
   };
@@ -31,12 +57,6 @@ class AdminHospital extends React.Component {
     );
     this.setState({ dialogueList: newLD });
   };
-
-  changeState(value, field) {
-    let UID = document.querySelector(field);
-    if (value) UID.style.display = "flex";
-    else UID.style.display = "none";
-  }
   render() {
     return (
       <>
@@ -96,9 +116,7 @@ class AdminHospital extends React.Component {
                       </button>
                       <button
                         className="DeleteButton"
-                        onClick={() =>
-                          this.changeState(true, ".HDDOverlayContainer")
-                        }
+                        onClick={() => this.addHDD()}
                       >
                         <FaEraser />
                       </button>
@@ -123,9 +141,7 @@ class AdminHospital extends React.Component {
                       </button>
                       <button
                         className="DeleteButton"
-                        onClick={() =>
-                          this.changeState(true, ".HDDOverlayContainer")
-                        }
+                        onClick={() => this.addHDD()}
                       >
                         <FaEraser />
                       </button>
@@ -149,22 +165,6 @@ class AdminHospital extends React.Component {
                 <FcNext />
               </div>
             </div>
-          </div>
-        </div>
-        <div className="HDDOverlayContainer">
-          <div className="HDDClose"></div>
-          <div className="HDDOverlayContent">
-            <HospitalDeleteDialogue
-              closeHDDMethod={(value, field) => this.changeState(value, field)}
-            />
-          </div>
-        </div>
-        <div className="CPDOverlayContainer">
-          <div className="CPDClose"></div>
-          <div className="CPDOverlayContent">
-            <AdminChangePasswordDialogue
-              closeCPDmethod={(value, field) => this.changeState(value, field)}
-            />
           </div>
         </div>
         {this.state.dialogueList}

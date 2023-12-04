@@ -23,11 +23,10 @@ import AdminUser from "admin/Content/User/AdminUser";
 import AdminTopic from "admin/Content/Topic/AdminTopic";
 import AdminPost from "admin/Content/Post/AdminPost";
 import AdminHospital from "admin/Content/Hospital/AdminHospital";
-import AdminSpecialist from "admin/Content/Specialist/AdminSpecialist";
+import AdminSpecialist from "admin/Content/Specialist/AdminSpeciality";
 import infoHospital from "containers/Hospital/InfoHospital/infoHospital";
 import doctorManagement from "containers/Hospital/DoctorManagement/doctorManagement";
 import ManageScheduleDoctor from "containers/Doctor/ManageScheduleDoctor/manageScheduleDoctor";
-import AdminStatistic from "admin/Content/Statistic/AdminStatistic";
 import AdminChangePasswordDialogue from "admin/AdminComponent/AdminChangePassword/AdminChangePassword";
 import hospitalPassword from "containers/Hospital/ChangePassword/hospitalPassword";
 import dashboardHospital from "containers/Hospital/DashboardHospital/dashboardHospital";
@@ -81,12 +80,8 @@ const routeAdmin = [
     component: AdminHospital,
   },
   {
-    path: "/admin/specialist",
+    path: "/admin/speciality",
     component: AdminSpecialist,
-  },
-  {
-    path: "/admin/statistic",
-    component: AdminStatistic,
   },
 ];
 const routeHospital = [

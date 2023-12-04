@@ -16,9 +16,14 @@ class HospitalInfoDialogue extends React.Component {
     close("HID");
   };
 
-  handleOpenCPD = () => {
-    const { openCPDmethod } = this.props;
-    openCPDmethod(true, ".CPDOverlayContainer");
+  openCPD = () => {
+    const { openCPD } = this.props;
+    openCPD();
+  };
+
+  openHDD = () => {
+    const { openHDD } = this.props;
+    openHDD();
   };
 
   render() {
@@ -65,10 +70,10 @@ class HospitalInfoDialogue extends React.Component {
               </div>
             </div>
             <div className="HIDAction">
-              <button id="HIDChangePasswordButton" onClick={this.handleOpenCPD}>
+              <button id="HIDChangePasswordButton" onClick={this.openCPD}>
                 <BiSolidEditAlt /> Đổi mật khẩu
               </button>
-              <button id="HIDDeleteButton">
+              <button id="HIDDeleteButton" onClick={this.openHDD}>
                 <FaEraser />
                 Xoá tài khoản
               </button>

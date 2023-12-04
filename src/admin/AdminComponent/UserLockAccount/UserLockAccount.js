@@ -14,7 +14,7 @@ class UserLockAccountDialogue extends React.Component {
           <div className="UserLockAccountDialogueContainer">
             <div className="ULDHeader">
               <h3 className="bold">
-                {this.props.type === 0 ? "Khoá tài khoản" : "Mở khoá tài khoản"}
+                {!this.props.isLocked ? "Khoá tài khoản" : "Mở khoá tài khoản"}
               </h3>
             </div>
             <div className="ULDContent">
@@ -29,7 +29,10 @@ class UserLockAccountDialogue extends React.Component {
             </div>
             <div className="ULDActions">
               <div className="ULDWarning bold">
-                Bạn chắc chắn muốn {this.props.type === 0 ? "khoá" : "mở khoá"}{" "}
+                Bạn chắc chắn muốn{" "}
+                <span style={{ color: "red", fontWeight: "700" }}>
+                  {!this.props.isLocked ? "khoá" : "mở khoá"}
+                </span>{" "}
                 tài khoản này chứ?
               </div>
               <div className="ULDButtons">

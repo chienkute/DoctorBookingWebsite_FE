@@ -1,0 +1,57 @@
+@use "sass:map";
+@import "style/pages/theme";
+
+
+.AdminAddAccountDialogueContainer {
+    width : 300px;
+    height: fit-content;
+}
+
+.AADHeader h3 {
+    margin-bottom: 16px;
+}
+
+.AADContent .AADField {
+    margin-bottom: 16px;
+}
+
+.AADContent .AADField>div {
+    margin-bottom: 8px;
+    font-weight  : 700;
+}
+
+.AADContent input {
+    width  : 100%;
+    padding: 8px
+}
+
+.AADActions .AADWarning {
+    margin-bottom: 8px;
+    width        : 100%;
+    text-align   : center;
+}
+
+.AADButtons {
+    display: flex;
+    gap    : 8px;
+}
+
+.AADButtons>button {
+    width  : 100%;
+    padding: 8px;
+}
+
+#AADConfirmButton {
+    border-radius: 10px;
+    background   : #3A57E8;
+    color        : white;
+    font-weight  : 700;
+    border       : none;
+}
+
+#AADCancelButton {
+    border-radius: 10px;
+    border       : 1px solid #6597DB;
+    background   : #FFF;
+    font-weight  : 700;
+}

@@ -31,11 +31,20 @@ class UserInfoDialogue extends React.Component {
     close("UID");
   };
 
-  handleOpenCPD = () => {
-    const { openCPDmethod } = this.props;
-    openCPDmethod(true, ".CPDOverlayContainer");
+  openCPD = () => {
+    const { openCPD } = this.props;
+    openCPD();
   };
 
+  openULD = () => {
+    const { openULD } = this.props;
+    openULD(this.state.isLocked);
+  };
+
+  openUDD = () => {
+    const { openUDD } = this.props;
+    openUDD();
+  };
   render() {
     return (
       <div className="OverlayContainer">
@@ -132,21 +141,21 @@ class UserInfoDialogue extends React.Component {
               <button
                 className="button"
                 id="ChangePasswordButton"
-                onClick={this.handleOpenCPD}
+                onClick={this.openCPD}
               >
                 <BiSolidEditAlt /> Đổi mật khẩu
               </button>
               {!this.state.isLocked && (
-                <button id="UIDLockButton">
+                <button id="UIDLockButton" onClick={this.openULD}>
                   <FaLock /> Khoá tài khoản
                 </button>
               )}
               {this.state.isLocked && (
-                <button id="UIDUnlockButton">
+                <button id="UIDUnlockButton" onClick={this.openULD}>
                   <FaUnlock /> Mở khoá tài khoản
                 </button>
               )}
-              <button id="UIDDeleteButton">
+              <button id="UIDDeleteButton" onClick={this.openUDD}>
                 <FaEraser />
                 Xoá tài khoản
               </button>
