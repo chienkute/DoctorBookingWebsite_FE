@@ -19,7 +19,6 @@ const ServiceSearch = () => {
   const queryDebounce = useDebounce(search, 500);
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const getService = async () => {
       let res = await getServiceByIdHospital(queryDebounce, "");

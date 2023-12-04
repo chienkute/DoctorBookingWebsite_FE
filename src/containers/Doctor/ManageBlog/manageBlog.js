@@ -16,10 +16,9 @@ import { useParams } from "react-router";
 import { addBlog, deleteBlog, editBlog, getBlog } from "service/DoctorService";
 import { fetchAllCategories } from "service/UserService";
 import { toast } from "react-toastify";
-import { UpdateContext } from "context/UpdateContext";
 const ManageBlog = () => {
   const { id } = useParams();
-  const { update, setUpdate } = useContext(UpdateContext);
+  const [update, setUpdate] = useState(false);
   const [showAddNewBlog, setShowAddNewBlog] = useState(false);
   const handleCloseAddNewBlog = () => setShowAddNewBlog(false);
   const handleShowAddNewBlog = () => setShowAddNewBlog(true);
@@ -40,7 +39,8 @@ const ManageBlog = () => {
   const inputRef = useRef(null);
   const [titleAdd, setTitleAdd] = useState("");
   const [value, setValue] = useState("");
-  useEffect(() => {}, [queryDebounce]);
+  const [defaultSelect, setDefaultSelect] = useState("");
+  console.log(titleAdd);
   console.log(idCategory);
   var toolbarOptions = [
     ["bold", "italic", "underline", "strike"],
@@ -80,6 +80,7 @@ const ManageBlog = () => {
   const postBlog = async () => {
     let res = await addBlog(idCategory, id, titleAdd, value);
     if (res) {
+      console.log(res);
       toast.success("Thêm blog thành công");
     } else {
       toast.error("Thêm thất bại");
@@ -109,17 +110,12 @@ const ManageBlog = () => {
   }, []);
   useEffect(() => {
     getBlogById();
-  }, [update]);
-  useEffect(() => {
-    getBlogById();
-  }, [queryDebounce, idCategorySearch]);
+  }, [queryDebounce, idCategorySearch, update]);
   const formik = useFormik({
     initialValues: {
       nameAdd: "",
       categoryAdd: "",
-      contentAdd: "",
       nameEdit: "",
-      categoryEdit: "",
       contentEdit: "",
     },
     validationSchema: Yup.object({
@@ -199,13 +195,13 @@ const ManageBlog = () => {
                     <label htmlFor="">Tiêu đề blog</label>
                     <input
                       type="text"
-                      id="nameAdd"
+                      // id="nameAdd"
                       placeholder="Nhập tên tiêu đề"
                       class="form-control"
                       onChange={(e) => {
                         setTitleAdd(e.target.value);
                       }}
-                      {...formik.getFieldProps("nameAdd")}
+                      // {...formik.getFieldProps("nameAdd")}
                       autoComplete="off"
                     />
                     <div className="form__error">
@@ -260,6 +256,7 @@ const ManageBlog = () => {
                 handleCloseAddNewBlog();
                 postBlog();
                 setUpdate(!update);
+                setQuery("");
               }}
             >
               Lưu
@@ -293,7 +290,7 @@ const ManageBlog = () => {
                       <td>
                         <input type="checkbox"></input>
                       </td>
-                      <td>1</td>
+                      <td>{index}</td>
                       <td style={{ transform: "translateY(10px)" }}>
                         <p>{item.title}</p>
                       </td>
@@ -309,6 +306,7 @@ const ManageBlog = () => {
                               setEdit(true);
                               setValue(`${item?.content}`);
                               setTitleAdd(`${item?.title}`);
+                              setDefaultSelect(`${item?.id_category?.id}`);
                             }}
                           >
                             <IoInformation />
@@ -320,6 +318,7 @@ const ManageBlog = () => {
                               setEdit(false);
                               setValue(`${item?.content}`);
                               setTitleAdd(`${item?.title}`);
+                              setDefaultSelect(`${item?.id_category?.id}`);
                             }}
                           >
                             <FiEdit3 />
@@ -329,7 +328,6 @@ const ManageBlog = () => {
                             onHide={handleCloseEditBlog}
                             centered
                             size="xl"
-                            // backdrop="static"
                           >
                             <Modal.Header closeButton>
                               <Modal.Title>Thông tin bác sĩ</Modal.Title>
@@ -389,7 +387,7 @@ const ManageBlog = () => {
                                         name="categoryEdit"
                                         disabled={edit ? true : false}
                                         // defaultValue={`${item?.id_category?.id}`}
-                                        defaultValue={"Chiến Kute"}
+                                        // defau={"Chiến Kute"}
                                         onChange={(e) => {
                                           setIdCategory(e.target.value);
                                         }}
@@ -401,7 +399,17 @@ const ManageBlog = () => {
                                           category.length > 0 &&
                                           category.map((item, index) => {
                                             return (
-                                              <option value={`${item.id}`}>
+                                              <option
+                                                value={`${item.id}`}
+                                                selected={
+                                                  defaultSelect
+                                                    ? defaultSelect ===
+                                                      `${item?.id}`
+                                                      ? true
+                                                      : false
+                                                    : false
+                                                }
+                                              >
                                                 {item.name}
                                               </option>
                                             );
@@ -444,6 +452,7 @@ const ManageBlog = () => {
                                     handleCloseEditBlog();
                                     fixBlog(item?.id);
                                     setUpdate(!update);
+                                    setQuery("");
                                   }}
                                 >
                                   Lưu

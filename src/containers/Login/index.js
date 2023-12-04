@@ -55,7 +55,7 @@ const Login = () => {
         //   localStorage.setItem("admin", JSON.stringify(res));
         //   navigate("/admin/dashboard");
         //   toast.success("Đăng nhập thành công");
-        // } else if (res?.account?.role === "doctor" && res.access_token) {
+      } else if (res?.account?.role === "doctor" && res.access_token) {
         localStorage.setItem("token", res.access_token);
         localStorage.setItem("doctor", JSON.stringify(res));
         navigate(`/doctor/information/${res?.doctor?.id}`);

@@ -4,12 +4,41 @@
 .blog {
   margin-top: 70px;
   &__main {
-    width: 998px;
+    width: 1050px;
     margin: 30px auto;
     display: flex;
+    justify-content: space-between;
     &_content {
-      width: 60%;
+      width: 65%;
+      &_main {
+        line-height: 20px;
+        grid-area: auto;
+        color: $color-title;
+        word-spacing: 1px;
+        h1 {
+          font-weight: bold;
+          font-size: 40px;
+          color: $color-title;
+        }
+        h3 {
+          font-size: $fs-normal-title;
+          font-weight: bold;
+        }
+        h2 {
+          font-size: $fs-large-title;
+          font-weight: bold;
+        }
+        b {
+          font-size: 18px;
+          font-weight: bold;
+        }
+        i {
+          font-size: 18px;
+          color: $color-title;
+        }
+      }
     }
+
     &_author {
       border-radius: 4px;
       width: 300px;

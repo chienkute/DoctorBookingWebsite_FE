@@ -11,36 +11,68 @@ import {
 import { IoClose } from "react-icons/io5";
 import avatar from "../../../assets/avatar.png";
 import { Button, Modal } from "react-bootstrap";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import Form from "react-bootstrap/Form";
-import ReactQuill from "react-quill";
 import ReactPaginate from "react-paginate";
 import { useDebounce } from "@uidotdev/usehooks";
-import { searchDoctor } from "service/UserService";
 import { useParams } from "react-router";
-import { AiFillEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { MdOutlinePending } from "react-icons/md";
+import { getDoctorAppoinment } from "service/DoctorService";
+import { statusAppoinment } from "service/UserService";
+import { toast } from "react-toastify";
 const ManageAppointment = () => {
   const { id } = useParams();
-  const [showAddNewDoctor, setShowAddNewDoctor] = useState(false);
-  const handleCloseAddNewDoctor = () => setShowAddNewDoctor(false);
-  const handleShowAddNewDoctor = () => setShowAddNewDoctor(true);
-  const [showEditDoctor, setShowEditDoctor] = useState(false);
-  const handleCloseEditDoctor = () => setShowEditDoctor(false);
-  const handleShowEditDoctor = () => setShowEditDoctor(true);
-  const [showDeleteDoctor, setShowDeleteDoctor] = useState(false);
-  const handleCloseDeleteDoctor = () => setShowDeleteDoctor(false);
-  const handleShowDeleteDoctor = () => setShowDeleteDoctor(true);
-  const [isShowPassword, setIsShowPassword] = useState(false);
+  const [update, setUpdate] = useState(false);
+  const [showAppointmentInfor, setShowAppoinmentInfor] = useState(false);
+  const handleCloseAppointmentInfor = () => setShowAppoinmentInfor(false);
+  const handleShowAppointmentInfor = () => setShowAppoinmentInfor(true);
+  const [showConfirmAppointment, setShowConfirmAppointment] = useState(false);
+  const handleCloseConfirmAppointment = () => setShowConfirmAppointment(false);
+  const handleShowConfirmAppointment = () => setShowConfirmAppointment(true);
+  const [showApproveAppointment, setShowApproveAppointment] = useState(false);
+  const handleCloseApproveAppointment = () => setShowApproveAppointment(false);
+  const handleShowApproveAppointment = () => setShowApproveAppointment(true);
+  const [showCancelAppointment, setShowCancelAppointment] = useState(false);
+  const handleCloseCancelAppointment = () => setShowCancelAppointment(false);
+  const handleShowCancelAppointment = () => setShowCancelAppointment(true);
   const [edit, setEdit] = useState(false);
   const [query, setQuery] = useState("");
+  const [count, setCount] = useState("");
+  const [appointment, setAppoinment] = useState([]);
+  console.log(appointment);
   const queryDebounce = useDebounce(query, 500);
-  const handleImageClick = () => {
-    inputRef.current.click();
+  const getAppoinment = async () => {
+    let res = await getDoctorAppoinment(3);
+    if (res) {
+      console.log(res);
+      setAppoinment(res?.results);
+      setCount(res?.count);
+    }
   };
-  const inputRef = useRef(null);
-  const [value, setValue] = useState("");
+  const setStatus = async (id, status) => {
+    let res = await statusAppoinment(id, status);
+    if (res) {
+      console.log(res);
+      toast.success("Thay đổi thành công");
+    } else {
+      toast.error("Thay đổi thất bại");
+    }
+  };
+  const filteredCategories = appointment.filter((item) =>
+    item?.user?.name.toLowerCase().includes(queryDebounce.toLowerCase()),
+  );
+  useEffect(() => {
+    getAppoinment();
+  }, []);
+  useEffect(() => {
+    getAppoinment();
+  }, [update]);
+  const formatTime = (time) => {
+    if (time) {
+      const timeParts = time.split(":");
+      return `${timeParts[0]}:${timeParts[1]}`;
+    }
+    return "";
+  };
   return (
     <div className="management">
       <div className="management__header">
@@ -76,7 +108,7 @@ const ManageAppointment = () => {
       <div className="management__content">
         <div className="AdminUserResult">
           <div className="ResultPerTable">
-            <label for="dropdown">Có 5 kết quả tìm được</label>
+            <label for="dropdown">Có {count} kết quả tìm được</label>
           </div>
           <div className="Table">
             <table>
@@ -86,356 +118,240 @@ const ManageAppointment = () => {
                 </th>
                 <th>STT</th>
                 <th>Họ tên người đặt</th>
-                <th>Dịch vụ</th>
+                <th>SĐT</th>
                 <th>Thời Gian</th>
                 <th>Tình trạng</th>
                 <th>Hành động</th>
               </tr>
-              <tr>
-                <td>
-                  <input type="checkbox"></input>
-                </td>
-                <td>1</td>
-                <td style={{ transform: "translateY(10px)" }}>
-                  <p>Phạm Sĩ Chiến</p>
-                </td>
-                <td>Khám da mặt</td>
-                <td>8:30 - 9:30, 21/10/2022</td>
-                <td
-                  className="approvedPost"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    transform: "translate(30px,10px)",
-                  }}
-                >
-                  <FaRegCheckCircle />
-                  <span>Đã hoàn thành</span>
-                </td>
-                <td>
-                  <div className="Action">
-                    <button
-                      className="InfoButton"
-                      onClick={() => {
-                        handleShowEditDoctor();
-                        setEdit(true);
-                      }}
-                    >
-                      <IoInformation />
-                    </button>
-                    <button className="ApproveButton ">
-                      <FaRegCheckCircle />
-                    </button>
-                    <button
-                      className="ChangeInfoButton"
-                      onClick={() => {
-                        handleShowEditDoctor();
-                        setEdit(false);
-                      }}
-                    >
-                      <FiEdit3 />
-                    </button>
-                    <Modal
-                      show={showEditDoctor}
-                      onHide={handleCloseEditDoctor}
-                      centered
-                      size="lg"
-                    >
-                      <Modal.Header closeButton>
-                        <Modal.Title>Thông tin bác sĩ</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <div className="add__form">
-                          <div className="form__avatar">
-                            <label htmlFor="">
-                              Ảnh đại diện <span>*</span>
-                            </label>
-                            <div className="form__image">
-                              <img src={avatar} alt="" />
-                            </div>
+              {appointment &&
+                appointment.length > 0 &&
+                filteredCategories.map((item, index) => {
+                  return (
+                    <tr>
+                      <td>
+                        <input type="checkbox"></input>
+                      </td>
+                      <td>{index}</td>
+                      <td style={{ transform: "translateY(10px)" }}>
+                        <p>{item?.user?.name || "Chưa có tên bệnh nhân"}</p>
+                      </td>
+                      <td>{item?.user?.phone || "Chưa có số điện thoại"}</td>
+                      <td>
+                        {formatTime(`${item?.schedule_doctor?.schedule.start}`)}
+                        -{formatTime(`${item?.schedule_doctor?.schedule?.end}`)}
+                        , {item?.date || "--"}
+                      </td>
+                      <td
+                        className="waitingPost"
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          transform: "translate(20px,10px)",
+                        }}
+                      >
+                        {item?.status === 0 && (
+                          <div>
+                            <MdOutlinePending />
+                            <span>Chưa xác nhận hẹn</span>
                           </div>
-                        </div>
-                      </Modal.Body>
-                      <Modal.Footer>
-                        <Button
-                          variant="secondary"
-                          onClick={handleCloseEditDoctor}
-                        >
-                          Đóng
-                        </Button>
-                        {edit ? (
-                          <div></div>
-                        ) : (
-                          <Button
-                            variant="primary"
-                            onClick={handleCloseEditDoctor}
-                          >
-                            Lưu
-                          </Button>
                         )}
-                      </Modal.Footer>
-                    </Modal>
-                    <button className="DenyButton">
-                      <FaRegTimesCircle />
-                    </button>
-                    <Modal
-                      show={showDeleteDoctor}
-                      onHide={handleCloseDeleteDoctor}
-                    >
-                      <Modal.Header closeButton>
-                        <Modal.Title>Bạn muốn xóa bác sĩ này?</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        Thao tác này không thể hoàn tác!!!
-                      </Modal.Body>
-                      <Modal.Footer>
-                        <Button
-                          variant="secondary"
-                          onClick={handleCloseDeleteDoctor}
-                        >
-                          Hủy
-                        </Button>
-                        <Button
-                          variant="primary"
-                          onClick={handleCloseDeleteDoctor}
-                        >
-                          Xác nhận
-                        </Button>
-                      </Modal.Footer>
-                    </Modal>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox"></input>
-                </td>
-                <td>1</td>
-                <td style={{ transform: "translateY(10px)" }}>
-                  <p>Phạm Sĩ Chiến</p>
-                </td>
-                <td>Khám da mặt</td>
-                <td>8:30 - 9:30, 21/10/2022</td>
-                <td
-                  className="waitingPost"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    transform: "translate(20px,10px)",
-                  }}
-                >
-                  <MdOutlinePending />
-                  <span>Chưa xác nhận hẹn</span>
-                </td>
-                <td>
-                  <div className="Action">
-                    <button
-                      className="InfoButton"
-                      onClick={() => {
-                        handleShowEditDoctor();
-                        setEdit(true);
-                      }}
-                    >
-                      <IoInformation />
-                    </button>
-                    <button className="ApproveButton ">
-                      <FaRegCheckCircle />
-                    </button>
-                    <button
-                      className="ChangeInfoButton"
-                      onClick={() => {
-                        handleShowEditDoctor();
-                        setEdit(false);
-                      }}
-                    >
-                      <FiEdit3 />
-                    </button>
-                    <Modal
-                      show={showEditDoctor}
-                      onHide={handleCloseEditDoctor}
-                      centered
-                      size="lg"
-                    >
-                      <Modal.Header closeButton>
-                        <Modal.Title>Thông tin bác sĩ</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <div className="add__form">
-                          <div className="form__avatar">
-                            <label htmlFor="">
-                              Ảnh đại diện <span>*</span>
-                            </label>
-                            <div className="form__image">
-                              <img src={avatar} alt="" />
-                            </div>
+                        {item?.status === 1 && (
+                          <div>
+                            {/* <FaRegCheckCircle />
+                            <span>Đã hoàn thành</span> */}
+                            <FaRegCheckCircle style={{ color: "#33E423" }} />
+                            <span>Đã xác nhận hẹn</span>
                           </div>
-                        </div>
-                      </Modal.Body>
-                      <Modal.Footer>
-                        <Button
-                          variant="secondary"
-                          onClick={handleCloseEditDoctor}
-                        >
-                          Đóng
-                        </Button>
-                        {edit ? (
-                          <div></div>
-                        ) : (
-                          <Button
-                            variant="primary"
-                            onClick={handleCloseEditDoctor}
-                          >
-                            Lưu
-                          </Button>
                         )}
-                      </Modal.Footer>
-                    </Modal>
-                    <button className="DenyButton">
-                      <FaRegTimesCircle />
-                    </button>
-                    <Modal
-                      show={showDeleteDoctor}
-                      onHide={handleCloseDeleteDoctor}
-                    >
-                      <Modal.Header closeButton>
-                        <Modal.Title>Bạn muốn xóa bác sĩ này?</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        Thao tác này không thể hoàn tác!!!
-                      </Modal.Body>
-                      <Modal.Footer>
-                        <Button
-                          variant="secondary"
-                          onClick={handleCloseDeleteDoctor}
-                        >
-                          Hủy
-                        </Button>
-                        <Button
-                          variant="primary"
-                          onClick={handleCloseDeleteDoctor}
-                        >
-                          Xác nhận
-                        </Button>
-                      </Modal.Footer>
-                    </Modal>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox"></input>
-                </td>
-                <td>1</td>
-                <td style={{ transform: "translateY(10px)" }}>
-                  <p>Phạm Sĩ Chiến</p>
-                </td>
-                <td>Khám da mặt</td>
-                <td>8:30 - 9:30, 21/10/2022</td>
-                <td
-                  className="approvedPost"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    transform: "translate(30px,10px)",
-                  }}
-                >
-                  <FaRegCheckCircle />
-                  <span>Đã xác nhận hẹn</span>
-                </td>
-                <td>
-                  <div className="Action">
-                    <button
-                      className="InfoButton"
-                      onClick={() => {
-                        handleShowEditDoctor();
-                        setEdit(true);
-                      }}
-                    >
-                      <IoInformation />
-                    </button>
-                    <button className="ApproveButton ">
-                      <FaRegCheckCircle />
-                    </button>
-                    <button
-                      className="ChangeInfoButton"
-                      onClick={() => {
-                        handleShowEditDoctor();
-                        setEdit(false);
-                      }}
-                    >
-                      <FiEdit3 />
-                    </button>
-                    <Modal
-                      show={showEditDoctor}
-                      onHide={handleCloseEditDoctor}
-                      centered
-                      size="lg"
-                    >
-                      <Modal.Header closeButton>
-                        <Modal.Title>Thông tin bác sĩ</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <div className="add__form">
-                          <div className="form__avatar">
-                            <label htmlFor="">
-                              Ảnh đại diện <span>*</span>
-                            </label>
-                            <div className="form__image">
-                              <img src={avatar} alt="" />
-                            </div>
-                          </div>
-                        </div>
-                      </Modal.Body>
-                      <Modal.Footer>
-                        <Button
-                          variant="secondary"
-                          onClick={handleCloseEditDoctor}
-                        >
-                          Đóng
-                        </Button>
-                        {edit ? (
-                          <div></div>
-                        ) : (
-                          <Button
-                            variant="primary"
-                            onClick={handleCloseEditDoctor}
+                      </td>
+                      <td>
+                        <div className="Action">
+                          <button
+                            className="InfoButton"
+                            onClick={() => {
+                              handleShowAppointmentInfor();
+                              setEdit(true);
+                            }}
                           >
-                            Lưu
-                          </Button>
-                        )}
-                      </Modal.Footer>
-                    </Modal>
-                    <button className="DenyButton">
-                      <FaRegTimesCircle />
-                    </button>
-                    <Modal
-                      show={showDeleteDoctor}
-                      onHide={handleCloseDeleteDoctor}
-                    >
-                      <Modal.Header closeButton>
-                        <Modal.Title>Bạn muốn xóa bác sĩ này?</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        Thao tác này không thể hoàn tác!!!
-                      </Modal.Body>
-                      <Modal.Footer>
-                        <Button
-                          variant="secondary"
-                          onClick={handleCloseDeleteDoctor}
-                        >
-                          Hủy
-                        </Button>
-                        <Button
-                          variant="primary"
-                          onClick={handleCloseDeleteDoctor}
-                        >
-                          Xác nhận
-                        </Button>
-                      </Modal.Footer>
-                    </Modal>
-                  </div>
-                </td>
-              </tr>
+                            <IoInformation />
+                          </button>
+                          <button
+                            className="ApproveButton"
+                            onClick={() => {
+                              handleShowApproveAppointment();
+                            }}
+                          >
+                            <FaRegCheckCircle />
+                          </button>
+                          <button
+                            className="ChangeInfoButton"
+                            onClick={() => {
+                              setEdit(false);
+                            }}
+                          >
+                            <FiEdit3 />
+                          </button>
+                          <Modal
+                            show={showAppointmentInfor}
+                            onHide={handleCloseAppointmentInfor}
+                            centered
+                            size="lg"
+                          >
+                            <Modal.Header closeButton>
+                              <Modal.Title>Thông tin lịch hẹn</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                              <div className="add__form">
+                                <div className="form__avatar">
+                                  <label htmlFor="">Ảnh đại diện</label>
+                                  <div className="form__image">
+                                    <img src={avatar} alt="" />
+                                  </div>
+                                </div>
+                                <div className="appointmentManage_content">
+                                  <div className="appointmentManage">
+                                    <div className="appointmentManage_header">
+                                      Thông tin bệnh nhân
+                                    </div>
+                                    <div className="appointmentManage_info">
+                                      <span>Họ và tên : </span>
+                                      <p>{item?.user?.name}</p>
+                                    </div>
+                                    <div className="appointmentManage_info">
+                                      <span>Giới tính : </span>
+                                      {item?.user?.gender === true ? (
+                                        <p>Nam</p>
+                                      ) : item?.user?.gender === false ? (
+                                        <p>Nữ</p>
+                                      ) : (
+                                        <p></p>
+                                      )}
+                                    </div>
+                                    <div className="appointmentManage_info">
+                                      <span>Ngày sinh : </span>
+                                      <p>{item?.user?.birthday}</p>
+                                    </div>
+                                    <div className="appointmentManage_info">
+                                      <span>Số điện thoại : </span>
+                                      <p>{item?.user?.phone}</p>
+                                    </div>
+                                    <div className="appointmentManage_info">
+                                      <span>Email : </span>
+                                      <p>chienkute@gmail.com</p>
+                                    </div>
+                                    <div className="appointmentManage_info">
+                                      <span>Địa điểm : </span>
+                                      <p>{item?.user?.address}</p>
+                                    </div>
+                                  </div>
+                                  <div className="appointmentManage">
+                                    <div className="appointmentManage_header">
+                                      Chi tiết lịch hẹn
+                                    </div>
+                                    <div className="appointmentManage_info">
+                                      <span>Dịch vụ : </span>
+                                      <p>Đau răng</p>
+                                    </div>
+                                    <div className="appointmentManage_info">
+                                      <span>Thời gian : </span>
+                                      <p>
+                                        {formatTime(
+                                          `${item?.schedule_doctor?.schedule.start}`,
+                                        )}
+                                        -
+                                        {formatTime(
+                                          `${item?.schedule_doctor?.schedule?.end}`,
+                                        )}
+                                      </p>
+                                    </div>
+                                    <div className="appointmentManage_info">
+                                      <span>Ngày : </span>
+                                      <p>{item?.date}</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </Modal.Body>
+                            <Modal.Footer>
+                              <Button
+                                variant="secondary"
+                                onClick={handleCloseAppointmentInfor}
+                              >
+                                Đóng
+                              </Button>
+                            </Modal.Footer>
+                          </Modal>
+                          <button
+                            className="DenyButton"
+                            onClick={() => {
+                              handleShowCancelAppointment();
+                            }}
+                          >
+                            <FaRegTimesCircle />
+                          </button>
+                          <Modal
+                            show={showCancelAppointment}
+                            onHide={handleCloseCancelAppointment}
+                          >
+                            <Modal.Header closeButton>
+                              <Modal.Title>Bạn muốn hủy lịch hẹn ?</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                              Thao tác này không thể hoàn tác!!!
+                            </Modal.Body>
+                            <Modal.Footer>
+                              <Button
+                                variant="secondary"
+                                onClick={handleCloseCancelAppointment}
+                              >
+                                Hủy
+                              </Button>
+                              <Button
+                                variant="primary"
+                                onClick={() => {
+                                  handleCloseCancelAppointment();
+                                  setStatus(item?.id, 2);
+                                }}
+                              >
+                                Xác nhận
+                              </Button>
+                            </Modal.Footer>
+                          </Modal>
+                          <Modal
+                            show={showApproveAppointment}
+                            onHide={handleCloseApproveAppointment}
+                          >
+                            <Modal.Header closeButton>
+                              <Modal.Title>
+                                Bạn muốn xác nhận cuộc hẹn ?
+                              </Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                              Thao tác này không thể hoàn tác!!!
+                            </Modal.Body>
+                            <Modal.Footer>
+                              <Button
+                                variant="secondary"
+                                onClick={handleCloseApproveAppointment}
+                              >
+                                Hủy
+                              </Button>
+                              <Button
+                                variant="primary"
+                                onClick={() => {
+                                  handleCloseApproveAppointment();
+                                  setStatus(item?.id, 1);
+                                }}
+                              >
+                                Xác nhận
+                              </Button>
+                            </Modal.Footer>
+                          </Modal>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
             </table>
           </div>
         </div>

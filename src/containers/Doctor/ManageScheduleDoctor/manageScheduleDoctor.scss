@@ -1,19 +1,30 @@
-
+@use "sass:map";
+@import "~mdb-ui-kit/css/mdb.min.css";
+@import "style/pages/theme";
+.managedoctor__content {
+  label {
+    font-weight: 700;
+    color: $color-title;
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+}
 .ShowDateButton {
   padding: 10px 15px;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
+  background-color: #fff;
+  margin-left: 20px;
 }
 // Datebox: 7 date có width: 14.28% (100/7)
 .DateBoxGroup {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-left: 0;
-    margin-right: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-left: 0;
+  margin-right: auto;
 }
-
 // .DateBox {
 //     height: 50px;
 //     border-radius: 5px;
@@ -29,29 +40,29 @@
 // DateBox.scss
 
 .DateBox {
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px;
-    margin: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 
-    p {
-      margin: 0;
-    }
-  
-    p:first-child {
-      font-weight: bold;
-      color: #333;
-      font-size: 1.2em;
-    }
-  
-    p:last-child {
-      color: #777;
-      font-size: 1em;
-    }
+  p {
+    margin: 0;
+  }
+
+  p:first-child {
+    font-weight: bold;
+    color: #333;
+    font-size: 1.2em;
+  }
+
+  p:last-child {
+    color: #777;
+    font-size: 1em;
+  }
 }
 
 .DateBox:hover {
@@ -66,7 +77,6 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-
 // Session box
 
 .SessionBoxGroup {
@@ -74,7 +84,7 @@
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: left;
+  justify-content: center;
   padding-left: 20px;
   gap: 12px;
   font-size: 1.2em;
@@ -112,16 +122,12 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-
-  
 // Timebox ở dạng ẩn
 .TimeBoxGroup {
-    // display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-left: 0;
-    margin-right: auto;
-    display: none;
+  flex-wrap: wrap;
+  gap: 12px;
+  display: none;
+  margin: 0 auto;
 }
 .TimeBoxGroupShow {
   display: flex;
@@ -162,7 +168,6 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-
 // button save schedules
 .saveScheduleBtn {
   display: flex;
@@ -188,4 +193,8 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: not-allowed;
 }
-  
+.manage_button {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
