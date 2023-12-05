@@ -87,16 +87,39 @@ const editBlog = (id_blog, id_category, id_doctor, title, content) => {
 const addSpecialty = (specialty_id, doctor_id) => {
   return instance.post("/api/specialtydoctor/", { specialty_id, doctor_id });
 };
+const deleteSpecialtyDoctor = (specialtyDoctorId) => {
+  return instance.delete("/api/specialtydoctor/" + specialtyDoctorId + "/");
+}
+const deleteSomeSpecialtyDoctor = (SpecialtyDoctorIds) => {
+  return instance.post("api/deletespecialtydoctors/", {
+    specialty_doctor_ids: SpecialtyDoctorIds, 
+  });
+};
 const getSpecialtyByName = (name, id_doctor) => {
   return instance.get(
     `/api/search_specialty666/?name=${name}&id_doctor=${id_doctor}`,
   );
 };
+const getSpecialtyByDoctorId = (id_doctor, limit = 100, offset = 0) => {
+  return instance.get(
+    `/api/specialtydoctor?doctor=${id_doctor}&limit=${limit}&offset=${offset}`,
+  );
+}
 const getServiceByName = (name, id_doctor) => {
   return instance.get(
     `/api/search_service666/?name=${name}&id_doctor=${id_doctor}`,
   );
 };
+const getServiceByDoctorId = (id_doctor, limit = 100, offset = 0) => {
+  return instance.get(
+    `/api/servicedoctors?doctor=${id_doctor}&limit=${limit}&offset=${offset}`,
+  );
+}
+const deleteSomeServiceDoctor = (ServiceDoctorIds) => {
+  return instance.post("api/deleteservicedoctors/", {
+    service_doctor_ids: ServiceDoctorIds, 
+  });
+}
 const addService = (service_id, doctor_id) => {
   return instance.post("/api/servicedoctors/", { service_id, doctor_id });
 };
@@ -120,4 +143,9 @@ export {
   getServiceByName,
   addService,
   getDoctorAppoinment,
+  deleteSpecialtyDoctor,
+  deleteSomeSpecialtyDoctor,
+  getSpecialtyByDoctorId,
+  getServiceByDoctorId,
+  deleteSomeServiceDoctor,
 };

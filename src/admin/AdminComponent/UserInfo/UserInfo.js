@@ -1,22 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import "./UserInfo.scss";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { Button, Modal } from "react-bootstrap";
 import { FaEraser, FaLock, FaUnlock } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
-class UserInfoDialogue extends React.Component {
-  // const { show, handleClose } = props;
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      isLocked: false,
-      accType: 1,
-    };
-  }
+const UserInfoDialogue = ({ close, openCPD, openULD, openUDD }) => {
+  const [isLocked, setIsLocked] = useState(false);
+  const [accType, setAccType] = useState(1);
 
-  getAccType = () => {
-    switch (this.state.accType) {
+  const getAccType = () => {
+    switch (accType) {
       case 0:
         return "Thành viên";
       case 1:
@@ -26,48 +20,43 @@ class UserInfoDialogue extends React.Component {
     }
   };
 
-  closeUID = () => {
-    const { close } = this.props;
+  const closeUID = () => {
     close("UID");
   };
 
-  openCPD = () => {
-    const { openCPD } = this.props;
+  const openChangePasswordDialogue = () => {
     openCPD();
   };
 
-  openULD = () => {
-    const { openULD } = this.props;
-    openULD(this.state.isLocked);
+  const openUserLockDialogue = () => {
+    openULD(isLocked);
   };
 
-  openUDD = () => {
-    const { openUDD } = this.props;
+  const openUserDeleteDialogue = () => {
     openUDD();
   };
-  render() {
-    return (
-      <div className="OverlayContainer">
-        <div className="Close">
-          <button id="UIDCloseButton" onClick={() => this.closeUID()}>
-            <IoClose />
-          </button>
-        </div>
-        <div className="OverlayContent">
-          <div className="UserInfoDialogueContainer">
-            <header className="UIDHeader">
-              <h3 className="bold">Thông tin người dùng</h3>
-            </header>
+
+  return (
+    <div className="OverlayContainer">
+      <div className="Close">
+        <button id="UIDCloseButton" onClick={() => closeUID()}>
+          <IoClose />
+        </button>
+      </div>
+      <div className="OverlayContent">
+        <div className="UserInfoDialogueContainer">
+          <header className="UIDHeader">
+            <h3 className="bold">Thông tin người dùng</h3>
+          </header>
+          <div className="UIDContent">
             <div className="UIDContent">
               <div className="UIDCols col-2">
                 <div className="UIDAccountStatus UIDField">
                   <span>
                     <div className="UIDLabel">Tình trạng tài khoản:</div>
                   </span>
-                  {!this.state.isLocked && (
-                    <span id="SpanUnlocked">Bình thường</span>
-                  )}
-                  {this.state.isLocked && <span id="SpanLocked">Đã khoá</span>}
+                  {!isLocked && <span id="SpanUnlocked">Bình thường</span>}
+                  {isLocked && <span id="SpanLocked">Đã khoá</span>}
                 </div>
                 <div className="UIDAccount UIDField">
                   <div className="UIDAccountLabel UIDLabel">Tên tài khoản</div>
@@ -93,10 +82,10 @@ class UserInfoDialogue extends React.Component {
                     type="text"
                     id="UIDRoleInput"
                     disabled
-                    value={"Thành viên"}
+                    value={getAccType()}
                   ></input>
                 </div>
-                {this.state.accType === 1 && (
+                {accType === 1 && (
                   <>
                     <div className="UIDKCBAddress UIDField">
                       <div className="UIDKCBAddressLabel UIDLabel">
@@ -153,7 +142,7 @@ class UserInfoDialogue extends React.Component {
                   <div className="UIDEmailLabel UIDLabel">Email</div>
                   <input type="text" id="UIDEmailInput" disabled></input>
                 </div>
-                {this.state.accType === 1 && (
+                {accType === 1 && (
                   <>
                     <div className="UIDField"></div>
                     <div className="UIDField"></div>
@@ -161,99 +150,99 @@ class UserInfoDialogue extends React.Component {
                 )}
               </div>
             </div>
-            <div className="UIDAction">
-              <button
-                className="button"
-                id="ChangePasswordButton"
-                onClick={this.openCPD}
-              >
-                <BiSolidEditAlt /> Đổi mật khẩu
+          </div>
+          <div className="UIDAction">
+            <button
+              className="button"
+              id="ChangePasswordButton"
+              onClick={openChangePasswordDialogue}
+            >
+              <BiSolidEditAlt /> Đổi mật khẩu
+            </button>
+            {!isLocked && (
+              <button id="UIDLockButton" onClick={openUserLockDialogue}>
+                <FaLock /> Khoá tài khoản
               </button>
-              {!this.state.isLocked && (
-                <button id="UIDLockButton" onClick={this.openULD}>
-                  <FaLock /> Khoá tài khoản
-                </button>
-              )}
-              {this.state.isLocked && (
-                <button id="UIDUnlockButton" onClick={this.openULD}>
-                  <FaUnlock /> Mở khoá tài khoản
-                </button>
-              )}
-              <button id="UIDDeleteButton" onClick={this.openUDD}>
-                <FaEraser />
-                Xoá tài khoản
+            )}
+            {isLocked && (
+              <button id="UIDUnlockButton" onClick={openUserLockDialogue}>
+                <FaUnlock /> Mở khoá tài khoản
               </button>
-            </div>
+            )}
+            <button id="UIDDeleteButton" onClick={openUserDeleteDialogue}>
+              <FaEraser />
+              Xoá tài khoản
+            </button>
           </div>
         </div>
       </div>
-
-      // <Modal show={show} onHide={handleClose} centered>
-      //   <Modal.Header closeButton>
-      //     <Modal.Title>Chỉnh sửa thông tin người dùng</Modal.Title>
-      //   </Modal.Header>
-      //   <Modal.Body>
-      //     <div className="UIDContent">
-      //       <div className="UIDCols col-2">
-      //         <div className="UIDAccount UIDField">
-      //           <div className="UIDAccountLabel UIDLabel">Tên tài khoản</div>
-      //           <input type="text" id="UIDAccountInput" disabled></input>
-      //         </div>
-      //         <div className="UIDName UIDField">
-      //           <div className="UIDNameLabel UIDLabel">Tên người dùng</div>
-      //           <input type="text" id="UIDNameInput"></input>
-      //         </div>
-
-      //         <div className="UIDGender UIDField">
-      //           <label htmlFor="UIDGenderSelect">Giới tính:</label>
-      //           <select id="UIDGenderSelect">
-      //             <option value="yes">Nam</option>
-      //             <option value="no">Nữ</option>
-      //           </select>
-      //         </div>
-      //         <div className="UIDRole UIDField">
-      //           <label htmlFor="UIDRoleSelect">Vai trò:</label>
-      //           <select id="UIDRoleSelect">
-      //             <option value="user">Thành viên</option>
-      //             <option value="doctor">Bác sĩ</option>
-      //           </select>
-      //         </div>
-      //       </div>
-      //       <div className="UIDCols col-2">
-      //         <div className="UIDBirthday UIDField">
-      //           <div className="UIDBirthdayLabel UIDLabel">Ngày sinh</div>
-      //           <input
-      //             type="date"
-      //             id="UIDBirthdayInput"
-      //             value={"1970-01-01"}
-      //           ></input>
-      //         </div>
-      //         <div className="UIDAddress UIDField">
-      //           <div className="UIDAddressLabel UIDLabel">Địa chỉ</div>
-      //           <input type="text" id="UIDAddressInput"></input>
-      //         </div>
-      //         <div className="UIDPhone UIDField">
-      //           <div className="UIDPhoneLabel UIDLabel">SĐT</div>
-      //           <input type="text" id="UIDPhoneInput"></input>
-      //         </div>
-      //         <div className="UIDEmail UIDField">
-      //           <div className="UIDEmailLabel UIDLabel">Email</div>
-      //           <input type="text" id="UIDEmailInput"></input>
-      //         </div>
-      //       </div>
-      //     </div>
-      //   </Modal.Body>
-      //   <Modal.Footer>
-      //     <Button variant="secondary" onClick={handleClose}>
-      //       Close
-      //     </Button>
-      //     <Button variant="primary" onClick={handleClose}>
-      //       Save Changes
-      //     </Button>
-      //   </Modal.Footer>
-      // </Modal>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default UserInfoDialogue;
+
+// <Modal show={show} onHide={handleClose} centered>
+//   <Modal.Header closeButton>
+//     <Modal.Title>Chỉnh sửa thông tin người dùng</Modal.Title>
+//   </Modal.Header>
+//   <Modal.Body>
+//     <div className="UIDContent">
+//       <div className="UIDCols col-2">
+//         <div className="UIDAccount UIDField">
+//           <div className="UIDAccountLabel UIDLabel">Tên tài khoản</div>
+//           <input type="text" id="UIDAccountInput" disabled></input>
+//         </div>
+//         <div className="UIDName UIDField">
+//           <div className="UIDNameLabel UIDLabel">Tên người dùng</div>
+//           <input type="text" id="UIDNameInput"></input>
+//         </div>
+
+//         <div className="UIDGender UIDField">
+//           <label htmlFor="UIDGenderSelect">Giới tính:</label>
+//           <select id="UIDGenderSelect">
+//             <option value="yes">Nam</option>
+//             <option value="no">Nữ</option>
+//           </select>
+//         </div>
+//         <div className="UIDRole UIDField">
+//           <label htmlFor="UIDRoleSelect">Vai trò:</label>
+//           <select id="UIDRoleSelect">
+//             <option value="user">Thành viên</option>
+//             <option value="doctor">Bác sĩ</option>
+//           </select>
+//         </div>
+//       </div>
+//       <div className="UIDCols col-2">
+//         <div className="UIDBirthday UIDField">
+//           <div className="UIDBirthdayLabel UIDLabel">Ngày sinh</div>
+//           <input
+//             type="date"
+//             id="UIDBirthdayInput"
+//             value={"1970-01-01"}
+//           ></input>
+//         </div>
+//         <div className="UIDAddress UIDField">
+//           <div className="UIDAddressLabel UIDLabel">Địa chỉ</div>
+//           <input type="text" id="UIDAddressInput"></input>
+//         </div>
+//         <div className="UIDPhone UIDField">
+//           <div className="UIDPhoneLabel UIDLabel">SĐT</div>
+//           <input type="text" id="UIDPhoneInput"></input>
+//         </div>
+//         <div className="UIDEmail UIDField">
+//           <div className="UIDEmailLabel UIDLabel">Email</div>
+//           <input type="text" id="UIDEmailInput"></input>
+//         </div>
+//       </div>
+//     </div>
+//   </Modal.Body>
+//   <Modal.Footer>
+//     <Button variant="secondary" onClick={handleClose}>
+//       Close
+//     </Button>
+//     <Button variant="primary" onClick={handleClose}>
+//       Save Changes
+//     </Button>
+//   </Modal.Footer>
+// </Modal>
