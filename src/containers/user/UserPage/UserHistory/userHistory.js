@@ -31,6 +31,8 @@ const UserHistory = () => {
   const [scheduleBook, setScheduleBook] = useState([]);
   const [scheduleComing, setScheduleComing] = useState([]);
   const [schedulePassed, setSchedulePassed] = useState([]);
+  const [update, setUpdate] = useState(false);
+  console.log(schedulePassed);
   const [rating, setRating] = useState("");
   const getBooking = async () => {
     let res = await getAppoinment();
@@ -58,6 +60,9 @@ const UserHistory = () => {
   useEffect(() => {
     getBooking();
   }, []);
+  useEffect(() => {
+    getBooking();
+  }, [update]);
   return (
     <div className="UserPageContainer">
       <div className="UserPageContent">
@@ -189,6 +194,7 @@ const UserHistory = () => {
                                         onClick={() => {
                                           handleClose();
                                           cancelSchedule(item.id);
+                                          setUpdate(!update);
                                           getBooking();
                                         }}
                                       >
@@ -287,7 +293,6 @@ const UserHistory = () => {
                 >
                   {scheduleComing.length > 0 ? (
                     <div>
-                      {" "}
                       <table class="table align-middle mb-0 bg-white history__tab_table">
                         <thead class="bg-light">
                           <tr>
@@ -466,144 +471,155 @@ const UserHistory = () => {
                         <tbody>
                           {schedulePassed &&
                             schedulePassed.map((item, index) => {
-                              <tr>
-                                <td>
-                                  <div class="d-flex align-items-center">
-                                    <img
-                                      src="https://mdbootstrap.com/img/new/avatars/8.jpg"
-                                      alt=""
-                                      class="rounded-circle"
-                                      style={{ width: "45px", height: "45px" }}
-                                    />
-                                    <div class="ms-3">
-                                      <p class="fw-bold mb-0">BS. Trần Thị A</p>
-                                      <p class="text-muted mb-0">Nha khoa</p>
-                                    </div>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div class="d-flex align-items-center">
-                                    <div class="ms-3">
-                                      <p class=" mb-0 table__name">
-                                        Bệnh viện quốc tế City
-                                      </p>
-                                    </div>
-                                  </div>
-                                </td>
-                                <td>
-                                  <p class="fw-normal mb-1">8:30 - 9:00</p>
-                                  <p class="text-muted mb-0">24/11/2023</p>
-                                </td>
-                                <td>
-                                  <p
-                                    class="fw-normal mb-1 table__address"
-                                    style={{ flexWrap: "nowrap" }}
-                                  >
-                                    Đà Nẵng
-                                  </p>
-                                </td>
-                                <td className="d-flex table__action">
-                                  <button
-                                    type="button"
-                                    class="btn btn-link btn-sm btn-rounded"
-                                    onClick={handleShowRating}
-                                  >
-                                    Vote
-                                  </button>
-                                  <button
-                                    type="button"
-                                    class="btn btn-link btn-sm btn-rounded"
-                                    onClick={handleShowSchedule}
-                                  >
-                                    Xem
-                                  </button>
-                                </td>
-                                {/* Xác nhận hủy */}
-                                <Modal
-                                  show={showRating}
-                                  onHide={handleCloseRating}
-                                >
-                                  <Modal.Header closeButton>
-                                    <Modal.Title>
-                                      Hãy cho chúng tôi biết trải nghiệm của
-                                      bạn!
-                                    </Modal.Title>
-                                  </Modal.Header>
-                                  <Modal.Body>
-                                    <div className="schedule__rating">
-                                      <ReactStars
-                                        count={5}
-                                        onChange={setRating}
-                                        size={50}
-                                        activeColor="#ffd700"
+                              return (
+                                <tr>
+                                  <td>
+                                    <div class="d-flex align-items-center">
+                                      <img
+                                        src="https://mdbootstrap.com/img/new/avatars/8.jpg"
+                                        alt=""
+                                        class="rounded-circle"
+                                        style={{
+                                          width: "45px",
+                                          height: "45px",
+                                        }}
                                       />
-                                    </div>
-                                  </Modal.Body>
-                                  <Modal.Footer>
-                                    <Button
-                                      variant="secondary"
-                                      onClick={handleCloseRating}
-                                    >
-                                      Đóng
-                                    </Button>
-                                    <Button
-                                      variant="primary"
-                                      onClick={handleCloseRating}
-                                    >
-                                      Xác nhận
-                                    </Button>
-                                  </Modal.Footer>
-                                </Modal>
-                                {/* Xem lịch hẹn */}
-                                <Modal
-                                  show={showSchedule}
-                                  onHide={handleCloseSchedule}
-                                >
-                                  <Modal.Header closeButton>
-                                    <Modal.Title>Chi tiết lịch hẹn</Modal.Title>
-                                  </Modal.Header>
-                                  <Modal.Body>
-                                    <div className="view__schedule">
-                                      <div className="view__content">
-                                        <p className="view__text">
-                                          Tên bác sĩ :
+                                      <div class="ms-3">
+                                        <p class="fw-bold mb-0">
+                                          BS. Trần Thị A
                                         </p>
-                                        <p>Phạm Sĩ Chiến</p>
-                                      </div>
-                                      <div className="view__content">
-                                        <p className="view__text">
-                                          Chuyên khoa :
-                                        </p>
-                                        <p>Đa khoa</p>
-                                      </div>
-                                      <div className="view__content">
-                                        <p className="view__text">
-                                          Bệnh viện :
-                                        </p>
-                                        <p>Phòng khám đa khoa quốc tế</p>
-                                      </div>
-                                      <div className="view__content">
-                                        <p className="view__text">
-                                          Thời gian :
-                                        </p>
-                                        <p>8:30 - 9:00 | 20/11/2002</p>
-                                      </div>
-                                      <div className="view__content">
-                                        <p className="view__text">Địa điểm :</p>
-                                        <p>182 Trần Tấn , Đà Nẵng</p>
+                                        <p class="text-muted mb-0">Nha khoa</p>
                                       </div>
                                     </div>
-                                  </Modal.Body>
-                                  <Modal.Footer>
-                                    <Button
-                                      variant="secondary"
-                                      onClick={handleCloseSchedule}
+                                  </td>
+                                  <td>
+                                    <div class="d-flex align-items-center">
+                                      <div class="ms-3">
+                                        <p class=" mb-0 table__name">
+                                          Bệnh viện quốc tế City
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <p class="fw-normal mb-1">8:30 - 9:00</p>
+                                    <p class="text-muted mb-0">24/11/2023</p>
+                                  </td>
+                                  <td>
+                                    <p
+                                      class="fw-normal mb-1 table__address"
+                                      style={{ flexWrap: "nowrap" }}
                                     >
-                                      Đóng
-                                    </Button>
-                                  </Modal.Footer>
-                                </Modal>
-                              </tr>;
+                                      Đà Nẵng
+                                    </p>
+                                  </td>
+                                  <td className="d-flex table__action">
+                                    <button
+                                      type="button"
+                                      class="btn btn-link btn-sm btn-rounded"
+                                      onClick={handleShowRating}
+                                    >
+                                      Vote
+                                    </button>
+                                    <button
+                                      type="button"
+                                      class="btn btn-link btn-sm btn-rounded"
+                                      onClick={handleShowSchedule}
+                                    >
+                                      Xem
+                                    </button>
+                                  </td>
+                                  {/* Xác nhận hủy */}
+                                  <Modal
+                                    show={showRating}
+                                    onHide={handleCloseRating}
+                                  >
+                                    <Modal.Header closeButton>
+                                      <Modal.Title>
+                                        Hãy cho chúng tôi biết trải nghiệm của
+                                        bạn!
+                                      </Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>
+                                      <div className="schedule__rating">
+                                        <ReactStars
+                                          count={5}
+                                          onChange={setRating}
+                                          size={50}
+                                          activeColor="#ffd700"
+                                        />
+                                      </div>
+                                    </Modal.Body>
+                                    <Modal.Footer>
+                                      <Button
+                                        variant="secondary"
+                                        onClick={handleCloseRating}
+                                      >
+                                        Đóng
+                                      </Button>
+                                      <Button
+                                        variant="primary"
+                                        onClick={handleCloseRating}
+                                      >
+                                        Xác nhận
+                                      </Button>
+                                    </Modal.Footer>
+                                  </Modal>
+                                  {/* Xem lịch hẹn */}
+                                  <Modal
+                                    show={showSchedule}
+                                    onHide={handleCloseSchedule}
+                                  >
+                                    <Modal.Header closeButton>
+                                      <Modal.Title>
+                                        Chi tiết lịch hẹn
+                                      </Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>
+                                      <div className="view__schedule">
+                                        <div className="view__content">
+                                          <p className="view__text">
+                                            Tên bác sĩ :
+                                          </p>
+                                          <p>Phạm Sĩ Chiến</p>
+                                        </div>
+                                        <div className="view__content">
+                                          <p className="view__text">
+                                            Chuyên khoa :
+                                          </p>
+                                          <p>Đa khoa</p>
+                                        </div>
+                                        <div className="view__content">
+                                          <p className="view__text">
+                                            Bệnh viện :
+                                          </p>
+                                          <p>Phòng khám đa khoa quốc tế</p>
+                                        </div>
+                                        <div className="view__content">
+                                          <p className="view__text">
+                                            Thời gian :
+                                          </p>
+                                          <p>8:30 - 9:00 | 20/11/2002</p>
+                                        </div>
+                                        <div className="view__content">
+                                          <p className="view__text">
+                                            Địa điểm :
+                                          </p>
+                                          <p>182 Trần Tấn , Đà Nẵng</p>
+                                        </div>
+                                      </div>
+                                    </Modal.Body>
+                                    <Modal.Footer>
+                                      <Button
+                                        variant="secondary"
+                                        onClick={handleCloseSchedule}
+                                      >
+                                        Đóng
+                                      </Button>
+                                    </Modal.Footer>
+                                  </Modal>
+                                </tr>
+                              );
                             })}
                         </tbody>
                       </table>

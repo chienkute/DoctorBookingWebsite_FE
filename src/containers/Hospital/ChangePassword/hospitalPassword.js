@@ -1,17 +1,27 @@
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { AiFillEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import "./hospitalPassword.scss";
 import { useNavigate, useParams } from "react-router-dom";
-import { changePassword } from "service/UserService";
+import { changePassword, getHospitalByID } from "service/UserService";
 const HospitalPassword = () => {
   const { id } = useParams();
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowConfPassword, setIsShowConfPassword] = useState(false);
   const [isShowNewPassword, setisShowNewPassword] = useState(false);
+  const [idAccount, setIdAccount] = useState("");
   const navigate = useNavigate();
+  useEffect(() => {
+    const getInfoHospital = async () => {
+      let res = await getHospitalByID(id);
+      if (res && res?.account) {
+        setIdAccount(res?.account?.id);
+      }
+    };
+    getInfoHospital();
+  }, []);
   const formik = useFormik({
     initialValues: {
       password: "",
@@ -34,8 +44,13 @@ const HospitalPassword = () => {
         ),
     }),
     onSubmit: async (values) => {
-      const res = await changePassword(values.password, values.newpasswd, id);
+      const res = await changePassword(
+        values.password,
+        values.newpasswd,
+        idAccount,
+      );
       if (res) {
+        console.log(res);
         toast.success("Đổi mật khẩu thành công");
         navigate(`/hospital/information/${id}`);
       } else {

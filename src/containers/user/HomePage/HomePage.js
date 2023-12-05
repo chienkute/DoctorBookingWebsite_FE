@@ -70,7 +70,7 @@ function App() {
               <div className="NewsLarge2ItemsContainer">
                 <ul className="clear NewsLarge2Items flex-center">
                   {blog &&
-                    blog.slice(0, 2).map((item, index) => {
+                    blog.slice(4, 7).map((item, index) => {
                       return (
                         <ItemLarge
                           key={index}
@@ -82,6 +82,8 @@ function App() {
                           doctor={item?.id_doctor?.name}
                           id_doctor={item?.id_doctor?.id}
                           content={item?.content}
+                          image={item?.picture}
+                          avatar={item?.id_doctor?.account?.avatar}
                         ></ItemLarge>
                       );
                     })}
@@ -89,9 +91,24 @@ function App() {
               </div>
               <div className="NewsLarge3ItemsContainer">
                 <ul className="clear NewsLarge3Items flex-center">
-                  <ItemSmall></ItemSmall>
-                  <ItemSmall></ItemSmall>
-                  <ItemSmall></ItemSmall>
+                  {blog &&
+                    blog.slice(1, 4).map((item, index) => {
+                      return (
+                        <ItemSmall
+                          key={index}
+                          title={item?.title}
+                          id_blog={item?.id}
+                          category={item?.id_category?.name}
+                          id_category={item?.id_category?.id}
+                          date={item?.created_at}
+                          doctor={item?.id_doctor?.name}
+                          id_doctor={item?.id_doctor?.id}
+                          content={item?.content}
+                          image={item?.picture}
+                          avatar={item?.id_doctor?.account?.avatar}
+                        ></ItemSmall>
+                      );
+                    })}
                 </ul>
               </div>
             </div>

@@ -1,17 +1,27 @@
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import "./changePasswordDoctor.scss";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { AiFillEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
-import { changePassword } from "service/UserService";
+import { changePassword, getDoctorByID } from "service/UserService";
 const ChangePasswordDoctor = () => {
   const { id } = useParams();
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowConfPassword, setIsShowConfPassword] = useState(false);
   const [isShowNewPassword, setisShowNewPassword] = useState(false);
+  const [idAccount, setIdAccount] = useState("");
   const navigate = useNavigate();
+  const getInfoDoctor = async () => {
+    let res = await getDoctorByID(id);
+    if (res) {
+      setIdAccount(res?.account?.id);
+    }
+  };
+  useEffect(() => {
+    getInfoDoctor();
+  }, []);
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -35,10 +45,14 @@ const ChangePasswordDoctor = () => {
         ),
     }),
     onSubmit: async (values) => {
-      const res = await changePassword(values.password, values.newpasswd, id);
+      const res = await changePassword(
+        values.password,
+        values.newpasswd,
+        idAccount,
+      );
       if (res) {
         toast.success("Đổi mật khẩu thành công");
-        // navigate(`/doctor/information/${id}`);
+        navigate(`/doctor/information/${id}`);
       } else {
         toast.error("Đổi mật khẩu thất bại");
       }

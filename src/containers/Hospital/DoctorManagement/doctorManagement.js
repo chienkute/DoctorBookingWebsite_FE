@@ -1,15 +1,13 @@
 import { memo, useEffect, useRef, useState } from "react";
 import "./doctorManagement.scss";
 import { FaEraser } from "react-icons/fa6";
-import { FiEdit3 } from "react-icons/fi";
+// import { FiEdit3 } from "react-icons/fi";
 import { IoInformation } from "react-icons/io5";
 import { FaRegCheckSquare } from "react-icons/fa";
-import avatar from "../../../assets/avatar.png";
+// import avatar from "../../../assets/avatar.png";
 import { Button, Modal } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import Form from "react-bootstrap/Form";
-import ReactQuill from "react-quill";
 import ReactPaginate from "react-paginate";
 import { useDebounce } from "@uidotdev/usehooks";
 import { searchDoctor } from "service/UserService";
@@ -31,11 +29,14 @@ const DoctorManagement = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowConfPassword, setIsShowConfPassword] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [update, setUpdate] = useState(false);
   const [doctor, setDoctor] = useState([]);
   const [cout, setCount] = useState("");
   const [query, setQuery] = useState("");
   const queryDebounce = useDebounce(query, 500);
   const [usernameDefault, setUsernameDefault] = useState("");
+  // const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const getDoctorById = async () => {
     let res = await searchDoctor(queryDebounce, "", id, "", "");
     if (res) {
@@ -49,10 +50,10 @@ const DoctorManagement = () => {
   }, []);
   useEffect(() => {
     getDoctorById();
-  }, [queryDebounce, edit]);
-  const handleImageClick = () => {
-    inputRef.current.click();
-  };
+  }, [queryDebounce]);
+  useEffect(() => {
+    getDoctorById();
+  }, [update]);
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -95,8 +96,8 @@ const DoctorManagement = () => {
       }
     },
   });
-  const inputRef = useRef(null);
-  const [value, setValue] = useState("");
+  // const inputRef = useRef(null);
+  // const [value, setValue] = useState("");
   return (
     <div className="management">
       <div className="management__header">
@@ -230,6 +231,8 @@ const DoctorManagement = () => {
               onClick={() => {
                 handleCloseAddNewDoctor();
                 formik.handleSubmit();
+                getDoctorById();
+                setUpdate(!update);
               }}
             >
               Lưu
@@ -269,10 +272,10 @@ const DoctorManagement = () => {
                           display: "block",
                         }}
                       >
-                        <p>{item.name || "Chưa có tên"}</p>
+                        <p>{item?.name || "Chưa có tên"}</p>
                       </td>
-                      <td>hoanganh07</td>
-                      <td>doctor1@gmail.com</td>
+                      <td>{item?.account?.username}</td>
+                      <td>{item?.account?.email}</td>
                       <td>
                         <div className="Action">
                           <button
@@ -280,6 +283,8 @@ const DoctorManagement = () => {
                             onClick={() => {
                               handleShowEditDoctor();
                               setEdit(true);
+                              setUsernameDefault(item?.account?.username);
+                              setEmail(item?.account?.email);
                             }}
                           >
                             <IoInformation />
@@ -335,34 +340,9 @@ const DoctorManagement = () => {
                                       id="username"
                                       class="form-control"
                                       autoComplete="off"
+                                      defaultValue={usernameDefault}
                                       disabled
                                     />
-                                  </div>
-                                  <div className="form__col">
-                                    <label htmlFor="">Mật khẩu</label>
-                                    <div className="form__login_in">
-                                      <input
-                                        id="password"
-                                        type={`${
-                                          isShowPassword ? "text" : "password"
-                                        }`}
-                                        class="form-control changePassword__form_input"
-                                        autoComplete="off"
-                                        disabled
-                                      />
-                                      <div
-                                        onClick={() =>
-                                          setIsShowPassword(!isShowPassword)
-                                        }
-                                        className="changePassword__form_icon"
-                                      >
-                                        {isShowPassword ? (
-                                          <AiFillEye />
-                                        ) : (
-                                          <AiOutlineEyeInvisible />
-                                        )}
-                                      </div>
-                                    </div>
                                   </div>
                                   <div className="form__col">
                                     <label htmlFor="">Email</label>
@@ -371,6 +351,7 @@ const DoctorManagement = () => {
                                       id="email"
                                       class="form-control"
                                       autoComplete="off"
+                                      defaultValue={email}
                                       disabled
                                     />
                                   </div>

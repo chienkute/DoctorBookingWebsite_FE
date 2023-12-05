@@ -4,11 +4,10 @@ import avatar from "../../../assets/avatar.jpg";
 import upload from "../../../assets/upload 1.svg";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-// import { toast } from "react-toastify";
 import "react-quill/dist/quill.snow.css";
-import ReactQuill from "react-quill";
+// import ReactQuill from "react-quill";
 import { UpdateContext } from "context/UpdateContext";
-import { getHospitalByID } from "service/UserService";
+import { editAvatar, getHospitalByID } from "service/UserService";
 import { useParams } from "react-router-dom";
 import { editHospital } from "service/HospitalService";
 import { toast } from "react-toastify";
@@ -20,43 +19,52 @@ const InfoHospital = () => {
   const [edit, setEdit] = useState(true);
   const [name, setName] = useState("");
   const [adress, setAdress] = useState("");
-  const [phone, setPhone] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [info, setInfo] = useState("");
-  //   [{ header: 1 }, { header: 2 }], // custom button values
-  //   [{ list: "ordered" }, { list: "bullet" }],
-  //   [{ script: "sub" }, { script: "super" }], // superscript/subscript
-  //   [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-  //   [{ direction: "rtl" }], // text direction
-
-  //   [{ size: ["small", false, "large", "huge"] }], // custom dropdown
-  //   [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
-  //   [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-  //   [{ font: [] }],
-  //   [{ align: [] }],
-
-  //   ["clean"],
-  // ];
+  const [image, setImage] = useState("");
+  const [imageUpdate, setImageUpdate] = useState([]);
+  const [idAccount, setIdAccount] = useState("");
+  const [imageOld, setImageOld] = useState("");
+  const [formData, setFormData] = useState(new FormData());
   const getInfoHospital = async () => {
     let res = await getHospitalByID(id);
     if (res && res?.account) {
       console.log(res);
       setName(res?.name);
       setAdress(res?.address);
-      setPhone(res?.phone);
+      setUsername(res?.account?.username);
       setEmail(res?.email);
       setInfo(res?.info);
+      setIdAccount(res?.account?.id);
+      setImageOld(res?.account?.avatar);
     }
   };
   useEffect(() => {
     getInfoHospital();
   }, []);
+  const editAvatarUser = async () => {
+    let res = await editAvatar(idAccount, formData);
+    if (res) {
+      console.log(res);
+    }
+  };
+  useEffect(() => {
+    if (imageUpdate !== null) {
+      const updatedFormData = new FormData();
+      updatedFormData.append("avatar", imageUpdate);
+      setFormData(updatedFormData);
+    }
+  }, [imageUpdate]);
   useEffect(() => {
     getInfoHospital();
   }, [update]);
   const handleImageClick = () => {
     inputRef.current.click();
+  };
+  const handleImageChange = (event) => {
+    setImageUpdate(event.target.files[0]);
+    setImage(URL.createObjectURL(event.target.files[0]));
   };
   const handleCallAPI = () => {
     setUpdate(!update);
@@ -66,15 +74,12 @@ const InfoHospital = () => {
     initialValues: {
       name: name,
       address: adress,
-      phone: phone,
       email: email,
       info: info,
+      username: username,
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Bạn chưa nhập tên bệnh viện"),
-      phone: Yup.string()
-        .required("Bạn chưa nhập số điện thoại")
-        .min(9, "Số điện thoại ít nhất phải hơn 9 chữ số"),
       address: Yup.string().required("Bạn chưa nhập địa chỉ"),
       email: Yup.string()
         .required("Bạn chưa nhập email")
@@ -82,6 +87,7 @@ const InfoHospital = () => {
           /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
           "Vui lòng nhập đúng địa chỉ email",
         ),
+      info: Yup.string().required("Bạn chưa nhập thông tin"),
     }),
     onSubmit: (values) => {
       const Edit = async () => {
@@ -90,7 +96,7 @@ const InfoHospital = () => {
           values.name,
           values.email,
           values.address,
-          "Bệnh viện tư nhân",
+          values.info,
         );
         if (res) {
           console.log(res);
@@ -100,6 +106,7 @@ const InfoHospital = () => {
         }
       };
       Edit();
+      editAvatarUser();
     },
   });
   return (
@@ -108,18 +115,37 @@ const InfoHospital = () => {
       <div className="information__hospital_header">
         <div className="information__header_content">
           <div className="information__avatar">
-            <img src={avatar} alt="" />
+            {imageOld ? (
+              <img src={imageOld} alt="BlogImg" className="avatarAfter"></img>
+            ) : image ? (
+              <img src={image} alt="BlogImg" className="avatarBefore"></img>
+            ) : (
+              <img src={avatar} alt="BlogImg" className="avatarBefore"></img>
+            )}
           </div>
           <div className="information__upload">
             <div style={{ fontSize: "18px" }}>Ảnh đại diện</div>
-            <input type="file" style={{ display: "none" }} ref={inputRef} />
-            <button className="btn button" onClick={handleImageClick}>
-              <img src={upload} alt="" />
-              Tải ảnh lên
-            </button>
+            <input
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              ref={inputRef}
+              onChange={handleImageChange}
+            />
+            {edit ? (
+              <button className="btn button">
+                <img src={upload} alt="" />
+                Tải ảnh lên
+              </button>
+            ) : (
+              <button className="btn button" onClick={handleImageClick}>
+                <img src={upload} alt="" />
+                Tải ảnh lên
+              </button>
+            )}
           </div>
         </div>
-        <div className="information__header_content">
+        {/* <div className="information__header_content">
           <div className="information__page">
             <img src={avatar} alt="" />
           </div>
@@ -131,7 +157,7 @@ const InfoHospital = () => {
               Tải ảnh lên
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
       <form>
         <div className="information__content">
@@ -187,20 +213,15 @@ const InfoHospital = () => {
           </div>
           <div className="information__content2">
             <div className="information__name">
-              <label htmlFor="">Số điện thoại</label>
+              <label htmlFor="">Tài khoản</label>
               <input
                 type="text"
                 id="phone"
                 placeholder="Số điện thoại"
                 class="form-control"
-                value={formik.values.phone}
-                disabled={edit ? true : false}
-                onChange={formik.handleChange}
-                {...formik.getFieldProps("phone")}
+                value={formik.values.username}
+                disabled
               />
-              <div className="form__error">
-                {formik.touched.phone && formik.errors.phone}
-              </div>
             </div>
             <div className="information__name">
               <label htmlFor="">Email</label>
@@ -219,19 +240,6 @@ const InfoHospital = () => {
                 {formik.touched.email && formik.errors.email}
               </div>
             </div>
-            {/* <div className="information__name">
-              <label htmlFor="">Chuyên khoa</label>
-              <ReactQuill
-                // modules={module}
-                theme="snow"
-                value={value}
-                onChange={setValue}
-                // defaultValue={formik.values.info}
-                placeholder={"Thêm chuyên khoa của bạn ....."}
-                readOnly={edit ? true : false}
-                // {...formik.getFieldProps("info")}
-              />
-            </div> */}
           </div>
         </div>
         {edit ? (

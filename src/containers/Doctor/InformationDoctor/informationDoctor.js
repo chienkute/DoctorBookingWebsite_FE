@@ -7,10 +7,9 @@ import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { UpdateContext } from "context/UpdateContext";
-import { getDoctorByID } from "service/UserService";
+import { editAvatar, getDoctorByID } from "service/UserService";
 import { Form } from "react-bootstrap";
 import { editDoctorInformation } from "service/DoctorService";
-
 const InformationDoctor = () => {
   const { id } = useParams();
   const { update, setUpdate } = useContext(UpdateContext);
@@ -25,9 +24,19 @@ const InformationDoctor = () => {
   const [gender, setGender] = useState("");
   const [year, setYear] = useState("");
   const [birthday, setBirthday] = useState("");
-  // const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [image, setImage] = useState("");
+  const [imageUpdate, setImageUpdate] = useState([]);
+  const [idAccount, setIdAccount] = useState("");
+  const [imageOld, setImageOld] = useState("");
+  const [formData, setFormData] = useState(new FormData());
   const handleImageClick = () => {
     inputRef.current.click();
+  };
+  const handleImageChange = (event) => {
+    setImageUpdate(event.target.files[0]);
+    setImage(URL.createObjectURL(event.target.files[0]));
   };
   const getInfoDoctor = async () => {
     let res = await getDoctorByID(id);
@@ -38,23 +47,37 @@ const InformationDoctor = () => {
       setYear(res?.years_of_experience);
       setBirthday(res?.birthday);
       setGender(res?.gender);
+      setIdAccount(res?.account?.id);
+      setImageOld(res?.account?.avatar);
+      setEmail(res?.account?.email);
+      setUsername(res?.account?.username);
     }
   };
   useEffect(() => {
     getInfoDoctor();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     getInfoDoctor();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [update]);
+  useEffect(() => {
+    if (imageUpdate !== null) {
+      const updatedFormData = new FormData();
+      updatedFormData.append("avatar", imageUpdate);
+      setFormData(updatedFormData);
+    }
+  }, [imageUpdate]);
+  const editAvatarUser = async () => {
+    let res = await editAvatar(idAccount, formData);
+    if (res) {
+      console.log(res);
+    }
+  };
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       name: name,
       address: adress,
       phone: phone,
-      // email: email,
       year: year,
       birthday: birthday,
       gender: gender,
@@ -66,12 +89,6 @@ const InformationDoctor = () => {
         .min(9, "Số điện thoại ít nhất phải hơn 9 chữ số"),
       address: Yup.string().required("Bạn chưa nhập địa chỉ"),
       year: Yup.string().required("Bạn chưa nhập số năm làm việc"),
-      // email: Yup.string()
-      //   .required("Bạn chưa nhập email")
-      //   .matches(
-      //     /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-      //     "Vui lòng nhập đúng địa chỉ email",
-      //   ),
     }),
     onSubmit: (values) => {
       const Edit = async () => {
@@ -92,6 +109,7 @@ const InformationDoctor = () => {
         }
       };
       Edit();
+      editAvatarUser();
     },
   });
   return (
@@ -99,21 +117,51 @@ const InformationDoctor = () => {
       <h1>Hồ sơ cá nhân</h1>
       <div className="information__header">
         <div className="information__avatar">
-          <img src={avatar} alt="" />
+          {image ? (
+            <img src={image} alt="BlogImg" className="avatarAfter"></img>
+          ) : imageOld ? (
+            <img src={imageOld} alt="BlogImg" className="avatarBefore"></img>
+          ) : (
+            <img src={avatar} alt="BlogImg" className="avatarBefore"></img>
+          )}
         </div>
         <div className="information__upload">
           <div style={{ fontSize: "18px" }}>Ảnh đại diện</div>
-          <input type="file" style={{ display: "none" }} ref={inputRef} />
-          <button className="btn button" onClick={handleImageClick}>
-            <img src={upload} alt="" />
-            Tải ảnh lên
-          </button>
+          <input
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            ref={inputRef}
+            onChange={handleImageChange}
+          />
+          {edit ? (
+            <button className="btn button">
+              <img src={upload} alt="" />
+              Tải ảnh lên
+            </button>
+          ) : (
+            <button className="btn button" onClick={handleImageClick}>
+              <img src={upload} alt="" />
+              Tải ảnh lên
+            </button>
+          )}
           <div>Cho phép tệp loại JPG, GIF hoặc PNG. Kích cỡ 2MB</div>
         </div>
       </div>
       <form>
         <div className="information__content">
           <div className="information__content1">
+            <div className="information__name">
+              <label htmlFor="">Tài khoản</label>
+              <input
+                type="email"
+                id="email"
+                className="form-control"
+                defaultValue={username}
+                disabled
+                autoComplete="off"
+              />
+            </div>
             <div className="information__name">
               <label htmlFor="">Tên bác sĩ</label>
               <input
@@ -122,7 +170,6 @@ const InformationDoctor = () => {
                 placeholder="Nhập tên bác sĩ"
                 className="form-control"
                 value={formik.values.name}
-                // defaultValue={formik.values.name}
                 onChange={formik.handleChange}
                 disabled={edit ? true : false}
                 {...formik.getFieldProps("name")}
@@ -156,10 +203,7 @@ const InformationDoctor = () => {
                   type="date"
                   name="birthday"
                   id="birthday"
-                  // defaultValue={startDate}
-                  // onChange={(e) => {
-                  //   setStartDate(e.target.value);
-                  // }}
+                  disabled={edit ? true : false}
                   value={formik.values.birthday}
                   onChange={formik.handleChange}
                   {...formik.getFieldProps("birthday")}
@@ -169,6 +213,17 @@ const InformationDoctor = () => {
             </div>
           </div>
           <div className="information__content2">
+            <div className="information__name">
+              <label htmlFor="">Email</label>
+              <input
+                type="email"
+                id="email"
+                className="form-control"
+                defaultValue={email}
+                disabled
+                autoComplete="off"
+              />
+            </div>
             <div className="information__name">
               <label htmlFor="">Số điện thoại</label>
               <input
@@ -185,23 +240,6 @@ const InformationDoctor = () => {
                 {formik.touched.phone && formik.errors.phone}
               </div>
             </div>
-            {/* <div className="information__name">
-              <label htmlFor="">Email</label>
-              <input
-                type="email"
-                id="email"
-                placeholder="Nhập email của bạn"
-                className="form-control"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                disabled={edit ? true : false}
-                {...formik.getFieldProps("email")}
-                autoComplete="off"
-              />
-              <div className="form__error">
-                {formik.touched.email && formik.errors.email}
-              </div>
-            </div> */}
             <div className="information__name">
               <label htmlFor="">Giới tính</label>
               <Form.Select
@@ -210,9 +248,6 @@ const InformationDoctor = () => {
                 id="gender"
                 name="gender"
                 disabled={edit ? true : false}
-                // onChange={(e) => {
-                //   setGender(e.target.value);
-                // }}
                 value={formik.values.gender}
                 onChange={formik.handleChange}
                 {...formik.getFieldProps("gender")}

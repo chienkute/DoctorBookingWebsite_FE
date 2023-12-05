@@ -12,7 +12,11 @@ import { useParams } from "react-router";
 import { toast } from "react-toastify";
 import { UpdateContext } from "context/UpdateContext";
 import { fetchAllService } from "service/UserService";
-import { addService, getServiceByDoctorId, deleteSomeServiceDoctor } from "service/DoctorService";
+import {
+  addService,
+  getServiceByDoctorId,
+  deleteSomeServiceDoctor,
+} from "service/DoctorService";
 const ManageService = () => {
   const { id } = useParams();
   const { update, setUpdate } = useContext(UpdateContext);
@@ -23,7 +27,6 @@ const ManageService = () => {
   const handleCloseDeleteBlog = () => setShowDeleteBlog(false);
   const handleShowDeleteBlog = () => setShowDeleteBlog(true);
   const [query, setQuery] = useState("");
-  // const [service, setService] = useState([]);
   const [serviceDoctors, setServiceDoctors] = useState([]);
   const [allService, setAllService] = useState([]);
   const [selectService, setSelectService] = useState("");
@@ -32,12 +35,11 @@ const ManageService = () => {
   const queryDebounce = useDebounce(query, 500);
   const [defaultValue, setDefaultValue] = useState("");
   const [defaultDescribe, setDefaultDescribe] = useState("");
+  const [icon, setIcon] = useState("");
   const searchService = async () => {
-    // let res = await getServiceByName(queryDebounce, id);
     let res = await getServiceByDoctorId(id);
     if (res) {
       console.log(res);
-      // setService(res?.results);
       setServiceDoctors(res?.results);
       setCount(res?.count);
     }
@@ -58,6 +60,9 @@ const ManageService = () => {
       toast.error("Thêm thất bại");
     }
   };
+  const filteredCategories = serviceDoctors.filter((item) =>
+    item?.service?.name.toLowerCase().includes(query.toLowerCase()),
+  );
   const deleteServiceDoctors = async (serviceDoctorIds) => {
     let res = await deleteSomeServiceDoctor(serviceDoctorIds);
     if (res) {
@@ -70,11 +75,10 @@ const ManageService = () => {
   };
   useEffect(() => {
     searchService();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryDebounce]);
   useEffect(() => {
     getAllService();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    searchService();
   }, []);
   return (
     <div>
@@ -123,7 +127,16 @@ const ManageService = () => {
         <div className="management__content">
           <div className="AdminUserResult">
             <div className="ResultPerTable">
-              <label for="dropdown">Có {count} kết quả tìm được</label>
+              {/* <label for="dropdown">Có {count} kết quả tìm được</label> */}
+              <button
+                className="btn button mt-4"
+                onClick={async () => {
+                  console.log(choosedCheckboxs);
+                  deleteServiceDoctors(choosedCheckboxs);
+                }}
+              >
+                Xoá các mục đã chọn
+              </button>
             </div>
             <div className="Table">
               <table>
@@ -134,30 +147,34 @@ const ManageService = () => {
                   <th>STT</th>
                   <th>Tên</th>
                   <th>Ảnh</th>
-                  <th>Giá tiền</th>
                   <th>Hành động</th>
                 </tr>
                 {serviceDoctors &&
                   serviceDoctors.length > 0 &&
-                  serviceDoctors.map((item, index) => {
+                  filteredCategories.map((item, index) => {
                     return (
                       <tr key={item.id}>
                         <td>
-                          <input type="checkbox"
+                          <input
+                            type="checkbox"
                             onChange={(e) => {
                               if (e.target.checked) {
                                 setChoosedCheckboxs((prevChoosedCheckboxs) => {
-                                  console.log("prevChoosedCheckboxs", prevChoosedCheckboxs);
-                                  return [
-                                  ...prevChoosedCheckboxs,
-                                  item.id,
-                                ]});
+                                  console.log(
+                                    "prevChoosedCheckboxs",
+                                    prevChoosedCheckboxs,
+                                  );
+                                  return [...prevChoosedCheckboxs, item.id];
+                                });
                               } else {
                                 setChoosedCheckboxs((prevChoosedCheckboxs) => {
-                                  console.log("prevChoosedCheckboxs", prevChoosedCheckboxs);
+                                  console.log(
+                                    "prevChoosedCheckboxs",
+                                    prevChoosedCheckboxs,
+                                  );
                                   return prevChoosedCheckboxs.filter(
                                     (prevChoosedCheckbox) =>
-                                      prevChoosedCheckbox !== item.id
+                                      prevChoosedCheckbox !== item.id,
                                   );
                                 });
                               }
@@ -170,12 +187,11 @@ const ManageService = () => {
                         </td>
                         <td>
                           <img
-                            src={avatar}
+                            src={item?.service?.icon || avatar}
                             alt=""
                             style={{ height: "50px", width: "50x" }}
                           />
                         </td>
-                        <td>23.000</td>
                         <td>
                           <div className="Action">
                             <button
@@ -184,6 +200,7 @@ const ManageService = () => {
                                 handleShowEditBlog();
                                 setDefaultValue(item?.service.name);
                                 setDefaultDescribe(item?.service.descripe);
+                                setIcon(item?.service?.icon);
                               }}
                             >
                               <IoInformation />
@@ -202,7 +219,7 @@ const ManageService = () => {
                                     <div className="form__avatar">
                                       <label htmlFor="">Ảnh dịch vụ</label>
                                       <div className="form__image">
-                                        <img src={avatar} alt="" />
+                                        <img src={icon || avatar} alt="" />
                                       </div>
                                     </div>
                                     <div>
@@ -290,15 +307,15 @@ const ManageService = () => {
               </table>
             </div>
           </div>
-          <button
+          {/* <button
             className="btn button mt-4"
-            onClick={ async () => {
+            onClick={async () => {
               console.log(choosedCheckboxs);
               deleteServiceDoctors(choosedCheckboxs);
             }}
           >
             Xoá các mục đã chọn
-          </button>
+          </button> */}
         </div>
         <div className="management__pagination">
           <ReactPaginate
