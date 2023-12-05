@@ -2,13 +2,11 @@ import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "./AdminChangePassword.scss";
-
 class AdminChangePasswordDialogue extends React.Component {
   closeCPD = () => {
     const { close } = this.props;
     close("CPD");
   };
-
   render() {
     const initialValues = {
       newPassword: "",
@@ -74,7 +72,6 @@ class AdminChangePasswordDialogue extends React.Component {
                       />
                     </div>
                   </div>
-
                   <div className="ACPDActions">
                     <div className="ACPDWarning bold">
                       Bạn chắc chắn muốn đổi mật khẩu chứ?{" "}
