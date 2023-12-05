@@ -2,7 +2,6 @@ import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "./AdminChangePassword.scss";
-
 const AdminChangePasswordDialogue = (props) => {
   const closeCPD = () => {
     const { close } = props;
@@ -24,7 +23,6 @@ const AdminChangePasswordDialogue = (props) => {
   const onSubmit = (values) => {
     console.log(values);
   };
-
   return (
     <div className="OverlayContainer">
       <div className="Close"></div>
@@ -76,7 +74,6 @@ const AdminChangePasswordDialogue = (props) => {
                     />
                   </div>
                 </div>
-
                 <div className="ACPDActions">
                   <div className="ACPDWarning bold">
                     Bạn chắc chắn muốn đổi mật khẩu chứ?{" "}
