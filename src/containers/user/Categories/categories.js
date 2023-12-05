@@ -73,7 +73,7 @@ const Categories = () => {
                       key={index}
                     >
                       <div>
-                        <img src={categoriesimage1} alt="" />
+                        <img src={item?.icon || categoriesimage1} alt="" />
                       </div>
                       <p>{item.name}</p>
                     </Link>

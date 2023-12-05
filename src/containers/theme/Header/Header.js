@@ -70,7 +70,7 @@ const Header = () => {
   const { show, setShow, nodeRef } = useClickOutSide();
   const [specialty, setSpecialty] = useState([]);
   const [categories, setCategories] = useState([]);
-  const specialtySlice = specialty.slice(0, 5);
+  const specialtySlice = specialty.slice(0, 6);
   const getSpecialty = async () => {
     let res = await fetchAllSpecialties();
     if (res) {
@@ -132,7 +132,7 @@ const Header = () => {
                   </li>
                   {categories &&
                     categories.length > 0 &&
-                    categories.slice(0, 7).map((item, index) => {
+                    categories.slice(0, 6).map((item, index) => {
                       return (
                         <li
                           key={index}
@@ -273,7 +273,7 @@ const Header = () => {
                   </li>
                   {specialtySlice &&
                     specialtySlice.length > 0 &&
-                    specialtySlice.slice(0, 7).map((item, index) => {
+                    specialtySlice.map((item, index) => {
                       return (
                         <li
                           onClick={() => {

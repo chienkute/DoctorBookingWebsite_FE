@@ -40,9 +40,9 @@ const Specialties = () => {
                     to={`/care/searchDoctor/${item.id}/${item.name}`}
                   >
                     <div>
-                      <img src={specialtiesImage} alt="" />
+                      <img src={item?.icon || specialtiesImage} alt="" />
                     </div>
-                    <p>{item.name}</p>
+                    <p>{item?.name}</p>
                   </Link>
                 );
               })}

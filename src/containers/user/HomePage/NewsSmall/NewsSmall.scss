@@ -14,7 +14,7 @@
 
 .NewsSmallLink {
   position: absolute;
-  left: 220px;
+  left: 300px;
   bottom: 0px;
   p {
     color: rgb(45, 135, 243);
@@ -34,7 +34,7 @@
   padding: 8px;
 }
 
-.NewsSmallContent .NewsItem > .NewsImage {
+.NewsSmallContent .NewsItem {
   width: 150%;
 }
 
@@ -46,7 +46,8 @@
 .NewsInfo {
   display: flex;
   flex-direction: column;
-  margin-top: -3px;
+  margin-top: -10px;
+  margin-left: 10px;
 }
 
 .NewsSmallContent .NewsItem .NewsTitle,
@@ -65,21 +66,37 @@
   align-items: center;
 }
 
-.NewsSmallContent .NewsItem .NewsAuthorAndTime > a > img {
+.NewsSmallContent1 .NewsItem .NewsAuthorAndTime > a > img {
   height: 20px;
   object-fit: contain;
   margin-right: 4px;
 }
 .NewsItem {
-  margin-left: -7px !important;
+  margin-left: -5px !important;
 }
-.NewsContent {
+.NewsContent1 {
+  width: 80%;
   span {
     font-size: $fs-normal-text;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    h1 {
+      font-size: 18px;
+      font-weight: bold;
+      color: $color-title;
+    }
   }
 }
-.NewsImage {
-  img {
-    border-radius: 6px;
+.NewsImage1 {
+  a {
+    img {
+      border-radius: 6px;
+      width: 150px;
+      height: 85px;
+      object-fit: cover;
+    }
   }
 }

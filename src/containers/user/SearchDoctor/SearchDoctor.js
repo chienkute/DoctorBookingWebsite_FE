@@ -433,12 +433,10 @@ function SearchDoctor() {
                         <div className="DoctorOfficeAvatar">
                           <Skeleton circle width="45px" height="45px" />
                         </div>
-
                         <div className="DoctorOffice">
                           <div className="DoctorOfficeName">
                             <Skeleton width="400px" />
                           </div>
-
                           <div className="DoctorOfficeAddress">
                             <Skeleton />
                           </div>
@@ -472,7 +470,11 @@ function SearchDoctor() {
                                     style={{ transform: "translateY(-10px)" }}
                                   />
                                 ) : (
-                                  <img src={avt} alt="Avatar"></img>
+                                  <img
+                                    src={item?.account?.avatar || avt}
+                                    alt="Avatar"
+                                    style={{ borderRadius: "50%" }}
+                                  ></img>
                                 )}
                               </div>
                               <div className="DoctorInfo">
@@ -486,7 +488,7 @@ function SearchDoctor() {
                                   </div>
                                 ) : (
                                   <div className="DoctorName bold">
-                                    {item.name}
+                                    {item.name || "Tên bác sĩ"}
                                   </div>
                                 )}
                                 {loadingSkeleton ? (
@@ -498,11 +500,17 @@ function SearchDoctor() {
                                     />
                                   </div>
                                 ) : (
-                                  <div className="DoctorSpeicalist">
-                                    Đa khoa, Nội tổng quát
+                                  <div
+                                    className="DoctorSpeicalist d-flex"
+                                    style={{ columnGap: "10px" }}
+                                  >
+                                    {item?.specialties?.map((item, index) => {
+                                      return (
+                                        <p>{item?.specialty?.name || "----"}</p>
+                                      );
+                                    })}
                                   </div>
                                 )}
-
                                 <div className="TagContainer">
                                   {loadingSkeleton ? (
                                     <Skeleton
@@ -515,7 +523,6 @@ function SearchDoctor() {
                                       Tư vấn trực tiếp
                                     </div>
                                   )}
-
                                   {loadingSkeleton ? (
                                     <Skeleton
                                       count={1}
@@ -542,13 +549,22 @@ function SearchDoctor() {
                                 </div>
                               </div>
                             </Link>
-                            <a href="/care/hospital" className="DoctorFooter">
+                            <Link
+                              to={`/care/hospital/${item?.hospital?.id}/${item?.hospital?.name}`}
+                              className="DoctorFooter"
+                            >
                               <div className="DoctorOfficeAvatar">
                                 {loadingSkeleton ? (
                                   <Skeleton circle width="45px" height="45px" />
                                 ) : (
                                   <div className="DoctorOfficeAvatar">
-                                    <img src={avt} alt="avt img"></img>
+                                    <img
+                                      src={
+                                        item?.hospital?.account?.avatar || avt
+                                      }
+                                      alt="avt img"
+                                      style={{ borderRadius: "50%" }}
+                                    ></img>
                                   </div>
                                 )}
                               </div>
@@ -560,8 +576,7 @@ function SearchDoctor() {
                                   </div>
                                 ) : (
                                   <div className="DoctorOfficeName">
-                                    Phòng khám Đa khoa trực tuyến BS. Nguyễn
-                                    Thanh Tâm
+                                    {item?.hospital?.name || "Tên bệnh viện"}
                                   </div>
                                 )}
 
@@ -571,7 +586,7 @@ function SearchDoctor() {
                                   </div>
                                 ) : (
                                   <div className="DoctorOfficeAddress">
-                                    Ho Chi Minh, Ho Chi Minh City, Vietnam
+                                    {item?.hospital?.address || "Địa chỉ"}
                                   </div>
                                 )}
                               </div>
@@ -584,21 +599,20 @@ function SearchDoctor() {
                                   <button
                                     className="BookDoctorButton bold"
                                     onClick={() => {
-                                      navigate(`/care/doctor/${item.id}`);
+                                      navigate(`/care/doctor/${item?.id}`);
                                     }}
                                   >
                                     Đặt lịch hẹn
                                   </button>
                                 </div>
                               )}
-                            </a>
+                            </Link>
                           </div>
                         );
                       })}
                   </li>
                 </ul>
               )}
-
               <ul
                 className="clear ListHospitalResult disabled"
                 id="ListHospitalResult"
@@ -620,7 +634,11 @@ function SearchDoctor() {
                               {loadingSkeleton ? (
                                 <Skeleton height="64px" width="64px" circle />
                               ) : (
-                                <img src={avt} alt="Avatar"></img>
+                                <img
+                                  src={item?.account?.avatar || avt}
+                                  alt="Avatar"
+                                  style={{ borderRadius: "50%" }}
+                                ></img>
                               )}
                             </div>
                             <div className="HospitalInfo">
@@ -629,7 +647,9 @@ function SearchDoctor() {
                                   <Skeleton width="50%" />
                                 </div>
                               ) : (
-                                <div className="HospitalName">{item.name}</div>
+                                <div className="HospitalName">
+                                  {item?.name || "Tên bác sĩ"}
+                                </div>
                               )}
 
                               {loadingSkeleton ? (
@@ -645,8 +665,7 @@ function SearchDoctor() {
                                     <MdLocationOn></MdLocationOn>
                                   </span>
                                   <p>
-                                    47 Lê Đình Lý, Quận Thanh Khê, Thành phố Đà
-                                    Nẵng
+                                    {item?.address || "Địa chỉ bệnh viện  ...."}
                                   </p>
                                 </div>
                               )}
@@ -657,10 +676,8 @@ function SearchDoctor() {
                                 </div>
                               ) : (
                                 <div className="HospitalDescriptionContent">
-                                  Hệ thống phòng khám Sản - Phụ khoa Dr. Marie
-                                  là đối tác chiến lược của tổ chức MSI
-                                  Reproductive Choices. Phòng khám được thành
-                                  lập từ năm 1994
+                                  {item?.info ||
+                                    "Thông tin sơ lược về bệnh viện"}
                                 </div>
                               )}
                             </div>
@@ -669,7 +686,9 @@ function SearchDoctor() {
                             <button
                               className="HospitalViewButton bold"
                               onClick={() => {
-                                navigate(`/care/hospital/${item.id}`);
+                                navigate(
+                                  `/care/hospital/${item?.id}/${item?.name}`,
+                                );
                               }}
                             >
                               Xem bệnh viện
@@ -797,9 +816,9 @@ function SearchDoctor() {
                               }}
                             >
                               <div className="img_chuyenkhoa">
-                                <img src={dakhoaImages} alt="" />
+                                <img src={item?.icon || dakhoaImages} alt="" />
                               </div>
-                              <p style={{ fontSize: "14px" }}>{item.name}</p>
+                              <p style={{ fontSize: "14px" }}>{item?.name}</p>
                             </Link>
                             <div className="care__banner_menu_title_line"></div>
                           </li>
@@ -854,7 +873,7 @@ function SearchDoctor() {
                               }}
                             >
                               <div className="img_chuyenkhoa">
-                                <img src={dakhoaImages} alt="" />
+                                <img src={item?.icon || dakhoaImages} alt="" />
                               </div>
                               <p style={{ fontSize: "14px" }}>{item.name}</p>
                             </Link>

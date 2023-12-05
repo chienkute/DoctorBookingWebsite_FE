@@ -11,6 +11,7 @@ import ReactPaginate from "react-paginate";
 import ReactStars from "react-rating-stars-component";
 import Moment from "react-moment";
 import { FaRegCalendarAlt } from "react-icons/fa";
+import avatar from "../../../../assets/avatar.jpg";
 const UserHistory = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -32,7 +33,13 @@ const UserHistory = () => {
   const [scheduleComing, setScheduleComing] = useState([]);
   const [schedulePassed, setSchedulePassed] = useState([]);
   const [update, setUpdate] = useState(false);
-  console.log(schedulePassed);
+  const [name, setName] = useState("");
+  const [specialty, setSpecialty] = useState([]);
+  const [hospital, setHospital] = useState("");
+  const [timeStart, setTimeStart] = useState("");
+  const [timeEnd, setTimeEnd] = useState("");
+  const [date, setDate] = useState("");
+  const [address, setAddress] = useState("");
   const [rating, setRating] = useState("");
   const getBooking = async () => {
     let res = await getAppoinment();
@@ -108,7 +115,10 @@ const UserHistory = () => {
                                   <td key={index}>
                                     <div class="d-flex align-items-center">
                                       <img
-                                        src="https://mdbootstrap.com/img/new/avatars/8.jpg"
+                                        src={
+                                          item?.schedule_doctor?.doctor?.account
+                                            ?.avatar || avatar
+                                        }
                                         alt=""
                                         class="rounded-circle"
                                         style={{
@@ -118,9 +128,9 @@ const UserHistory = () => {
                                       />
                                       <div class="ms-3">
                                         <p class="fw-bold mb-0">
-                                          BS. Trần Thị A
+                                          {item?.schedule_doctor?.doctor
+                                            ?.name || "Tên bác sĩ"}
                                         </p>
-                                        <p class="text-muted mb-0">Nha khoa</p>
                                       </div>
                                     </div>
                                   </td>
@@ -128,7 +138,8 @@ const UserHistory = () => {
                                     <div class="d-flex align-items-center">
                                       <div class="ms-3">
                                         <p class=" mb-0 table__name">
-                                          Bệnh viện quốc tế City
+                                          {item?.schedule_doctor?.doctor
+                                            ?.hospital?.name || "Tên bệnh viện"}
                                         </p>
                                       </div>
                                     </div>
@@ -136,16 +147,16 @@ const UserHistory = () => {
                                   <td>
                                     <p class="fw-normal mb-1">
                                       {formatTime(
-                                        `${item.schedule_doctor.schedule.start}`,
+                                        `${item?.schedule_doctor?.schedule?.start}`,
                                       )}
                                       -
                                       {formatTime(
-                                        `${item.schedule_doctor.schedule.end}`,
+                                        `${item?.schedule_doctor?.schedule?.end}`,
                                       )}
                                     </p>
                                     <p class="text-muted mb-0">
                                       <Moment format="DD/MM/YYYY">
-                                        {item.date}
+                                        {item?.date}
                                       </Moment>
                                     </p>
                                   </td>
@@ -154,7 +165,10 @@ const UserHistory = () => {
                                       class="fw-normal mb-1 table__address"
                                       style={{ flexWrap: "nowrap" }}
                                     >
-                                      Đà Nẵng
+                                      {
+                                        item?.schedule_doctor?.doctor?.hospital
+                                          ?.address
+                                      }
                                     </p>
                                   </td>
                                   <td className="d-flex table__action">
@@ -168,7 +182,32 @@ const UserHistory = () => {
                                     <button
                                       type="button"
                                       class="btn btn-link btn-sm btn-rounded"
-                                      onClick={handleShowView}
+                                      onClick={() => {
+                                        handleShowView();
+                                        setName(
+                                          item?.schedule_doctor?.doctor?.name,
+                                        );
+                                        setSpecialty(
+                                          item?.schedule_doctor?.doctor
+                                            ?.specialties,
+                                        );
+                                        setHospital(
+                                          item?.schedule_doctor?.doctor
+                                            ?.hospital?.name,
+                                        );
+                                        setTimeStart(
+                                          item?.schedule_doctor?.schedule
+                                            ?.start,
+                                        );
+                                        setTimeEnd(
+                                          item?.schedule_doctor?.schedule?.end,
+                                        );
+                                        setDate(item?.date);
+                                        setAddress(
+                                          item?.schedule_doctor?.doctor
+                                            ?.hospital?.address,
+                                        );
+                                      }}
                                     >
                                       Xem
                                     </button>
@@ -214,31 +253,40 @@ const UserHistory = () => {
                                           <p className="view__text">
                                             Tên bác sĩ :
                                           </p>
-                                          <p>Phạm Sĩ Chiến</p>
+                                          <p>{name}</p>
                                         </div>
                                         <div className="view__content">
                                           <p className="view__text">
                                             Chuyên khoa :
                                           </p>
-                                          <p>Đa khoa</p>
+                                          <div className="d-flex">
+                                            {specialty.map((item, index) => {
+                                              return (
+                                                <p>{item?.specialty?.name}</p>
+                                              );
+                                            })}
+                                          </div>
                                         </div>
                                         <div className="view__content">
                                           <p className="view__text">
                                             Bệnh viện :
                                           </p>
-                                          <p>Phòng khám đa khoa quốc tế</p>
+                                          <p>{hospital}</p>
                                         </div>
                                         <div className="view__content">
                                           <p className="view__text">
                                             Thời gian :
                                           </p>
-                                          <p>8:30 - 9:00 | 20/11/2002</p>
+                                          <p>
+                                            {formatTime(timeStart)}-
+                                            {formatTime(timeEnd)} | {date}
+                                          </p>
                                         </div>
                                         <div className="view__content">
                                           <p className="view__text">
                                             Địa điểm :
                                           </p>
-                                          <p>182 Trần Tấn , Đà Nẵng</p>
+                                          <p>{address}</p>
                                         </div>
                                       </div>
                                     </Modal.Body>
@@ -311,10 +359,13 @@ const UserHistory = () => {
                             scheduleComing.map((item, index) => {
                               return (
                                 <tr>
-                                  <td>
+                                  <td key={index}>
                                     <div class="d-flex align-items-center">
                                       <img
-                                        src="https://mdbootstrap.com/img/new/avatars/8.jpg"
+                                        src={
+                                          item?.schedule_doctor?.doctor?.account
+                                            ?.avatar || avatar
+                                        }
                                         alt=""
                                         class="rounded-circle"
                                         style={{
@@ -324,9 +375,9 @@ const UserHistory = () => {
                                       />
                                       <div class="ms-3">
                                         <p class="fw-bold mb-0">
-                                          BS. Trần Thị A
+                                          {item?.schedule_doctor?.doctor
+                                            ?.name || "Tên bác sĩ"}
                                         </p>
-                                        <p class="text-muted mb-0">Nha khoa</p>
                                       </div>
                                     </div>
                                   </td>
@@ -334,21 +385,37 @@ const UserHistory = () => {
                                     <div class="d-flex align-items-center">
                                       <div class="ms-3">
                                         <p class=" mb-0 table__name">
-                                          Bệnh viện quốc tế City
+                                          {item?.schedule_doctor?.doctor
+                                            ?.hospital?.name || "Tên bệnh viện"}
                                         </p>
                                       </div>
                                     </div>
                                   </td>
                                   <td>
-                                    <p class="fw-normal mb-1">8:30 - 9:00</p>
-                                    <p class="text-muted mb-0">24/11/2023</p>
+                                    <p class="fw-normal mb-1">
+                                      {formatTime(
+                                        `${item?.schedule_doctor?.schedule?.start}`,
+                                      )}
+                                      -
+                                      {formatTime(
+                                        `${item?.schedule_doctor?.schedule?.end}`,
+                                      )}
+                                    </p>
+                                    <p class="text-muted mb-0">
+                                      <Moment format="DD/MM/YYYY">
+                                        {item?.date}
+                                      </Moment>
+                                    </p>
                                   </td>
                                   <td>
                                     <p
                                       class="fw-normal mb-1 table__address"
                                       style={{ flexWrap: "nowrap" }}
                                     >
-                                      Đà Nẵng
+                                      {
+                                        item?.schedule_doctor?.doctor?.hospital
+                                          ?.address
+                                      }
                                     </p>
                                   </td>
                                   <td style={{ minWidth: "164px" }}>
@@ -377,31 +444,40 @@ const UserHistory = () => {
                                           <p className="view__text">
                                             Tên bác sĩ :
                                           </p>
-                                          <p>Phạm Sĩ Chiến</p>
+                                          <p>{name}</p>
                                         </div>
                                         <div className="view__content">
                                           <p className="view__text">
                                             Chuyên khoa :
                                           </p>
-                                          <p>Đa khoa</p>
+                                          <div className="d-flex">
+                                            {specialty.map((item, index) => {
+                                              return (
+                                                <p>{item?.specialty?.name}</p>
+                                              );
+                                            })}
+                                          </div>
                                         </div>
                                         <div className="view__content">
                                           <p className="view__text">
                                             Bệnh viện :
                                           </p>
-                                          <p>Phòng khám đa khoa quốc tế</p>
+                                          <p>{hospital}</p>
                                         </div>
                                         <div className="view__content">
                                           <p className="view__text">
                                             Thời gian :
                                           </p>
-                                          <p>8:30 - 9:00 | 20/11/2002</p>
+                                          <p>
+                                            {formatTime(timeStart)}-
+                                            {formatTime(timeEnd)} | {date}
+                                          </p>
                                         </div>
                                         <div className="view__content">
                                           <p className="view__text">
                                             Địa điểm :
                                           </p>
-                                          <p>182 Trần Tấn , Đà Nẵng</p>
+                                          <p>{address}</p>
                                         </div>
                                       </div>
                                     </Modal.Body>
@@ -473,10 +549,13 @@ const UserHistory = () => {
                             schedulePassed.map((item, index) => {
                               return (
                                 <tr>
-                                  <td>
+                                  <td key={index}>
                                     <div class="d-flex align-items-center">
                                       <img
-                                        src="https://mdbootstrap.com/img/new/avatars/8.jpg"
+                                        src={
+                                          item?.schedule_doctor?.doctor?.account
+                                            ?.avatar || avatar
+                                        }
                                         alt=""
                                         class="rounded-circle"
                                         style={{
@@ -486,9 +565,9 @@ const UserHistory = () => {
                                       />
                                       <div class="ms-3">
                                         <p class="fw-bold mb-0">
-                                          BS. Trần Thị A
+                                          {item?.schedule_doctor?.doctor
+                                            ?.name || "Tên bác sĩ"}
                                         </p>
-                                        <p class="text-muted mb-0">Nha khoa</p>
                                       </div>
                                     </div>
                                   </td>
@@ -496,21 +575,37 @@ const UserHistory = () => {
                                     <div class="d-flex align-items-center">
                                       <div class="ms-3">
                                         <p class=" mb-0 table__name">
-                                          Bệnh viện quốc tế City
+                                          {item?.schedule_doctor?.doctor
+                                            ?.hospital?.name || "Tên bệnh viện"}
                                         </p>
                                       </div>
                                     </div>
                                   </td>
                                   <td>
-                                    <p class="fw-normal mb-1">8:30 - 9:00</p>
-                                    <p class="text-muted mb-0">24/11/2023</p>
+                                    <p class="fw-normal mb-1">
+                                      {formatTime(
+                                        `${item?.schedule_doctor?.schedule?.start}`,
+                                      )}
+                                      -
+                                      {formatTime(
+                                        `${item?.schedule_doctor?.schedule?.end}`,
+                                      )}
+                                    </p>
+                                    <p class="text-muted mb-0">
+                                      <Moment format="DD/MM/YYYY">
+                                        {item?.date}
+                                      </Moment>
+                                    </p>
                                   </td>
                                   <td>
                                     <p
                                       class="fw-normal mb-1 table__address"
                                       style={{ flexWrap: "nowrap" }}
                                     >
-                                      Đà Nẵng
+                                      {
+                                        item?.schedule_doctor?.doctor?.hospital
+                                          ?.address
+                                      }
                                     </p>
                                   </td>
                                   <td className="d-flex table__action">
@@ -524,7 +619,32 @@ const UserHistory = () => {
                                     <button
                                       type="button"
                                       class="btn btn-link btn-sm btn-rounded"
-                                      onClick={handleShowSchedule}
+                                      onClick={() => {
+                                        handleShowSchedule();
+                                        setName(
+                                          item?.schedule_doctor?.doctor?.name,
+                                        );
+                                        setSpecialty(
+                                          item?.schedule_doctor?.doctor
+                                            ?.specialties,
+                                        );
+                                        setHospital(
+                                          item?.schedule_doctor?.doctor
+                                            ?.hospital?.name,
+                                        );
+                                        setTimeStart(
+                                          item?.schedule_doctor?.schedule
+                                            ?.start,
+                                        );
+                                        setTimeEnd(
+                                          item?.schedule_doctor?.schedule?.end,
+                                        );
+                                        setDate(item?.date);
+                                        setAddress(
+                                          item?.schedule_doctor?.doctor
+                                            ?.hospital?.address,
+                                        );
+                                      }}
                                     >
                                       Xem
                                     </button>
@@ -581,31 +701,40 @@ const UserHistory = () => {
                                           <p className="view__text">
                                             Tên bác sĩ :
                                           </p>
-                                          <p>Phạm Sĩ Chiến</p>
+                                          <p>{name}</p>
                                         </div>
                                         <div className="view__content">
                                           <p className="view__text">
                                             Chuyên khoa :
                                           </p>
-                                          <p>Đa khoa</p>
+                                          <div className="d-flex">
+                                            {specialty.map((item, index) => {
+                                              return (
+                                                <p>{item?.specialty?.name}</p>
+                                              );
+                                            })}
+                                          </div>
                                         </div>
                                         <div className="view__content">
                                           <p className="view__text">
                                             Bệnh viện :
                                           </p>
-                                          <p>Phòng khám đa khoa quốc tế</p>
+                                          <p>{hospital}</p>
                                         </div>
                                         <div className="view__content">
                                           <p className="view__text">
                                             Thời gian :
                                           </p>
-                                          <p>8:30 - 9:00 | 20/11/2002</p>
+                                          <p>
+                                            {formatTime(timeStart)}-
+                                            {formatTime(timeEnd)} | {date}
+                                          </p>
                                         </div>
                                         <div className="view__content">
                                           <p className="view__text">
                                             Địa điểm :
                                           </p>
-                                          <p>182 Trần Tấn , Đà Nẵng</p>
+                                          <p>{address}</p>
                                         </div>
                                       </div>
                                     </Modal.Body>

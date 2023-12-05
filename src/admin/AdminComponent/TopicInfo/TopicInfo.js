@@ -1,33 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "./TopicInfo.scss";
 import { IoIosSave } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
-
+import avatar from "../../../assets/avatar.jpg";
+import { UpdateContext } from "context/UpdateContext";
 const TopicInfoDialogue = ({ data, close }) => {
+  const { update } = useContext(UpdateContext);
+  const [icon, setIcon] = useState("");
   const initialValues = {
     name: data ? data.name || "" : "",
   };
-
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Tên chuyên mục là bắt buộc"),
   });
-
   const onSubmit = (values) => {
     console.log(values);
   };
-
   const closeTID = () => {
     close("TID");
   };
-
   useEffect(() => {
     if (data) {
       initialValues.name = data.name || "";
+      setIcon(data?.icon);
     }
-  }, [data]);
-
+  }, [update]);
   return (
     <div className="OverlayContainer">
       <div className="Close"></div>
@@ -46,6 +45,12 @@ const TopicInfoDialogue = ({ data, close }) => {
               </header>
               <div className="TIDContent">
                 <div className="TIDCols">
+                  <div className="TIDAccount TIDField">
+                    <div className="TIDAccountLabel TIDLabel">Ảnh</div>
+                    <div className="form__image">
+                      <img src={icon || avatar} alt="" />
+                    </div>
+                  </div>
                   <div className="TIDAccount TIDField">
                     <div className="TIDAccountLabel TIDLabel">
                       Tên chuyên mục

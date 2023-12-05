@@ -269,7 +269,12 @@ const CareSearch = () => {
                               key={index}
                             >
                               <div>
-                                {<img src={dakhoaImages} alt="" /> || (
+                                {(
+                                  <img
+                                    src={item?.icon || dakhoaImages}
+                                    alt=""
+                                  />
+                                ) || (
                                   <Skeleton
                                     width="30px"
                                     height="30px"
@@ -348,7 +353,12 @@ const CareSearch = () => {
                               key={index}
                             >
                               <div>
-                                {<img src={dakhoaImages} alt="" /> || (
+                                {(
+                                  <img
+                                    src={item?.icon || dakhoaImages}
+                                    alt=""
+                                  />
+                                ) || (
                                   <Skeleton
                                     width="30px"
                                     height="30px"
@@ -427,7 +437,12 @@ const CareSearch = () => {
                               key={index}
                             >
                               <div>
-                                {<img src={dakhoaImages} alt="" /> || (
+                                {(
+                                  <img
+                                    src={item?.account?.avatar || dakhoaImages}
+                                    alt=""
+                                  />
+                                ) || (
                                   <Skeleton
                                     width="30px"
                                     height="30px"
@@ -506,7 +521,12 @@ const CareSearch = () => {
                               key={index}
                             >
                               <div>
-                                {<img src={dakhoaImages} alt="" /> || (
+                                {(
+                                  <img
+                                    src={item?.account?.avatar || dakhoaImages}
+                                    alt=""
+                                  />
+                                ) || (
                                   <Skeleton
                                     width="30px"
                                     height="30px"

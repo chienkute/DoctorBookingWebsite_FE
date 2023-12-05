@@ -37,18 +37,26 @@ const Doctor = () => {
         <div className="DoctorPageContainer">
           <div className="DoctorPageHeader flex-center">
             <div className="Avatar">
-              <img src={avatar} alt=""></img>
+              <img
+                src={doctor?.account?.avatar || avatar}
+                alt=""
+                style={{ borderRadius: "50%" }}
+              ></img>
             </div>
             <div className="BasicInfo">
               <h4 className="bold">{doctor.name}</h4>
-              <span>Khoa/Chuyên khoa</span>
+              <span className="d-flex" style={{ columnGap: "10px" }}>
+                {doctor?.specialties?.map((item, index) => {
+                  return <p>{item?.specialty?.name || "--"}</p>;
+                })}
+              </span>
               <div className="Tags">
                 <ul className="ListTags clear">
                   <li className="Tag blue">
                     <div className="TagContent">Đặt lịch khám</div>
                   </li>
                   <li className="Tag orange">
-                    <div className="TagContent">Tư vấn từ xa</div>
+                    <div className="TagContent">Tư vấn trực tiếp</div>
                   </li>
                   <li className="Tag">
                     <div className="TagContent">Dành cho trẻ em</div>
@@ -90,16 +98,17 @@ const Doctor = () => {
                 <div className="Header">
                   <ul className="clear ListTab">
                     <li className="bold Tab selected">Thông tin cơ bản</li>
-                    <li className="bold Tab">Đánh giá (0)</li>
+                    {/* <li className="bold Tab">Đánh giá (0)</li> */}
                   </ul>
                 </div>
                 <div className="Content">
                   <div className="BasicInfo">
                     <div className="bold Header">Thông tin bác sĩ </div>
+                    {/* <p>{doctor?.info || ""}</p> */}
                     <p>
-                      Bác sĩ Nguyễn Thanh Tâm có hơn 5 năm kinh nghiệm trong
-                      việc thăm khám và điều trị các vấn đề bệnh lý đa khoa dành
-                      cho cả trẻ em lẫn người lớn.
+                      Bác sĩ {doctor?.name} có hơn 5 năm kinh nghiệm trong việc
+                      thăm khám và điều trị các vấn đề bệnh lý đa khoa dành cho
+                      cả trẻ em lẫn người lớn.
                     </p>
                     <p>
                       Sở hữu nền tảng chuyên môn vững chắc, bác sĩ tốt nghiệp

@@ -53,7 +53,7 @@ const Service = () => {
           <div className="service__main">
             <div className="service__main_header">
               <div className="service__main_header_img">
-                <img src={serviceImg} alt="" />
+                <img src={service?.icon || serviceImg} alt="" />
               </div>
               <div className="service__main_header_text">
                 <h1>{service?.name}</h1>
@@ -75,11 +75,7 @@ const Service = () => {
                   <div className="servicehead">
                     <h2>Về dịch vụ</h2>
                   </div>
-                  <span>
-                    Gói khám tầm soát phụ khoa được thiết kế với khung giá hợp
-                    lý, bảo đảm chất lượng, được thực hiện bởi các bác sĩ có
-                    chuyên môn cao, giàu kinh nghiệm
-                  </span>
+                  <span>{service?.descripe || "Mô tả về dịch vụ"}</span>
                 </div>
                 <div className="service__main_body_hour">
                   <div className="servicehead">

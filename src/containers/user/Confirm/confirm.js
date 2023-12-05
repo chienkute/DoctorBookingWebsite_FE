@@ -20,7 +20,8 @@ const Confirm = () => {
   const [userInfo, setUserInfo] = useState([]);
   // const { loading, setLoading } = useContext(LoadingContext);
   const [loading, setLoading] = useState(true);
-  const { schedule, day, time, days, idUser } = location.state;
+  const { schedule, day, time, days, idUser, timeStart, timeEnd } =
+    location.state;
   const book = async () => {
     let res = await Booking(id, schedule, day, time);
     if (res) {
@@ -38,6 +39,13 @@ const Confirm = () => {
       setDoctor(res);
       setLoading(false);
     }
+  };
+  const formatTime = (time) => {
+    if (time) {
+      const timeParts = time.split(":");
+      return `${timeParts[0]}:${timeParts[1]}`;
+    }
+    return "";
   };
   const getUserByID = async () => {
     let res = await getUserID(idUser);
@@ -93,7 +101,11 @@ const Confirm = () => {
               <div className="confirm__infor_content">
                 <div className="confirm__infor_content_header">
                   <div className="confirm__infor_content_header_image">
-                    <img src={avtImage} alt="" />
+                    <img
+                      src={userInfo?.account?.avatar || avtImage}
+                      alt=""
+                      style={{ borderRadius: "50%" }}
+                    />
                   </div>
                   <div className="confirm__infor_content_header_text">
                     <p>{userInfo?.name || "-------"}</p>
@@ -154,7 +166,11 @@ const Confirm = () => {
               <div className="confirm__schedule_content">
                 <div className="confirm__schedule_content_header">
                   <div className="confirm__schedule_content_header_image">
-                    <img src={avtImage} alt="" />
+                    <img
+                      src={doctor?.account?.avatar || avtImage}
+                      alt=""
+                      style={{ borderRadius: "50%" }}
+                    />
                   </div>
                   <div className="confirm__schedule_content_header_text">
                     <p>{doctor?.name || "-------"}</p>
@@ -175,7 +191,8 @@ const Confirm = () => {
                       </div>
                       <div className="confirm__schedule_footer_info">
                         <p className="confirm__schedule_footer_info_text">
-                          08:00 - 08:30
+                          {formatTime(`${timeStart}`)} -{" "}
+                          {formatTime(`${timeEnd}`)}
                         </p>
                         <p className="confirm__schedule_footer_info_text1">
                           Thứ {days || ""},

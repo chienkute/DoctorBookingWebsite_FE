@@ -20,13 +20,15 @@
   flex-wrap: wrap;
 }
 
-.ListCategoriesNews,
 .ListMainPageTools {
   display: inline-block;
-  width: 50%;
+  width: 48%;
   box-sizing: border-box;
 }
-
+.ListCategoriesNews {
+  display: inline-block;
+  width: 52%;
+}
 .ListTrendingNews {
   padding: 0 3rem;
 }
@@ -37,7 +39,7 @@
 }
 
 .ListMainPageTools {
-  padding-right: 13rem;
+  padding-right: 9rem;
   padding-left: 1rem;
   display: flex;
   flex-direction: column;

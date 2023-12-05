@@ -35,7 +35,11 @@ const ItemLarge = (props) => {
       ) : (
         <div className="NewsImage">
           <Link to={`/blog/${id_blog}`} className="clear">
-            <img src={image || blogImg} alt="Blog Img"></img>
+            <img
+              src={image || blogImg}
+              alt="Blog Img"
+              style={{ height: "275px" }}
+            ></img>
           </Link>
         </div>
       )}
