@@ -11,8 +11,8 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
 import { UpdateContext } from "context/UpdateContext";
-import { fetchAllService, getDoctorByID } from "service/UserService";
-import { addService, getServiceByName } from "service/DoctorService";
+import { fetchAllService } from "service/UserService";
+import { addService, getServiceByDoctorId, deleteSomeServiceDoctor } from "service/DoctorService";
 const ManageService = () => {
   const { id } = useParams();
   const { update, setUpdate } = useContext(UpdateContext);
@@ -23,18 +23,22 @@ const ManageService = () => {
   const handleCloseDeleteBlog = () => setShowDeleteBlog(false);
   const handleShowDeleteBlog = () => setShowDeleteBlog(true);
   const [query, setQuery] = useState("");
-  const [service, setService] = useState([]);
+  // const [service, setService] = useState([]);
+  const [serviceDoctors, setServiceDoctors] = useState([]);
   const [allService, setAllService] = useState([]);
   const [selectService, setSelectService] = useState("");
   const [count, setCount] = useState("");
+  const [choosedCheckboxs, setChoosedCheckboxs] = useState([]);
   const queryDebounce = useDebounce(query, 500);
   const [defaultValue, setDefaultValue] = useState("");
   const [defaultDescribe, setDefaultDescribe] = useState("");
-  const searchSpecialty = async () => {
-    let res = await getServiceByName(queryDebounce, id);
+  const searchService = async () => {
+    // let res = await getServiceByName(queryDebounce, id);
+    let res = await getServiceByDoctorId(id);
     if (res) {
       console.log(res);
-      setService(res?.results);
+      // setService(res?.results);
+      setServiceDoctors(res?.results);
       setCount(res?.count);
     }
   };
@@ -49,15 +53,28 @@ const ManageService = () => {
     if (res) {
       console.log(res);
       toast.success("Thêm dịch vụ thành công");
+      searchService();
     } else {
       toast.error("Thêm thất bại");
     }
   };
+  const deleteServiceDoctors = async (serviceDoctorIds) => {
+    let res = await deleteSomeServiceDoctor(serviceDoctorIds);
+    if (res) {
+      console.log(res);
+      toast.success("Xóa dịch vụ thành công");
+      searchService();
+    } else {
+      toast.error("Xóa thất bại");
+    }
+  };
   useEffect(() => {
-    searchSpecialty();
+    searchService();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryDebounce]);
   useEffect(() => {
     getAllService();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div>
@@ -120,17 +137,36 @@ const ManageService = () => {
                   <th>Giá tiền</th>
                   <th>Hành động</th>
                 </tr>
-                {service &&
-                  service.length > 0 &&
-                  service.map((item, index) => {
+                {serviceDoctors &&
+                  serviceDoctors.length > 0 &&
+                  serviceDoctors.map((item, index) => {
                     return (
-                      <tr key={index}>
+                      <tr key={item.id}>
                         <td>
-                          <input type="checkbox"></input>
+                          <input type="checkbox"
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setChoosedCheckboxs((prevChoosedCheckboxs) => {
+                                  console.log("prevChoosedCheckboxs", prevChoosedCheckboxs);
+                                  return [
+                                  ...prevChoosedCheckboxs,
+                                  item.id,
+                                ]});
+                              } else {
+                                setChoosedCheckboxs((prevChoosedCheckboxs) => {
+                                  console.log("prevChoosedCheckboxs", prevChoosedCheckboxs);
+                                  return prevChoosedCheckboxs.filter(
+                                    (prevChoosedCheckbox) =>
+                                      prevChoosedCheckbox !== item.id
+                                  );
+                                });
+                              }
+                            }}
+                          ></input>
                         </td>
                         <td>{index}</td>
                         <td style={{ transform: "translateY(10px)" }}>
-                          <p>{item?.name}</p>
+                          <p>{item?.service.name}</p>
                         </td>
                         <td>
                           <img
@@ -146,8 +182,8 @@ const ManageService = () => {
                               className="InfoButton"
                               onClick={() => {
                                 handleShowEditBlog();
-                                setDefaultValue(item?.name);
-                                setDefaultDescribe(item?.descripe);
+                                setDefaultValue(item?.service.name);
+                                setDefaultDescribe(item?.service.descripe);
                               }}
                             >
                               <IoInformation />
@@ -238,6 +274,7 @@ const ManageService = () => {
                                   variant="primary"
                                   onClick={() => {
                                     handleCloseDeleteBlog();
+                                    deleteServiceDoctors([item.id]);
                                     setUpdate(!update);
                                   }}
                                 >
@@ -253,6 +290,15 @@ const ManageService = () => {
               </table>
             </div>
           </div>
+          <button
+            className="btn button mt-4"
+            onClick={ async () => {
+              console.log(choosedCheckboxs);
+              deleteServiceDoctors(choosedCheckboxs);
+            }}
+          >
+            Xoá các mục đã chọn
+          </button>
         </div>
         <div className="management__pagination">
           <ReactPaginate

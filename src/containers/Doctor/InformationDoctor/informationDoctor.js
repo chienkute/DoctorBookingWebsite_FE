@@ -42,9 +42,11 @@ const InformationDoctor = () => {
   };
   useEffect(() => {
     getInfoDoctor();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     getInfoDoctor();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [update]);
   const formik = useFormik({
     enableReinitialize: true,
@@ -118,9 +120,9 @@ const InformationDoctor = () => {
                 type="text"
                 id="name"
                 placeholder="Nhập tên bác sĩ"
-                class="form-control"
+                className="form-control"
                 value={formik.values.name}
-                defaultValue={formik.values.name}
+                // defaultValue={formik.values.name}
                 onChange={formik.handleChange}
                 disabled={edit ? true : false}
                 {...formik.getFieldProps("name")}
@@ -136,7 +138,7 @@ const InformationDoctor = () => {
                 type="text"
                 id="address"
                 placeholder="Địa chỉ bác sĩ"
-                class="form-control"
+                className="form-control"
                 value={formik.values.address}
                 onChange={formik.handleChange}
                 disabled={edit ? true : false}
@@ -173,7 +175,7 @@ const InformationDoctor = () => {
                 type="text"
                 id="phone"
                 placeholder="Số điện thoại"
-                class="form-control"
+                className="form-control"
                 value={formik.values.phone}
                 disabled={edit ? true : false}
                 onChange={formik.handleChange}
@@ -189,7 +191,7 @@ const InformationDoctor = () => {
                 type="email"
                 id="email"
                 placeholder="Nhập email của bạn"
-                class="form-control"
+                className="form-control"
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 disabled={edit ? true : false}
@@ -226,7 +228,7 @@ const InformationDoctor = () => {
                 type="number"
                 id="year"
                 placeholder="Nhập số năm kinh nghiệm"
-                class="form-control"
+                className="form-control"
                 value={formik.values.year}
                 disabled={edit ? true : false}
                 onChange={formik.handleChange}
