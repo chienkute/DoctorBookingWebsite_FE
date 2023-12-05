@@ -13,13 +13,7 @@ import ReactQuill from "react-quill";
 import ReactPaginate from "react-paginate";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useParams } from "react-router";
-import {
-  addBlog,
-  deleteBlog,
-  editAvatarBlog,
-  editBlog,
-  getBlog,
-} from "service/DoctorService";
+import { addBlog, deleteBlog, editBlog, getBlog } from "service/DoctorService";
 import { fetchAllCategories } from "service/UserService";
 import { toast } from "react-toastify";
 const ManageBlog = () => {
@@ -52,7 +46,6 @@ const ManageBlog = () => {
   const [imageOld, setImageOld] = useState("");
   const [formData, setFormData] = useState(new FormData());
   console.log(blog);
-  // console.log(titleAdd);
   console.log(idCategory);
   console.log(imageUpdate);
   console.log(formData);
@@ -107,30 +100,34 @@ const ManageBlog = () => {
     let res = await addBlog(idCategory, id, titleAdd, value, imageUpdate);
     if (res) {
       console.log(res);
+      getBlogById();
       toast.success("Thêm blog thành công");
     } else {
       toast.error("Thêm thất bại");
     }
   };
   const fixBlog = async (id_blog) => {
-    let res = await editBlog(id_blog, idCategory, id, titleAdd, value);
+    let res = await editBlog(
+      id_blog,
+      idCategory,
+      id,
+      titleAdd,
+      value,
+      imageUpdate,
+    );
     if (res) {
       console.log(res);
+      getBlogById();
       toast.success("Sửa blog thành công");
     } else {
       toast.error("Sửa thất bại");
-    }
-  };
-  const fixAvatatBlog = async (id_blog) => {
-    let res = await editAvatarBlog(id_blog, formData);
-    if (res) {
-      console.log(res);
     }
   };
   const deleteBlogByID = async (id_blog) => {
     let res = await deleteBlog(id_blog, idCategory, id, titleAdd, value);
     if (res) {
       console.log(res);
+      getBlogById();
       toast.success("Xóa blog thành công");
     } else {
       toast.error("Sửa thất bại");
@@ -142,7 +139,7 @@ const ManageBlog = () => {
   }, []);
   useEffect(() => {
     getBlogById();
-  }, [queryDebounce, idCategorySearch, update]);
+  }, [queryDebounce, idCategorySearch]);
   const formik = useFormik({
     initialValues: {
       nameAdd: "",
@@ -193,6 +190,7 @@ const ManageBlog = () => {
           onClick={() => {
             handleShowAddNewBlog();
             setValue("");
+            setImage("");
           }}
         >
           Thêm
@@ -353,7 +351,7 @@ const ManageBlog = () => {
                               setTitleAdd(`${item?.title}`);
                               setDefaultSelect(`${item?.id_category?.id}`);
                               setImageOld(item?.picture);
-                              console.log(item.picture);
+                              // console.log(item.picture);
                             }}
                           >
                             <IoInformation />
@@ -369,6 +367,7 @@ const ManageBlog = () => {
                               setIdCategory(`${item?.id_category?.id}`);
                               setIdEdit(`${item?.id}`);
                               setImageOld(item?.picture);
+                              setImage("");
                             }}
                           >
                             <FiEdit3 />
@@ -553,7 +552,6 @@ const ManageBlog = () => {
                                   onClick={() => {
                                     handleCloseEditBlog();
                                     fixBlog(idEdit);
-                                    fixAvatatBlog(idEdit);
                                     setUpdate(!update);
                                     setQuery("");
                                     getBlogById();

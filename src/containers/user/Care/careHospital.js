@@ -35,21 +35,21 @@ const CareHospital = () => {
           <div className="row">
             {hospital &&
               hospital.length > 0 &&
-              hospital.map((item, index) => {
+              hospital.slice(0, 9).map((item, index) => {
                 return (
                   <div className="col-6 care__hospital_item" key={index}>
                     <div>
-                      <img src={hospitalImgaes} alt="" />
+                      <img
+                        src={item?.account?.avatar || hospitalImgaes}
+                        alt=""
+                      />
                     </div>
                     <div className="care__hospital_name">{item.name}</div>
                     <div className="care__hospital_address">
                       <div>
                         <CiLocationOn></CiLocationOn>
                       </div>
-                      <p>
-                        1-3 Trịnh Văn Cấn, Cầu Ông Lãnh, Quận 1, Thành phố Hồ
-                        Chí Minh, Vietnam
-                      </p>
+                      <p>{item?.address || "địa chỉ"}</p>
                     </div>
                     <button
                       type="button"

@@ -23,10 +23,10 @@ const ServiceSearch = () => {
     const getService = async () => {
       let res = await getServiceByIdHospital(queryDebounce, "");
       if (res) {
+        console.log(res);
         setLoadingSkeleton(true);
         setService(res?.results);
         setSearchCount(res?.count);
-        console.log(res);
       }
     };
     getService();
@@ -113,15 +113,13 @@ const ServiceSearch = () => {
                         height={"40px"}
                       ></Skeleton>
                     </div>
-
-                    <div className="hospital__body_dichvu_bottom_descrip">
+                    {/* <div className="hospital__body_dichvu_bottom_descrip">
                       <Skeleton
                         count={2}
                         width={"400px"}
                         height={"10px"}
                       ></Skeleton>
-                    </div>
-
+                    </div> */}
                     <div className="hospital__body_dichvu_bottom_button">
                       <Skeleton
                         width={"140px"}
@@ -206,11 +204,10 @@ const ServiceSearch = () => {
                             </div>
                           ) : (
                             <div className="hospital__body_dichvu_bottom_avtHosp">
-                              <img src={hospavt} alt="" />
+                              <img src={item?.icon || hospavt} alt="" />
                             </div>
                           )}
-
-                          {loadingSkeleton ? (
+                          {/* {loadingSkeleton ? (
                             <div className="hospital__body_dichvu_bottom_descrip">
                               <Skeleton
                                 count={2}
@@ -226,7 +223,7 @@ const ServiceSearch = () => {
                                 Châu, Đà Nẵng, Viet Nam
                               </p>
                             </div>
-                          )}
+                          )} */}
                           {loadingSkeleton ? (
                             <div className="hospital__body_dichvu_bottom_button">
                               <Skeleton
@@ -243,7 +240,7 @@ const ServiceSearch = () => {
                                 navigate(`/care/service/${item.id}`);
                               }}
                             >
-                              Đặt Lịch Hẹn
+                              Xem dịch vụ
                             </button>
                           )}
                         </div>

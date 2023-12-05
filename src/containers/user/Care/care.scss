@@ -197,8 +197,9 @@
       margin-bottom: 15px;
     }
     img {
-      height: 48px;
+      height: 60px;
       width: 136px;
+      object-fit: fill;
     }
     &_name {
       margin-top: 10px;

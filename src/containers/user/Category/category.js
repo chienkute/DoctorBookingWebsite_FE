@@ -12,6 +12,7 @@ import "../Category/CategoryListStyle.scss";
 import ReactPaginate from "react-paginate";
 import { Link, useParams } from "react-router-dom";
 import {
+  fecthAllDoctor,
   fetchAllCategories,
   getBlogByIdCategory,
   getCategoryById,
@@ -19,15 +20,19 @@ import {
 import { LoadingContext } from "context/LoadingContext";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { UpdateContext } from "context/UpdateContext";
+import ItemLarge from "../HomePage/NewsLarge/ItemLarge";
+import ItemSmall from "../HomePage/NewsLarge/ItemSmall";
+import NewsSmall from "../HomePage/NewsSmall/NewsSmall";
 const Category = () => {
   const { id, name } = useParams();
   console.log(name);
   const [blog, setBlog] = useState([]);
   console.log(blog);
-  const { update } = useContext(UpdateContext);
+  const { update, setUpdate } = useContext(UpdateContext);
   const { loading, setLoading } = useContext(LoadingContext);
   const [categories, setCategories] = useState([]);
   const [categoryy, setCategory] = useState([]);
+  const [doctor, setDoctor] = useState([]);
   const getService = async () => {
     let res = await fetchAllCategories(1);
     if (res) {
@@ -37,7 +42,7 @@ const Category = () => {
   const getCategory = async () => {
     let res = await getCategoryById(id);
     if (res) {
-      setLoading(false);
+      setLoading(true);
       setCategory(res);
     }
   };
@@ -45,17 +50,29 @@ const Category = () => {
     const getBlog = async () => {
       let res = await getBlogByIdCategory(id);
       if (res?.results) {
-        setLoading(false);
         console.log(res);
         setBlog(res.results);
       }
     };
+    const getDoctor = async () => {
+      let res = await fecthAllDoctor();
+      if (res) {
+        setDoctor(res?.results);
+      }
+    };
+    getDoctor();
     getBlog();
     getService();
     getCategory();
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
   }, []);
   useEffect(() => {
     setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
     getCategory();
   }, [update]);
   return (
@@ -90,18 +107,12 @@ const Category = () => {
             <div className="category__banner_header">
               <div className="category__banner_heading">
                 <div className="category__banner_image_header">
-                  <img src={chuyenmucImages} alt="" />
+                  <img src={categoryy?.icon || chuyenmucImages} alt="" />
                 </div>
                 <h1>{categoryy?.name}</h1>
               </div>
               <div className="category__banner_description">
-                <p>
-                  Khoang miệng của chúng ta chứa đầy vi khuẩn và chúng thường vô
-                  hại. Việc không chăm sóc răng miệng đúng cách có thể khiến vi
-                  khuẩn tăng sinh mất kiểm soát, dẫn đến các bệnh về răng miệng.
-                  Hãy tìm hiểu cách cải thiện sức khỏe răng miệng và bảo vệ bản
-                  thân chống lại các bệnh khác ngay bây giờ.
-                </p>
+                <p>{categoryy?.info || "Thông tin cơ bản về chuyên mục"}</p>
               </div>
             </div>
             <div className="category__blog">
@@ -109,143 +120,46 @@ const Category = () => {
               <div className="category__blog_news">
                 <div className="NewsLarge2ItemsContainer">
                   <ul className="clear NewsLarge2Items flex-center">
-                    <li className="NewsItem col-2">
-                      <div className="NewsImage">
-                        <Link className="clear">
-                          <img src={blogImages} alt="Blog Img"></img>
-                        </Link>
-                      </div>
-                      <div className="NewsCategory">
-                        <Link className="clear bold" style={{ color: "red" }}>
-                          Chuyên mục
-                        </Link>
-                      </div>
-                      <div className="NewsTitle">
-                        <Link className="clear bold">Tiêu đề bài viết</Link>
-                      </div>
-                      <div className="NewsContent">
-                        <span>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Pulvinar pellentesque habitant
-                          morbi tristique senectus et. Libero id faucibus nisl
-                          tincidunt eget nullam non nisi est...
-                        </span>
-                      </div>
-                      <div className="NewsAuthorAndTime">
-                        <Link className="clear">
-                          <img src={avtImg} placeholder="Avatar" alt=""></img>
-                          <span>
-                            Được viết bởi <b>Lorem ipsum</b> - 01/01/1990
-                          </span>
-                        </Link>
-                      </div>
-                    </li>
-                    <li className="NewsItem col-2">
-                      <div className="NewsImage">
-                        <Link className="clear">
-                          <img src={blogImages} alt="Blog Img"></img>
-                        </Link>
-                      </div>
-                      <div className="NewsCategory">
-                        <Link className="clear bold" style={{ color: "blue" }}>
-                          Chuyên mục
-                        </Link>
-                      </div>
-                      <div className="NewsTitle">
-                        <Link className="clear bold">Tiêu đề bài viết</Link>
-                      </div>
-                      <div className="NewsContent">
-                        <span>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Pulvinar pellentesque habitant
-                          morbi tristique senectus et. Libero id faucibus nisl
-                          tincidunt eget nullam non nisi est...
-                        </span>
-                      </div>
-                      <div className="NewsAuthorAndTime">
-                        <Link className="clear">
-                          <img src={avtImg} placeholder="Avatar" alt=""></img>
-                          <span>
-                            Được viết bởi <b>Lorem ipsum</b> - 01/01/1990
-                          </span>
-                        </Link>
-                      </div>
-                    </li>
+                    {blog &&
+                      blog.slice(4, 6).map((item, index) => {
+                        return (
+                          <ItemLarge
+                            key={index}
+                            title={item?.title}
+                            id_blog={item?.id}
+                            category={item?.id_category?.name}
+                            id_category={item?.id_category?.id}
+                            date={item?.created_at}
+                            doctor={item?.id_doctor?.name}
+                            id_doctor={item?.id_doctor?.id}
+                            content={item?.content}
+                            image={item?.picture}
+                            avatar={item?.id_doctor?.account?.avatar}
+                          ></ItemLarge>
+                        );
+                      })}
                   </ul>
                 </div>
                 <div className="NewsLarge3ItemsContainer">
                   <ul className="clear NewsLarge3Items flex-center">
-                    <li className="NewsItem col-3">
-                      <div className="NewsImage">
-                        <Link className="clear">
-                          <img src={blogImages} alt="Blog Img"></img>
-                        </Link>
-                      </div>
-                      <div className="NewsCategory">
-                        <Link className="clear bold" style={{ color: "green" }}>
-                          Chuyên mục
-                        </Link>
-                      </div>
-                      <div className="NewsTitle">
-                        <Link className="clear bold">Tiêu đề bài viết</Link>
-                      </div>
-                      <div className="NewsAuthorAndTime">
-                        <Link className="clear">
-                          <img src={avtImg} placeholder="Avatar" alt=""></img>
-                          <span>
-                            Được viết bởi <b>Lorem ipsum</b> - 01/01/1990
-                          </span>
-                        </Link>
-                      </div>
-                    </li>
-                    <li className="NewsItem col-3">
-                      <div className="NewsImage">
-                        <Link className="clear">
-                          <img src={blogImages} alt="Blog Img"></img>
-                        </Link>
-                      </div>
-                      <div className="NewsCategory">
-                        <Link className="clear bold" style={{ color: "cyan" }}>
-                          Chuyên mục
-                        </Link>
-                      </div>
-                      <div className="NewsTitle">
-                        <Link className="clear bold">Tiêu đề bài viết</Link>
-                      </div>
-                      <div className="NewsAuthorAndTime">
-                        <Link className="clear">
-                          <img src={avtImg} placeholder="Avatar" alt=""></img>
-                          <span>
-                            Được viết bởi <b>Lorem ipsum</b> - 01/01/1990
-                          </span>
-                        </Link>
-                      </div>
-                    </li>
-                    <li className="NewsItem col-3">
-                      <div className="NewsImage">
-                        <Link className="clear">
-                          <img src={blogImages} alt="Blog Img"></img>
-                        </Link>
-                      </div>
-                      <div className="NewsCategory">
-                        <Link className="clear bold" style={{ color: "red" }}>
-                          Chuyên mục
-                        </Link>
-                      </div>
-                      <div className="NewsTitle">
-                        <Link className="clear bold">Tiêu đề bài viết</Link>
-                      </div>
-                      <div className="NewsAuthorAndTime">
-                        <Link className="clear">
-                          <img src={avtImg} placeholder="Avatar" alt=""></img>
-                          <span>
-                            Được viết bởi <b>Lorem ipsum</b> - 01/01/1990
-                          </span>
-                        </Link>
-                      </div>
-                    </li>
+                    {blog &&
+                      blog.slice(1, 4).map((item, index) => {
+                        return (
+                          <ItemSmall
+                            key={index}
+                            title={item?.title}
+                            id_blog={item?.id}
+                            category={item?.id_category?.name}
+                            id_category={item?.id_category?.id}
+                            date={item?.created_at}
+                            doctor={item?.id_doctor?.name}
+                            id_doctor={item?.id_doctor?.id}
+                            content={item?.content}
+                            image={item?.picture}
+                            avatar={item?.id_doctor?.account?.avatar}
+                          ></ItemSmall>
+                        );
+                      })}
                   </ul>
                 </div>
               </div>
@@ -265,123 +179,25 @@ const Category = () => {
                         <SwiperSlide>
                           <Link
                             className="col-md-2 category-item"
-                            to={`/category/${item.id}`}
+                            to={`/category/${item.id}/${item?.name}`}
                             state={{ chuyenmuc: `${item.name}` }}
+                            onClick={() => {
+                              setUpdate(!update);
+                            }}
                           >
                             <div className="category-item-image">
-                              <img src={chuyenmucImages} alt="" />
+                              <img src={item?.icon || chuyenmucImages} alt="" />
                             </div>
-                            <p>{item.name}</p>
+                            <p>{item?.name}</p>
                           </Link>
                         </SwiperSlide>
                       );
                     })}
                 </Swiper>
               </div>
-              <h3>Xem thêm về Sức khỏe răng miệng</h3>
+              <h3>Xem thêm về {categoryy?.name}</h3>
               <div className="category__blog_item">
-                <div className="NewsSmallContainer">
-                  <div className="NewsSmallContent">
-                    <ul className="ListNewsSmallItems clear">
-                      <li className="NewsItem">
-                        <div className="NewsImage">
-                          <a href="#" className="clear">
-                            <img src={blogImages} alt="Blog Img"></img>
-                          </a>
-                        </div>
-                        <div className="NewsInfo">
-                          <div className="NewsTitle">
-                            <a href="#" className="clear bold">
-                              Tiêu đề bài viết
-                            </a>
-                          </div>
-                          <div className="NewsContent">
-                            <span>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit, sed do eiusmod tempor incididunt ut labore
-                              et dolore magna aliqua. Pulvinar pellentesque
-                              habitant morbi tristique senectus et. Libero id
-                              faucibus nisl tincidunt eget nullam non nisi
-                              est...
-                            </span>
-                          </div>
-                          <div className="NewsAuthorAndTime">
-                            <a href="#" className="clear">
-                              <img src={avtImg} placeholder="Avatar"></img>
-                              <span>
-                                Được viết bởi <b>Lorem ipsum</b> - 01/01/1990
-                              </span>
-                            </a>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="NewsItem">
-                        <div className="NewsImage">
-                          <a href="#" className="clear">
-                            <img src={blogImages} alt="Blog Img"></img>
-                          </a>
-                        </div>
-                        <div className="NewsInfo">
-                          <div className="NewsTitle">
-                            <a href="#" className="clear bold">
-                              Tiêu đề bài viết
-                            </a>
-                          </div>
-                          <div className="NewsContent">
-                            <span>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit, sed do eiusmod tempor incididunt ut labore
-                              et dolore magna aliqua. Pulvinar pellentesque
-                              habitant morbi tristique senectus et. Libero id
-                              faucibus nisl tincidunt eget nullam non nisi
-                              est...
-                            </span>
-                          </div>
-                          <div className="NewsAuthorAndTime">
-                            <a href="#" className="clear">
-                              <img src={avtImg} placeholder="Avatar"></img>
-                              <span>
-                                Được viết bởi <b>Lorem ipsum</b> - 01/01/1990
-                              </span>
-                            </a>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="NewsItem">
-                        <div className="NewsImage">
-                          <a href="#" className="clear">
-                            <img src={blogImages} alt="Blog Img"></img>
-                          </a>
-                        </div>
-                        <div className="NewsInfo">
-                          <div className="NewsTitle">
-                            <a href="#" className="clear bold">
-                              Tiêu đề bài viết
-                            </a>
-                          </div>
-                          <div className="NewsContent">
-                            <span>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit, sed do eiusmod tempor incididunt ut labore
-                              et dolore magna aliqua. Pulvinar pellentesque
-                              habitant morbi tristique senectus et. Libero id
-                              faucibus nisl tincidunt eget nullam non nisi
-                              est...
-                            </span>
-                          </div>
-                          <div className="NewsAuthorAndTime">
-                            <a href="#" className="clear">
-                              <img src={avtImg} placeholder="Avatar"></img>
-                              <span>
-                                Được viết bởi <b>Lorem ipsum</b> - 01/01/1990
-                              </span>
-                            </a>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+                <NewsSmall id={`${categoryy?.id}`}></NewsSmall>
                 <div className="DoctorResultPageMonitor search__page">
                   <ReactPaginate
                     breakLabel="..."
@@ -420,49 +236,30 @@ const Category = () => {
                     tin hữu ích có thể dễ dàng tiếp cận đến bạn đọc, giúp bạn
                     chủ động hơn trong các quyết định chăm sóc sức khỏe.
                   </p>
-                  <a href="#">Xem thêm chuyên gia</a>
+                  <a href="/care/searchDoctor">Xem thêm chuyên gia</a>
                 </div>
                 <div className="category__blog_doctor_item row">
-                  <div className="category__blog_doctor_item_list col-sm-6">
-                    <div className="category__blog_doctor_item_list_img">
-                      <img src={doctorImg} alt="" />
-                    </div>
-                    <p>Bác sĩ Lê Thị Mỹ Duyên</p>
-                    <div className="category__blog_doctor_item_list_text">
-                      <span>Đa khoa</span>{" "}
-                      <span>• Bệnh viện Đa khoa Hồng Ngọc</span>
-                    </div>
-                  </div>
-                  <div className="category__blog_doctor_item_list col-sm-6">
-                    <div className="category__blog_doctor_item_list_img">
-                      <img src={doctorImg} alt="" />
-                    </div>
-                    <p>Bác sĩ Lê Thị Mỹ Duyên</p>
-                    <div className="category__blog_doctor_item_list_text">
-                      <span>Đa khoa</span>{" "}
-                      <span>• Bệnh viện Đa khoa Hồng Ngọc</span>
-                    </div>
-                  </div>
-                  <div className="category__blog_doctor_item_list col-sm-6">
-                    <div className="category__blog_doctor_item_list_img">
-                      <img src={doctorImg} alt="" />
-                    </div>
-                    <p>Bác sĩ Lê Thị Mỹ Duyên</p>
-                    <div className="category__blog_doctor_item_list_text">
-                      <span>Đa khoa</span>{" "}
-                      <span>• Bệnh viện Đa khoa Hồng Ngọc</span>
-                    </div>
-                  </div>
-                  <div className="category__blog_doctor_item_list col-sm-6">
-                    <div className="category__blog_doctor_item_list_img">
-                      <img src={doctorImg} alt="" />
-                    </div>
-                    <p>Bác sĩ Lê Thị Mỹ Duyên</p>
-                    <div className="category__blog_doctor_item_list_text">
-                      <span>Đa khoa</span>{" "}
-                      <span>• Bệnh viện Đa khoa Hồng Ngọc</span>
-                    </div>
-                  </div>
+                  {doctor &&
+                    doctor.slice(0, 4).map((item, index) => {
+                      return (
+                        <div className="category__blog_doctor_item_list col-sm-6">
+                          <div className="category__blog_doctor_item_list_img">
+                            <img
+                              src={item?.account?.avatar || doctorImg}
+                              alt=""
+                            />
+                          </div>
+                          <p>{item?.name || "Tên bác sĩ"}</p>
+                          <div className="category__blog_doctor_item_list_text">
+                            {item?.specialties?.map((item, index) => {
+                              return <span>{item?.specialty?.name}</span>;
+                            })}
+                            {"   "}
+                            <span>• {item?.hospital?.name}</span>
+                          </div>
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
             </div>

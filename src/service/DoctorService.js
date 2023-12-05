@@ -81,16 +81,18 @@ const deleteBlog = (id_blog, id_category, id_doctor, title, content) => {
     content,
   });
 };
-const editBlog = (id_blog, id_category, id_doctor, title, content) => {
-  return instance.patch(`/api/blogcruds/${id_blog}/`, {
-    id_category,
-    id_doctor,
-    title,
-    content,
+const editBlog = (id_blog, id_category, id_doctor, title, content, picture) => {
+  const formData = new FormData();
+  formData.append("id_category", id_category);
+  formData.append("id_doctor", id_doctor);
+  formData.append("title", title);
+  formData.append("content", content);
+  formData.append("picture", picture);
+  return instance.patch(`/api/blogcruds/${id_blog}/`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
   });
-};
-const editAvatarBlog = (id_blog, picture) => {
-  return instance.patch(`/api/blogcruds/${id_blog}/`, picture);
 };
 const addSpecialty = (specialty_id, doctor_id) => {
   return instance.post("/api/specialtydoctor/", { specialty_id, doctor_id });
@@ -163,5 +165,4 @@ export {
   getSpecialtyByDoctorId,
   getServiceByDoctorId,
   deleteSomeServiceDoctor,
-  editAvatarBlog,
 };

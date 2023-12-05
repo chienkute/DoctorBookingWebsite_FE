@@ -127,6 +127,9 @@ const editAvatar = (id, avatar) => {
     },
   });
 };
+const fecthAllDoctor = () => {
+  return instance.get("api/doctors/");
+};
 export {
   getDoctorByNameAddress,
   getHospitalByNameAddress,
@@ -162,4 +165,5 @@ export {
   getServiceById,
   fecthAllBlog,
   editAvatar,
+  fecthAllDoctor,
 };

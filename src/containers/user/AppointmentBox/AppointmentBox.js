@@ -23,6 +23,8 @@ const AppointmentBox = (props) => {
   const time = "";
   const [user, setUser] = useState([]);
   const [showButton, setShowbutton] = useState(false);
+  const [timeStart, setTimeStart] = useState("");
+  const [timeEnd, setTimeEnd] = useState("");
   console.log(idSchedule);
   const getUser = () => {
     const user = localStorage.getItem("user");
@@ -186,6 +188,8 @@ const AppointmentBox = (props) => {
                                   handleSpecialtyClick(index);
                                   setIdSchedule(item?.id);
                                   setShowbutton(true);
+                                  setTimeStart(item?.start);
+                                  setTimeEnd(item?.end);
                                 }}
                               >
                                 {formatTime(`${item?.start}`)} -
@@ -246,6 +250,8 @@ const AppointmentBox = (props) => {
                                   handleSpecialtyClick(index);
                                   setIdSchedule(item?.id);
                                   setShowbutton(true);
+                                  setTimeStart(item?.start);
+                                  setTimeEnd(item?.end);
                                 }}
                               >
                                 {formatTime(`${item?.start}`)} -{" "}
@@ -304,6 +310,8 @@ const AppointmentBox = (props) => {
                                 onClick={() => {
                                   handleSpecialtyClick(index);
                                   setIdSchedule(item?.id);
+                                  setTimeStart(item?.start);
+                                  setTimeEnd(item?.end);
                                   setShowbutton(true);
                                 }}
                               >
@@ -348,6 +356,8 @@ const AppointmentBox = (props) => {
                   time: `${time}`,
                   days: `${days}`,
                   idUser: `${user?.user?.id}`,
+                  timeStart: `${timeStart}`,
+                  timeEnd: `${timeEnd}`,
                 }}
               >
                 Tiếp tục đặt lịch

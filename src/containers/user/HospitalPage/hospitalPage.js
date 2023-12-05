@@ -9,10 +9,11 @@ import "../Care/care.scss";
 import tienmat from "../../../assets/tienmat.png";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import hospavt from "../../../assets/hospital.jpg";
-import doctorImg from "../../../assets/doctor/tat.jpg";
+import doctorImg from "../../../assets/avatar.jpg";
 import {
   fetchAllSpecialties,
-  getServiceByIdHospital,
+  getHospitalByID,
+  // getServiceByIdHospital,
   searchDoctor,
 } from "service/UserService";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -29,14 +30,15 @@ const HospitalPage = () => {
   const [specialtyy, setSpecialtyy] = useState("");
   const [specialties, setSpecialties] = useState(null);
   const [doctor, setDoctor] = useState([]);
-  const [service, setService] = useState([]);
+  // const [service, setService] = useState([]);
   const [selectDoctor, setSelectDoctor] = useState("");
   const [doctorSearch, setDoctorSearch] = useState([]);
   const [show, setShow] = useState(false);
   const [queryDoctor, setQueryDoctor] = useState("");
-  const [queryService, setQueryService] = useState("");
+  const [hospital, setHospital] = useState("");
+  // const [queryService, setQueryService] = useState("");
   const debouncedSearchDoctor = useDebounce(queryDoctor, 500);
-  const debouncedSearchService = useDebounce(queryService, 500);
+  // const debouncedSearchService = useDebounce(queryService, 500);
   const [idDoctor, setIdDoctor] = useState("");
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
   const navigate = useNavigate();
@@ -53,11 +55,18 @@ const HospitalPage = () => {
       setDoctorSearch(res?.results);
     }
   };
-  const getService = async () => {
-    let res = await getServiceByIdHospital(debouncedSearchService, id);
+  // const getService = async () => {
+  //   let res = await getServiceByIdHospital(debouncedSearchService, id);
+  //   if (res) {
+  //     setLoadingSkeleton(true);
+  //     setService(res?.results);
+  //   }
+  // };
+  const getHospitalInfo = async () => {
+    let res = await getHospitalByID(id);
     if (res) {
-      setLoadingSkeleton(true);
-      setService(res?.results);
+      setLoading(true);
+      setHospital(res);
     }
   };
   const getSpecialty = async () => {
@@ -79,7 +88,10 @@ const HospitalPage = () => {
   }, [specialty]);
   useEffect(() => {
     getSpecialty();
-    setLoading(false);
+    getHospitalInfo();
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
   }, []);
   useEffect(() => {
     getDoctorByIdHospital();
@@ -87,12 +99,12 @@ const HospitalPage = () => {
       setLoadingSkeleton(false);
     }, 1500);
   }, [queryDoctor]);
-  useEffect(() => {
-    getService();
-    setTimeout(() => {
-      setLoadingSkeleton(false);
-    }, 1500);
-  }, [queryService]);
+  // useEffect(() => {
+  //   // getService();
+  //   setTimeout(() => {
+  //     setLoadingSkeleton(false);
+  //   }, 1500);
+  // }, [queryService]);
   return (
     <div>
       {loading ? (
@@ -125,18 +137,15 @@ const HospitalPage = () => {
             </div>
             <div className="hospital__body_header">
               <div className="hospital__body_header_image">
-                <img src={hospitalImage} alt="" />
+                <img src={hospital?.account?.avatar || hospitalImage} alt="" />
               </div>
               <div className="hospital__body_header_info">
-                <h1>Phòng Khám ACC - Chiropractic Đà Nẵng</h1>
+                <h1>{hospital?.name || "-------"}</h1>
                 <div className="hospital__body_header_location">
                   <div>
                     <CiLocationOn></CiLocationOn>
                   </div>
-                  <div>
-                    112 Đường 2 Tháng 9, phường Bình Thuận, Hải Châu, Đà Nẵng,
-                    Viet Nam
-                  </div>
+                  <div>{hospital?.address || "-----"}</div>
                 </div>
               </div>
             </div>
@@ -160,7 +169,7 @@ const HospitalPage = () => {
                     Thông tin chung
                   </a>
                 </li>
-                <li class="nav-item" role="presentation">
+                {/* <li class="nav-item" role="presentation">
                   <a
                     class="nav-link hospital__body_item"
                     id="tab-dichvu"
@@ -172,7 +181,7 @@ const HospitalPage = () => {
                   >
                     Dịch vụ (1)
                   </a>
-                </li>
+                </li> */}
                 <li class="nav-item" role="presentation">
                   <a
                     class="nav-link hospital__body_item"
@@ -183,7 +192,7 @@ const HospitalPage = () => {
                     aria-controls="tabs-bacsi"
                     aria-selected="false"
                   >
-                    Bác sĩ (1)
+                    Bác sĩ
                   </a>
                 </li>
               </ul>
@@ -345,10 +354,14 @@ const HospitalPage = () => {
                                       }}
                                     >
                                       <div className="img_chuyenkhoa">
-                                        <img src={dakhoaImages} alt="" />
+                                        <img
+                                          src={item?.icon || dakhoaImages}
+                                          alt=""
+                                          style={{ borderRadius: "50%" }}
+                                        />
                                       </div>
                                       <p style={{ fontSize: "14px" }}>
-                                        {item.name}
+                                        {item?.name}
                                       </p>
                                     </Link>
                                     <div className="care__banner_menu_title_line"></div>
@@ -392,7 +405,14 @@ const HospitalPage = () => {
                                       }}
                                     >
                                       <div className="img_chuyenkhoa">
-                                        <img src={dakhoaImages} alt="" />
+                                        <img
+                                          src={
+                                            item?.account?.avatar ||
+                                            dakhoaImages
+                                          }
+                                          alt=""
+                                          style={{ borderRadius: "50%" }}
+                                        />
                                       </div>
                                       <p style={{ fontSize: "14px" }}>
                                         {item.name}
@@ -418,7 +438,7 @@ const HospitalPage = () => {
                     </div>
                   </div>
                 </div>
-                <div
+                {/* <div
                   class="tab-pane fade hospital__body_dichvu"
                   id="tabs-dichvu"
                   role="tabpanel"
@@ -539,7 +559,7 @@ const HospitalPage = () => {
                       activeClassName="active active-pagination"
                     />
                   </div>
-                </div>
+                </div> */}
                 <div
                   class="tab-pane fade hospital__body_bacsi"
                   id="tabs-bacsi"
@@ -579,7 +599,10 @@ const HospitalPage = () => {
                               ></Skeleton>
                             ) : (
                               <div className="hospital__body_bacsi_content_avt">
-                                <img src={doctorImg} alt="" />
+                                <img
+                                  src={item?.account?.avatar || doctorImg}
+                                  alt=""
+                                />
                               </div>
                             )}
                             {loadingSkeleton ? (
@@ -593,10 +616,17 @@ const HospitalPage = () => {
                             ) : (
                               <div className="hospital__body_bacsi_content_info">
                                 <p className="hospital__body_bacsi_content_info_name">
-                                  {item.name}
+                                  {item?.name || "----"}
                                 </p>
-                                <p className="hospital__body_bacsi_content_info_ck">
-                                  Thần kinh, Y học phục hồi chức năng
+                                <p
+                                  className="hospital__body_bacsi_content_info_ck d-flex"
+                                  style={{ columnGap: "10px" }}
+                                >
+                                  {item?.specialties?.map((item, index) => {
+                                    return (
+                                      <p>{item?.specialty?.name || "---"}</p>
+                                    );
+                                  })}
                                 </p>
                                 <div className="hospital__body_bacsi_content_info_price">
                                   <div className="hospital__body_bacsi_content_info_icon">
@@ -624,7 +654,10 @@ const HospitalPage = () => {
                               </div>
                             ) : (
                               <div className="hospital__body_dichvu_bottom_avtHosp">
-                                <img src={hospavt} alt="" />
+                                <img
+                                  src={hospital?.account?.avatar || hospavt}
+                                  alt=""
+                                />
                               </div>
                             )}
                             {loadingSkeleton ? (
@@ -637,13 +670,8 @@ const HospitalPage = () => {
                               </div>
                             ) : (
                               <div className="hospital__body_dichvu_bottom_descrip">
-                                <Link>
-                                  Phòng Khám ACC - Chiropractic Đà Nẵng
-                                </Link>
-                                <p>
-                                  112 Đường 2 Tháng 9, phường Bình Thuận, Hải
-                                  Châu, Đà Nẵng, Viet Nam
-                                </p>
+                                <Link>{hospital?.name || "----"}</Link>
+                                <p>{hospital?.address || "-----"}</p>
                               </div>
                             )}
                             {loadingSkeleton ? (
