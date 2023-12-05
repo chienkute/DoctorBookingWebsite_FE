@@ -1,7 +1,7 @@
 import { memo, useContext, useEffect, useState } from "react";
 import avtImg from "assets/avatar.png";
 import Moment from "react-moment";
-import { editUser, getUserID } from "service/UserService";
+import { editAvatar, editUser, getUserID } from "service/UserService";
 import UserTab from "../../UserTab/userTab";
 import "../../UserPage/UserPage.scss";
 import { LoadingContext } from "context/LoadingContext";
@@ -13,7 +13,6 @@ import { useRef } from "react";
 const UserInfo = () => {
   const [user, setUser] = useState([]);
   const [edit, setEdit] = useState(false);
-  console.log(user);
   const { id } = useParams();
   const [nameOld, setNameOld] = useState("");
   const [nameNew, setNameNew] = useState("");
@@ -25,20 +24,33 @@ const UserInfo = () => {
   const [genderNew, setGenderNew] = useState("");
   const [phoneOld, setPhoneOld] = useState("");
   const [phoneNew, setPhoneNew] = useState("");
+  const [idAccount, setIdAccount] = useState("");
   const { loading, setLoading } = useContext(LoadingContext);
   const { update, setUpdate } = useContext(UpdateContext);
   const inputRef = useRef(null);
   const [image, setImage] = useState("");
-  const [imageUpdate, setImageUpdate] = useState("");
+  const [imageUpdate, setImageUpdate] = useState([]);
   const [imageOld, setImageOld] = useState("");
-  console.log(imageOld);
-  console.log(imageUpdate);
+  const [formData, setFormData] = useState(new FormData());
   const handleImageClick = () => {
     inputRef.current.click();
   };
+  useEffect(() => {
+    if (imageUpdate !== null) {
+      const updatedFormData = new FormData();
+      updatedFormData.append("avatar", imageUpdate);
+      setFormData(updatedFormData);
+    }
+  }, [imageUpdate]);
   const handleImageChange = (event) => {
     setImageUpdate(event.target.files[0]);
     setImage(URL.createObjectURL(event.target.files[0]));
+  };
+  const editAvatarUser = async () => {
+    let res = await editAvatar(idAccount, formData);
+    if (res) {
+      console.log(res);
+    }
   };
   const editUserInfo = async () => {
     let res = await editUser(
@@ -76,19 +88,19 @@ const UserInfo = () => {
       setGenderNew(res?.gender);
       setPhoneNew(res?.phone);
       setAdressNew(res?.address);
+      setImageOld(res?.account?.avatar);
+      setIdAccount(res?.account?.id);
     }
   };
   useEffect(() => {
     getUser();
     const loadUser = () => {
       if (user) {
-        setImageOld(user?.account?.avatar);
         setLoading(false);
       }
     };
     loadUser();
     getUserByID();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   if (user === null) {
     return <div className="UserPageContainer"></div>;
@@ -125,11 +137,13 @@ const UserInfo = () => {
             </div>
             <div className="UserBasicInfo">
               <div className="UserAvatar">
-                {/* {image ? (
+                {image ? (
+                  <img src={image} alt="BlogImg" className="avatarAfter"></img>
+                ) : imageOld ? (
                   <img
                     src={imageOld}
                     alt="BlogImg"
-                    className="avatarAfter"
+                    className="avatarBefore"
                   ></img>
                 ) : (
                   <img
@@ -137,9 +151,7 @@ const UserInfo = () => {
                     alt="BlogImg"
                     className="avatarBefore"
                   ></img>
-                )} */}
-                <img src={imageOld} alt="BlogImg" className="avatarAfter"></img>
-
+                )}
                 <input
                   type="file"
                   accept="image/*"
@@ -148,13 +160,20 @@ const UserInfo = () => {
                   style={{ display: "none" }}
                 />
               </div>
-              <div
-                className="upload__image"
-                role="button"
-                onClick={handleImageClick}
-              >
-                <MdPhotoCamera></MdPhotoCamera>
-              </div>
+              {edit ? (
+                <div
+                  className="upload__image"
+                  role="button"
+                  onClick={handleImageClick}
+                >
+                  <MdPhotoCamera></MdPhotoCamera>
+                </div>
+              ) : (
+                <div className="upload__image" role="button">
+                  <MdPhotoCamera></MdPhotoCamera>
+                </div>
+              )}
+
               <div className="UserAccount">
                 <p>{nameOld ? <b>{nameOld}</b> : <b>---</b>}</p>
                 {user?.account?.username ? (
@@ -172,6 +191,7 @@ const UserInfo = () => {
                   editUserInfo();
                   setEdit(false);
                   getUserByID();
+                  editAvatarUser();
                 }}
               >
                 <div className="user__info">

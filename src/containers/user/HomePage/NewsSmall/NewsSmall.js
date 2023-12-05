@@ -6,6 +6,16 @@ import avtImg from "assets/avatar.png";
 import { Link } from "react-router-dom";
 
 const NewsSmall = (props) => {
+  const {
+    key,
+    id_blog,
+    category,
+    date,
+    id_category,
+    doctor,
+    id_doctor,
+    content,
+  } = props;
   return (
     <div className="NewsSmallContainer">
       <div className="NewsSmallHeader">

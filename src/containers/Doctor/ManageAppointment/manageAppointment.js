@@ -1,6 +1,6 @@
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import "./manageAppointment.scss";
-import { FaEraser } from "react-icons/fa6";
+// import { FaEraser } from "react-icons/fa6";
 import { FiEdit3 } from "react-icons/fi";
 import { IoInformation } from "react-icons/io5";
 import {
@@ -8,7 +8,7 @@ import {
   FaRegCheckCircle,
   FaRegTimesCircle,
 } from "react-icons/fa";
-import { IoClose } from "react-icons/io5";
+// import { IoClose } from "react-icons/io5";
 import avatar from "../../../assets/avatar.png";
 import { Button, Modal } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
@@ -46,12 +46,19 @@ const ManageAppointment = () => {
   const [timeStart, setTimeStart] = useState("");
   const [timeEnd, setTimeEnd] = useState("");
   const [date, setDate] = useState("");
-  console.log(appointment);
+  const [idAppointment, setIdAppointment] = useState("");
+  const [totalPage, setTotalPage] = useState(0);
+  const [hasclick, setHasClick] = useState(true);
+  const [image, setImage] = useState("");
   const queryDebounce = useDebounce(query, 500);
+  const handlePageClick = (event) => {
+    getAppoinment(1, 6, +event.selected + 1);
+    console.log(event.selected);
+  };
   const getAppoinment = async () => {
-    let res = await getDoctorAppoinment(3);
+    let res = await getDoctorAppoinment(id);
     if (res) {
-      console.log(res);
+      setTotalPage(res?.total_page);
       setAppoinment(res?.results);
       setCount(res?.count);
     }
@@ -97,7 +104,7 @@ const ManageAppointment = () => {
             />
           </div>
         </div>
-        <div className="">
+        {/* <div className="">
           <Form.Select
             aria-label="Default select example"
             className="form__select"
@@ -111,7 +118,7 @@ const ManageAppointment = () => {
             <option value="2">Đã hoàn thành</option>
             <option value="3">Đã xác nhận</option>
           </Form.Select>
-        </div>
+        </div> */}
       </div>
       <div className="management__content">
         <div className="AdminUserResult">
@@ -171,6 +178,12 @@ const ManageAppointment = () => {
                             <span>Đã xác nhận hẹn</span>
                           </div>
                         )}
+                        {item?.status === 2 && (
+                          <div>
+                            <FaRegTimesCircle style={{ color: "red" }} />
+                            <span>Lịch hẹn đã bị hủy</span>
+                          </div>
+                        )}
                       </td>
                       <td>
                         <div className="Action">
@@ -189,26 +202,32 @@ const ManageAppointment = () => {
                               );
                               setTimeEnd(item?.schedule_doctor?.schedule?.end);
                               setDate(item?.date);
+                              setImage(item?.user?.account?.avatar);
                             }}
                           >
                             <IoInformation />
                           </button>
-                          <button
-                            className="ApproveButton"
-                            onClick={() => {
-                              handleShowApproveAppointment();
-                            }}
-                          >
-                            <FaRegCheckCircle />
-                          </button>
-                          <button
+                          {item?.status === 0 ? (
+                            <button
+                              className="ApproveButton"
+                              onClick={() => {
+                                handleShowApproveAppointment();
+                                setIdAppointment(item?.id);
+                              }}
+                            >
+                              <FaRegCheckCircle />
+                            </button>
+                          ) : (
+                            <div></div>
+                          )}
+                          {/* <button
                             className="ChangeInfoButton"
                             onClick={() => {
                               setEdit(false);
                             }}
                           >
                             <FiEdit3 />
-                          </button>
+                          </button> */}
                           <Modal
                             show={showAppointmentInfor}
                             onHide={handleCloseAppointmentInfor}
@@ -223,7 +242,7 @@ const ManageAppointment = () => {
                                 <div className="form__avatar">
                                   <label htmlFor="">Ảnh đại diện</label>
                                   <div className="form__image">
-                                    <img src={avatar} alt="" />
+                                    <img src={image} alt="" />
                                   </div>
                                 </div>
                                 <div className="appointmentManage_content">
@@ -294,14 +313,19 @@ const ManageAppointment = () => {
                               </Button>
                             </Modal.Footer>
                           </Modal>
-                          <button
-                            className="DenyButton"
-                            onClick={() => {
-                              handleShowCancelAppointment();
-                            }}
-                          >
-                            <FaRegTimesCircle />
-                          </button>
+                          {item?.status === 0 ? (
+                            <button
+                              className="DenyButton"
+                              onClick={() => {
+                                handleShowApproveAppointment();
+                                setIdAppointment(item?.id);
+                              }}
+                            >
+                              <FaRegTimesCircle />
+                            </button>
+                          ) : (
+                            <div></div>
+                          )}
                           <Modal
                             show={showCancelAppointment}
                             onHide={handleCloseCancelAppointment}
@@ -323,7 +347,9 @@ const ManageAppointment = () => {
                                 variant="primary"
                                 onClick={() => {
                                   handleCloseCancelAppointment();
-                                  setStatus(item?.id, 2);
+                                  setStatus(idAppointment, 2);
+                                  getAppoinment();
+                                  setUpdate(!update);
                                 }}
                               >
                                 Xác nhận
@@ -353,7 +379,9 @@ const ManageAppointment = () => {
                                 variant="primary"
                                 onClick={() => {
                                   handleCloseApproveAppointment();
-                                  setStatus(item?.id, 1);
+                                  setStatus(idAppointment, 1);
+                                  getAppoinment();
+                                  setUpdate(!update);
                                 }}
                               >
                                 Xác nhận
@@ -373,9 +401,12 @@ const ManageAppointment = () => {
         <ReactPaginate
           breakLabel="..."
           nextLabel=">"
-          // onPageChange={handlePageClick}
+          onPageChange={(e) => {
+            handlePageClick(e);
+            getAppoinment();
+          }}
           pageRangeDisplayed={5}
-          pageCount={3}
+          pageCount={totalPage}
           previousLabel="<"
           pageClassName="page-item"
           pageLinkClassName="page-link"

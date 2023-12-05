@@ -64,27 +64,27 @@ const publicRoutes = [
 ];
 const routeAdmin = [
   {
-    path: "/admin/user",
+    path: "/admin/user/:id",
     component: AdminUser,
   },
   {
-    path: "/admin/topic",
+    path: "/admin/topic/:id",
     component: AdminTopic,
   },
   {
-    path: "/admin/post",
+    path: "/admin/post/:id",
     component: AdminPost,
   },
   {
-    path: "/admin/hospital",
+    path: "/admin/hospital/:id",
     component: AdminHospital,
   },
   {
-    path: "/admin/speciality",
+    path: "/admin/speciality/:id",
     component: AdminSpecialist,
   },
   {
-    path: "/admin/service",
+    path: "/admin/service/:id",
     component: AdminService,
   },
 ];

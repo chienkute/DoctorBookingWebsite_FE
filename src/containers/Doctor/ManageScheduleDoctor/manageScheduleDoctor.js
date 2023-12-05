@@ -11,7 +11,9 @@ import {
 } from "service/DoctorService.js";
 import { LoadingContext } from "context/LoadingContext";
 import "./manageScheduleDoctor.scss";
+import { useParams } from "react-router-dom";
 const ManageScheduleDoctor = () => {
+  const { id } = useParams();
   const { setLoading } = useContext(LoadingContext);
   const [choosedDate, setChoosedDate] = useState(new Date());
   const [choosedSession, setCurrentSession] = useState(0);
@@ -49,7 +51,7 @@ const ManageScheduleDoctor = () => {
       setLoading(true);
       let oldSchedules = [];
       while (true) {
-        let res = await fetchAllScheduleByDoctorId(3, 10, oldSchedules.length);
+        let res = await fetchAllScheduleByDoctorId(id, 10, oldSchedules.length);
         console.log("res", res);
         oldSchedules = oldSchedules.concat(res.results);
         if (res.count === oldSchedules.length) {
@@ -343,7 +345,7 @@ const ManageScheduleDoctor = () => {
             onClick={() => setCurrentSession(0)}
           >
             <p>Sáng</p>
-            <p>({ timeMorning.length } khung giờ)</p>
+            <p>({timeMorning.length} khung giờ)</p>
           </div>
           <div
             className={`SessionBox ${
@@ -407,7 +409,7 @@ const ManageScheduleDoctor = () => {
                   !choosedIdSchedules.includes(beginChoosedIdSchedule),
               );
               if (AddIdSchedules.length !== 0)
-                await addSomeScheduleDoctor(3, AddIdSchedules);
+                await addSomeScheduleDoctor(id, AddIdSchedules);
               // for (let i = 0; i < AddIdSchedules.length; i++) {
               //   await addScheduleDoctor(3, AddIdSchedules[i]);
               // }

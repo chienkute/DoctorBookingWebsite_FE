@@ -1,17 +1,27 @@
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import "./userChangePassword.scss";
 import UserTab from "containers/user/UserTab/userTab";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AiFillEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { changePassword } from "service/UserService";
+import { changePassword, getUserID } from "service/UserService";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 const UserChangePassword = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowConfPassword, setIsShowConfPassword] = useState(false);
   const [isShowNewPassword, setisShowNewPassword] = useState(false);
+  const [idAccount, setIdAccount] = useState("");
   const { id } = useParams();
+  const getUserByID = async () => {
+    let res = await getUserID(id);
+    if (res) {
+      setIdAccount(res?.account?.id);
+    }
+  };
+  useEffect(() => {
+    getUserByID();
+  }, []);
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -35,7 +45,11 @@ const UserChangePassword = () => {
         ),
     }),
     onSubmit: async (values) => {
-      const res = await changePassword(values.password, values.newpasswd, id);
+      const res = await changePassword(
+        values.password,
+        values.newpasswd,
+        idAccount,
+      );
       if (res) {
         navigate("/");
         toast.success("Đổi mật khẩu thành công");

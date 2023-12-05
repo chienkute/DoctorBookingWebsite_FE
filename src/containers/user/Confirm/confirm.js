@@ -51,6 +51,10 @@ const Confirm = () => {
     getUserByID();
     setLoading(true);
   }, []);
+  if (!location.state) {
+    setLoading(true);
+    return navigate(`"/care/doctor/${id}`);
+  }
   return (
     <div>
       {loading ? (

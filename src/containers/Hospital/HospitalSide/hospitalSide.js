@@ -59,9 +59,9 @@ const HospitalSide = () => {
         <NavLink to={"/login"} className="AdminMenu" onClick={handleLogout}>
           Đăng xuất
         </NavLink>
-        <NavLink to={"/hospital/dashboard"} className="AdminMenu">
+        {/* <NavLink to={"/hospital/dashboard"} className="AdminMenu">
           Thống kê
-        </NavLink>
+        </NavLink> */}
       </div>
     </div>
   );

@@ -5,7 +5,20 @@ import blogImg from "assets/blog-img.png";
 import avtImg from "assets/avatar.png";
 import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
-const ItemSmall = () => {
+const ItemSmall = (props) => {
+  const {
+    key,
+    id_blog,
+    category,
+    date,
+    id_category,
+    doctor,
+    id_doctor,
+    content,
+    image,
+    title,
+    avatar,
+  } = props;
   const [loadingSkeleton, SetLoadingSkeleton] = useState(true);
   useEffect(() => {
     SetLoadingSkeleton(true);
@@ -14,13 +27,17 @@ const ItemSmall = () => {
     }, 2000);
   }, []);
   return (
-    <li className="NewsItem col-3">
+    <li className="NewsItem col-3" key={key}>
       <div className="NewsImage">
         {loadingSkeleton ? (
           <Skeleton width="300px" height="185px"></Skeleton>
         ) : (
-          <Link className="clear">
-            <img src={blogImg} alt="Blog Img"></img>
+          <Link to={`/blog/${id_blog}`} className="clear">
+            <img
+              src={image || blogImg}
+              alt="Blog Img"
+              style={{ height: "185px" }}
+            ></img>
           </Link>
         )}
       </div>
@@ -28,8 +45,12 @@ const ItemSmall = () => {
         {loadingSkeleton ? (
           <Skeleton count={1} width="94%"></Skeleton>
         ) : (
-          <Link className="clear bold" style={{ color: "green" }}>
-            Chuyên mục
+          <Link
+            to={`/category/${id_category}/${category}`}
+            className="clear bold"
+            style={{ color: "green" }}
+          >
+            {category}
           </Link>
         )}
       </div>
@@ -37,17 +58,19 @@ const ItemSmall = () => {
         {loadingSkeleton ? (
           <Skeleton count={1} width="94%"></Skeleton>
         ) : (
-          <Link className="clear bold">Tiêu đề bài viết</Link>
+          <Link to={`/blog/${id_blog}`} className="clear bold">
+            {title || "Tiêu đề"}
+          </Link>
         )}
       </div>
       <div className="NewsAuthorAndTime">
         {loadingSkeleton ? (
           <Skeleton count={1} width="301px" height="15px"></Skeleton>
         ) : (
-          <Link className="clear">
-            <img src={avtImg} placeholder="Avatar"></img>
+          <Link o={`/care/doctor/${id_doctor}`} className="clear">
+            <img src={avatar || avtImg} placeholder="Avatar" alt=""></img>
             <span>
-              Được viết bởi <b>Lorem ipsum</b> - 01/01/1990
+              Được viết bởi <b>{doctor}</b> - {date}
             </span>
           </Link>
         )}

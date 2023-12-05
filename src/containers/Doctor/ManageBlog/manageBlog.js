@@ -13,7 +13,13 @@ import ReactQuill from "react-quill";
 import ReactPaginate from "react-paginate";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useParams } from "react-router";
-import { addBlog, deleteBlog, editBlog, getBlog } from "service/DoctorService";
+import {
+  addBlog,
+  deleteBlog,
+  editAvatarBlog,
+  editBlog,
+  getBlog,
+} from "service/DoctorService";
 import { fetchAllCategories } from "service/UserService";
 import { toast } from "react-toastify";
 const ManageBlog = () => {
@@ -41,8 +47,15 @@ const ManageBlog = () => {
   const [value, setValue] = useState("");
   const [defaultSelect, setDefaultSelect] = useState("");
   const [idEdit, setIdEdit] = useState("");
-  console.log(titleAdd);
+  const [image, setImage] = useState("");
+  const [imageUpdate, setImageUpdate] = useState([]);
+  const [imageOld, setImageOld] = useState("");
+  const [formData, setFormData] = useState(new FormData());
+  console.log(blog);
+  // console.log(titleAdd);
   console.log(idCategory);
+  console.log(imageUpdate);
+  console.log(formData);
   var toolbarOptions = [
     ["bold", "italic", "underline", "strike"],
     ["blockquote", "code-block"],
@@ -65,13 +78,25 @@ const ManageBlog = () => {
   const handleImageClick = () => {
     inputRef.current.click();
   };
+  const handleImageChange = (event) => {
+    setImageUpdate(event.target.files[0]);
+    setImage(URL.createObjectURL(event.target.files[0]));
+  };
   const getBlogById = async () => {
     let res = await getBlog(id, queryDebounce, idCategorySearch);
     if (res) {
+      console.log(res);
       setBlog(res?.results);
       setCount(res?.count);
     }
   };
+  useEffect(() => {
+    if (imageUpdate !== null) {
+      const updatedFormData = new FormData();
+      updatedFormData.append("picture", imageUpdate);
+      setFormData(updatedFormData);
+    }
+  }, [imageUpdate]);
   const getAllCategory = async () => {
     let res = await fetchAllCategories();
     if (res) {
@@ -79,7 +104,7 @@ const ManageBlog = () => {
     }
   };
   const postBlog = async () => {
-    let res = await addBlog(idCategory, id, titleAdd, value);
+    let res = await addBlog(idCategory, id, titleAdd, value, imageUpdate);
     if (res) {
       console.log(res);
       toast.success("Thêm blog thành công");
@@ -94,6 +119,12 @@ const ManageBlog = () => {
       toast.success("Sửa blog thành công");
     } else {
       toast.error("Sửa thất bại");
+    }
+  };
+  const fixAvatatBlog = async (id_blog) => {
+    let res = await editAvatarBlog(id_blog, formData);
+    if (res) {
+      console.log(res);
     }
   };
   const deleteBlogByID = async (id_blog) => {
@@ -179,16 +210,30 @@ const ManageBlog = () => {
             <div className="add__form">
               <form action="">
                 <div className="form__avatar">
-                  <label htmlFor="">
-                    Ảnh chủ đề Blog <span>*</span>
-                  </label>
+                  <label htmlFor="">Ảnh chủ đề Blog</label>
                   <div className="form__image">
-                    <img src={avatar} alt="" onClick={handleImageClick} />
+                    {image ? (
+                      <img
+                        src={image}
+                        alt="BlogImg"
+                        className="avatarAfter"
+                        onClick={handleImageClick}
+                      ></img>
+                    ) : (
+                      <img
+                        src={avatar}
+                        alt="BlogImg"
+                        className="avatarBefore"
+                        onClick={handleImageClick}
+                      ></img>
+                    )}
                   </div>
                   <input
                     type="file"
+                    accept="image/*"
                     style={{ display: "none" }}
                     ref={inputRef}
+                    onChange={handleImageChange}
                   />
                 </div>
                 <div className="row">
@@ -258,6 +303,7 @@ const ManageBlog = () => {
                 postBlog();
                 setUpdate(!update);
                 setQuery("");
+                getBlogById();
               }}
             >
               Lưu
@@ -280,7 +326,6 @@ const ManageBlog = () => {
                 <th>Tiêu đề</th>
                 <th>Chuyên mục</th>
                 <th>Ngày tạo</th>
-                <th>Tình trạng</th>
                 <th>Hành động</th>
               </tr>
               {blog &&
@@ -293,11 +338,10 @@ const ManageBlog = () => {
                       </td>
                       <td>{index}</td>
                       <td style={{ transform: "translateY(10px)" }}>
-                        <p>{item.title}</p>
+                        <p>{item?.title}</p>
                       </td>
-                      <td>{item.id_category.name}</td>
-                      <td>20/11/2023</td>
-                      <td>Đang chờ duyệt</td>
+                      <td>{item?.id_category.name}</td>
+                      <td>{item?.created_at || "Không có dữ liệu"}</td>
                       <td>
                         <div className="Action">
                           <button
@@ -308,6 +352,8 @@ const ManageBlog = () => {
                               setValue(`${item?.content}`);
                               setTitleAdd(`${item?.title}`);
                               setDefaultSelect(`${item?.id_category?.id}`);
+                              setImageOld(item?.picture);
+                              console.log(item.picture);
                             }}
                           >
                             <IoInformation />
@@ -322,6 +368,7 @@ const ManageBlog = () => {
                               setDefaultSelect(`${item?.id_category?.id}`);
                               setIdCategory(`${item?.id_category?.id}`);
                               setIdEdit(`${item?.id}`);
+                              setImageOld(item?.picture);
                             }}
                           >
                             <FiEdit3 />
@@ -342,9 +389,9 @@ const ManageBlog = () => {
                                     <label htmlFor="">
                                       Ảnh chủ đề Blog <span>*</span>
                                     </label>
-                                    {edit ? (
+                                    {/* {edit ? (
                                       <div className="form__image">
-                                        <img src={avatar} alt="" />
+                                        <img src={imageOld} alt="" />
                                       </div>
                                     ) : (
                                       <div className="form__image">
@@ -359,6 +406,58 @@ const ManageBlog = () => {
                                       type="file"
                                       style={{ display: "none" }}
                                       ref={inputRef}
+                                    /> */}
+                                    {/* <div className="form__image"> */}
+                                    {edit ? (
+                                      <div className="form__image">
+                                        {imageOld ? (
+                                          <img
+                                            src={imageOld}
+                                            alt="BlogImg"
+                                            className="avatarAfter"
+                                          ></img>
+                                        ) : (
+                                          <img
+                                            src={avatar}
+                                            alt="BlogImg"
+                                            className="avatarBefore"
+                                            onClick={handleImageClick}
+                                          ></img>
+                                        )}
+                                      </div>
+                                    ) : (
+                                      <div className="form__image">
+                                        {imageOld ? (
+                                          <img
+                                            src={imageOld}
+                                            alt="BlogImg"
+                                            className="avatarAfter"
+                                            onClick={handleImageClick}
+                                          ></img>
+                                        ) : image ? (
+                                          <img
+                                            src={image}
+                                            alt="BlogImg"
+                                            className="avatarBefore"
+                                            onClick={handleImageClick}
+                                          ></img>
+                                        ) : (
+                                          <img
+                                            src={avatar}
+                                            alt="BlogImg"
+                                            className="avatarBefore"
+                                            onClick={handleImageClick}
+                                          ></img>
+                                        )}
+                                      </div>
+                                    )}
+                                    {/* </div> */}
+                                    <input
+                                      type="file"
+                                      accept="image/*"
+                                      style={{ display: "none" }}
+                                      ref={inputRef}
+                                      onChange={handleImageChange}
                                     />
                                   </div>
                                   <div className="row">
@@ -454,8 +553,10 @@ const ManageBlog = () => {
                                   onClick={() => {
                                     handleCloseEditBlog();
                                     fixBlog(idEdit);
+                                    fixAvatatBlog(idEdit);
                                     setUpdate(!update);
                                     setQuery("");
+                                    getBlogById();
                                   }}
                                 >
                                   Lưu
@@ -494,6 +595,7 @@ const ManageBlog = () => {
                                   handleCloseDeleteBlog();
                                   deleteBlogByID(item?.id);
                                   setUpdate(!update);
+                                  getBlogById();
                                 }}
                               >
                                 Xác nhận

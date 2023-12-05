@@ -12,8 +12,11 @@ import { useParams } from "react-router";
 import { toast } from "react-toastify";
 import { UpdateContext } from "context/UpdateContext";
 import { fetchAllSpecialties } from "service/UserService";
-import { addSpecialty, deleteSomeSpecialtyDoctor, getSpecialtyByDoctorId } from "service/DoctorService";
-
+import {
+  addSpecialty,
+  deleteSomeSpecialtyDoctor,
+  getSpecialtyByDoctorId,
+} from "service/DoctorService";
 const ManageSpecialty = () => {
   const { id } = useParams();
   const { update, setUpdate } = useContext(UpdateContext);
@@ -24,7 +27,6 @@ const ManageSpecialty = () => {
   const handleCloseDeleteBlog = () => setShowDeleteBlog(false);
   const handleShowDeleteBlog = () => setShowDeleteBlog(true);
   const [query, setQuery] = useState("");
-  // const [specialty, setspecialty] = useState([]);
   const [specialtyDoctor, setSpecialtyDoctor] = useState([]);
   const [allSpecialty, setAllSpecialty] = useState([]);
   const [selectSpecialty, setSelectSpecialty] = useState("");
@@ -33,12 +35,11 @@ const ManageSpecialty = () => {
   const [defaultDescribe, setDefaultDescribe] = useState("");
   const [choosedCheckboxs, setChoosedCheckboxs] = useState([]);
   const queryDebounce = useDebounce(query, 500);
+  const [icon, setIcon] = useState("");
   const searchSpecialty = async () => {
-    // let res = await getSpecialtyByName(queryDebounce, id);
     let res = await getSpecialtyByDoctorId(id);
     if (res) {
       console.log(res);
-      // setspecialty(res?.results);
       setSpecialtyDoctor(res?.results);
       setCount(res?.count);
     }
@@ -69,14 +70,15 @@ const ManageSpecialty = () => {
       toast.error("Xoá thất bại");
     }
   };
+  const filteredCategories = specialtyDoctor.filter((item) =>
+    item?.specialty?.name.toLowerCase().includes(queryDebounce.toLowerCase()),
+  );
   useEffect(() => {
     searchSpecialty();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryDebounce]);
   useEffect(() => {
     searchSpecialty();
     getAllService();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div>
@@ -125,7 +127,16 @@ const ManageSpecialty = () => {
         <div className="management__content">
           <div className="AdminUserResult">
             <div className="ResultPerTable">
-              <label for="dropdown">Có {count} kết quả tìm được</label>
+              {/* <label for="dropdown">Có {count} kết quả tìm được</label> */}
+              <button
+                className="btn button mt-4"
+                onClick={async () => {
+                  console.log(choosedCheckboxs);
+                  deleteSpecialtyDoctors(choosedCheckboxs);
+                }}
+              >
+                Xoá các mục đã chọn
+              </button>
             </div>
             <div className="Table">
               <table>
@@ -136,30 +147,34 @@ const ManageSpecialty = () => {
                   <th>STT</th>
                   <th>Tên</th>
                   <th>Ảnh</th>
-                  <th>Thông tin</th>
                   <th>Hành động</th>
                 </tr>
                 {specialtyDoctor &&
                   specialtyDoctor.length > 0 &&
-                  specialtyDoctor.map((item, index) => {
+                  filteredCategories.map((item, index) => {
                     return (
                       <tr key={item.id}>
                         <td>
-                          <input type="checkbox"
+                          <input
+                            type="checkbox"
                             onChange={(e) => {
                               if (e.target.checked) {
                                 setChoosedCheckboxs((prevChoosedCheckboxs) => {
-                                  console.log("prevChoosedCheckboxs", prevChoosedCheckboxs);
-                                  return [
-                                  ...prevChoosedCheckboxs,
-                                  item.id,
-                                ]});
+                                  console.log(
+                                    "prevChoosedCheckboxs",
+                                    prevChoosedCheckboxs,
+                                  );
+                                  return [...prevChoosedCheckboxs, item.id];
+                                });
                               } else {
                                 setChoosedCheckboxs((prevChoosedCheckboxs) => {
-                                  console.log("prevChoosedCheckboxs", prevChoosedCheckboxs);
+                                  console.log(
+                                    "prevChoosedCheckboxs",
+                                    prevChoosedCheckboxs,
+                                  );
                                   return prevChoosedCheckboxs.filter(
                                     (prevChoosedCheckbox) =>
-                                      prevChoosedCheckbox !== item.id
+                                      prevChoosedCheckbox !== item.id,
                                   );
                                 });
                               }
@@ -172,12 +187,11 @@ const ManageSpecialty = () => {
                         </td>
                         <td>
                           <img
-                            src={avatar}
+                            src={item?.specialty?.icon || avatar}
                             alt=""
                             style={{ height: "50px", width: "50x" }}
                           />
                         </td>
-                        <td>23.000</td>
                         <td>
                           <div className="Action">
                             <button
@@ -186,6 +200,7 @@ const ManageSpecialty = () => {
                                 handleShowEditBlog();
                                 setDefaultValue(item?.specialty.name);
                                 setDefaultDescribe(item?.specialty.describe);
+                                setIcon(item?.specialty?.icon);
                               }}
                             >
                               <IoInformation />
@@ -204,7 +219,7 @@ const ManageSpecialty = () => {
                                     <div className="form__avatar">
                                       <label htmlFor="">Ảnh chuyên khoa</label>
                                       <div className="form__image">
-                                        <img src={avatar} alt="" />
+                                        <img src={icon || avatar} alt="" />
                                       </div>
                                     </div>
                                     <div>
@@ -292,15 +307,15 @@ const ManageSpecialty = () => {
               </table>
             </div>
           </div>
-          <button
+          {/* <button
             className="btn button mt-4"
-            onClick={ async () => {
+            onClick={async () => {
               console.log(choosedCheckboxs);
               deleteSpecialtyDoctors(choosedCheckboxs);
             }}
           >
             Xoá các mục đã chọn
-          </button>
+          </button> */}
         </div>
         <div className="management__pagination">
           <ReactPaginate

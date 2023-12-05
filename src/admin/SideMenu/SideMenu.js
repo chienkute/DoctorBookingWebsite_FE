@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./SideMenu.scss";
 import logo from "assets/logo.png";
-import { NavLink } from "react-router-dom";
-
+import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 const SideMenu = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("admin");
+    navigate("/login");
+    toast.success("Đăng xuất thành công!");
+  };
+  useEffect(() => {
+    if (!localStorage.getItem("admin")) return navigate("/login");
+  }, []);
   return (
     <div className="AdminSideMenuContainer">
       <div className="AdminSideMenuLogo">
@@ -12,40 +23,40 @@ const SideMenu = () => {
         </a>
       </div>
       <div className="AdminMenu">
-        <NavLink
-          to={"/admin/user"}
+        {/* <NavLink
+          to={`/admin/user/${id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive AdminMenu" : "AdminMenu"
           }
         >
           Quản lí người dùng
-        </NavLink>
+        </NavLink> */}
         <NavLink
-          to={"/admin/topic"}
+          to={`/admin/topic/${id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive AdminMenu" : "AdminMenu"
           }
         >
           Quản lí chuyên mục
         </NavLink>
-        <NavLink
-          to={"/admin/post"}
+        {/* <NavLink
+          to={`/admin/post/${id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive AdminMenu" : "AdminMenu"
           }
         >
           Quản lí bài viết
-        </NavLink>
+        </NavLink> */}
         <NavLink
-          to={"/admin/hospital"}
+          to={`/admin/hospital/${id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive AdminMenu" : "AdminMenu"
           }
         >
-          Quản lí cơ sở KCB
+          Quản lí bệnh viện
         </NavLink>
         <NavLink
-          to={"/admin/speciality"}
+          to={`/admin/speciality/${id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive AdminMenu" : "AdminMenu"
           }
@@ -53,12 +64,15 @@ const SideMenu = () => {
           Quản lí chuyên khoa
         </NavLink>
         <NavLink
-          to={"/admin/service"}
+          to={`/admin/service/${id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive AdminMenu" : "AdminMenu"
           }
         >
           Quản lí dịch vụ
+        </NavLink>
+        <NavLink to={"/login"} className="DoctorMenu" onClick={handleLogout}>
+          Đăng xuất
         </NavLink>
       </div>
     </div>

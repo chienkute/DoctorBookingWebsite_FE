@@ -11,6 +11,7 @@ import imageChuyenMuc1 from "../../../assets/chuyenmuc/medical.png";
 // import imageskhoe4 from "../../../assets/suckhoe/ktraskhoe4.png";
 // import imageskhoe5 from "../../../assets/suckhoe/ktrasuckhoe5.png";
 // import imageskhoe6 from "../../../assets/suckhoe/ktrasuckhoe6.png";
+import avatar from "../../../assets/avatar.jpg";
 import imageck1 from "../../../assets/chuyenkhoa/dakhoa.png";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { FaUserLarge } from "react-icons/fa6";
@@ -32,6 +33,7 @@ const Header = () => {
   const { setSearch } = useContext(SearchContext);
   const { update, setUpdate } = useContext(UpdateContext);
   const [user, setUser] = useState([]);
+  const [image, setImage] = useState("");
   console.log(user);
   const [userName, setUserName] = useState("");
   const navigate = useNavigate();
@@ -62,6 +64,7 @@ const Header = () => {
     if (res) {
       console.log(res);
       setUserName(res?.name);
+      setImage(res?.account?.avatar);
     }
   };
   const { show, setShow, nodeRef } = useClickOutSide();
@@ -129,7 +132,7 @@ const Header = () => {
                   </li>
                   {categories &&
                     categories.length > 0 &&
-                    categories.map((item, index) => {
+                    categories.slice(0, 7).map((item, index) => {
                       return (
                         <li
                           key={index}
@@ -142,7 +145,7 @@ const Header = () => {
                             to={`/category/${item.id}/${item.name}`}
                           >
                             <div className="header__menu_image">
-                              <img src={imageChuyenMuc1} alt="" />
+                              <img src={item?.icon || imageChuyenMuc1} alt="" />
                             </div>
                             <span>{item.name}</span>
                           </Link>
@@ -270,7 +273,7 @@ const Header = () => {
                   </li>
                   {specialtySlice &&
                     specialtySlice.length > 0 &&
-                    specialtySlice.map((item, index) => {
+                    specialtySlice.slice(0, 7).map((item, index) => {
                       return (
                         <li
                           onClick={() => {
@@ -283,7 +286,7 @@ const Header = () => {
                             key={index}
                           >
                             <div className="header__menu_image">
-                              <img src={imageck1} alt="" />
+                              <img src={item?.icon || imageck1} alt="" />
                             </div>
                             <span>{item.name}</span>
                           </Link>
@@ -319,14 +322,14 @@ const Header = () => {
                   setUpdate(!update);
                 }}
               >
-                <FaUserLarge></FaUserLarge>
+                <img src={image || avatar} alt="" />
               </Link>
             </div>
             {show && (
               <div className="HeaderItem">
                 <div className="HeaderItem__user">
                   <div className="HeaderItem__user_avt">
-                    <FaUserLarge></FaUserLarge>
+                    <img src={image || avatar} alt="" />
                   </div>
                   <div className="HeaderItem__user_name">
                     <h6>{userName || "Họ và tên"}</h6>

@@ -120,6 +120,13 @@ const getServiceByIdHospital = (name, id_hospital) => {
     `api/search_service666/?name=${name}&id_hospital=${id_hospital}`,
   );
 };
+const editAvatar = (id, avatar) => {
+  return instance.patch(`/api/accounts/${id}/`, avatar, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
 export {
   getDoctorByNameAddress,
   getHospitalByNameAddress,
@@ -154,4 +161,5 @@ export {
   getUserID,
   getServiceById,
   fecthAllBlog,
+  editAvatar,
 };

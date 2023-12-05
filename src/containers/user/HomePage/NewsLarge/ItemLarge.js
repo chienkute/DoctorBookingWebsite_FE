@@ -15,6 +15,8 @@ const ItemLarge = (props) => {
     doctor,
     id_doctor,
     content,
+    image,
+    avatar,
   } = props;
   const [loadingSkeleton, SetLoadingSkeleton] = useState(true);
   useEffect(() => {
@@ -33,7 +35,7 @@ const ItemLarge = (props) => {
       ) : (
         <div className="NewsImage">
           <Link to={`/blog/${id_blog}`} className="clear">
-            <img src={blogImg} alt="Blog Img"></img>
+            <img src={image || blogImg} alt="Blog Img"></img>
           </Link>
         </div>
       )}
@@ -82,7 +84,7 @@ const ItemLarge = (props) => {
       ) : (
         <div className="NewsAuthorAndTime">
           <Link to={`/care/doctor/${id_doctor}`} className="clear">
-            <img src={avtImg} placeholder="Avatar" alt=""></img>
+            <img src={avatar || avtImg} placeholder="Avatar" alt=""></img>
             <span>
               Được viết bởi <b>{doctor}</b> - {date}
             </span>
