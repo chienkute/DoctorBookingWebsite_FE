@@ -15,8 +15,8 @@ const getUserID = (id) => {
 const login = (username, password) => {
   return instance.post("api/auth/login/", { username, password });
 };
-const fetchAllSpecialties = () => {
-  return instance.get(`api/specialties/`);
+const fetchAllSpecialties = (offset) => {
+  return instance.get(`api/specialties/?limit=100&offset=${offset}`);
 };
 const fecthAllBlog = (page) => {
   return instance.get(`/api/blogs/?current_page=${page}`);

@@ -20,13 +20,16 @@ const Search = () => {
   const [loadingSkeleton, SetLoadingSkeleton] = useState(true);
   const navigate = useNavigate();
   const [show, setShow] = useState(true);
+  const [totalPage, setTotalPage] = useState(0);
   const handlePageClick = (event) => {
-    // getUser(+event.selected + 1);
+    // searchBlogByName(+event.selected + 1);
   };
   const searchNameBlog = async () => {
     let res = await searchBlogByName(debouncedSearchTerm);
     if (res) {
-      SetLoadingSkeleton(true);
+      console.log(res);
+      // SetLoadingSkeleton(true);
+      setTotalPage(res?.total_page);
       setDataBlog(res?.results);
       setScount(res?.count);
     }
@@ -46,6 +49,9 @@ const Search = () => {
     setSearch(debouncedSearchTerm);
     setTimeout(() => {
       SetLoadingSkeleton(false);
+    }, 1000);
+    setTimeout(() => {
+      setShow(false);
     }, 1000);
   }, [debouncedSearchTerm]);
   return (
@@ -209,23 +215,26 @@ const Search = () => {
                               style={{ transform: "translateY(-5px)" }}
                             />
                           ) : (
-                            <img src={blogImg} alt="" />
+                            <img src={item?.picture || blogImg} alt="" />
                           )}
                         </div>
                         <div className="search__summary d-flex flex-column">
                           <Link
                             className="search__category"
                             onClick={() => {
-                              navigate(`/category/${item.id_category}`);
+                              navigate(
+                                `/category/${item?.id_category?.id}/${item?.id_category?.name}`,
+                              );
                             }}
                           >
                             {loadingSkeleton ? (
                               <span>
-                                {" "}
                                 <Skeleton width="50%" />
                               </span>
                             ) : (
-                              <span> Chuyên mục</span>
+                              <span>
+                                {item?.id_category?.name || "Chuyên mục"}
+                              </span>
                             )}
                           </Link>
                           {loadingSkeleton ? (
@@ -234,10 +243,10 @@ const Search = () => {
                             <Link
                               className="search__titles"
                               onClick={() => {
-                                navigate(`/blog/${item.id}`);
+                                navigate(`/blog/${item?.id}`);
                               }}
                             >
-                              {item.title}
+                              {item?.title}
                             </Link>
                           )}
                           {loadingSkeleton ? (
@@ -248,7 +257,7 @@ const Search = () => {
                             <p
                               className="search__text"
                               onClick={() => {
-                                navigate(`/blog/${item.id}`);
+                                navigate(`/blog/${item?.id}`);
                               }}
                             >
                               Lorem ipsum dolor sit amet consectetur adipisicing
@@ -262,7 +271,7 @@ const Search = () => {
                           <div
                             className="search__author d-flex"
                             onClick={() => {
-                              navigate(`/care/doctor/${item.id_doctor}`);
+                              navigate(`/care/doctor/${item?.id_doctor}`);
                             }}
                           >
                             {loadingSkeleton ? (
@@ -277,7 +286,13 @@ const Search = () => {
                               </div>
                             ) : (
                               <div className="search__images">
-                                <img src={imagedoctor1} alt="" />
+                                <img
+                                  src={
+                                    item?.id_doctor?.account?.avatar ||
+                                    imagedoctor1
+                                  }
+                                  alt=""
+                                />
                               </div>
                             )}
                             {loadingSkeleton ? (
@@ -291,8 +306,10 @@ const Search = () => {
                             ) : (
                               <p>
                                 Tham vấn y khoa {""}
-                                <span>TS.Dược khoa Trương Anh Thư </span>
-                                17/04/2023
+                                <span>
+                                  {item?.id_doctor?.name || "Tên bác sĩ"}
+                                </span>
+                                {item?.created_at}
                               </p>
                             )}
                           </div>
@@ -311,7 +328,7 @@ const Search = () => {
             breakLabel="..."
             nextLabel=">"
             onPageChange={handlePageClick}
-            pageRangeDisplayed={5}
+            pageRangeDisplayed={totalPage}
             pageCount={3}
             previousLabel="<"
             pageClassName="page-item"

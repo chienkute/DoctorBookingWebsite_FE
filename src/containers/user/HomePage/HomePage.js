@@ -9,16 +9,14 @@ import banner2 from "../../../assets/banner5.png";
 import ItemLarge from "./NewsLarge/ItemLarge";
 import ItemSmall from "./NewsLarge/ItemSmall";
 import { fecthAllBlog } from "service/UserService";
-import { useContext, useEffect, useState } from "react";
-import { LoadingContext } from "context/LoadingContext";
+import { useEffect, useState } from "react";
 function App() {
   const [blog, setBlog] = useState([]);
   console.log(blog);
-  const { loading, setLoading } = useContext(LoadingContext);
+  const [loading, setLoading] = useState(true);
   const getBlog = async () => {
     let res = await fecthAllBlog(1);
     if (res) {
-      setLoading(true);
       setBlog(res?.results);
     }
   };
