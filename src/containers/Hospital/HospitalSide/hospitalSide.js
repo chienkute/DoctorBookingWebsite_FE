@@ -4,7 +4,6 @@ import logo from "assets/logo.png";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { UpdateContext } from "context/UpdateContext";
-
 const HospitalSide = () => {
   const { id } = useParams();
   const navigate = useNavigate();
