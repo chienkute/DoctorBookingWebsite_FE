@@ -47,14 +47,14 @@ const SideMenu = () => {
         >
           Quản lí bài viết
         </NavLink> */}
-        <NavLink
+        {/* <NavLink
           to={`/admin/hospital/${id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive AdminMenu" : "AdminMenu"
           }
         >
           Quản lí bệnh viện
-        </NavLink>
+        </NavLink> */}
         <NavLink
           to={`/admin/speciality/${id}`}
           className={({ isActive }) =>

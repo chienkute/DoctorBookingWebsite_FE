@@ -55,9 +55,9 @@ const editDoctorInformation = (
     gender,
   });
 };
-const getBlog = (id, name, id_category) => {
+const getBlog = (id, name, id_category, offset) => {
   return instance.get(
-    `/api/search_blog/?id_category=${id_category}&name=${name}&id_doctor=${id}`,
+    `/api/search_blog/?id_category=${id_category}&name=${name}&id_doctor=${id}&limit=6&offset=${offset}`,
   );
 };
 const addBlog = (id_category, id_doctor, title, content, picture) => {
@@ -133,15 +133,10 @@ const deleteSomeServiceDoctor = (ServiceDoctorIds) => {
 const addService = (service_id, doctor_id) => {
   return instance.post("/api/servicedoctors/", { service_id, doctor_id });
 };
-// const getDoctorAppoinment = (id, limit, page) => {
-//   const offset = page * limit;
-//   return instance.get(
-//     `/api/appointments?doctor_id=${id}&limit=${limit}&offset=${offset}`,
-//   );
-// };
-const getDoctorAppoinment = (id) => {
-  // const offset = page * limit;
-  return instance.get(`/api/appointments?doctor_id=${id}`);
+const getDoctorAppoinment = (id, offset) => {
+  return instance.get(
+    `/api/appointments?doctor_id=${id}&limit=6&offset=${offset}`,
+  );
 };
 export {
   editDoctorInformation,

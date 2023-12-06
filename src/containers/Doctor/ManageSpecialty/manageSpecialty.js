@@ -30,7 +30,6 @@ const ManageSpecialty = () => {
   const [specialtyDoctor, setSpecialtyDoctor] = useState([]);
   const [allSpecialty, setAllSpecialty] = useState([]);
   const [selectSpecialty, setSelectSpecialty] = useState("");
-  const [count, setCount] = useState("");
   const [defaultValue, setDefaultValue] = useState("");
   const [defaultDescribe, setDefaultDescribe] = useState("");
   const [choosedCheckboxs, setChoosedCheckboxs] = useState([]);
@@ -41,7 +40,6 @@ const ManageSpecialty = () => {
     if (res) {
       console.log(res);
       setSpecialtyDoctor(res?.results);
-      setCount(res?.count);
     }
   };
   const getAllService = async () => {
@@ -317,7 +315,7 @@ const ManageSpecialty = () => {
             Xoá các mục đã chọn
           </button> */}
         </div>
-        <div className="management__pagination">
+        {/* <div className="management__pagination">
           <ReactPaginate
             breakLabel="..."
             nextLabel=">"
@@ -336,7 +334,7 @@ const ManageSpecialty = () => {
             containerClassName="pagination"
             activeClassName="active active-pagination"
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );

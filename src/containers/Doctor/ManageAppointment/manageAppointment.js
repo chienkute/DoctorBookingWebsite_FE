@@ -1,7 +1,7 @@
 import { memo, useEffect, useState } from "react";
 import "./manageAppointment.scss";
 // import { FaEraser } from "react-icons/fa6";
-import { FiEdit3 } from "react-icons/fi";
+// import { FiEdit3 } from "react-icons/fi";
 import { IoInformation } from "react-icons/io5";
 import {
   FaRegCheckSquare,
@@ -11,7 +11,7 @@ import {
 // import { IoClose } from "react-icons/io5";
 import avatar from "../../../assets/avatar.png";
 import { Button, Modal } from "react-bootstrap";
-import Form from "react-bootstrap/Form";
+// import Form from "react-bootstrap/Form";
 import ReactPaginate from "react-paginate";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useParams } from "react-router";
@@ -25,9 +25,9 @@ const ManageAppointment = () => {
   const [showAppointmentInfor, setShowAppoinmentInfor] = useState(false);
   const handleCloseAppointmentInfor = () => setShowAppoinmentInfor(false);
   const handleShowAppointmentInfor = () => setShowAppoinmentInfor(true);
-  const [showConfirmAppointment, setShowConfirmAppointment] = useState(false);
-  const handleCloseConfirmAppointment = () => setShowConfirmAppointment(false);
-  const handleShowConfirmAppointment = () => setShowConfirmAppointment(true);
+  // const [showConfirmAppointment, setShowConfirmAppointment] = useState(false);
+  // const handleCloseConfirmAppointment = () => setShowConfirmAppointment(false);
+  // const handleShowConfirmAppointment = () => setShowConfirmAppointment(true);
   const [showApproveAppointment, setShowApproveAppointment] = useState(false);
   const handleCloseApproveAppointment = () => setShowApproveAppointment(false);
   const handleShowApproveAppointment = () => setShowApproveAppointment(true);
@@ -48,16 +48,17 @@ const ManageAppointment = () => {
   const [date, setDate] = useState("");
   const [idAppointment, setIdAppointment] = useState("");
   const [totalPage, setTotalPage] = useState(0);
-  const [hasclick, setHasClick] = useState(true);
+  // const [hasclick, setHasClick] = useState(true);
   const [image, setImage] = useState("");
   const queryDebounce = useDebounce(query, 500);
   const handlePageClick = (event) => {
-    getAppoinment(1, 6, +event.selected + 1);
-    console.log(event.selected);
+    console.log(+event.selected + 1);
+    getAppoinment(+event.selected + 1);
   };
-  const getAppoinment = async () => {
-    let res = await getDoctorAppoinment(id);
+  const getAppoinment = async (page) => {
+    let res = await getDoctorAppoinment(id, (page - 1) * 6);
     if (res) {
+      console.log(res);
       setTotalPage(res?.total_page);
       setAppoinment(res?.results);
       setCount(res?.count);
@@ -68,6 +69,7 @@ const ManageAppointment = () => {
     if (res) {
       console.log(res);
       toast.success("Thay đổi thành công");
+      getAppoinment();
     } else {
       toast.error("Thay đổi thất bại");
     }
@@ -242,7 +244,7 @@ const ManageAppointment = () => {
                                 <div className="form__avatar">
                                   <label htmlFor="">Ảnh đại diện</label>
                                   <div className="form__image">
-                                    <img src={image} alt="" />
+                                    <img src={image || avatar} alt="" />
                                   </div>
                                 </div>
                                 <div className="appointmentManage_content">
@@ -317,7 +319,7 @@ const ManageAppointment = () => {
                             <button
                               className="DenyButton"
                               onClick={() => {
-                                handleShowApproveAppointment();
+                                handleShowCancelAppointment();
                                 setIdAppointment(item?.id);
                               }}
                             >
@@ -401,10 +403,7 @@ const ManageAppointment = () => {
         <ReactPaginate
           breakLabel="..."
           nextLabel=">"
-          onPageChange={(e) => {
-            handlePageClick(e);
-            getAppoinment();
-          }}
+          onPageChange={handlePageClick}
           pageRangeDisplayed={5}
           pageCount={totalPage}
           previousLabel="<"

@@ -133,7 +133,7 @@ function App() {
               </div>
             </div>
             <div className="ListCategoriesNews">
-              <NewsSmall id={"1"} />
+              <NewsSmall id={"4"} />
               <NewsSmall id={"2"} />
               <NewsSmall id={"3"} />
             </div>

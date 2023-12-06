@@ -54,9 +54,6 @@ const NewsSmall = (props) => {
                     </Link>
                   </div>
                   <div className="NewsInfo">
-                    {/* <div className="NewsTitle">
-                      <Link className="clear bold">Tiêu đề bài viết</Link>
-                    </div> */}
                     <div className="NewsContent1">
                       <span
                         dangerouslySetInnerHTML={{ __html: item?.content }}
