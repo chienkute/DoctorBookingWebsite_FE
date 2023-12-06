@@ -14,7 +14,6 @@ const ItemSmall = (props) => {
     id_category,
     doctor,
     id_doctor,
-    content,
     image,
     title,
     avatar,
