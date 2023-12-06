@@ -90,6 +90,7 @@ const DoctorManagement = () => {
           email: "",
           password: "",
         });
+        getDoctorById();
         toast.success("Thêm thành công");
       } else {
         toast.success("Thêm thất bại");
