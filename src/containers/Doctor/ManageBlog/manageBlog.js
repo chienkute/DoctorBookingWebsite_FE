@@ -45,6 +45,7 @@ const ManageBlog = () => {
   const [imageUpdate, setImageUpdate] = useState([]);
   const [imageOld, setImageOld] = useState("");
   const [formData, setFormData] = useState(new FormData());
+  const [totalPage, setTotalPage] = useState(0);
   console.log(blog);
   console.log(idCategory);
   console.log(imageUpdate);
@@ -75,10 +76,20 @@ const ManageBlog = () => {
     setImageUpdate(event.target.files[0]);
     setImage(URL.createObjectURL(event.target.files[0]));
   };
-  const getBlogById = async () => {
-    let res = await getBlog(id, queryDebounce, idCategorySearch);
+  const handlePageClick = (event) => {
+    console.log(+event.selected + 1);
+    getBlogById(+event.selected + 1);
+  };
+  const getBlogById = async (page) => {
+    let res = await getBlog(
+      id,
+      queryDebounce,
+      idCategorySearch,
+      (page - 1) * 6,
+    );
     if (res) {
       console.log(res);
+      setTotalPage(res?.total_page);
       setBlog(res?.results);
       setCount(res?.count);
     }
@@ -426,16 +437,16 @@ const ManageBlog = () => {
                                       </div>
                                     ) : (
                                       <div className="form__image">
-                                        {imageOld ? (
+                                        {image ? (
                                           <img
-                                            src={imageOld}
+                                            src={image}
                                             alt="BlogImg"
                                             className="avatarAfter"
                                             onClick={handleImageClick}
                                           ></img>
-                                        ) : image ? (
+                                        ) : imageOld ? (
                                           <img
-                                            src={image}
+                                            src={imageOld}
                                             alt="BlogImg"
                                             className="avatarBefore"
                                             onClick={handleImageClick}
@@ -613,8 +624,8 @@ const ManageBlog = () => {
         <ReactPaginate
           breakLabel="..."
           nextLabel=">"
-          // onPageChange={handlePageClick}
-          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={totalPage}
           pageCount={3}
           previousLabel="<"
           pageClassName="page-item"

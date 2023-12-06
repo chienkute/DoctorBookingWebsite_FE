@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "./AdminTopic.scss";
 import { FaRegCheckSquare, FaEraser } from "react-icons/fa";
-import { FcPrevious, FcNext } from "react-icons/fc";
+// import { FcPrevious, FcNext } from "react-icons/fc";
 import { FiEdit3 } from "react-icons/fi";
-import TopicInfoDialogue from "admin/AdminComponent/TopicInfo/TopicInfo";
-import TopicDeleteDialogue from "admin/AdminComponent/TopicDelete/TopicDelete";
+// import TopicInfoDialogue from "admin/AdminComponent/TopicInfo/TopicInfo";
+// import TopicDeleteDialogue from "admin/AdminComponent/TopicDelete/TopicDelete";
 import { FaPlus } from "react-icons/fa6";
-import { fetchAllCategories } from "service/UserService";
 import avatar from "../../../assets/avatar.jpg";
 import { UpdateContext } from "context/UpdateContext";
 import { Button, Modal } from "react-bootstrap";
@@ -14,27 +13,29 @@ import {
   addCategory,
   deleteCategory,
   editCategory,
+  fetchAllCategoriess,
 } from "service/AdminService";
 import { toast } from "react-toastify";
+import ReactPaginate from "react-paginate";
 const AdminTopic = () => {
   const { update, setUpdate } = useContext(UpdateContext);
-  const [dialogueList, setDialogueList] = useState([]);
-  const addTID = (data) => {
-    setDialogueList([
-      ...dialogueList,
-      <TopicInfoDialogue key="TID" data={data} close={(key) => closeD(key)} />,
-    ]);
-  };
-  const addTDD = () => {
-    setDialogueList([
-      ...dialogueList,
-      <TopicDeleteDialogue key="TDD" close={(key) => closeD(key)} />,
-    ]);
-  };
-  const closeD = (key) => {
-    const newLD = dialogueList.filter((dialogue) => dialogue.key !== key);
-    setDialogueList(newLD);
-  };
+  // const [dialogueList, setDialogueList] = useState([]);
+  // const addTID = (data) => {
+  //   setDialogueList([
+  //     ...dialogueList,
+  //     <TopicInfoDialogue key="TID" data={data} close={(key) => closeD(key)} />,
+  //   ]);
+  // };
+  // const addTDD = () => {
+  //   setDialogueList([
+  //     ...dialogueList,
+  //     <TopicDeleteDialogue key="TDD" close={(key) => closeD(key)} />,
+  //   ]);
+  // };
+  // const closeD = (key) => {
+  //   const newLD = dialogueList.filter((dialogue) => dialogue.key !== key);
+  //   setDialogueList(newLD);
+  // };
   const [showAddNewBlog, setShowAddNewBlog] = useState(false);
   const handleCloseAddNewBlog = () => setShowAddNewBlog(false);
   const handleShowAddNewBlog = () => setShowAddNewBlog(true);
@@ -55,9 +56,15 @@ const AdminTopic = () => {
   const [imageUpdate, setImageUpdate] = useState([]);
   const [id, setId] = useState("");
   const inputRef = useRef(null);
-  const getAllCategories = async () => {
-    let res = await fetchAllCategories();
+  const [totalPage, setTotalPage] = useState(0);
+  const handlePageClick = (event) => {
+    console.log(+event.selected + 1);
+    getAllCategories(+event.selected + 1);
+  };
+  const getAllCategories = async (page) => {
+    let res = await fetchAllCategoriess((page - 1) * 6);
     if (res?.results) {
+      setTotalPage(res?.total_page);
       setCategory(res?.results);
     }
   };
@@ -264,6 +271,8 @@ const AdminTopic = () => {
                               handleShowEditBlog();
                               setUpdate(!update);
                               setImage("");
+                              setNameAdd(item?.name);
+                              setDescribeAdd(item?.describe);
                             }}
                           >
                             <FiEdit3 />
@@ -282,16 +291,16 @@ const AdminTopic = () => {
                                   <div className="form__avatar">
                                     <label htmlFor="">Ảnh chuyên mục</label>
                                     <div className="form__image">
-                                      {icon ? (
+                                      {image ? (
                                         <img
-                                          src={icon}
+                                          src={image}
                                           alt="BlogImg"
                                           className="avatarAfter"
                                           onClick={handleImageClick}
                                         ></img>
-                                      ) : image ? (
+                                      ) : icon ? (
                                         <img
-                                          src={image}
+                                          src={icon}
                                           alt="BlogImg"
                                           className="avatarBefore"
                                           onClick={handleImageClick}
@@ -380,7 +389,7 @@ const AdminTopic = () => {
                           >
                             <Modal.Header closeButton>
                               <Modal.Title>
-                                Bạn muốn xóa bài viết này không?
+                                Bạn muốn xóa chuyên mục này không?
                               </Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
@@ -412,7 +421,7 @@ const AdminTopic = () => {
                 })}
             </table>
           </div>
-          <div className="PageMonitor">
+          {/* <div className="PageMonitor">
             <div className="PrevPage flex-center disabled">
               <FcPrevious />
             </div>
@@ -426,10 +435,30 @@ const AdminTopic = () => {
             <div className="NextPage flex-center">
               <FcNext />
             </div>
+          </div> */}
+          <div className="management__pagination">
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel=">"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={totalPage}
+              pageCount={3}
+              previousLabel="<"
+              pageClassName="page-item"
+              pageLinkClassName="page-link"
+              previousClassName="page-item previous"
+              previousLinkClassName="page-link"
+              nextClassName="page-item previous"
+              nextLinkClassName="page-link"
+              breakClassName="page-item"
+              breakLinkClassName="page-link"
+              containerClassName="pagination"
+              activeClassName="active active-pagination"
+            />
           </div>
         </div>
       </div>
-      {dialogueList}
+      {/* {dialogueList} */}
     </>
   );
 };

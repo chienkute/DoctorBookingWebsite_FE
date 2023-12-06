@@ -1,40 +1,90 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./AdminService.scss";
 import { FaRegCheckSquare, FaEraser } from "react-icons/fa";
-import { FcPrevious, FcNext } from "react-icons/fc";
 import { FiEdit3 } from "react-icons/fi";
-import ServiceInfoDialogue from "admin/AdminComponent/ServiceInfo/ServiceInfo";
-import ServiceDeleteDialogue from "admin/AdminComponent/ServiceDelete/ServiceDelete";
 import { FaPlus } from "react-icons/fa6";
-import ser_avt from "assets/service.png";
-
-//class AdminService extends React.Component {
+import {
+  addService,
+  deleteService,
+  editService,
+  fetchAllServices,
+} from "service/AdminService";
+import { toast } from "react-toastify";
+import { Button, Modal } from "react-bootstrap";
+import avatar from "../../../assets/avatar.jpg";
+import { UpdateContext } from "context/UpdateContext";
+import ReactPaginate from "react-paginate";
 const AdminService = () => {
-  const [dialogueList, setDialogueList] = useState([]);
-
-  const addSID = (data = null) => {
-    setDialogueList([
-      ...dialogueList,
-      <ServiceInfoDialogue
-        key="SID"
-        data={data}
-        close={(key) => closeD(key)}
-      />,
-    ]);
+  const { update, setUpdate } = useContext(UpdateContext);
+  const [showAddNewBlog, setShowAddNewBlog] = useState(false);
+  const handleCloseAddNewBlog = () => setShowAddNewBlog(false);
+  const handleShowAddNewBlog = () => setShowAddNewBlog(true);
+  const [showEditBlog, setShowEditBlog] = useState(false);
+  const handleCloseEditBlog = () => setShowEditBlog(false);
+  const handleShowEditBlog = () => setShowEditBlog(true);
+  const [showDeleteBlog, setShowDeleteBlog] = useState(false);
+  const handleCloseDeleteBlog = () => setShowDeleteBlog(false);
+  const handleShowDeleteBlog = () => setShowDeleteBlog(true);
+  const [category, setCategory] = useState([]);
+  const [search, setSearch] = useState("");
+  const [defaultValue, setDefaultValue] = useState("");
+  const [defaultDescribe, setDefaultDescribe] = useState("");
+  const [icon, setIcon] = useState("");
+  const [nameAdd, setNameAdd] = useState("");
+  const [describeAdd, setDescribeAdd] = useState("");
+  const [image, setImage] = useState("");
+  const [imageUpdate, setImageUpdate] = useState([]);
+  const [id, setId] = useState("");
+  const inputRef = useRef(null);
+  const [totalPage, setTotalPage] = useState(0);
+  const handlePageClick = (event) => {
+    console.log(+event.selected + 1);
+    getAllCategories(+event.selected + 1);
   };
-
-  const addSDD = () => {
-    setDialogueList([
-      ...dialogueList,
-      <ServiceDeleteDialogue key="SDD" close={(key) => closeD(key)} />,
-    ]);
+  const getAllCategories = async (page) => {
+    let res = await fetchAllServices((page - 1) * 6);
+    if (res?.results) {
+      setTotalPage(res?.total_page);
+      setCategory(res?.results);
+    }
   };
-
-  const closeD = (key) => {
-    const newLD = dialogueList.filter((dialogue) => dialogue.key !== key);
-    setDialogueList(newLD);
+  const filteredCategories = category.filter((item) =>
+    item.name.toLowerCase().includes(search.toLowerCase()),
+  );
+  const handleImageClick = () => {
+    inputRef.current.click();
   };
-
+  const handleImageChange = (event) => {
+    setImageUpdate(event.target.files[0]);
+    setImage(URL.createObjectURL(event.target.files[0]));
+  };
+  const addNewCategory = async () => {
+    let res = await addService(nameAdd, describeAdd, imageUpdate);
+    if (res) {
+      console.log(res);
+      toast.success("Thêm thành công");
+      getAllCategories();
+    }
+  };
+  const fixCategory = async (id) => {
+    let res = await editService(id, nameAdd, describeAdd, imageUpdate);
+    if (res) {
+      console.log(res);
+      toast.success("Thêm thành công");
+      getAllCategories();
+    }
+  };
+  const deleteCategories = async (id) => {
+    let res = await deleteService(id);
+    if (res) {
+      console.log(res);
+      getAllCategories();
+      toast.success("Xóa thành công");
+    }
+  };
+  useEffect(() => {
+    getAllCategories();
+  }, []);
   return (
     <>
       <div className="AdminServiceContainer">
@@ -48,25 +98,108 @@ const AdminService = () => {
                   placeholder="Nhập tên dịch vụ"
                   id="ServiceNameInput"
                   name="ServiceNameInput"
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                  }}
                 ></input>
               </div>
             </div>
           </div>
         </div>
         <div className="AdminServiceFunction">
-          <button id="AdminServiceAddService" onClick={() => addSID()}>
+          <button
+            id="AdminServiceAddService"
+            onClick={() => {
+              handleShowAddNewBlog();
+              setImage("");
+            }}
+          >
             <FaPlus /> Thêm dịch vụ...
           </button>
+          <Modal show={showAddNewBlog} onHide={handleCloseAddNewBlog} centered>
+            <Modal.Header closeButton>
+              <Modal.Title>Thêm mới dịch vụ</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className="add__form">
+                <form action="">
+                  <div className="form__avatar">
+                    <label htmlFor="">Ảnh dịch vụ</label>
+                    <div className="form__image">
+                      {image ? (
+                        <img
+                          src={image}
+                          alt="BlogImg"
+                          className="avatarAfter"
+                          onClick={handleImageClick}
+                        ></img>
+                      ) : (
+                        <img
+                          src={avatar}
+                          alt="BlogImg"
+                          className="avatarBefore"
+                          onClick={handleImageClick}
+                        ></img>
+                      )}
+                    </div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: "none" }}
+                      ref={inputRef}
+                      onChange={handleImageChange}
+                    />
+                  </div>
+                  <div>
+                    <div className=" form__col">
+                      <label htmlFor="">Tiêu đề dịch vụ</label>
+                      <input
+                        type="text"
+                        id="nameEdit"
+                        class="form-control"
+                        autoComplete="off"
+                        onChange={(e) => {
+                          setNameAdd(e.target.value);
+                        }}
+                      />
+                    </div>
+                    <div className="form__col">
+                      <label htmlFor="">Thông tin cơ bản</label>
+                      <textarea
+                        name=""
+                        id=""
+                        cols="30"
+                        rows="10"
+                        onChange={(e) => {
+                          setDescribeAdd(e.target.value);
+                        }}
+                      ></textarea>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseAddNewBlog}>
+                Đóng
+              </Button>
+              <Button
+                variant="primary"
+                type="submit"
+                onClick={() => {
+                  handleCloseAddNewBlog();
+                  setUpdate(!update);
+                  addNewCategory();
+                }}
+              >
+                Lưu
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </div>
         <div className="AdminServiceResult">
           <div className="ResultPerTable">
-            <label for="dropdown">Số kết quả mỗi trang:</label>
-            <select id="dropdown">
-              <option value="5">5</option>
-              <option value="20">20</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-            </select>
+            <label for="dropdown">Số kết quả mỗi trang: 6</label>
           </div>
           <div className="Table">
             <table>
@@ -76,85 +209,212 @@ const AdminService = () => {
                 </th>
                 <th>STT</th>
                 <th>Tên dịch vụ</th>
-                <th>Số lượt sử dụng</th>
+                <th>Ảnh</th>
                 <th>Hành động</th>
               </tr>
-              <tr>
-                <td>
-                  <input type="checkbox"></input>
-                </td>
-                <td>1</td>
-                <td>
-                  <img src={ser_avt} alt="avt"></img>
-                  Dịch vụ 01
-                </td>
-                <td>565</td>
-                <td>
-                  <div className="Action">
-                    <button
-                      className="EditButton"
-                      onClick={() =>
-                        addSID({
-                          name: "Dịch vụ 01",
-                          image: ser_avt,
-                          description: "Description",
-                        })
-                      }
-                    >
-                      <FiEdit3 />
-                    </button>
-                    <button className="DeleteButton" onClick={() => addSDD()}>
-                      <FaEraser />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox"></input>
-                </td>
-                <td>2</td>
-                <td>
-                  <img src={ser_avt} alt="avt"></img>
-                  Dịch vụ 02
-                </td>
-                <td>534</td>
-                <td>
-                  <div className="Action">
-                    <button
-                      className="EditButton"
-                      onClick={() =>
-                        addSID({ name: "Dịch vụ 02", image: ser_avt })
-                      }
-                    >
-                      <FiEdit3 />
-                    </button>
-                    <button className="DeleteButton" onClick={() => addSDD()}>
-                      <FaEraser />
-                    </button>
-                  </div>
-                </td>
-              </tr>
+              {category &&
+                category.length > 0 &&
+                filteredCategories.map((item, index) => {
+                  return (
+                    <tr>
+                      <td>
+                        <input type="checkbox"></input>
+                      </td>
+                      <td>{index}</td>
+                      <td>{item?.name}</td>
+                      <td>
+                        <img
+                          src={item?.icon || avatar}
+                          alt=""
+                          style={{
+                            width: "40px",
+                            height: "40px",
+                            borderRadius: "50%",
+                          }}
+                        />
+                      </td>
+                      <td>
+                        <div className="Action">
+                          <button
+                            className="EditButton"
+                            onClick={() => {
+                              setDefaultValue(item?.name);
+                              setDefaultDescribe(item?.descripe);
+                              setIcon(item?.icon);
+                              setId(item?.id);
+                              handleShowEditBlog();
+                              setUpdate(!update);
+                              setImage("");
+                              setNameAdd(item?.name);
+                              setDescribeAdd(item?.descripe);
+                            }}
+                          >
+                            <FiEdit3 />
+                          </button>
+                          <Modal
+                            show={showEditBlog}
+                            onHide={handleCloseEditBlog}
+                            centered
+                          >
+                            <Modal.Header closeButton>
+                              <Modal.Title>Thông tin dịch vụ</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                              <div className="add__form">
+                                <form action="">
+                                  <div className="form__avatar">
+                                    <label htmlFor="">Ảnh dịch vụ</label>
+                                    <div className="form__image">
+                                      {image ? (
+                                        <img
+                                          src={image}
+                                          alt="BlogImg"
+                                          className="avatarAfter"
+                                          onClick={handleImageClick}
+                                        ></img>
+                                      ) : icon ? (
+                                        <img
+                                          src={icon}
+                                          alt="BlogImg"
+                                          className="avatarBefore"
+                                          onClick={handleImageClick}
+                                        ></img>
+                                      ) : (
+                                        <img
+                                          src={avatar}
+                                          alt="BlogImg"
+                                          className="avatarBefore"
+                                          onClick={handleImageClick}
+                                        ></img>
+                                      )}
+                                    </div>
+                                    <input
+                                      type="file"
+                                      accept="image/*"
+                                      style={{ display: "none" }}
+                                      ref={inputRef}
+                                      onChange={handleImageChange}
+                                    />
+                                  </div>
+                                  <div>
+                                    <div className=" form__col">
+                                      <label htmlFor="">Tiêu đề dịch vụ</label>
+                                      <input
+                                        type="text"
+                                        id="nameEdit"
+                                        class="form-control"
+                                        autoComplete="off"
+                                        defaultValue={defaultValue}
+                                        onChange={(e) => {
+                                          setNameAdd(e.target.value);
+                                        }}
+                                      />
+                                    </div>
+                                    <div className="form__col">
+                                      <label htmlFor="">Thông tin cơ bản</label>
+                                      <textarea
+                                        name=""
+                                        id=""
+                                        cols="30"
+                                        rows="10"
+                                        defaultValue={defaultDescribe}
+                                        onChange={(e) => {
+                                          setDescribeAdd(e.target.value);
+                                        }}
+                                      ></textarea>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </Modal.Body>
+                            <Modal.Footer>
+                              <Button
+                                variant="secondary"
+                                onClick={handleCloseEditBlog}
+                              >
+                                Đóng
+                              </Button>
+                              <Button
+                                variant="primary"
+                                onClick={() => {
+                                  setUpdate(!update);
+                                  fixCategory(id);
+                                  handleCloseEditBlog();
+                                }}
+                              >
+                                Lưu
+                              </Button>
+                            </Modal.Footer>
+                          </Modal>
+                          <button
+                            className="DeleteButton"
+                            onClick={() => {
+                              handleShowDeleteBlog();
+                              setId(item?.id);
+                            }}
+                          >
+                            <FaEraser />
+                          </button>
+                          <Modal
+                            show={showDeleteBlog}
+                            onHide={handleCloseDeleteBlog}
+                          >
+                            <Modal.Header closeButton>
+                              <Modal.Title>
+                                Bạn muốn xóa dịch vụ này không?
+                              </Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                              Thao tác này không thể hoàn tác!!!
+                            </Modal.Body>
+                            <Modal.Footer>
+                              <Button
+                                variant="secondary"
+                                onClick={handleCloseDeleteBlog}
+                              >
+                                Hủy
+                              </Button>
+                              <Button
+                                variant="primary"
+                                onClick={() => {
+                                  handleCloseDeleteBlog();
+                                  setUpdate(!update);
+                                  deleteCategories(id);
+                                }}
+                              >
+                                Xác nhận
+                              </Button>
+                            </Modal.Footer>
+                          </Modal>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
             </table>
           </div>
-          <div className="PageMonitor">
-            <div className="PrevPage flex-center disabled">
-              <FcPrevious />
-            </div>
-            <ul className="Pages clear">
-              <li className="Page flex-center bold selected">1</li>
-              <li className="Page flex-center bold">2</li>
-              <li className="Page flex-center bold">3</li>
-              <li className="Page flex-center bold">4</li>
-              <li className="Page flex-center bold">5</li>
-            </ul>
-            <div className="NextPage flex-center">
-              <FcNext />
-            </div>
+          <div className="management__pagination">
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel=">"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={totalPage}
+              pageCount={3}
+              previousLabel="<"
+              pageClassName="page-item"
+              pageLinkClassName="page-link"
+              previousClassName="page-item previous"
+              previousLinkClassName="page-link"
+              nextClassName="page-item previous"
+              nextLinkClassName="page-link"
+              breakClassName="page-item"
+              breakLinkClassName="page-link"
+              containerClassName="pagination"
+              activeClassName="active active-pagination"
+            />
           </div>
         </div>
       </div>
-      {dialogueList}
     </>
   );
 };

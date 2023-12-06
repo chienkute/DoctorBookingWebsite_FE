@@ -30,7 +30,6 @@ const ManageService = () => {
   const [serviceDoctors, setServiceDoctors] = useState([]);
   const [allService, setAllService] = useState([]);
   const [selectService, setSelectService] = useState("");
-  const [count, setCount] = useState("");
   const [choosedCheckboxs, setChoosedCheckboxs] = useState([]);
   const queryDebounce = useDebounce(query, 500);
   const [defaultValue, setDefaultValue] = useState("");
@@ -41,7 +40,6 @@ const ManageService = () => {
     if (res) {
       console.log(res);
       setServiceDoctors(res?.results);
-      setCount(res?.count);
     }
   };
   const getAllService = async () => {
@@ -317,12 +315,12 @@ const ManageService = () => {
             Xoá các mục đã chọn
           </button> */}
         </div>
-        <div className="management__pagination">
+        {/* <div className="management__pagination">
           <ReactPaginate
             breakLabel="..."
             nextLabel=">"
-            // onPageChange={handlePageClick}
-            pageRangeDisplayed={5}
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={totalPage}
             pageCount={3}
             previousLabel="<"
             pageClassName="page-item"
@@ -336,7 +334,7 @@ const ManageService = () => {
             containerClassName="pagination"
             activeClassName="active active-pagination"
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );

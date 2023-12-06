@@ -1,6 +1,6 @@
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import "./doctorManagement.scss";
-import { FaEraser } from "react-icons/fa6";
+// import { FaEraser } from "react-icons/fa6";
 // import { FiEdit3 } from "react-icons/fi";
 import { IoInformation } from "react-icons/io5";
 import { FaRegCheckSquare } from "react-icons/fa";
@@ -25,7 +25,7 @@ const DoctorManagement = () => {
   const handleShowEditDoctor = () => setShowEditDoctor(true);
   const [showDeleteDoctor, setShowDeleteDoctor] = useState(false);
   const handleCloseDeleteDoctor = () => setShowDeleteDoctor(false);
-  const handleShowDeleteDoctor = () => setShowDeleteDoctor(true);
+  // const handleShowDeleteDoctor = () => setShowDeleteDoctor(true);
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowConfPassword, setIsShowConfPassword] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -377,12 +377,12 @@ const DoctorManagement = () => {
                               )}
                             </Modal.Footer>
                           </Modal>
-                          <button
+                          {/* <button
                             className="DeleteAccount"
                             onClick={handleShowDeleteDoctor}
                           >
                             <FaEraser />
-                          </button>
+                          </button> */}
                           <Modal
                             show={showDeleteDoctor}
                             onHide={handleCloseDeleteDoctor}
@@ -419,7 +419,7 @@ const DoctorManagement = () => {
           </div>
         </div>
       </div>
-      <div className="management__pagination">
+      {/* <div className="management__pagination">
         <ReactPaginate
           breakLabel="..."
           nextLabel=">"
@@ -438,7 +438,7 @@ const DoctorManagement = () => {
           containerClassName="pagination"
           activeClassName="active active-pagination"
         />
-      </div>
+      </div> */}
     </div>
   );
 };
