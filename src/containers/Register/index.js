@@ -6,7 +6,7 @@ import imageLogin from "../../assets/banner_4.png";
 import imageLogin2 from "../../assets/banner__3.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { signup } from "service/UserService";
 const Register = () => {
@@ -43,8 +43,12 @@ const Register = () => {
     }),
     onSubmit: async (values) => {
       const res = await signup(values.username, values.email, values.password);
-      toast.success("Dang ky thanh cong");
-      navigate("/login");
+      if (res) {
+        toast.success("Đăng ký thành công");
+        navigate("/login");
+      } else {
+        toast.error("Đăng ký thất bại");
+      }
     },
   });
   return (
@@ -150,22 +154,9 @@ const Register = () => {
           <button type="submit" className="btn btn-primary btn-block mb-4">
             Đăng ký
           </button>
-
           <div className="text-center">
-            <p>Hoặc đăng nhập với:</p>
-            <button
-              type="button"
-              className="btn btn-secondary btn-floating mx-1"
-            >
-              <i className="fab fa-facebook-f"></i>
-            </button>
-
-            <button
-              type="button"
-              className="btn btn-secondary btn-floating mx-1"
-            >
-              <i className="fab fa-google"></i>
-            </button>
+            <p>Bạn đã có tài khoản ?</p>
+            <Link to={"/login"}>Đăng nhập</Link>
           </div>
         </form>
       </div>

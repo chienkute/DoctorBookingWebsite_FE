@@ -90,20 +90,17 @@ const AdminSpeciality = () => {
     <>
       <div className="AdminSpecialityContainer">
         <div className="AdminSpecialityFilter">
-          <div className="FilterRow">
-            <div className="Filter col">
-              <div className="FilterLabel">Tên chuyên khoa</div>
-              <div className="FilterInput FilterTextInput">
-                <input
-                  type="text"
-                  placeholder="Nhập tên chuyên khoa"
-                  id="SpecialityNameInput"
-                  name="SpecialityNameInput"
-                  onChange={(e) => {
-                    setSearch(e.target.value);
-                  }}
-                ></input>
-              </div>
+          <div className="management__search">
+            <div className="management__input flex-center">
+              <input
+                type="text"
+                placeholder="Tìm kiếm theo tên chuyên khoa"
+                id="care__ins"
+                autoComplete="off"
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
+              />
             </div>
           </div>
         </div>
@@ -407,8 +404,8 @@ const AdminSpeciality = () => {
               breakLabel="..."
               nextLabel=">"
               onPageChange={handlePageClick}
-              pageRangeDisplayed={totalPage}
-              pageCount={3}
+              pageRangeDisplayed={3}
+              pageCount={totalPage}
               previousLabel="<"
               pageClassName="page-item"
               pageLinkClassName="page-link"

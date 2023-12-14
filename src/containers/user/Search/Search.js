@@ -1,19 +1,19 @@
-import { memo, useContext, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import "./Search.scss";
 import { FaSistrix } from "react-icons/fa6";
 import imagedoctor1 from "../../../assets/doctor/tat.jpg";
 import blogImg from "../../../assets/blog-img.png";
 import "../../../style/pages/_theme.scss";
-import { SearchContext } from "context/SearchContext";
 import ReactPaginate from "react-paginate";
 import "../../../style/page.scss";
 import { searchBlogByName } from "service/UserService";
 import { useDebounce } from "@uidotdev/usehooks";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 const Search = () => {
-  const { search, setSearch } = useContext(SearchContext);
-  const [searchBlog, setSearchBlog] = useState("");
+  const { name } = useParams();
+  const [searchBlog, setSearchBlog] = useState(name);
+  console.log(searchBlog);
   const [dataBlog, setDataBlog] = useState([]);
   const [count, setScount] = useState("");
   const debouncedSearchTerm = useDebounce(searchBlog, 500);
@@ -28,31 +28,26 @@ const Search = () => {
     let res = await searchBlogByName(debouncedSearchTerm);
     if (res) {
       console.log(res);
-      // SetLoadingSkeleton(true);
+      SetLoadingSkeleton(true);
+      setTimeout(() => {
+        SetLoadingSkeleton(false);
+      }, 1500);
       setTotalPage(res?.total_page);
       setDataBlog(res?.results);
       setScount(res?.count);
     }
   };
   useEffect(() => {
-    setSearchBlog(search);
     searchNameBlog();
-    setTimeout(() => {
-      SetLoadingSkeleton(false);
-    }, 1500);
     setTimeout(() => {
       setShow(false);
     }, 1500);
   }, []);
   useEffect(() => {
     searchNameBlog();
-    setSearch(debouncedSearchTerm);
-    setTimeout(() => {
-      SetLoadingSkeleton(false);
-    }, 1000);
     setTimeout(() => {
       setShow(false);
-    }, 1000);
+    }, 1500);
   }, [debouncedSearchTerm]);
   return (
     <div className="searchr">

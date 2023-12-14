@@ -52,7 +52,6 @@ const ManageAppointment = () => {
   const [image, setImage] = useState("");
   const queryDebounce = useDebounce(query, 500);
   const handlePageClick = (event) => {
-    console.log(+event.selected + 1);
     getAppoinment(+event.selected + 1);
   };
   const getAppoinment = async (page) => {
@@ -69,7 +68,7 @@ const ManageAppointment = () => {
     if (res) {
       console.log(res);
       toast.success("Thay đổi thành công");
-      getAppoinment();
+      getAppoinment(1);
     } else {
       toast.error("Thay đổi thất bại");
     }
@@ -404,7 +403,7 @@ const ManageAppointment = () => {
           breakLabel="..."
           nextLabel=">"
           onPageChange={handlePageClick}
-          pageRangeDisplayed={5}
+          pageRangeDisplayed={3}
           pageCount={totalPage}
           previousLabel="<"
           pageClassName="page-item"

@@ -23,14 +23,14 @@ const SideMenu = () => {
         </a>
       </div>
       <div className="AdminMenu">
-        {/* <NavLink
-          to={`/admin/user/${id}`}
+        <NavLink
+          to={`/admin/account/${id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive AdminMenu" : "AdminMenu"
           }
         >
-          Quản lí người dùng
-        </NavLink> */}
+          Quản lí tài khoản
+        </NavLink>
         <NavLink
           to={`/admin/topic/${id}`}
           className={({ isActive }) =>
@@ -39,22 +39,6 @@ const SideMenu = () => {
         >
           Quản lí chuyên mục
         </NavLink>
-        {/* <NavLink
-          to={`/admin/post/${id}`}
-          className={({ isActive }) =>
-            isActive ? "sideBarActive AdminMenu" : "AdminMenu"
-          }
-        >
-          Quản lí bài viết
-        </NavLink> */}
-        {/* <NavLink
-          to={`/admin/hospital/${id}`}
-          className={({ isActive }) =>
-            isActive ? "sideBarActive AdminMenu" : "AdminMenu"
-          }
-        >
-          Quản lí bệnh viện
-        </NavLink> */}
         <NavLink
           to={`/admin/speciality/${id}`}
           className={({ isActive }) =>

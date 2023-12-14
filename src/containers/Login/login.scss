@@ -5,15 +5,15 @@
   z-index: 2;
   margin: 0 auto;
   display: flex;
-  max-width: 400px !important;
+  max-width: 380px !important;
   width: 100%;
   max-height: 840px;
   height: 100%;
   align-items: center;
-  padding: 40px;
+  padding: 35px;
   border: 1px solid #b7b7a4;
   border-radius: 10px;
-  margin-top: 60px !important;
+  margin-top: 100px !important;
   &__login {
     &_title {
       font-size: 25px;
@@ -40,6 +40,7 @@
       height: 5px;
       font-size: 10px;
       color: red;
+      margin-bottom: 20px;
     }
   }
 }
@@ -47,7 +48,7 @@
   width: 400px;
   position: absolute;
   left: -20px;
-  bottom: -99px;
+  bottom: -140px;
   img {
     width: 100%;
   }
@@ -56,9 +57,12 @@
   width: 400px;
   position: absolute;
   right: 0px;
-  bottom: -99px;
+  bottom: -140px;
   object-fit: cover;
   img {
     width: 100%;
   }
+}
+.button-login {
+  margin-top: 0px !important;
 }

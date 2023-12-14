@@ -14,12 +14,11 @@ import imageChuyenMuc1 from "../../../assets/chuyenmuc/medical.png";
 import avatar from "../../../assets/avatar.jpg";
 import imageck1 from "../../../assets/chuyenkhoa/dakhoa.png";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import { FaUserLarge } from "react-icons/fa6";
+// import { FaUserLarge } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import useClickOutSide from "components/hooks/useClickOutSide";
 import { AiOutlineLogout } from "react-icons/ai";
 import { BiSolidHelpCircle } from "react-icons/bi";
-import { SearchContext } from "context/SearchContext";
 import { FaCalendarAlt } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import {
@@ -30,21 +29,19 @@ import {
 import { FaUserAlt } from "react-icons/fa";
 import { UpdateContext } from "context/UpdateContext";
 const Header = () => {
-  const { setSearch } = useContext(SearchContext);
   const { update, setUpdate } = useContext(UpdateContext);
   const [user, setUser] = useState([]);
   const [image, setImage] = useState("");
-  console.log(user);
   const [userName, setUserName] = useState("");
+  const [value, setValue] = useState("");
+  const { show, setShow, nodeRef } = useClickOutSide();
+  const [specialty, setSpecialty] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const specialtySlice = specialty.slice(0, 6);
   const navigate = useNavigate();
-  useEffect(() => {
-    getUser();
-    getUserByID();
-  }, [update]);
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      setSearch(e.target.value);
-      navigate("/search");
+      navigate(`/search/${value}`);
     }
   };
   const handleLogout = () => {
@@ -67,10 +64,6 @@ const Header = () => {
       setImage(res?.account?.avatar);
     }
   };
-  const { show, setShow, nodeRef } = useClickOutSide();
-  const [specialty, setSpecialty] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const specialtySlice = specialty.slice(0, 6);
   const getSpecialty = async () => {
     let res = await fetchAllSpecialties();
     if (res) {
@@ -89,6 +82,10 @@ const Header = () => {
     getService();
     getUserByID();
   }, []);
+  useEffect(() => {
+    getUser();
+    getUserByID();
+  }, [update]);
   return (
     <div>
       <header className="HeaderContainer flex-center">
@@ -105,6 +102,9 @@ const Header = () => {
               placeholder="Tìm kiếm..."
               id="HeaderSearch"
               onKeyDown={handleKeyDown}
+              onChange={(e) => {
+                setValue(e.target.value);
+              }}
               autoComplete="off"
             ></input>
           </div>

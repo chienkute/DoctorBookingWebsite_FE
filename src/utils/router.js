@@ -18,15 +18,11 @@ import blog from "containers/user/Blog/blog";
 import userChangePassword from "containers/user/UserPage/UserChangePassword/userChangePassword";
 import userhelp from "containers/user/UserPage/UserHelp/userhelp";
 import tool from "containers/user/Tool/tool";
-import AdminUser from "admin/Content/User/AdminUser";
 import AdminTopic from "admin/Content/Topic/AdminTopic";
-import AdminPost from "admin/Content/Post/AdminPost";
-import AdminHospital from "admin/Content/Hospital/AdminHospital";
 import AdminSpecialist from "admin/Content/Specialist/AdminSpeciality";
 import infoHospital from "containers/Hospital/InfoHospital/infoHospital";
 import doctorManagement from "containers/Hospital/DoctorManagement/doctorManagement";
 import ManageScheduleDoctor from "containers/Doctor/ManageScheduleDoctor/manageScheduleDoctor";
-import AdminChangePasswordDialogue from "admin/AdminComponent/AdminChangePassword/AdminChangePassword";
 import hospitalPassword from "containers/Hospital/ChangePassword/hospitalPassword";
 import dashboardHospital from "containers/Hospital/DashboardHospital/dashboardHospital";
 import changePasswordDoctor from "containers/Doctor/ChangePasswordDoctor/changePasswordDoctor";
@@ -37,13 +33,14 @@ import AdminService from "admin/Content/Service/AdminService";
 import manageService from "containers/Doctor/ManageService/manageService";
 import manageSpecialty from "containers/Doctor/ManageSpecialty/manageSpecialty";
 import Chatbot from "containers/theme/ChatBox/ChatBoxMain/Chatbot";
+import AccountManager from "admin/Content/Account/AccountManager";
 const publicRoutes = [
   { path: "/", component: HomePage },
   { path: "/login", component: Login, layout: null },
   { path: "/register", component: Register, layout: null },
   { path: "/care/searchDoctor", component: SearchDoctor },
   { path: "/care/searchDoctor/:id/:chuyenkhoa", component: SearchDoctor },
-  { path: "/search", component: Search },
+  { path: "/search/:name", component: Search },
   { path: "/categories", component: categories },
   { path: "/care/", component: Care },
   { path: "/care/doctor/:id", component: Doctor },
@@ -59,25 +56,16 @@ const publicRoutes = [
   { path: "/care/doctor/confirm/:id/:namedoctor", component: confirm },
   { path: "/blog/:id", component: blog },
   { path: "/tool", component: tool, layout: null },
-  { path: "/test", component: AdminChangePasswordDialogue, layout: null },
   { path: "/chatbox", component: Chatbot, layout: null },
 ];
 const routeAdmin = [
   {
-    path: "/admin/user/:id",
-    component: AdminUser,
+    path: "/admin/account/:id",
+    component: AccountManager,
   },
   {
     path: "/admin/topic/:id",
     component: AdminTopic,
-  },
-  {
-    path: "/admin/post/:id",
-    component: AdminPost,
-  },
-  {
-    path: "/admin/hospital/:id",
-    component: AdminHospital,
   },
   {
     path: "/admin/speciality/:id",

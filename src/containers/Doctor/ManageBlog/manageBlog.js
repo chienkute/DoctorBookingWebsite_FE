@@ -625,8 +625,8 @@ const ManageBlog = () => {
           breakLabel="..."
           nextLabel=">"
           onPageChange={handlePageClick}
-          pageRangeDisplayed={totalPage}
-          pageCount={3}
+          pageRangeDisplayed={3}
+          pageCount={totalPage}
           previousLabel="<"
           pageClassName="page-item"
           pageLinkClassName="page-link"
