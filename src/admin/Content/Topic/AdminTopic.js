@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./AdminTopic.scss";
 import { FaRegCheckSquare, FaEraser } from "react-icons/fa";
 // import { FcPrevious, FcNext } from "react-icons/fc";
@@ -7,7 +7,6 @@ import { FiEdit3 } from "react-icons/fi";
 // import TopicDeleteDialogue from "admin/AdminComponent/TopicDelete/TopicDelete";
 import { FaPlus } from "react-icons/fa6";
 import avatar from "../../../assets/avatar.jpg";
-import { UpdateContext } from "context/UpdateContext";
 import { Button, Modal } from "react-bootstrap";
 import {
   addCategory,
@@ -18,24 +17,6 @@ import {
 import { toast } from "react-toastify";
 import ReactPaginate from "react-paginate";
 const AdminTopic = () => {
-  const { update, setUpdate } = useContext(UpdateContext);
-  // const [dialogueList, setDialogueList] = useState([]);
-  // const addTID = (data) => {
-  //   setDialogueList([
-  //     ...dialogueList,
-  //     <TopicInfoDialogue key="TID" data={data} close={(key) => closeD(key)} />,
-  //   ]);
-  // };
-  // const addTDD = () => {
-  //   setDialogueList([
-  //     ...dialogueList,
-  //     <TopicDeleteDialogue key="TDD" close={(key) => closeD(key)} />,
-  //   ]);
-  // };
-  // const closeD = (key) => {
-  //   const newLD = dialogueList.filter((dialogue) => dialogue.key !== key);
-  //   setDialogueList(newLD);
-  // };
   const [showAddNewBlog, setShowAddNewBlog] = useState(false);
   const handleCloseAddNewBlog = () => setShowAddNewBlog(false);
   const handleShowAddNewBlog = () => setShowAddNewBlog(true);
@@ -90,8 +71,8 @@ const AdminTopic = () => {
     let res = await editCategory(id, nameAdd, describeAdd, imageUpdate);
     if (res) {
       console.log(res);
-      toast.success("Thêm thành công");
       getAllCategories();
+      toast.success("Thêm thành công");
     }
   };
   const deleteCategories = async (id) => {
@@ -109,20 +90,17 @@ const AdminTopic = () => {
     <>
       <div className="AdminTopicContainer">
         <div className="AdminTopicFilter">
-          <div className="FilterRow">
-            <div className="Filter col">
-              <div className="FilterLabel">Tên chuyên mục</div>
-              <div className="FilterInput FilterTextInput">
-                <input
-                  type="text"
-                  placeholder="Nhập tên chuyên mục"
-                  id="TopicNameInput"
-                  name="TopicNameInput"
-                  onChange={(e) => {
-                    setSearch(e.target.value);
-                  }}
-                ></input>
-              </div>
+          <div className="management__search">
+            <div className="management__input flex-center">
+              <input
+                type="text"
+                placeholder="Tìm kiếm theo tên chuyên mục"
+                id="care__ins"
+                autoComplete="off"
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
+              />
             </div>
           </div>
         </div>
@@ -208,7 +186,6 @@ const AdminTopic = () => {
                 type="submit"
                 onClick={() => {
                   handleCloseAddNewBlog();
-                  setUpdate(!update);
                   addNewCategory();
                 }}
               >
@@ -269,7 +246,6 @@ const AdminTopic = () => {
                               setIcon(item?.icon);
                               setId(item?.id);
                               handleShowEditBlog();
-                              setUpdate(!update);
                               setImage("");
                               setNameAdd(item?.name);
                               setDescribeAdd(item?.describe);
@@ -365,7 +341,6 @@ const AdminTopic = () => {
                               <Button
                                 variant="primary"
                                 onClick={() => {
-                                  setUpdate(!update);
                                   fixCategory(id);
                                   handleCloseEditBlog();
                                 }}
@@ -406,7 +381,6 @@ const AdminTopic = () => {
                                 variant="primary"
                                 onClick={() => {
                                   handleCloseDeleteBlog();
-                                  setUpdate(!update);
                                   deleteCategories(id);
                                 }}
                               >
@@ -421,28 +395,13 @@ const AdminTopic = () => {
                 })}
             </table>
           </div>
-          {/* <div className="PageMonitor">
-            <div className="PrevPage flex-center disabled">
-              <FcPrevious />
-            </div>
-            <ul className="Pages clear">
-              <li className="Page flex-center bold selected">1</li>
-              <li className="Page flex-center bold">2</li>
-              <li className="Page flex-center bold">3</li>
-              <li className="Page flex-center bold">4</li>
-              <li className="Page flex-center bold">5</li>
-            </ul>
-            <div className="NextPage flex-center">
-              <FcNext />
-            </div>
-          </div> */}
           <div className="management__pagination">
             <ReactPaginate
               breakLabel="..."
               nextLabel=">"
               onPageChange={handlePageClick}
-              pageRangeDisplayed={totalPage}
-              pageCount={3}
+              pageRangeDisplayed={3}
+              pageCount={totalPage}
               previousLabel="<"
               pageClassName="page-item"
               pageLinkClassName="page-link"

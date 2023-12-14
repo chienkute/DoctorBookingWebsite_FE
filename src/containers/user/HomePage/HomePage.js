@@ -9,11 +9,12 @@ import banner2 from "../../../assets/banner5.png";
 import ItemLarge from "./NewsLarge/ItemLarge";
 import ItemSmall from "./NewsLarge/ItemSmall";
 import { fecthAllBlog } from "service/UserService";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UpdateContext } from "context/UpdateContext";
 function App() {
   const [blog, setBlog] = useState([]);
-  console.log(blog);
   const [loading, setLoading] = useState(true);
+  const { update, setUpdate } = useContext(UpdateContext);
   const getBlog = async () => {
     let res = await fecthAllBlog(1);
     if (res) {
@@ -25,6 +26,7 @@ function App() {
     setTimeout(() => {
       setLoading(false);
     }, 1500);
+    setUpdate(!update);
   }, []);
   return (
     <div>

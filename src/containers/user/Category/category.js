@@ -43,6 +43,9 @@ const Category = () => {
     let res = await getCategoryById(id);
     if (res) {
       setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
       setCategory(res);
     }
   };
@@ -64,9 +67,6 @@ const Category = () => {
     getBlog();
     getService();
     getCategory();
-    setTimeout(() => {
-      setLoading(false);
-    }, 1500);
   }, []);
   useEffect(() => {
     setLoading(true);

@@ -137,29 +137,21 @@ const Login = () => {
             </div>
           </div>
           <div class="mb-4 d-flex justify-content-between">
+            <div></div>
             <div>
               <a href="/register">Đăng ký</a>
             </div>
-            <div>
+            {/* <div>
               <a href="#!">Quên mật khẩu ?</a>
-            </div>
+            </div> */}
           </div>
-
-          <button type="submit" class="btn btn-primary btn-block mb-4">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block mb-2 mt-3 button-login"
+          >
             {/* <i class="fas fa-sync fa-spin"></i> */}
             Đăng nhập
           </button>
-
-          <div class="text-center">
-            <p>Hoặc đăng nhập với:</p>
-            <button type="button" class="btn btn-secondary btn-floating mx-1">
-              <i class="fab fa-facebook-f"></i>
-            </button>
-
-            <button type="button" class="btn btn-secondary btn-floating mx-1">
-              <i class="fab fa-google"></i>
-            </button>
-          </div>
         </form>
       </div>
       <div className="image1">

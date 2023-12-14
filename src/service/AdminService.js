@@ -6,8 +6,8 @@ const addHospital = (username, password, email) => {
     email,
   });
 };
-const getAllAcount = () => {
-  return instance.get("/api/accounts?limit=100&offset=0");
+const getAllAcount = (offset) => {
+  return instance.get(`/api/accounts/?limit=6&offset=${offset}`);
 };
 const addCategory = (name, describe, icon) => {
   const formData = new FormData();

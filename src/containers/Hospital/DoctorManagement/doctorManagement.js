@@ -8,7 +8,7 @@ import { FaRegCheckSquare } from "react-icons/fa";
 import { Button, Modal } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import ReactPaginate from "react-paginate";
+// import ReactPaginate from "react-paginate";
 import { useDebounce } from "@uidotdev/usehooks";
 import { searchDoctor } from "service/UserService";
 import { useParams } from "react-router";
@@ -97,8 +97,6 @@ const DoctorManagement = () => {
       }
     },
   });
-  // const inputRef = useRef(null);
-  // const [value, setValue] = useState("");
   return (
     <div className="management">
       <div className="management__header">

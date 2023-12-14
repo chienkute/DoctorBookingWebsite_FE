@@ -1,7 +1,14 @@
 import axios from "axios";
 const API = {
+  GetChatbotResponse: async () => {
+    return new Promise(function (resolve, reject) {
+      setTimeout(function () {
+        resolve("Chào mừng bạn đã đến với Chatbot của Hibacsi!");
+      }, 2000);
+    });
+  },
   GetChatbotResponseG2: async (question) => {
-    const urlG2 = "https://71b5-34-67-131-170.ngrok-free.app/gpt2";
+    const urlG2 = "https://09a1-35-202-38-236.ngrok-free.app/gpt2";
     const headers = {
       "Content-Type": "application/json",
     };
@@ -23,7 +30,7 @@ const API = {
     });
   },
   GetChatbotResponseT5: async (question) => {
-    const urlT5 = "https://71b5-34-67-131-170.ngrok-free.app/t5";
+    const urlT5 = "https://09a1-35-202-38-236.ngrok-free.app/t5";
     const headers = {
       "Content-Type": "application/json",
     };

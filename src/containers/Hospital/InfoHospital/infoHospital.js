@@ -116,11 +116,23 @@ const InfoHospital = () => {
         <div className="information__header_content">
           <div className="information__avatar">
             {imageOld ? (
-              <img src={imageOld} alt="BlogImg" className="avatarAfter"></img>
+              <img
+                src={imageOld}
+                alt="BlogImg"
+                className="hospital_avatar_after"
+              ></img>
             ) : image ? (
-              <img src={image} alt="BlogImg" className="avatarBefore"></img>
+              <img
+                src={image}
+                alt="BlogImg"
+                className="hospital_avatar_after"
+              ></img>
             ) : (
-              <img src={avatar} alt="BlogImg" className="avatarBefore"></img>
+              <img
+                src={avatar}
+                alt="BlogImg"
+                className="hospital_avatar_before"
+              ></img>
             )}
           </div>
           <div className="information__upload">
@@ -223,7 +235,7 @@ const InfoHospital = () => {
                 disabled
               />
             </div>
-            <div className="information__name">
+            <div className="information__name" style={{ marginTop: "10px" }}>
               <label htmlFor="">Email</label>
               <input
                 type="email"
