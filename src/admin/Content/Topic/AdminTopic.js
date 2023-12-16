@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./AdminTopic.scss";
 import { FaRegCheckSquare, FaEraser } from "react-icons/fa";
-// import { FcPrevious, FcNext } from "react-icons/fc";
 import { FiEdit3 } from "react-icons/fi";
-// import TopicInfoDialogue from "admin/AdminComponent/TopicInfo/TopicInfo";
-// import TopicDeleteDialogue from "admin/AdminComponent/TopicDelete/TopicDelete";
 import { FaPlus } from "react-icons/fa6";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import avatar from "../../../assets/avatar.jpg";
 import { Button, Modal } from "react-bootstrap";
 import {
@@ -59,20 +58,14 @@ const AdminTopic = () => {
     setImageUpdate(event.target.files[0]);
     setImage(URL.createObjectURL(event.target.files[0]));
   };
-  const addNewCategory = async () => {
-    let res = await addCategory(nameAdd, describeAdd, imageUpdate);
-    if (res) {
-      console.log(res);
-      toast.success("Thêm thành công");
-      getAllCategories();
-    }
-  };
   const fixCategory = async (id) => {
     let res = await editCategory(id, nameAdd, describeAdd, imageUpdate);
     if (res) {
       console.log(res);
       getAllCategories();
-      toast.success("Thêm thành công");
+      toast.success("Sửa thành công");
+    } else {
+      toast.error("Sửa thất bại");
     }
   };
   const deleteCategories = async (id) => {
@@ -81,11 +74,38 @@ const AdminTopic = () => {
       console.log(res);
       getAllCategories();
       toast.success("Xóa thành công");
+    } else {
+      toast.error("Xóa thất bại");
     }
   };
   useEffect(() => {
     getAllCategories();
   }, []);
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      name: "",
+      describe: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required("Bạn chưa nhập tiêu đề"),
+      describe: Yup.string().required("Bạn chưa nhập thông tin cơ bản"),
+    }),
+    onSubmit: async (values) => {
+      let res = await addCategory(values.name, values.describe, imageUpdate);
+      if (res) {
+        console.log(res);
+        toast.success("Thêm thành công");
+        getAllCategories();
+        formik.setValues({
+          name: "",
+          describe: "",
+        });
+      } else {
+        toast.error("Thêm thất bại");
+      }
+    },
+  });
   return (
     <>
       <div className="AdminTopicContainer">
@@ -122,7 +142,9 @@ const AdminTopic = () => {
               <div className="add__form">
                 <form action="">
                   <div className="form__avatar">
-                    <label htmlFor="">Ảnh chuyên mục</label>
+                    <label htmlFor="">
+                      Ảnh chuyên mục <span className="validate">*</span>
+                    </label>
                     <div className="form__image">
                       {image ? (
                         <img
@@ -150,28 +172,46 @@ const AdminTopic = () => {
                   </div>
                   <div>
                     <div className=" form__col">
-                      <label htmlFor="">Tiêu đề chuyên mục</label>
+                      <label htmlFor="">
+                        Tiêu đề chuyên mục <span className="validate">*</span>
+                      </label>
                       <input
                         type="text"
-                        id="nameEdit"
+                        id="name"
                         class="form-control"
                         autoComplete="off"
-                        onChange={(e) => {
-                          setNameAdd(e.target.value);
-                        }}
+                        name="name"
+                        value={formik.values.name}
+                        onChange={formik.handleChange}
+                        {...formik.getFieldProps("name")}
                       />
+                      <div
+                        className="form__login_error"
+                        style={{ marginTop: "-7px" }}
+                      >
+                        {formik.touched.name && formik.errors.name}
+                      </div>
                     </div>
                     <div className="form__col">
-                      <label htmlFor="">Thông tin cơ bản</label>
+                      <label htmlFor="">
+                        Thông tin cơ bản <span className="validate">*</span>
+                      </label>
                       <textarea
-                        name=""
-                        id=""
+                        className="form-control"
+                        name="describe"
+                        id="describe"
                         cols="30"
                         rows="10"
-                        onChange={(e) => {
-                          setDescribeAdd(e.target.value);
-                        }}
+                        value={formik.values.describe}
+                        onChange={formik.handleChange}
+                        {...formik.getFieldProps("describe")}
                       ></textarea>
+                      <div
+                        className="form__login_error"
+                        style={{ marginTop: "-7px" }}
+                      >
+                        {formik.touched.describe && formik.errors.describe}
+                      </div>
                     </div>
                   </div>
                 </form>
@@ -186,7 +226,7 @@ const AdminTopic = () => {
                 type="submit"
                 onClick={() => {
                   handleCloseAddNewBlog();
-                  addNewCategory();
+                  formik.handleSubmit();
                 }}
               >
                 Lưu
@@ -197,12 +237,6 @@ const AdminTopic = () => {
         <div className="AdminTopicResult">
           <div className="ResultPerTable">
             <label for="dropdown">Số kết quả mỗi trang: 6</label>
-            {/* <select id="dropdown">
-              <option value="5">5</option>
-              <option value="20">20</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-            </select> */}
           </div>
           <div className="Table">
             <table>
@@ -265,7 +299,10 @@ const AdminTopic = () => {
                               <div className="add__form">
                                 <form action="">
                                   <div className="form__avatar">
-                                    <label htmlFor="">Ảnh chuyên mục</label>
+                                    <label htmlFor="">
+                                      Ảnh chuyên mục{" "}
+                                      <span className="validate">*</span>
+                                    </label>
                                     <div className="form__image">
                                       {image ? (
                                         <img
@@ -301,7 +338,8 @@ const AdminTopic = () => {
                                   <div>
                                     <div className=" form__col">
                                       <label htmlFor="">
-                                        Tiêu đề chuyên mục
+                                        Tiêu đề chuyên mục{" "}
+                                        <span className="validate">*</span>
                                       </label>
                                       <input
                                         type="text"
@@ -315,8 +353,12 @@ const AdminTopic = () => {
                                       />
                                     </div>
                                     <div className="form__col">
-                                      <label htmlFor="">Thông tin cơ bản</label>
+                                      <label htmlFor="">
+                                        Thông tin cơ bản{" "}
+                                        <span className="validate">*</span>
+                                      </label>
                                       <textarea
+                                        className="form-control"
                                         name=""
                                         id=""
                                         cols="30"

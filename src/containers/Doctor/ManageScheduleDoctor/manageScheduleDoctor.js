@@ -1,4 +1,4 @@
-import { React, memo, useState, useContext, useEffect } from "react";
+import { React, memo, useState, useEffect } from "react";
 import { addDays, addMinutes, format } from "date-fns";
 import { convertDayOfWeek, convertDayOfWeektoNumber } from "tool/DataTimeTool";
 import {
@@ -9,12 +9,10 @@ import {
   addSomeScheduleDoctor,
   deleteSomeScheduleDoctor,
 } from "service/DoctorService.js";
-import { LoadingContext } from "context/LoadingContext";
 import "./manageScheduleDoctor.scss";
 import { useParams } from "react-router-dom";
 const ManageScheduleDoctor = () => {
   const { id } = useParams();
-  const { setLoading } = useContext(LoadingContext);
   const [choosedDate, setChoosedDate] = useState(new Date());
   const [choosedSession, setCurrentSession] = useState(0);
   const [beginChoosedIdSchedules, setBeginChoosedIdSchedules] = useState([]);
@@ -28,7 +26,6 @@ const ManageScheduleDoctor = () => {
   const endDate = addDays(startDate, 6);
   const getAllSchedule = async () => {
     try {
-      setLoading(true);
       let schedules = [];
       while (true) {
         let res = await fetchAllSchedule(100, schedules.length);
@@ -40,7 +37,6 @@ const ManageScheduleDoctor = () => {
       //   let res = await fetchAllSchedule();
       //   console.log("res", res);
       setSchedules(schedules);
-      setLoading(false);
       console.log("schedule", schedules);
     } catch (error) {
       console.log(error);
@@ -48,7 +44,6 @@ const ManageScheduleDoctor = () => {
   };
   const getOldSchedules = async () => {
     try {
-      setLoading(true);
       let oldSchedules = [];
       while (true) {
         let res = await fetchAllScheduleByDoctorId(id, 10, oldSchedules.length);
@@ -73,7 +68,6 @@ const ManageScheduleDoctor = () => {
       );
       setChoosedIdSchedules(oldIdSchedules);
       setBeginChoosedIdSchedules(oldIdSchedules);
-      setLoading(false);
       console.log("oldSchedules", oldSchedules);
     } catch (error) {
       console.log(error);
@@ -398,7 +392,6 @@ const ManageScheduleDoctor = () => {
           }`}
           onClick={async () => {
             try {
-              setLoading(true);
               // tìm id ScheduleDoctor cần thêm
               const AddIdSchedules = choosedIdSchedules.filter(
                 (choosedIdSchedule) =>
@@ -433,7 +426,6 @@ const ManageScheduleDoctor = () => {
                 await deleteSomeScheduleDoctor(deleteScheduleDoctorIds);
               // load lại oldScheduleDoctor
               getOldSchedules();
-              setLoading(false);
             } catch (error) {
               console.log(error);
             }

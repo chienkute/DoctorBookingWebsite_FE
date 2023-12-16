@@ -1,9 +1,13 @@
-import { memo, useContext } from "react";
+import { memo, useEffect, useState } from "react";
 import CareSearch from "./careSearchMenu/careSearch";
 import CareHospital from "./careHospital";
-import { LoadingContext } from "context/LoadingContext";
 const Care = () => {
-  const { loading } = useContext(LoadingContext);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+  }, []);
   return (
     <div className="care">
       {loading && (

@@ -152,7 +152,9 @@ const InformationDoctor = () => {
         <div className="information__content">
           <div className="information__content1">
             <div className="information__name">
-              <label htmlFor="">Tài khoản</label>
+              <label htmlFor="">
+                Tài khoản <span className="validate">*</span>
+              </label>
               <input
                 type="email"
                 id="email"
@@ -163,7 +165,9 @@ const InformationDoctor = () => {
               />
             </div>
             <div className="information__name">
-              <label htmlFor="">Tên bác sĩ</label>
+              <label htmlFor="">
+                Tên bác sĩ <span className="validate">*</span>
+              </label>
               <input
                 type="text"
                 id="name"
@@ -180,7 +184,9 @@ const InformationDoctor = () => {
               </div>
             </div>
             <div className="information__name">
-              <label htmlFor="">Địa chỉ</label>
+              <label htmlFor="">
+                Địa chỉ <span className="validate">*</span>
+              </label>
               <input
                 type="text"
                 id="address"
@@ -197,7 +203,9 @@ const InformationDoctor = () => {
               </div>
             </div>
             <div className="information__name">
-              <label htmlFor="">Ngày sinh</label>
+              <label htmlFor="">
+                Ngày sinh <span className="validate">*</span>
+              </label>
               <div className="doctor__info_input">
                 <input
                   type="date"
@@ -214,7 +222,9 @@ const InformationDoctor = () => {
           </div>
           <div className="information__content2">
             <div className="information__name">
-              <label htmlFor="">Email</label>
+              <label htmlFor="">
+                Email <span className="validate">*</span>
+              </label>
               <input
                 type="email"
                 id="email"
@@ -225,7 +235,9 @@ const InformationDoctor = () => {
               />
             </div>
             <div className="information__name">
-              <label htmlFor="">Số điện thoại</label>
+              <label htmlFor="">
+                Số điện thoại <span className="validate">*</span>
+              </label>
               <input
                 type="text"
                 id="phone"
@@ -241,7 +253,9 @@ const InformationDoctor = () => {
               </div>
             </div>
             <div className="information__name">
-              <label htmlFor="">Giới tính</label>
+              <label htmlFor="">
+                Giới tính <span className="validate">*</span>
+              </label>
               <Form.Select
                 aria-label="Default select example"
                 className="form__select"
@@ -258,7 +272,9 @@ const InformationDoctor = () => {
               </Form.Select>
             </div>
             <div className="information__name" style={{ marginTop: "12px" }}>
-              <label htmlFor="">Số năm kinh nghiệm</label>
+              <label htmlFor="">
+                Số năm kinh nghiệm <span className="validate">*</span>
+              </label>
               <input
                 type="number"
                 id="year"

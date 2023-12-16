@@ -52,7 +52,7 @@ const Login = () => {
       } else if (res?.account?.role === "admin" && res.access_token) {
         localStorage.setItem("token", res.access_token);
         localStorage.setItem("admin", JSON.stringify(res));
-        navigate(`/admin/topic/${res?.admin?.id}`);
+        navigate(`/admin/dashboard/${res?.admin?.id}`);
         toast.success("Đăng nhập thành công");
       } else if (res?.account?.role === "doctor" && res.access_token) {
         localStorage.setItem("token", res.access_token);

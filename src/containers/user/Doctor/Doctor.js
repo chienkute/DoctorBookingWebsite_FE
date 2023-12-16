@@ -1,4 +1,4 @@
-import React, { memo, useContext, useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import "./Doctor.scss";
 import AppointmentBox from "../AppointmentBox/AppointmentBox";
 import avatar from "assets/avatar.png";
@@ -6,12 +6,12 @@ import banking from "assets/ck.png";
 import VISA from "assets/VISA.jpg";
 import { getDoctorByID } from "service/UserService";
 import { useParams } from "react-router-dom";
-import { LoadingContext } from "context/LoadingContext";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 const Doctor = () => {
   const [doctor, setDoctor] = useState([]);
+  console.log(doctor);
   const { id } = useParams();
-  const { loading, setLoading } = useContext(LoadingContext);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     getDoctor();
   }, []);
@@ -44,7 +44,7 @@ const Doctor = () => {
               ></img>
             </div>
             <div className="BasicInfo">
-              <h4 className="bold">{doctor.name}</h4>
+              <h4 className="bold">{doctor?.name}</h4>
               <span className="d-flex" style={{ columnGap: "10px" }}>
                 {doctor?.specialties?.map((item, index) => {
                   return <p>{item?.specialty?.name || "--"}</p>;
@@ -157,7 +157,7 @@ const Doctor = () => {
                               <RiMoneyDollarCircleLine></RiMoneyDollarCircleLine>
                             </span>
                             <span>Phí tư vấn ban đầu từ</span>
-                            <span className="Fee"> 150.000đ</span>
+                            <span className="Fee"> {doctor?.price}đ</span>
                           </div>
                         </li>
                       </ul>
@@ -305,7 +305,11 @@ const Doctor = () => {
               </div>
             </div>
             <div className="DoctorPageAppointmentBox">
-              <AppointmentBox id={id} name={doctor.name} />
+              <AppointmentBox
+                id={id}
+                name={doctor.name}
+                price={doctor?.price}
+              />
             </div>
           </div>
         </div>

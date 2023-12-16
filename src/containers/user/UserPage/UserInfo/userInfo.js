@@ -4,7 +4,6 @@ import Moment from "react-moment";
 import { editAvatar, editUser, getUserID } from "service/UserService";
 import UserTab from "../../UserTab/userTab";
 import "../../UserPage/UserPage.scss";
-import { LoadingContext } from "context/LoadingContext";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MdPhotoCamera } from "react-icons/md";
@@ -25,7 +24,7 @@ const UserInfo = () => {
   const [phoneOld, setPhoneOld] = useState("");
   const [phoneNew, setPhoneNew] = useState("");
   const [idAccount, setIdAccount] = useState("");
-  const { loading, setLoading } = useContext(LoadingContext);
+  const [loading, setLoading] = useState(true);
   const { update, setUpdate } = useContext(UpdateContext);
   const inputRef = useRef(null);
   const [image, setImage] = useState("");

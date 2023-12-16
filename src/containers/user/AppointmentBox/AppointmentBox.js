@@ -104,6 +104,7 @@ const AppointmentBox = (props) => {
               type="date"
               onChange={(e) => {
                 handleDays(e.target.value);
+                setShowbutton(false);
               }}
               min={currentDate}
             />
@@ -341,7 +342,7 @@ const AppointmentBox = (props) => {
             <RiMoneyDollarCircleLine></RiMoneyDollarCircleLine>
           </span>
           <span>Phí tư vấn ban đầu từ</span>
-          <span className="Fee"> 150.000đ</span>
+          <span className="Fee"> {props.price}đ</span>
         </div>
       </div>
       {localStorage.getItem("token") ? (

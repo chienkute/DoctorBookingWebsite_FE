@@ -46,6 +46,7 @@ const ManageBlog = () => {
   const [imageOld, setImageOld] = useState("");
   const [formData, setFormData] = useState(new FormData());
   const [totalPage, setTotalPage] = useState(0);
+  const [showError, setShowError] = useState(true);
   console.log(blog);
   console.log(idCategory);
   console.log(imageUpdate);
@@ -219,7 +220,9 @@ const ManageBlog = () => {
             <div className="add__form">
               <form action="">
                 <div className="form__avatar">
-                  <label htmlFor="">Ảnh chủ đề Blog</label>
+                  <label htmlFor="">
+                    Ảnh chủ đề Blog <span className="validate">*</span>
+                  </label>
                   <div className="form__image">
                     {image ? (
                       <img
@@ -247,32 +250,48 @@ const ManageBlog = () => {
                 </div>
                 <div className="row">
                   <div className="col-6 form__col">
-                    <label htmlFor="">Tiêu đề blog</label>
+                    <label htmlFor="">
+                      Tiêu đề blog <span className="validate">*</span>
+                    </label>
                     <input
                       type="text"
-                      // id="nameAdd"
                       placeholder="Nhập tên tiêu đề"
                       class="form-control"
                       onChange={(e) => {
                         setTitleAdd(e.target.value);
+                        if (e.target.value === "") {
+                          setShowError(true);
+                        } else {
+                          setShowError(false);
+                        }
                       }}
-                      // {...formik.getFieldProps("nameAdd")}
                       autoComplete="off"
                     />
-                    <div className="form__error">
-                      {formik.touched.nameAdd && formik.errors.nameAdd}
-                    </div>
+                    {showError ? (
+                      <div className="form__error error_new">
+                        Tiêu đề không được để trống
+                      </div>
+                    ) : (
+                      <div></div>
+                    )}
                   </div>
                   <div className="col-6 form__col">
-                    <label htmlFor="">Chuyên mục</label>
+                    <label htmlFor="">
+                      Chuyên mục <span className="validate">*</span>
+                    </label>
                     <Form.Select
                       className="form__select"
                       id="categoryAdd"
                       onChange={(e) => {
                         setIdCategory(e.target.value);
+                        if (e.target.value === "") {
+                          setShowError(true);
+                        } else {
+                          setShowError(false);
+                        }
                       }}
                     >
-                      <option>Chọn chuyên mục</option>
+                      <option value={""}>Chọn chuyên mục</option>
                       {category &&
                         category.length > 0 &&
                         category.map((item, index) => {
@@ -281,12 +300,18 @@ const ManageBlog = () => {
                           );
                         })}
                     </Form.Select>
-                    <div className="form__error">
-                      {formik.touched.categoryAdd && formik.errors.categoryAdd}
-                    </div>
+                    {showError ? (
+                      <div className="form__error error_new">
+                        Chuyên mục không được để trống
+                      </div>
+                    ) : (
+                      <div></div>
+                    )}
                   </div>
                   <div className="form__col quill__content">
-                    <label htmlFor="">Nội dung Blog</label>
+                    <label htmlFor="">
+                      Nội dung Blog <span className="validate">*</span>
+                    </label>
                     <ReactQuill
                       id="contentAdd"
                       theme="snow"
@@ -399,25 +424,6 @@ const ManageBlog = () => {
                                     <label htmlFor="">
                                       Ảnh chủ đề Blog <span>*</span>
                                     </label>
-                                    {/* {edit ? (
-                                      <div className="form__image">
-                                        <img src={imageOld} alt="" />
-                                      </div>
-                                    ) : (
-                                      <div className="form__image">
-                                        <img
-                                          src={avatar}
-                                          alt=""
-                                          onClick={handleImageClick}
-                                        />
-                                      </div>
-                                    )}
-                                    <input
-                                      type="file"
-                                      style={{ display: "none" }}
-                                      ref={inputRef}
-                                    /> */}
-                                    {/* <div className="form__image"> */}
                                     {edit ? (
                                       <div className="form__image">
                                         {imageOld ? (
@@ -461,7 +467,6 @@ const ManageBlog = () => {
                                         )}
                                       </div>
                                     )}
-                                    {/* </div> */}
                                     <input
                                       type="file"
                                       accept="image/*"
@@ -472,7 +477,10 @@ const ManageBlog = () => {
                                   </div>
                                   <div className="row">
                                     <div className="col-6 form__col">
-                                      <label htmlFor="">Tiêu đề blog</label>
+                                      <label htmlFor="">
+                                        Tiêu đề blog{" "}
+                                        <span className="validate">*</span>
+                                      </label>
                                       <input
                                         type="text"
                                         id="nameEdit"
@@ -491,15 +499,16 @@ const ManageBlog = () => {
                                       </div>
                                     </div>
                                     <div className="col-6 form__col">
-                                      <label htmlFor="">Chuyên mục</label>
+                                      <label htmlFor="">
+                                        Chuyên mục{" "}
+                                        <span className="validate">*</span>
+                                      </label>
                                       <Form.Select
                                         aria-label="Default select example"
                                         className="form__select"
                                         id="categoryEdit"
                                         name="categoryEdit"
                                         disabled={edit ? true : false}
-                                        // defaultValue={`${item?.id_category?.id}`}
-                                        // defau={"Chiến Kute"}
                                         onChange={(e) => {
                                           setIdCategory(e.target.value);
                                         }}

@@ -1,12 +1,11 @@
-import { memo, useContext, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import "../../user/Specialties/specialties.scss";
 import specialtiesImage from "../../../assets/chuyenkhoa/dakhoa.png";
 import { fetchAllSpecialties } from "service/UserService";
-import { LoadingContext } from "context/LoadingContext";
 import { Link } from "react-router-dom";
 const Specialties = () => {
   const [specialty, setSpecialty] = useState([]);
-  const { loading, setLoading } = useContext(LoadingContext);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     getSpecialty();
   }, []);
