@@ -3,11 +3,9 @@ import hospitalImgaes from "../../../assets/hospital.jpg";
 import { CiLocationOn } from "react-icons/ci";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { fetchAllHospital } from "service/UserService";
-import { useContext, useEffect, useState } from "react";
-import { LoadingContext } from "context/LoadingContext";
+import { useEffect, useState } from "react";
 
 const CareHospital = () => {
-  const { setLoading } = useContext(LoadingContext);
   const [hospital, setHospital] = useState([]);
   console.log(hospital);
   const navigate = useNavigate();
@@ -15,7 +13,6 @@ const CareHospital = () => {
     let res = await fetchAllHospital();
     if (res) {
       setHospital(res.results);
-      setLoading(false);
     }
   };
   useEffect(() => {

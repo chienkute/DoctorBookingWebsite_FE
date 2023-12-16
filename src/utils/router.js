@@ -34,6 +34,7 @@ import manageService from "containers/Doctor/ManageService/manageService";
 import manageSpecialty from "containers/Doctor/ManageSpecialty/manageSpecialty";
 import Chatbot from "containers/theme/ChatBox/ChatBoxMain/Chatbot";
 import AccountManager from "admin/Content/Account/AccountManager";
+import dashboardAdmin from "admin/Content/DashboardAdmin/dashboardAdmin";
 const publicRoutes = [
   { path: "/", component: HomePage },
   { path: "/login", component: Login, layout: null },
@@ -59,6 +60,10 @@ const publicRoutes = [
   { path: "/chatbox", component: Chatbot, layout: null },
 ];
 const routeAdmin = [
+  {
+    path: "/admin/dashboard/:id",
+    component: dashboardAdmin,
+  },
   {
     path: "/admin/account/:id",
     component: AccountManager,

@@ -24,6 +24,14 @@ const SideMenu = () => {
       </div>
       <div className="AdminMenu">
         <NavLink
+          to={`/admin/dashboard/${id}`}
+          className={({ isActive }) =>
+            isActive ? "sideBarActive AdminMenu" : "AdminMenu"
+          }
+        >
+          Thống kê
+        </NavLink>
+        <NavLink
           to={`/admin/account/${id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive AdminMenu" : "AdminMenu"

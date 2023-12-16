@@ -1,18 +1,17 @@
-import { memo, useContext } from "react";
+import { memo } from "react";
 import "../Service/service.scss";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import serviceImg from "../../../assets/service.png";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import chuyenkhoan from "../../../assets/ck.png";
 import tienmat from "../../../assets/tienmat.png";
-import { LoadingContext } from "context/LoadingContext";
 import { getServiceById } from "service/UserService";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 const Service = () => {
   const { id, nameservice } = useParams();
-  const { loading, setLoading } = useContext(LoadingContext);
+  const [loading, setLoading] = useState(true);
   const [service, setService] = useState([]);
   const getService = async () => {
     let res = await getServiceById(id);

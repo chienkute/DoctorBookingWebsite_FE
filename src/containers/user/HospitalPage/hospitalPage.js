@@ -1,4 +1,4 @@
-import { memo, useContext, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import "../HospitalPage/hospitalPage.scss";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import hospitalImage from "../../../assets/hospital.jpg";
@@ -17,7 +17,6 @@ import {
   searchDoctor,
 } from "service/UserService";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { LoadingContext } from "context/LoadingContext";
 import dakhoaImages from "../../../assets/chuyenkhoa/dakhoa.png";
 import AppointmentBox from "../AppointmentBox/AppointmentBox";
 import { useDebounce } from "@uidotdev/usehooks";
@@ -25,7 +24,7 @@ import ReactPaginate from "react-paginate";
 import Skeleton from "react-loading-skeleton";
 const HospitalPage = () => {
   const { id, namehospital } = useParams();
-  const { loading, setLoading } = useContext(LoadingContext);
+  const [loading, setLoading] = useState(true);
   const [specialty, setSpecialty] = useState("");
   const [specialtyy, setSpecialtyy] = useState("");
   const [specialties, setSpecialties] = useState(null);
@@ -39,6 +38,7 @@ const HospitalPage = () => {
   // const [queryService, setQueryService] = useState("");
   const debouncedSearchDoctor = useDebounce(queryDoctor, 500);
   // const debouncedSearchService = useDebounce(queryService, 500);
+  const [price, setPrice] = useState(0);
   const [idDoctor, setIdDoctor] = useState("");
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
   const navigate = useNavigate();
@@ -401,7 +401,8 @@ const HospitalPage = () => {
                                       onClick={(e) => {
                                         handleClickDoctor(e);
                                         setShow(true);
-                                        setIdDoctor(item.id);
+                                        setIdDoctor(item?.id);
+                                        setPrice(item?.price);
                                       }}
                                     >
                                       <div className="img_chuyenkhoa">
@@ -430,6 +431,7 @@ const HospitalPage = () => {
                           <AppointmentBox
                             id={idDoctor}
                             name={specialtyy}
+                            price={price}
                           ></AppointmentBox>
                         </div>
                       ) : (

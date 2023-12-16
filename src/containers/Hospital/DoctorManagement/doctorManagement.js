@@ -129,7 +129,9 @@ const DoctorManagement = () => {
               <form action="">
                 <div>
                   <div className="form__col">
-                    <label htmlFor="">Tài khoản</label>
+                    <label htmlFor="">
+                      Tài khoản <span className="validate">*</span>
+                    </label>
                     <input
                       type="text"
                       id="username"
@@ -145,7 +147,9 @@ const DoctorManagement = () => {
                     </div>
                   </div>
                   <div className="form__col">
-                    <label htmlFor="">Mật khẩu</label>
+                    <label htmlFor="">
+                      Mật khẩu <span className="validate">*</span>
+                    </label>
                     <div className="form__login_in">
                       <input
                         type={`${isShowPassword ? "text" : "password"}`}
@@ -173,7 +177,9 @@ const DoctorManagement = () => {
                     </div>
                   </div>
                   <div className="form__col">
-                    <label htmlFor="confirmpasswd">Nhập lại mật khẩu</label>
+                    <label htmlFor="confirmpasswd">
+                      Nhập lại mật khẩu <span className="validate">*</span>
+                    </label>
                     <div className="forms__register_in">
                       <input
                         type={`${isShowConfPassword ? "text" : "password"}`}
@@ -202,7 +208,9 @@ const DoctorManagement = () => {
                     </div>
                   </div>
                   <div className="form__col">
-                    <label htmlFor="">Email</label>
+                    <label htmlFor="">
+                      Email <span className="validate">*</span>
+                    </label>
                     <input
                       type="text"
                       id="email"

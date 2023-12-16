@@ -2,8 +2,6 @@ import { memo, useContext, useEffect, useState } from "react";
 import "../Category/category.scss";
 import { BiSolidCategory } from "react-icons/bi";
 import chuyenmucImages from "../../../assets/chuyenmuc/tooth1.png";
-// import blogImages from "../../../assets/blog-img.png";
-// import avtImg from "../../../assets/avatar.png";
 import "../HomePage/NewsLarge/NewsLarge.scss";
 import doctorImg from "../../../assets/doctor/tat.jpg";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -17,7 +15,6 @@ import {
   getBlogByIdCategory,
   getCategoryById,
 } from "service/UserService";
-import { LoadingContext } from "context/LoadingContext";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { UpdateContext } from "context/UpdateContext";
 import ItemLarge from "../HomePage/NewsLarge/ItemLarge";
@@ -29,7 +26,7 @@ const Category = () => {
   const [blog, setBlog] = useState([]);
   console.log(blog);
   const { update, setUpdate } = useContext(UpdateContext);
-  const { loading, setLoading } = useContext(LoadingContext);
+  const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
   const [categoryy, setCategory] = useState([]);
   const [doctor, setDoctor] = useState([]);
@@ -49,20 +46,20 @@ const Category = () => {
       setCategory(res);
     }
   };
+  const getBlog = async () => {
+    let res = await getBlogByIdCategory(id);
+    if (res?.results) {
+      console.log(res);
+      setBlog(res.results);
+    }
+  };
+  const getDoctor = async () => {
+    let res = await fecthAllDoctor();
+    if (res) {
+      setDoctor(res?.results);
+    }
+  };
   useEffect(() => {
-    const getBlog = async () => {
-      let res = await getBlogByIdCategory(id);
-      if (res?.results) {
-        console.log(res);
-        setBlog(res.results);
-      }
-    };
-    const getDoctor = async () => {
-      let res = await fecthAllDoctor();
-      if (res) {
-        setDoctor(res?.results);
-      }
-    };
     getDoctor();
     getBlog();
     getService();
@@ -74,6 +71,7 @@ const Category = () => {
       setLoading(false);
     }, 1500);
     getCategory();
+    getBlog();
   }, [update]);
   return (
     <div>
@@ -121,7 +119,7 @@ const Category = () => {
                 <div className="NewsLarge2ItemsContainer">
                   <ul className="clear NewsLarge2Items flex-center">
                     {blog &&
-                      blog.slice(4, 6).map((item, index) => {
+                      blog.slice(0, 2).map((item, index) => {
                         return (
                           <ItemLarge
                             key={index}
@@ -143,7 +141,7 @@ const Category = () => {
                 <div className="NewsLarge3ItemsContainer">
                   <ul className="clear NewsLarge3Items flex-center">
                     {blog &&
-                      blog.slice(1, 4).map((item, index) => {
+                      blog.slice(2, 5).map((item, index) => {
                         return (
                           <ItemSmall
                             key={index}

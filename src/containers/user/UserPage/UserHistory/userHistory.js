@@ -1,13 +1,12 @@
 import UserTab from "containers/user/UserTab/userTab";
-import { memo, useContext, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import "./userHistory.scss";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import { LoadingContext } from "context/LoadingContext";
 import { getAppoinment, statusAppoinment } from "service/UserService";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import ReactPaginate from "react-paginate";
+// import ReactPaginate from "react-paginate";
 import ReactStars from "react-rating-stars-component";
 import Moment from "react-moment";
 import { FaRegCalendarAlt } from "react-icons/fa";
@@ -28,7 +27,7 @@ const UserHistory = () => {
   const [showRating, setShowRating] = useState(false);
   const handleCloseRating = () => setShowRating(false);
   const handleShowRating = () => setShowRating(true);
-  const { loading, setLoading } = useContext(LoadingContext);
+  const [loading, setLoading] = useState(true);
   const [scheduleBook, setScheduleBook] = useState([]);
   const [scheduleComing, setScheduleComing] = useState([]);
   const [schedulePassed, setSchedulePassed] = useState([]);
@@ -262,7 +261,9 @@ const UserHistory = () => {
                                           <div className="d-flex">
                                             {specialty.map((item, index) => {
                                               return (
-                                                <p>{item?.specialty?.name}</p>
+                                                <p>
+                                                  {item?.specialty?.name},{""}
+                                                </p>
                                               );
                                             })}
                                           </div>
@@ -304,7 +305,7 @@ const UserHistory = () => {
                             })}
                         </tbody>
                       </table>
-                      <div className="history__pagination">
+                      {/* <div className="history__pagination">
                         <ReactPaginate
                           breakLabel="..."
                           nextLabel=">"
@@ -323,7 +324,7 @@ const UserHistory = () => {
                           containerClassName="pagination"
                           activeClassName="active active-pagination"
                         />
-                      </div>
+                      </div> */}
                     </div>
                   ) : (
                     <div className="no__schedule">
@@ -453,7 +454,9 @@ const UserHistory = () => {
                                           <div className="d-flex">
                                             {specialty.map((item, index) => {
                                               return (
-                                                <p>{item?.specialty?.name}</p>
+                                                <p>
+                                                  {item?.specialty?.name},{""}
+                                                </p>
                                               );
                                             })}
                                           </div>
@@ -495,7 +498,7 @@ const UserHistory = () => {
                             })}
                         </tbody>
                       </table>
-                      <div className="history__pagination">
+                      {/* <div className="history__pagination">
                         <ReactPaginate
                           breakLabel="..."
                           nextLabel=">"
@@ -514,7 +517,7 @@ const UserHistory = () => {
                           containerClassName="pagination"
                           activeClassName="active active-pagination"
                         />
-                      </div>
+                      </div> */}
                     </div>
                   ) : (
                     <div className="no__schedule">
@@ -710,7 +713,9 @@ const UserHistory = () => {
                                           <div className="d-flex">
                                             {specialty.map((item, index) => {
                                               return (
-                                                <p>{item?.specialty?.name}</p>
+                                                <p>
+                                                  {item?.specialty?.name},{""}
+                                                </p>
                                               );
                                             })}
                                           </div>
@@ -752,7 +757,7 @@ const UserHistory = () => {
                             })}
                         </tbody>
                       </table>
-                      <div className="history__pagination">
+                      {/* <div className="history__pagination">
                         <ReactPaginate
                           breakLabel="..."
                           nextLabel=">"
@@ -771,7 +776,7 @@ const UserHistory = () => {
                           containerClassName="pagination"
                           activeClassName="active active-pagination"
                         />
-                      </div>
+                      </div> */}
                     </div>
                   ) : (
                     <div className="no__schedule">

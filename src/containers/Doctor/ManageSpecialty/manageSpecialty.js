@@ -1,5 +1,5 @@
 import "./manageSpecialty";
-import { memo, useContext, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { FaEraser } from "react-icons/fa6";
 import { IoInformation } from "react-icons/io5";
 import { FaRegCheckSquare } from "react-icons/fa";
@@ -19,7 +19,6 @@ import {
 } from "service/DoctorService";
 const ManageSpecialty = () => {
   const { id } = useParams();
-  const { update, setUpdate } = useContext(UpdateContext);
   const [showEditBlog, setShowEditBlog] = useState(false);
   const handleCloseEditBlog = () => setShowEditBlog(false);
   const handleShowEditBlog = () => setShowEditBlog(true);
@@ -115,7 +114,6 @@ const ManageSpecialty = () => {
             className="btn button"
             onClick={() => {
               addSpecialtyByID();
-              setUpdate(!update);
               setQuery("");
             }}
           >
@@ -290,7 +288,6 @@ const ManageSpecialty = () => {
                                   onClick={() => {
                                     handleCloseDeleteBlog();
                                     deleteSpecialtyDoctors([item.id]);
-                                    setUpdate(!update);
                                   }}
                                 >
                                   Xác nhận

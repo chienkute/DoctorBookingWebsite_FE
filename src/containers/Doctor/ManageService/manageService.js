@@ -1,4 +1,4 @@
-import { memo, useContext, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import "./manageService.scss";
 import { FaEraser } from "react-icons/fa6";
 import { IoInformation } from "react-icons/io5";
@@ -19,7 +19,6 @@ import {
 } from "service/DoctorService";
 const ManageService = () => {
   const { id } = useParams();
-  const { update, setUpdate } = useContext(UpdateContext);
   const [showEditBlog, setShowEditBlog] = useState(false);
   const handleCloseEditBlog = () => setShowEditBlog(false);
   const handleShowEditBlog = () => setShowEditBlog(true);
@@ -115,7 +114,6 @@ const ManageService = () => {
             className="btn button"
             onClick={() => {
               addServiceByID();
-              setUpdate(!update);
               setQuery("");
             }}
           >
@@ -290,7 +288,6 @@ const ManageService = () => {
                                   onClick={() => {
                                     handleCloseDeleteBlog();
                                     deleteServiceDoctors([item.id]);
-                                    setUpdate(!update);
                                   }}
                                 >
                                   Xác nhận

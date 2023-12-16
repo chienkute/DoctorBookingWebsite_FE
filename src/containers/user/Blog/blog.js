@@ -1,14 +1,13 @@
-import { memo, useContext, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import "../../user/Blog/blog.scss";
 import { BiSolidCategory } from "react-icons/bi";
 import doctorAvt from "../../../assets/doctor/tat.jpg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getBlogById } from "service/UserService";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import { LoadingContext } from "context/LoadingContext";
 const Blog = () => {
   const [content, setContent] = useState("");
-  const { loading, setLoading } = useContext(LoadingContext);
+  const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const [blog, setBlog] = useState([]);
   const [doctor, setDoctor] = useState([]);

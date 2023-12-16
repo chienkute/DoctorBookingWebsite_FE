@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./AdminSpeciality.scss";
 import { FaRegCheckSquare, FaEraser } from "react-icons/fa";
 import { FiEdit3 } from "react-icons/fi";
@@ -7,6 +7,8 @@ import avatar from "../../../assets/avatar.jpg";
 import { UpdateContext } from "context/UpdateContext";
 import { Button, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import ReactPaginate from "react-paginate";
 import {
   addSepcialties,
@@ -15,7 +17,6 @@ import {
   fetchAllSpecialtiess,
 } from "service/AdminService";
 const AdminSpeciality = () => {
-  const { update, setUpdate } = useContext(UpdateContext);
   const [showAddNewBlog, setShowAddNewBlog] = useState(false);
   const handleCloseAddNewBlog = () => setShowAddNewBlog(false);
   const handleShowAddNewBlog = () => setShowAddNewBlog(true);
@@ -59,20 +60,14 @@ const AdminSpeciality = () => {
     setImageUpdate(event.target.files[0]);
     setImage(URL.createObjectURL(event.target.files[0]));
   };
-  const addNewCategory = async () => {
-    let res = await addSepcialties(nameAdd, describeAdd, imageUpdate);
-    if (res) {
-      console.log(res);
-      toast.success("Thêm thành công");
-      getAllCategories();
-    }
-  };
   const fixCategory = async (id) => {
     let res = await editSpecialty(id, nameAdd, describeAdd, imageUpdate);
     if (res) {
       console.log(res);
-      toast.success("Thêm thành công");
+      toast.success("Sửa thành công");
       getAllCategories();
+    } else {
+      toast.error("Sửa thất bại");
     }
   };
   const deleteCategories = async (id) => {
@@ -81,11 +76,38 @@ const AdminSpeciality = () => {
       console.log(res);
       getAllCategories();
       toast.success("Xóa thành công");
+    } else {
+      toast.error("Xóa thất bại");
     }
   };
   useEffect(() => {
     getAllCategories();
   }, []);
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      name: "",
+      describe: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required("Bạn chưa nhập tiêu đề"),
+      describe: Yup.string().required("Bạn chưa nhập thông tin cơ bản"),
+    }),
+    onSubmit: async (values) => {
+      let res = await addSepcialties(values.name, values.describe, imageUpdate);
+      if (res) {
+        console.log(res);
+        toast.success("Thêm thành công");
+        getAllCategories();
+        formik.setValues({
+          name: "",
+          describe: "",
+        });
+      } else {
+        toast.error("Thêm thất bại");
+      }
+    },
+  });
   return (
     <>
       <div className="AdminSpecialityContainer">
@@ -122,7 +144,9 @@ const AdminSpeciality = () => {
               <div className="add__form">
                 <form action="">
                   <div className="form__avatar">
-                    <label htmlFor="">Ảnh chuyên khoa</label>
+                    <label htmlFor="">
+                      Ảnh chuyên khoa <span className="validate">*</span>
+                    </label>
                     <div className="form__image">
                       {image ? (
                         <img
@@ -150,28 +174,45 @@ const AdminSpeciality = () => {
                   </div>
                   <div>
                     <div className=" form__col">
-                      <label htmlFor="">Tiêu đề chuyên khoa</label>
+                      <label htmlFor="">
+                        Tiêu đề chuyên khoa <span className="validate">*</span>
+                      </label>
                       <input
                         type="text"
-                        id="nameEdit"
+                        id="name"
                         class="form-control"
                         autoComplete="off"
-                        onChange={(e) => {
-                          setNameAdd(e.target.value);
-                        }}
+                        value={formik.values.name}
+                        onChange={formik.handleChange}
+                        {...formik.getFieldProps("name")}
                       />
+                      <div
+                        className="form__login_error"
+                        style={{ marginTop: "-7px" }}
+                      >
+                        {formik.touched.name && formik.errors.name}
+                      </div>
                     </div>
                     <div className="form__col">
-                      <label htmlFor="">Thông tin cơ bản</label>
+                      <label htmlFor="">
+                        Thông tin cơ bản <span className="validate">*</span>
+                      </label>
                       <textarea
-                        name=""
-                        id=""
+                        className="form-control"
+                        name="describe"
+                        id="describe"
                         cols="30"
                         rows="10"
-                        onChange={(e) => {
-                          setDescribeAdd(e.target.value);
-                        }}
+                        value={formik.values.describe}
+                        onChange={formik.handleChange}
+                        {...formik.getFieldProps("describe")}
                       ></textarea>
+                      <div
+                        className="form__login_error"
+                        style={{ marginTop: "-7px" }}
+                      >
+                        {formik.touched.describe && formik.errors.describe}
+                      </div>
                     </div>
                   </div>
                 </form>
@@ -186,8 +227,7 @@ const AdminSpeciality = () => {
                 type="submit"
                 onClick={() => {
                   handleCloseAddNewBlog();
-                  setUpdate(!update);
-                  addNewCategory();
+                  formik.handleSubmit();
                 }}
               >
                 Lưu
@@ -247,7 +287,6 @@ const AdminSpeciality = () => {
                               setIcon(item?.icon);
                               setId(item?.id);
                               handleShowEditBlog();
-                              setUpdate(!update);
                               setImage("");
                               setNameAdd(item?.name);
                               setDescribeAdd(item?.describe);
@@ -267,7 +306,10 @@ const AdminSpeciality = () => {
                               <div className="add__form">
                                 <form action="">
                                   <div className="form__avatar">
-                                    <label htmlFor="">Ảnh chuyên khoa</label>
+                                    <label htmlFor="">
+                                      Ảnh chuyên khoa{" "}
+                                      <span className="validate">*</span>
+                                    </label>
                                     <div className="form__image">
                                       {image ? (
                                         <img
@@ -303,7 +345,8 @@ const AdminSpeciality = () => {
                                   <div>
                                     <div className=" form__col">
                                       <label htmlFor="">
-                                        Tiêu đề chuyên khoa
+                                        Tiêu đề chuyên khoa{" "}
+                                        <span className="validate">*</span>
                                       </label>
                                       <input
                                         type="text"
@@ -317,8 +360,12 @@ const AdminSpeciality = () => {
                                       />
                                     </div>
                                     <div className="form__col">
-                                      <label htmlFor="">Thông tin cơ bản</label>
+                                      <label htmlFor="">
+                                        Thông tin cơ bản{" "}
+                                        <span className="validate">*</span>
+                                      </label>
                                       <textarea
+                                        className="form-control"
                                         name=""
                                         id=""
                                         cols="30"
@@ -343,7 +390,6 @@ const AdminSpeciality = () => {
                               <Button
                                 variant="primary"
                                 onClick={() => {
-                                  setUpdate(!update);
                                   fixCategory(id);
                                   handleCloseEditBlog();
                                 }}
@@ -384,7 +430,6 @@ const AdminSpeciality = () => {
                                 variant="primary"
                                 onClick={() => {
                                   handleCloseDeleteBlog();
-                                  setUpdate(!update);
                                   deleteCategories(id);
                                 }}
                               >

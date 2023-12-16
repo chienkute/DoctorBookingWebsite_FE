@@ -24,11 +24,7 @@ function Chatbot(props) {
       <UserMessage key={messages.length + 1} text={text} />,
       <BotMessage
         key={messages.length + 2}
-        fetchMessage={async () => await API.GetChatbotResponseG2(text)}
-      />,
-      <BotMessage
-        key={messages.length + 2}
-        fetchMessage={async () => await API.GetChatbotResponseT5(text)}
+        fetchMessage={async () => await API.GetChatbotResponseAI(text)}
       />,
     );
     setMessages(newMessages);

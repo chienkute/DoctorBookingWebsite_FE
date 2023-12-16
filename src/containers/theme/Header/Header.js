@@ -30,6 +30,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { UpdateContext } from "context/UpdateContext";
 const Header = () => {
   const { update, setUpdate } = useContext(UpdateContext);
+  const [updateImage, setUpdateImage] = useState(false);
   const [user, setUser] = useState([]);
   const [image, setImage] = useState("");
   const [userName, setUserName] = useState("");
@@ -85,7 +86,7 @@ const Header = () => {
   useEffect(() => {
     getUser();
     getUserByID();
-  }, [update]);
+  }, [updateImage]);
   return (
     <div>
       <header className="HeaderContainer flex-center">
@@ -319,7 +320,7 @@ const Header = () => {
               <Link
                 onClick={() => {
                   setShow(!show);
-                  setUpdate(!update);
+                  setUpdateImage(!updateImage);
                 }}
               >
                 <img src={image || avatar} alt="" />

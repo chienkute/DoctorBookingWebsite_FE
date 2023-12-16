@@ -175,7 +175,9 @@ const InfoHospital = () => {
         <div className="information__content">
           <div className="information__content1">
             <div className="information__name">
-              <label htmlFor="">Tên bệnh viện</label>
+              <label htmlFor="">
+                Tên bệnh viện <span className="validate">*</span>
+              </label>
               <input
                 type="text"
                 id="name"
@@ -193,7 +195,9 @@ const InfoHospital = () => {
               </div>
             </div>
             <div className="information__name">
-              <label htmlFor="">Địa chỉ</label>
+              <label htmlFor="">
+                Địa chỉ <span className="validate">*</span>
+              </label>
               <input
                 type="text"
                 id="address"
@@ -210,7 +214,9 @@ const InfoHospital = () => {
               </div>
             </div>
             <div className="information__name">
-              <label htmlFor="">Thông tin cơ bản</label>
+              <label htmlFor="">
+                Thông tin cơ bản <span className="validate">*</span>
+              </label>
               <textarea
                 class="form-control"
                 id="info"
@@ -225,7 +231,9 @@ const InfoHospital = () => {
           </div>
           <div className="information__content2">
             <div className="information__name">
-              <label htmlFor="">Tài khoản</label>
+              <label htmlFor="">
+                Tài khoản <span className="validate">*</span>
+              </label>
               <input
                 type="text"
                 id="phone"
@@ -236,7 +244,9 @@ const InfoHospital = () => {
               />
             </div>
             <div className="information__name" style={{ marginTop: "10px" }}>
-              <label htmlFor="">Email</label>
+              <label htmlFor="">
+                Email <span className="validate">*</span>
+              </label>
               <input
                 type="email"
                 id="email"

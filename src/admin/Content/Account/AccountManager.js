@@ -1,8 +1,9 @@
 import React, { memo, useState, useEffect } from "react";
 import "./AccountManager.scss";
 import { FaRegCheckSquare, FaEraser } from "react-icons/fa";
+import { FiEdit3 } from "react-icons/fi";
 import { IoInformation } from "react-icons/io5";
-import { FaLock, FaPlus, FaUnlock } from "react-icons/fa6";
+import { FaLock, FaPlus } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import { getAllAcount } from "service/AdminService";
 import ReactPaginate from "react-paginate";
@@ -16,21 +17,15 @@ const AccountManager = () => {
   const [showAddNewHospital, setShowAddNewHospital] = useState(false);
   const handleCloseAddNewHospital = () => setShowAddNewHospital(false);
   const handleShowAddNewHospital = () => setShowAddNewHospital(true);
-  // const [showAddNewBlog, setShowAddNewBlog] = useState(false);
-  // const handleCloseAddNewBlog = () => setShowAddNewBlog(false);
-  // const handleShowAddNewBlog = () => setShowAddNewBlog(true);
-  // const [showEditBlog, setShowEditBlog] = useState(false);
-  // const handleCloseEditBlog = () => setShowEditBlog(false);
-  // const handleShowEditBlog = () => setShowEditBlog(true);
-  // const [showDeleteBlog, setShowDeleteBlog] = useState(false);
-  // const handleCloseDeleteBlog = () => setShowDeleteBlog(false);
-  // const handleShowDeleteBlog = () => setShowDeleteBlog(true);
-  // const [category, setCategory] = useState([]);
-  // const [defaultValue, setDefaultValue] = useState("");
-  // const [defaultDescribe, setDefaultDescribe] = useState("");
-  // const [icon, setIcon] = useState("");
-  // const [nameAdd, setNameAdd] = useState("");
-  // const [describeAdd, setDescribeAdd] = useState("");
+  const [showEdit, setShowEdit] = useState(false);
+  const handleCloseEdit = () => setShowEdit(false);
+  const handleShowEdit = () => setShowEdit(true);
+  const [showDelete, setShowDelete] = useState(false);
+  const handleCloseDelete = () => setShowDelete(false);
+  const handleShowDelete = () => setShowDelete(true);
+  const [showBlock, setShowBlock] = useState(false);
+  const handleCloseBlock = () => setShowBlock(false);
+  const handleShowBlock = () => setShowBlock(true);
   const [search, setSearch] = useState("");
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowConfPassword, setIsShowConfPassword] = useState(false);
@@ -52,7 +47,11 @@ const AccountManager = () => {
   }, []);
   const filteredElements = accounts.filter((element) => {
     const allowedRoles = ["user", "hospital", "doctor"];
-    return allowedRoles.includes(element.role) && element.role !== "admin";
+    return (
+      allowedRoles.includes(element.role) &&
+      element.role !== "admin" &&
+      element?.username.toLowerCase().includes(search.toLowerCase())
+    );
   });
   const formik = useFormik({
     initialValues: {
@@ -117,7 +116,9 @@ const AccountManager = () => {
               <form action="">
                 <div>
                   <div className="form__col">
-                    <label htmlFor="">Tài khoản</label>
+                    <label htmlFor="">
+                      Tài khoản <span className="validate">*</span>
+                    </label>
                     <input
                       type="text"
                       id="username"
@@ -133,7 +134,9 @@ const AccountManager = () => {
                     </div>
                   </div>
                   <div className="form__col">
-                    <label htmlFor="">Mật khẩu</label>
+                    <label htmlFor="">
+                      Mật khẩu <span className="validate">*</span>
+                    </label>
                     <div className="form__login_in">
                       <input
                         type={`${isShowPassword ? "text" : "password"}`}
@@ -161,7 +164,9 @@ const AccountManager = () => {
                     </div>
                   </div>
                   <div className="form__col">
-                    <label htmlFor="confirmpasswd">Nhập lại mật khẩu</label>
+                    <label htmlFor="confirmpasswd">
+                      Nhập lại mật khẩu <span className="validate">*</span>
+                    </label>
                     <div className="forms__register_in">
                       <input
                         type={`${isShowConfPassword ? "text" : "password"}`}
@@ -190,7 +195,9 @@ const AccountManager = () => {
                     </div>
                   </div>
                   <div className="form__col">
-                    <label htmlFor="">Email</label>
+                    <label htmlFor="">
+                      Email <span className="validate">*</span>
+                    </label>
                     <input
                       type="text"
                       id="email"
@@ -251,24 +258,82 @@ const AccountManager = () => {
                     </td>
                     <td>{index}</td>
                     <td>{item?.username}</td>
-                    <td>{item?.email}</td>
+                    <td style={{ maxWidth: "140px" }}>{item?.email}</td>
                     {item?.role === "user" && <td>Thành viên</td>}
                     {item?.role === "doctor" && <td>Bác sĩ</td>}
                     {item?.role === "hospital" && <td>Bệnh viện</td>}
                     <td>
                       <div className="Action">
                         <button className="InfoButton">
-                          <IoInformation />
+                          <FiEdit3 />
                         </button>
-                        <button className="UnlockButton">
+                        {/* <button className="UnlockButton">
                           <FaUnlock />
-                        </button>
-                        <button className="LockButton">
+                        </button> */}
+                        <button
+                          className="LockButton"
+                          onClick={handleShowBlock}
+                        >
                           <FaLock />
                         </button>
-                        <button className="DeleteAccount">
+                        <Modal show={showBlock} onHide={handleCloseBlock}>
+                          <Modal.Header closeButton>
+                            <Modal.Title>
+                              Bạn có muốn khóa tài khoản này không?
+                            </Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body>
+                            Thao tác này không thể hoàn tác!!!
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <Button
+                              variant="secondary"
+                              onClick={handleCloseBlock}
+                            >
+                              Hủy
+                            </Button>
+                            <Button
+                              variant="primary"
+                              onClick={() => {
+                                handleCloseBlock();
+                              }}
+                            >
+                              Xác nhận
+                            </Button>
+                          </Modal.Footer>
+                        </Modal>
+                        <button
+                          className="DeleteAccount"
+                          onClick={handleShowDelete}
+                        >
                           <FaEraser />
                         </button>
+                        <Modal show={showDelete} onHide={handleCloseDelete}>
+                          <Modal.Header closeButton>
+                            <Modal.Title>
+                              Bạn có muốn xóa tài khoản này không?
+                            </Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body>
+                            Thao tác này không thể hoàn tác!!!
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <Button
+                              variant="secondary"
+                              onClick={handleCloseDelete}
+                            >
+                              Hủy
+                            </Button>
+                            <Button
+                              variant="primary"
+                              onClick={() => {
+                                handleCloseDelete();
+                              }}
+                            >
+                              Xác nhận
+                            </Button>
+                          </Modal.Footer>
+                        </Modal>
                       </div>
                     </td>
                   </tr>

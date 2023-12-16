@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./AdminService.scss";
 import { FaRegCheckSquare, FaEraser } from "react-icons/fa";
 import { FiEdit3 } from "react-icons/fi";
@@ -12,10 +12,10 @@ import {
 import { toast } from "react-toastify";
 import { Button, Modal } from "react-bootstrap";
 import avatar from "../../../assets/avatar.jpg";
-import { UpdateContext } from "context/UpdateContext";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import ReactPaginate from "react-paginate";
 const AdminService = () => {
-  const { update, setUpdate } = useContext(UpdateContext);
   const [showAddNewBlog, setShowAddNewBlog] = useState(false);
   const handleCloseAddNewBlog = () => setShowAddNewBlog(false);
   const handleShowAddNewBlog = () => setShowAddNewBlog(true);
@@ -58,20 +58,14 @@ const AdminService = () => {
     setImageUpdate(event.target.files[0]);
     setImage(URL.createObjectURL(event.target.files[0]));
   };
-  const addNewCategory = async () => {
-    let res = await addService(nameAdd, describeAdd, imageUpdate);
-    if (res) {
-      console.log(res);
-      toast.success("Thêm thành công");
-      getAllCategories();
-    }
-  };
   const fixCategory = async (id) => {
     let res = await editService(id, nameAdd, describeAdd, imageUpdate);
     if (res) {
       console.log(res);
-      toast.success("Thêm thành công");
+      toast.success("Sửa thành công");
       getAllCategories();
+    } else {
+      toast.error("Sửa thất bại");
     }
   };
   const deleteCategories = async (id) => {
@@ -80,11 +74,38 @@ const AdminService = () => {
       console.log(res);
       getAllCategories();
       toast.success("Xóa thành công");
+    } else {
+      toast.error("Xóa thất bại");
     }
   };
   useEffect(() => {
     getAllCategories();
   }, []);
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      name: "",
+      describe: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required("Bạn chưa nhập tiêu đề"),
+      describe: Yup.string().required("Bạn chưa nhập thông tin cơ bản"),
+    }),
+    onSubmit: async (values) => {
+      let res = await addService(values.name, values.describe, imageUpdate);
+      if (res) {
+        console.log(res);
+        toast.success("Thêm thành công");
+        getAllCategories();
+        formik.setValues({
+          name: "",
+          describe: "",
+        });
+      } else {
+        toast.error("Thêm thất bại");
+      }
+    },
+  });
   return (
     <>
       <div className="AdminServiceContainer">
@@ -121,7 +142,9 @@ const AdminService = () => {
               <div className="add__form">
                 <form action="">
                   <div className="form__avatar">
-                    <label htmlFor="">Ảnh dịch vụ</label>
+                    <label htmlFor="">
+                      Ảnh dịch vụ <span className="validate">*</span>
+                    </label>
                     <div className="form__image">
                       {image ? (
                         <img
@@ -149,28 +172,45 @@ const AdminService = () => {
                   </div>
                   <div>
                     <div className=" form__col">
-                      <label htmlFor="">Tiêu đề dịch vụ</label>
+                      <label htmlFor="">
+                        Tiêu đề dịch vụ <span className="validate">*</span>
+                      </label>
                       <input
                         type="text"
-                        id="nameEdit"
+                        id="name"
                         class="form-control"
                         autoComplete="off"
-                        onChange={(e) => {
-                          setNameAdd(e.target.value);
-                        }}
+                        value={formik.values.name}
+                        onChange={formik.handleChange}
+                        {...formik.getFieldProps("name")}
                       />
+                      <div
+                        className="form__login_error"
+                        style={{ marginTop: "-7px" }}
+                      >
+                        {formik.touched.name && formik.errors.name}
+                      </div>
                     </div>
                     <div className="form__col">
-                      <label htmlFor="">Thông tin cơ bản</label>
+                      <label htmlFor="">
+                        Thông tin cơ bản <span className="validate">*</span>
+                      </label>
                       <textarea
-                        name=""
-                        id=""
+                        className="form-control"
+                        name="describe"
+                        id="describe"
                         cols="30"
                         rows="10"
-                        onChange={(e) => {
-                          setDescribeAdd(e.target.value);
-                        }}
+                        value={formik.values.describe}
+                        onChange={formik.handleChange}
+                        {...formik.getFieldProps("describe")}
                       ></textarea>
+                      <div
+                        className="form__login_error"
+                        style={{ marginTop: "-7px" }}
+                      >
+                        {formik.touched.describe && formik.errors.describe}
+                      </div>
                     </div>
                   </div>
                 </form>
@@ -185,8 +225,7 @@ const AdminService = () => {
                 type="submit"
                 onClick={() => {
                   handleCloseAddNewBlog();
-                  setUpdate(!update);
-                  addNewCategory();
+                  formik.handleSubmit();
                 }}
               >
                 Lưu
@@ -240,7 +279,6 @@ const AdminService = () => {
                               setIcon(item?.icon);
                               setId(item?.id);
                               handleShowEditBlog();
-                              setUpdate(!update);
                               setImage("");
                               setNameAdd(item?.name);
                               setDescribeAdd(item?.descripe);
@@ -260,7 +298,10 @@ const AdminService = () => {
                               <div className="add__form">
                                 <form action="">
                                   <div className="form__avatar">
-                                    <label htmlFor="">Ảnh dịch vụ</label>
+                                    <label htmlFor="">
+                                      Ảnh dịch vụ{" "}
+                                      <span className="validate">*</span>
+                                    </label>
                                     <div className="form__image">
                                       {image ? (
                                         <img
@@ -295,7 +336,10 @@ const AdminService = () => {
                                   </div>
                                   <div>
                                     <div className=" form__col">
-                                      <label htmlFor="">Tiêu đề dịch vụ</label>
+                                      <label htmlFor="">
+                                        Tiêu đề dịch vụ{" "}
+                                        <span className="validate">*</span>
+                                      </label>
                                       <input
                                         type="text"
                                         id="nameEdit"
@@ -308,8 +352,12 @@ const AdminService = () => {
                                       />
                                     </div>
                                     <div className="form__col">
-                                      <label htmlFor="">Thông tin cơ bản</label>
+                                      <label htmlFor="">
+                                        Thông tin cơ bản{" "}
+                                        <span className="validate">*</span>
+                                      </label>
                                       <textarea
+                                        className="form-control"
                                         name=""
                                         id=""
                                         cols="30"
@@ -334,7 +382,6 @@ const AdminService = () => {
                               <Button
                                 variant="primary"
                                 onClick={() => {
-                                  setUpdate(!update);
                                   fixCategory(id);
                                   handleCloseEditBlog();
                                 }}
@@ -375,7 +422,6 @@ const AdminService = () => {
                                 variant="primary"
                                 onClick={() => {
                                   handleCloseDeleteBlog();
-                                  setUpdate(!update);
                                   deleteCategories(id);
                                 }}
                               >

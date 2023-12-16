@@ -67,7 +67,7 @@ const ChangePasswordDoctor = () => {
       >
         <div class="mb-4">
           <label for="password" class="form-label changePassword__form_text">
-            Mật khẩu hiện tại
+            Mật khẩu hiện tại <span className="validate">*</span>
           </label>
           <div className="form__login_in">
             <input
@@ -91,7 +91,7 @@ const ChangePasswordDoctor = () => {
         </div>
         <div class="mb-4">
           <label for="newpasswd" class="form-label changePassword__form_text">
-            Mật khẩu mới
+            Mật khẩu mới <span className="validate">*</span>
           </label>
           <div className="form__login_in">
             <input
@@ -118,7 +118,7 @@ const ChangePasswordDoctor = () => {
             for="confirmpasswd"
             class="form-label changePassword__form_text"
           >
-            Xác nhận mật khẩu
+            Xác nhận mật khẩu <span className="validate">*</span>
           </label>
           <div className="form__login_in">
             <input

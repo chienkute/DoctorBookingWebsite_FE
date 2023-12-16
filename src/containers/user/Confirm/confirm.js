@@ -1,4 +1,4 @@
-import { memo, useContext, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import "./confirm.scss";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
@@ -11,14 +11,12 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Booking, getDoctorByID, getUserID } from "service/UserService";
 import { toast } from "react-toastify";
 import Moment from "react-moment";
-import { LoadingContext } from "context/LoadingContext";
 const Confirm = () => {
   const { id, namedoctor } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const [doctor, setDoctor] = useState([]);
   const [userInfo, setUserInfo] = useState([]);
-  // const { loading, setLoading } = useContext(LoadingContext);
   const [loading, setLoading] = useState(true);
   const { schedule, day, time, days, idUser, timeStart, timeEnd } =
     location.state;

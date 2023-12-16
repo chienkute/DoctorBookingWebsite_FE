@@ -1,12 +1,10 @@
 import React, { memo, useContext, useEffect, useState } from "react";
 import "./NewsSmall.scss";
-
 import blogImg from "assets/blog-img.png";
 import avtImg from "assets/avatar.png";
 import { Link } from "react-router-dom";
 import { getBlogByIdCategory, getCategoryById } from "service/UserService";
 import { UpdateContext } from "context/UpdateContext";
-
 const NewsSmall = (props) => {
   const [blog, setBlog] = useState([]);
   const [category, setCategory] = useState([]);

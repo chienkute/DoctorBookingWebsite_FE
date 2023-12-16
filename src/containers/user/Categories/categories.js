@@ -1,16 +1,15 @@
-import { memo, useContext, useState } from "react";
+import { memo, useState } from "react";
 import { FaSistrix } from "react-icons/fa6";
 import "../Categories/categories.scss";
 import { BiSolidCategory } from "react-icons/bi";
 import categoriesimage1 from "../../../assets/chuyenmuc/tooth.png";
 import { fetchAllCategories } from "service/UserService";
 import { useEffect } from "react";
-import { LoadingContext } from "context/LoadingContext";
 import { Link } from "react-router-dom";
 const Categories = () => {
   const [category, setCategory] = useState([]);
   const [search, setSearch] = useState("");
-  const { loading, setLoading } = useContext(LoadingContext);
+  const [loading, setLoading] = useState(true);
   const getAllCategories = async () => {
     let res = await fetchAllCategories();
     if (res?.results) {
