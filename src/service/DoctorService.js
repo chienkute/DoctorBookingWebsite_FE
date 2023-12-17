@@ -1,4 +1,8 @@
 const { default: instance } = require("utils/axiosCutomize");
+const token = localStorage.getItem("token");
+const headers = {
+  Authorization: `Bearer ${token}`,
+};
 const fetchAllSchedule = (limit = 100, offset = 0) => {
   return instance.get("api/schedules/?limit=" + limit + "&offset=" + offset);
 };

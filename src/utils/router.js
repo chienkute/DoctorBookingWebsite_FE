@@ -17,7 +17,6 @@ import confirm from "containers/user/Confirm/confirm";
 import blog from "containers/user/Blog/blog";
 import userChangePassword from "containers/user/UserPage/UserChangePassword/userChangePassword";
 import userhelp from "containers/user/UserPage/UserHelp/userhelp";
-import tool from "containers/user/Tool/tool";
 import AdminTopic from "admin/Content/Topic/AdminTopic";
 import AdminSpecialist from "admin/Content/Specialist/AdminSpeciality";
 import infoHospital from "containers/Hospital/InfoHospital/infoHospital";
@@ -56,7 +55,6 @@ const publicRoutes = [
   { path: "/user/help", component: userhelp },
   { path: "/care/doctor/confirm/:id/:namedoctor", component: confirm },
   { path: "/blog/:id", component: blog },
-  { path: "/tool", component: tool, layout: null },
   { path: "/chatbox", component: Chatbot, layout: null },
 ];
 const routeAdmin = [

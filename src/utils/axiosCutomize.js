@@ -11,8 +11,9 @@ const instance = axios.create({
 // Add a request interceptor
 instance.interceptors.request.use(
   function (config) {
-    const access_token = localStorage.getItem("token");
-    config.headers.Authorization = `Bearer ${access_token}`;
+    const token = localStorage.getItem("token");
+    config.headers.Authorization = `Bearer ${token}`;
+    console.log(token);
     NProgress.start();
     // Do something before request is sent
     return config;

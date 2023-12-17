@@ -9,8 +9,6 @@
   width: 500px;
   overflow: hidden;
 }
-.header__chatbot {
-}
 
 .header {
   padding: 20px;
@@ -22,8 +20,6 @@
   background-color: #002f50;
   display: flex;
   justify-content: center;
-}
-.chatbot__close {
 }
 
 .messages {
