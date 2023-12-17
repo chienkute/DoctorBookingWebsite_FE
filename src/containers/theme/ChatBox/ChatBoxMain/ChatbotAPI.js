@@ -9,7 +9,7 @@ const API = {
   },
   GetChatbotResponseAI: async (question) => {
     const urlG2 = "https://api.openai.com/v1/chat/completions";
-    const API_KEY = "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";
+    const API_KEY = "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";
     const headers = {
       Authorization: `Bearer ${API_KEY}`,
       "Content-Type": "application/json",

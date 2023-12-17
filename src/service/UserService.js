@@ -1,5 +1,8 @@
 const { default: instance } = require("utils/axiosCutomize");
-
+const token = localStorage.getItem("token");
+const headers = {
+  Authorization: `Bearer ${token}`,
+};
 const editUser = (id, name, gender, phone, address, birthday) => {
   return instance.patch(`/api/users/${id}/`, {
     name,

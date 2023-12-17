@@ -1,13 +1,9 @@
 const { default: instance } = require("utils/axiosCutomize");
-const addHospital = (username, password, email) => {
-  return instance.post(`/api/auth/register/doctor/`, {
-    username,
-    password,
-    email,
-  });
-};
 const getAllAcount = (offset) => {
   return instance.get(`/api/accounts/?limit=6&offset=${offset}`);
+};
+const deleteAccount = (id) => {
+  return instance.delete(`/api/accounts/${id}/`);
 };
 const addCategory = (name, describe, icon) => {
   const formData = new FormData();
@@ -93,6 +89,13 @@ const fetchAllSpecialtiess = (offset) => {
 const fetchAllCategoriess = (offset) => {
   return instance.get(`/api/categories/?limit=6&offset=${offset}`);
 };
+const addHospital = (username, password, email) => {
+  return instance.post(`/api/auth/register/hospital/`, {
+    username,
+    password,
+    email,
+  });
+};
 export {
   addHospital,
   getAllAcount,
@@ -108,4 +111,5 @@ export {
   fetchAllServices,
   fetchAllSpecialtiess,
   fetchAllCategoriess,
+  deleteAccount,
 };

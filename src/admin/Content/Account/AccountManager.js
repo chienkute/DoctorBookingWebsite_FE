@@ -5,7 +5,7 @@ import { FiEdit3 } from "react-icons/fi";
 import { IoInformation } from "react-icons/io5";
 import { FaLock, FaPlus } from "react-icons/fa6";
 import { toast } from "react-toastify";
-import { getAllAcount } from "service/AdminService";
+import { addHospital, deleteAccount, getAllAcount } from "service/AdminService";
 import ReactPaginate from "react-paginate";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -31,6 +31,7 @@ const AccountManager = () => {
   const [isShowConfPassword, setIsShowConfPassword] = useState(false);
   const [totalPage, setTotalPage] = useState(0);
   const [accounts, setAccounts] = useState([]);
+  const [idAccout, setIdAccount] = useState("");
   const handlePageClick = (event) => {
     getAccount(+event.selected + 1);
   };
@@ -40,6 +41,15 @@ const AccountManager = () => {
       console.log(res);
       setTotalPage(res?.total_page);
       setAccounts(res?.results);
+    }
+  };
+  const deleteAccouns = async (id) => {
+    let res = await deleteAccount(id);
+    if (res) {
+      console.log(res);
+      toast.success("Xóa thành công");
+    } else {
+      toast.error("Xóa thất bại");
     }
   };
   useEffect(() => {
@@ -80,7 +90,25 @@ const AccountManager = () => {
           "Vui lòng nhập đúng địa chỉ email",
         ),
     }),
-    onSubmit: async (values) => {},
+    onSubmit: async (values) => {
+      let res = await addHospital(
+        values.username,
+        values.password,
+        values.email,
+      );
+      if (res) {
+        console.log(res);
+        formik.setValues({
+          username: "",
+          email: "",
+          password: "",
+        });
+        getAccount(0);
+        toast.success("Thêm thành công");
+      } else {
+        toast.success("Thêm thất bại");
+      }
+    },
   });
   return (
     <div className="AdminUserContainer">
@@ -304,7 +332,10 @@ const AccountManager = () => {
                         </Modal>
                         <button
                           className="DeleteAccount"
-                          onClick={handleShowDelete}
+                          onClick={() => {
+                            handleShowDelete();
+                            setIdAccount(item?.id);
+                          }}
                         >
                           <FaEraser />
                         </button>
@@ -328,6 +359,7 @@ const AccountManager = () => {
                               variant="primary"
                               onClick={() => {
                                 handleCloseDelete();
+                                deleteAccouns(idAccout);
                               }}
                             >
                               Xác nhận

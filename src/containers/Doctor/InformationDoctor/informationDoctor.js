@@ -41,6 +41,7 @@ const InformationDoctor = () => {
   const getInfoDoctor = async () => {
     let res = await getDoctorByID(id);
     if (res) {
+      console.log(res);
       setName(res?.name);
       setPhone(res?.phone);
       setAdress(res?.address);

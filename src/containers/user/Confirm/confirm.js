@@ -229,7 +229,7 @@ const Confirm = () => {
                           Phí tư vấn cố định
                         </p>
                         <p className="confirm__schedule_footer_info_price">
-                          150.000 ₫
+                          {doctor?.price} ₫
                         </p>
                       </div>
                     </div>

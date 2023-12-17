@@ -15,6 +15,8 @@ import { useParams } from "react-router";
 import { AiFillEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { addDoctor } from "service/HospitalService";
 import { toast } from "react-toastify";
+import { deleteAccount } from "service/AdminService";
+import { FaEraser } from "react-icons/fa6";
 const DoctorManagement = () => {
   const { id } = useParams();
   const [showAddNewDoctor, setShowAddNewDoctor] = useState(false);
@@ -25,7 +27,7 @@ const DoctorManagement = () => {
   const handleShowEditDoctor = () => setShowEditDoctor(true);
   const [showDeleteDoctor, setShowDeleteDoctor] = useState(false);
   const handleCloseDeleteDoctor = () => setShowDeleteDoctor(false);
-  // const handleShowDeleteDoctor = () => setShowDeleteDoctor(true);
+  const handleShowDeleteDoctor = () => setShowDeleteDoctor(true);
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowConfPassword, setIsShowConfPassword] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -37,12 +39,22 @@ const DoctorManagement = () => {
   const [usernameDefault, setUsernameDefault] = useState("");
   // const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [idAccout, setIdAccount] = useState("");
   const getDoctorById = async () => {
     let res = await searchDoctor(queryDebounce, "", id, "", "");
     if (res) {
       console.log(res);
       setDoctor(res?.results);
       setCount(res?.count);
+    }
+  };
+  const deleteAccouns = async (id) => {
+    let res = await deleteAccount(id);
+    if (res) {
+      console.log(res);
+      toast.success("Xóa thành công");
+    } else {
+      toast.error("Xóa thất bại");
     }
   };
   useEffect(() => {
@@ -384,12 +396,15 @@ const DoctorManagement = () => {
                               )}
                             </Modal.Footer>
                           </Modal>
-                          {/* <button
+                          <button
                             className="DeleteAccount"
-                            onClick={handleShowDeleteDoctor}
+                            onClick={() => {
+                              handleShowDeleteDoctor();
+                              setIdAccount(item?.id);
+                            }}
                           >
                             <FaEraser />
-                          </button> */}
+                          </button>
                           <Modal
                             show={showDeleteDoctor}
                             onHide={handleCloseDeleteDoctor}
@@ -411,7 +426,10 @@ const DoctorManagement = () => {
                               </Button>
                               <Button
                                 variant="primary"
-                                onClick={handleCloseDeleteDoctor}
+                                onClick={() => {
+                                  handleCloseDeleteDoctor();
+                                  deleteAccouns(idAccout);
+                                }}
                               >
                                 Xác nhận
                               </Button>
