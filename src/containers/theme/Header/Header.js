@@ -38,7 +38,6 @@ const Header = () => {
   const { show, setShow, nodeRef } = useClickOutSide();
   const [specialty, setSpecialty] = useState([]);
   const [categories, setCategories] = useState([]);
-  const specialtySlice = specialty.slice(0, 6);
   const navigate = useNavigate();
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -66,13 +65,13 @@ const Header = () => {
     }
   };
   const getSpecialty = async () => {
-    let res = await fetchAllSpecialties();
+    let res = await fetchAllSpecialties(6, 0);
     if (res) {
       setSpecialty(res?.results);
     }
   };
   const getService = async () => {
-    let res = await fetchAllCategories(1);
+    let res = await fetchAllCategories(6, 0);
     if (res) {
       setCategories(res?.results);
     }
@@ -133,7 +132,7 @@ const Header = () => {
                   </li>
                   {categories &&
                     categories.length > 0 &&
-                    categories.slice(0, 6).map((item, index) => {
+                    categories.map((item, index) => {
                       return (
                         <li
                           key={index}
@@ -272,9 +271,9 @@ const Header = () => {
                       Các chuyên khoa
                     </div>
                   </li>
-                  {specialtySlice &&
-                    specialtySlice.length > 0 &&
-                    specialtySlice.map((item, index) => {
+                  {specialty &&
+                    specialty.length > 0 &&
+                    specialty.map((item, index) => {
                       return (
                         <li
                           onClick={() => {

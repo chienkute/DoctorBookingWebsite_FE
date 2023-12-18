@@ -19,20 +19,25 @@ const ServiceSearch = () => {
   const queryDebounce = useDebounce(search, 500);
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
   const [loading, setLoading] = useState(true);
+  const pageTotal = searchCount / 6;
+  const roundedNumber = Math.ceil(pageTotal);
+  const handlePageClick = (event) => {
+    getService(+event.selected + 1);
+  };
+  const getService = async (page) => {
+    let res = await getServiceByIdHospital(queryDebounce, "", page);
+    if (res) {
+      console.log(res);
+      setLoadingSkeleton(true);
+      setTimeout(() => {
+        setLoadingSkeleton(false);
+      }, 1500);
+      setService(res?.results);
+      setSearchCount(res?.count);
+    }
+  };
   useEffect(() => {
-    const getService = async () => {
-      let res = await getServiceByIdHospital(queryDebounce, "");
-      if (res) {
-        console.log(res);
-        setLoadingSkeleton(true);
-        setService(res?.results);
-        setSearchCount(res?.count);
-      }
-    };
-    getService();
-    setTimeout(() => {
-      setLoadingSkeleton(false);
-    }, 1500);
+    getService(1);
     setTimeout(() => {
       setLoading(false);
     }, 1500);
@@ -237,7 +242,9 @@ const ServiceSearch = () => {
                               type="button"
                               className="btn button hospital__body_dichvu_bottom_button"
                               onClick={() => {
-                                navigate(`/care/service/${item.id}`);
+                                navigate(
+                                  `/care/service/${item.id}/${item?.name}`,
+                                );
                               }}
                             >
                               Xem dịch vụ
@@ -254,9 +261,9 @@ const ServiceSearch = () => {
             <ReactPaginate
               breakLabel="..."
               nextLabel=">"
-              // onPageChange={handlePageClick}
+              onPageChange={handlePageClick}
               pageRangeDisplayed={5}
-              pageCount={3}
+              pageCount={roundedNumber}
               previousLabel="<"
               pageClassName="page-item"
               pageLinkClassName="page-link"

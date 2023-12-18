@@ -38,41 +38,57 @@ function SearchDoctor() {
   const debouncedSearchTerm = useDebounce(query, 500);
   const [loadingSkeleton, SetLoadingSkeleton] = useState(true);
   const [show, setShow] = useState(true);
+  const [totalPage, setTotalPage] = useState(0);
   const { update } = useContext(UpdateContext);
   const navigate = useNavigate();
-  const getDoctor = async () => {
+  const pageTotal = totalPage / 6;
+  const roundedNumber = Math.ceil(pageTotal);
+  console.log(roundedNumber);
+  const handlePageClick = (event) => {
+    console.log(+event.selected + 1);
+    getDoctor(+event.selected + 1);
+    getHospital(+event.selected + 1);
+  };
+  const getDoctor = async (page) => {
     let res = await searchDoctor(
       debouncedSearchTerm,
       adress,
       "",
       specialty,
       service,
+      page,
     );
     if (res) {
+      console.log(res);
       SetLoadingSkeleton(true);
+      setTimeout(() => {
+        SetLoadingSkeleton(false);
+      }, 1000);
       setDoctor(res?.results);
-      setDoctorCount(res?.results?.total_doctors);
+      setDoctorCount(res?.count);
+      setTotalPage(res?.count);
     }
   };
-  const getHospital = async () => {
+  const getHospital = async (page) => {
     let res = await searchHospital(
       debouncedSearchTerm,
       adress,
       specialty,
       service,
+      page,
     );
     if (res) {
       SetLoadingSkeleton(true);
+      setTimeout(() => {
+        SetLoadingSkeleton(false);
+      }, 1000);
       setHospital(res?.results);
-      setHospitalCount(res?.results?.total_doctors);
+      setHospitalCount(res?.count);
     }
   };
   useEffect(() => {
-    getDoctor();
-    getHospital();
-    setTimeout(() => {
-      SetLoadingSkeleton(false);
-    }, 1000);
+    getDoctor(1);
+    getHospital(1);
   }, [debouncedSearchTerm, adress, specialty, service]);
   useEffect(() => {
     if (chuyenkhoa) {
@@ -86,7 +102,7 @@ function SearchDoctor() {
       setSpecialty("");
     }
     const getAllSpecialty = async () => {
-      let res = await fetchAllSpecialties();
+      let res = await fetchAllSpecialties(100, 0);
       if (res) {
         setSpecialties(res?.results);
       }
@@ -107,8 +123,8 @@ function SearchDoctor() {
     }, 1500);
   }, []);
   useEffect(() => {
-    getDoctor();
-    getHospital();
+    getDoctor(1);
+    getHospital(1);
     setTimeout(() => {
       SetLoadingSkeleton(false);
     }, 1500);
@@ -133,6 +149,7 @@ function SearchDoctor() {
     document.getElementById("ListHospitalResult").style.display = "none";
     document.getElementById("DoctorResultFilters").style.display = "block";
     setCount(doctorCount);
+    setTotalPage(doctorCount);
   }
 
   function SwapHospital() {
@@ -142,6 +159,7 @@ function SearchDoctor() {
     document.getElementById("ListDoctorResult").style.display = "none";
     document.getElementById("DoctorResultFilters").style.display = "block";
     setCount(hospitalCount);
+    setTotalPage(hospitalCount);
   }
 
   return (
@@ -703,9 +721,9 @@ function SearchDoctor() {
                 <ReactPaginate
                   breakLabel="..."
                   nextLabel=">"
-                  // onPageChange={handlePageClick}
+                  onPageChange={handlePageClick}
                   pageRangeDisplayed={5}
-                  pageCount={3}
+                  pageCount={roundedNumber}
                   previousLabel="<"
                   pageClassName="page-item"
                   pageLinkClassName="page-link"

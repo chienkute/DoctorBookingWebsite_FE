@@ -65,6 +65,12 @@
         border-radius: 50%;
         background-color: white;
         margin-top: -40px;
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          object-fit: contain;
+        }
       }
     }
   }
@@ -121,14 +127,16 @@
     }
     &_doctor {
       display: flex;
-      column-gap: 50px;
+      column-gap: 20px;
       margin-bottom: 420px;
-      width: 100%;
+      width: 105%;
       &_item {
-        margin-right: -47px;
+        margin-right: -4px;
+        margin-left: 30px;
         &_list {
           height: 280px;
-          width: 270px;
+          // width: 270px;
+          width: 46%;
           background-color: white;
           border-radius: 6px;
           box-shadow: $box-shadow;
