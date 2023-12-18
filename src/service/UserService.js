@@ -9,7 +9,7 @@ const editUser = (id, name, gender, phone, address, birthday) => {
   });
 };
 const getUserID = (id) => {
-  return instance.get(`/api/users/${id}`);
+  return instance.get(`/api/users/${id}/`);
 };
 const login = (username, password) => {
   return instance.post("api/auth/login/", { username, password });
@@ -72,10 +72,10 @@ const getBlogById = (id) => {
   return instance.get(`/api/blogs/${id}/`);
 };
 const getCategoryById = (id) => {
-  return instance.get(`/api/categories/${id}`);
+  return instance.get(`/api/categories/${id}/`);
 };
 const changePassword = (oldpassword, newpassword, id) => {
-  return instance.patch(`/api/accounts/${id}/change_password`, {
+  return instance.patch(`/api/accounts/${id}/change_password/`, {
     oldpassword,
     newpassword,
   });
