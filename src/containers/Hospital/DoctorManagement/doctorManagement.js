@@ -10,12 +10,12 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 // import ReactPaginate from "react-paginate";
 import { useDebounce } from "@uidotdev/usehooks";
-import { searchDoctor } from "service/UserService";
 import { useParams } from "react-router";
 import { AiFillEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { addDoctor, deleteDocotor } from "service/HospitalService";
+import { addDoctor, deleteDocotor, getDoctor } from "service/HospitalService";
 import { toast } from "react-toastify";
 import { FaEraser } from "react-icons/fa6";
+import ReactPaginate from "react-paginate";
 // import ReactPaginate from "react-paginate";
 // import { FaEraser } from "react-icons/fa6";
 const DoctorManagement = () => {
@@ -38,11 +38,19 @@ const DoctorManagement = () => {
   const [query, setQuery] = useState("");
   const queryDebounce = useDebounce(query, 500);
   const [usernameDefault, setUsernameDefault] = useState("");
-  // const [name, setName] = useState("");
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [gender, setGender] = useState("");
+  const [birthday, setBirthday] = useState("");
   const [email, setEmail] = useState("");
   const [idAccout, setIdAccount] = useState("");
-  const getDoctorById = async () => {
-    let res = await searchDoctor(queryDebounce, "", id, "", "");
+  const pageTotal = cout / 6 + 1;
+  const handlePageClick = (event) => {
+    console.log(+event.selected + 1);
+    getDoctorById(+event.selected + 1);
+  };
+  const getDoctorById = async (page) => {
+    let res = await getDoctor(queryDebounce, id, page);
     if (res) {
       console.log(res);
       setDoctor(res?.results);
@@ -290,8 +298,8 @@ const DoctorManagement = () => {
                 </th>
                 <th>STT</th>
                 <th>Họ tên bác sĩ</th>
-                <th>Tài khoản</th>
-                <th>Email</th>
+                <th>Giới tính</th>
+                <th>Địa chỉ</th>
                 <th>Hành động</th>
               </tr>
               {doctor &&
@@ -311,8 +319,14 @@ const DoctorManagement = () => {
                       >
                         <p>{item?.name || "Chưa có tên"}</p>
                       </td>
-                      <td>{item?.account?.username}</td>
-                      <td>{item?.account?.email}</td>
+                      <td>
+                        {item?.gender === true
+                          ? "Nam"
+                          : item?.gender === false
+                            ? "Nữ"
+                            : "Giới tính thứ ba" || "Chưa có dữ liệu"}
+                      </td>
+                      <td>{item?.address || "Chưa có dữ liệu"}</td>
                       <td>
                         <div className="Action">
                           <button
@@ -322,6 +336,10 @@ const DoctorManagement = () => {
                               setEdit(true);
                               setUsernameDefault(item?.account?.username);
                               setEmail(item?.account?.email);
+                              setName(item?.name);
+                              setGender(item?.gender);
+                              setBirthday(item?.birthday);
+                              setAddress(item?.address);
                             }}
                           >
                             <IoInformation />
@@ -341,9 +359,7 @@ const DoctorManagement = () => {
                             centered
                           >
                             <Modal.Header closeButton>
-                              <Modal.Title>
-                                Thông tin tài khoản bác sĩ
-                              </Modal.Title>
+                              <Modal.Title>Thông tin bác sĩ</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                               <div className="add__form">
@@ -380,6 +396,50 @@ const DoctorManagement = () => {
                                       class="form-control"
                                       autoComplete="off"
                                       defaultValue={usernameDefault}
+                                      disabled
+                                    />
+                                  </div>
+                                  <div className="form__col">
+                                    <label htmlFor="">Họ và tên</label>
+                                    <input
+                                      type="text"
+                                      id="username"
+                                      class="form-control"
+                                      autoComplete="off"
+                                      defaultValue={name}
+                                      disabled
+                                    />
+                                  </div>
+                                  <div className="form__col">
+                                    <label htmlFor="">Giới tính</label>
+                                    <input
+                                      type="text"
+                                      id="username"
+                                      class="form-control"
+                                      autoComplete="off"
+                                      defaultValue={gender ? "Nam" : "Nữ"}
+                                      disabled
+                                    />
+                                  </div>
+                                  <div className="form__col">
+                                    <label htmlFor="">Địa chỉ</label>
+                                    <input
+                                      type="text"
+                                      id="username"
+                                      class="form-control"
+                                      autoComplete="off"
+                                      defaultValue={address}
+                                      disabled
+                                    />
+                                  </div>
+                                  <div className="form__col">
+                                    <label htmlFor="">Ngày sinh</label>
+                                    <input
+                                      type="text"
+                                      id="username"
+                                      class="form-control"
+                                      autoComplete="off"
+                                      defaultValue={birthday}
                                       disabled
                                     />
                                   </div>
@@ -464,13 +524,13 @@ const DoctorManagement = () => {
           </div>
         </div>
       </div>
-      {/* <div className="management__pagination">
+      <div className="management__pagination">
         <ReactPaginate
           breakLabel="..."
           nextLabel=">"
           onPageChange={handlePageClick}
           pageRangeDisplayed={5}
-          pageCount={3}
+          pageCount={pageTotal}
           previousLabel="<"
           pageClassName="page-item"
           pageLinkClassName="page-link"
@@ -483,7 +543,7 @@ const DoctorManagement = () => {
           containerClassName="pagination"
           activeClassName="active active-pagination"
         />
-      </div> */}
+      </div>
     </div>
   );
 };

@@ -17,7 +17,7 @@ const InformationDoctor = () => {
     setUpdate(!update);
   };
   const inputRef = useRef(null);
-  const [edit, setEdit] = useState(true);
+  const [edit, setOpenEdit] = useState(true);
   const [name, setName] = useState("");
   const [adress, setAdress] = useState("");
   const [phone, setPhone] = useState("");
@@ -76,7 +76,7 @@ const InformationDoctor = () => {
   const editInfo = async (username, email) => {
     let res = await editUsername(username, email, idAccount);
     if (res) {
-      toast.success("Sửa thành công");
+      // toast.success("Sửa thành công");
       console.log(res);
     } else {
       toast.error("Sửa thất bại");
@@ -111,7 +111,7 @@ const InformationDoctor = () => {
         ),
     }),
     onSubmit: (values) => {
-      const Edit = async () => {
+      const edit = async () => {
         let res = await editDoctorInformation(
           id,
           values.name,
@@ -123,12 +123,13 @@ const InformationDoctor = () => {
         );
         if (res) {
           console.log(res);
+          setOpenEdit(true);
           toast.success("Sửa thành công");
         } else {
           toast.error("Sửa thất bại");
         }
       };
-      Edit();
+      edit();
       editAvatarUser();
       editInfo(values.username, values.email);
     },
@@ -328,7 +329,7 @@ const InformationDoctor = () => {
               className="btn button"
               type="button"
               onClick={() => {
-                setEdit(false);
+                setOpenEdit(false);
               }}
             >
               Sửa
@@ -340,7 +341,7 @@ const InformationDoctor = () => {
               className="btn"
               type="button"
               onClick={() => {
-                setEdit(true);
+                setOpenEdit(true);
                 handleCallAPI();
               }}
             >
@@ -349,8 +350,8 @@ const InformationDoctor = () => {
             <button
               className="btn button"
               type="submit"
-              onClick={() => {
-                setEdit(true);
+              onClick={(e) => {
+                e.preventDefault();
                 formik.handleSubmit();
               }}
             >
