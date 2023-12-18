@@ -18,14 +18,15 @@ const AppointmentBox = (props) => {
   const [selectedSpecialtys, setSelectedSpecialtys] = useState(null);
   const [idSchedule, setIdSchedule] = useState(null);
   const [days, setDay] = useState("");
-  const [formattedDate, setFormattedDate] = useState("");
+  // const [formattedDate, setFormattedDate] = useState("");
   const [dayMonth, setDayMonth] = useState([]);
   const time = "";
   const [user, setUser] = useState([]);
   const [showButton, setShowbutton] = useState(false);
   const [timeStart, setTimeStart] = useState("");
   const [timeEnd, setTimeEnd] = useState("");
-  console.log(idSchedule);
+  const [dateBook, setDateBook] = useState("");
+  console.log(dateBook);
   const getUser = () => {
     const user = localStorage.getItem("user");
     if (user) {
@@ -35,10 +36,10 @@ const AppointmentBox = (props) => {
   const handleSpecialtyClick = (index) => {
     setSelectedSpecialty(index);
   };
-  const handleDays = (date) => {
-    const formatted = moment(date, "YYYY-MM-DD").format("YYYY/MM/DD");
-    setFormattedDate(formatted);
-  };
+  // const handleDays = (date) => {
+  //   const formatted = moment(date, "YYYY-MM-DD").format("YYYY/MM/DD");
+  //   setFormattedDate(formatted);
+  // };
   const handleSpecialtyClicks = (index) => {
     setSelectedSpecialtys(index);
   };
@@ -75,7 +76,7 @@ const AppointmentBox = (props) => {
       .concat(daysOfWeek.slice(0, currentDayIndex));
     setDayMonth(nextDays);
   };
-  const currentDate = new Date().toISOString().split("T")[0];
+  // const currentDate = new Date().toISOString().split("T")[0];
   const getIdSchedule = async () => {
     let res = await scheduleDoctor(props.id);
     if (res?.morning) {
@@ -99,16 +100,6 @@ const AppointmentBox = (props) => {
       <div className="AppointmentBoxContent">
         <div className="AppointmentDate">
           <div className="Header">Đặt lịch hẹn</div>
-          <div className="DateQuickPicker">
-            <input
-              type="date"
-              onChange={(e) => {
-                handleDays(e.target.value);
-                setShowbutton(false);
-              }}
-              min={currentDate}
-            />
-          </div>
         </div>
         <div className="day">
           <div className="day__header">Lịch trống gần nhất</div>
@@ -133,6 +124,9 @@ const AppointmentBox = (props) => {
                         onClick={() => {
                           handleDay(index);
                           handleSpecialtyClicks(index);
+                          setDateBook(
+                            moment().add(index, "days").format("YYYY/MM/DD"),
+                          );
                         }}
                       >
                         <p className="day__content_dayOfWeek">{item}</p>
@@ -353,7 +347,8 @@ const AppointmentBox = (props) => {
                 to={`/care/doctor/confirm/${props.id}/${props.name}`}
                 state={{
                   schedule: `${idSchedule}`,
-                  day: `${formattedDate}`,
+                  // day: `${formattedDate}`,
+                  dayBook: `${dateBook}`,
                   time: `${time}`,
                   days: `${days}`,
                   idUser: `${user?.user?.id}`,
