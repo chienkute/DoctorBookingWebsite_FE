@@ -66,7 +66,7 @@ const editService = (id, name, descripe, icon) => {
   });
 };
 const deleteCategory = (id) => {
-  return instance.delete(`/api/categories/${id}`);
+  return instance.delete(`/api/categories/${id}/`);
 };
 const deleteSpecialty = (id) => {
   return instance.delete(`/api/specialties/${id}/`);
