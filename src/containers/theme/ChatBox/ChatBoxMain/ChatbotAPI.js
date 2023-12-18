@@ -63,7 +63,7 @@ const API = {
     }
     return new Promise(function (resolve, reject) {
       setTimeout(function () {
-        resolve("Câu trả lời của gpt2 là : " + g2answer);
+        resolve(g2answer);
       }, 3000);
     });
   },
