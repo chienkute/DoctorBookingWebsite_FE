@@ -23,10 +23,12 @@ const InfoHospital = () => {
   const [email, setEmail] = useState("");
   const [info, setInfo] = useState("");
   const [image, setImage] = useState("");
+  console.log(image);
   const [imageUpdate, setImageUpdate] = useState([]);
   const [idAccount, setIdAccount] = useState("");
   const [imageOld, setImageOld] = useState("");
   const [formData, setFormData] = useState(new FormData());
+  console.log(imageOld);
   const getInfoHospital = async () => {
     let res = await getHospitalByID(id);
     if (res && res?.account) {
@@ -99,7 +101,7 @@ const InfoHospital = () => {
       username: Yup.string().required("Bạn chưa nhập tên tài khoản"),
     }),
     onSubmit: (values) => {
-      const Edit = async () => {
+      const editHospitalInfo = async () => {
         let res = await editHospital(
           id,
           values.name,
@@ -109,12 +111,13 @@ const InfoHospital = () => {
         );
         if (res) {
           console.log(res);
+          setEdit(true);
           toast.success("Sửa thành công");
         } else {
           toast.error("Sửa thất bại");
         }
       };
-      Edit();
+      editHospitalInfo();
       editAvatarUser();
       editInfo(values.username);
     },
@@ -125,24 +128,12 @@ const InfoHospital = () => {
       <div className="information__hospital_header">
         <div className="information__header_content">
           <div className="information__avatar">
-            {imageOld ? (
-              <img
-                src={imageOld}
-                alt="BlogImg"
-                className="hospital_avatar_after"
-              ></img>
-            ) : image ? (
-              <img
-                src={image}
-                alt="BlogImg"
-                className="hospital_avatar_after"
-              ></img>
+            {image ? (
+              <img src={image} alt="BlogImg" className="avatarAfter"></img>
+            ) : imageOld ? (
+              <img src={imageOld} alt="BlogImg" className="avatarBefore"></img>
             ) : (
-              <img
-                src={avatar}
-                alt="BlogImg"
-                className="hospital_avatar_before"
-              ></img>
+              <img src={avatar} alt="BlogImg" className="avatarBefore"></img>
             )}
           </div>
           <div className="information__upload">
@@ -305,9 +296,8 @@ const InfoHospital = () => {
             </button>
             <button
               className="btn button"
-              type="submit"
-              onClick={() => {
-                setEdit(true);
+              onClick={(e) => {
+                e.preventDefault();
                 formik.handleSubmit();
               }}
             >

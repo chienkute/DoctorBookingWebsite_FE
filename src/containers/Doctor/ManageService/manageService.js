@@ -49,12 +49,12 @@ const ManageService = () => {
   };
   const addServiceByID = async () => {
     let res = await addService(selectService, id);
-    if (res) {
+    if (res?.service) {
       console.log(res);
       toast.success("Thêm dịch vụ thành công");
       searchService();
-    } else {
-      toast.error("Thêm thất bại");
+    } else if (res?.detail === "service_doctor is exist") {
+      toast.error("Dịch vụ đã tồn tại");
     }
   };
   const filteredCategories = serviceDoctors.filter((item) =>
