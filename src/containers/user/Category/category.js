@@ -22,16 +22,14 @@ import ItemSmall from "../HomePage/NewsLarge/ItemSmall";
 import NewsSmall from "../HomePage/NewsSmall/NewsSmall";
 const Category = () => {
   const { id, name } = useParams();
-  console.log(name);
   const [blog, setBlog] = useState([]);
-  console.log(blog);
   const { update, setUpdate } = useContext(UpdateContext);
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
   const [categoryy, setCategory] = useState([]);
   const [doctor, setDoctor] = useState([]);
   const getService = async () => {
-    let res = await fetchAllCategories(1);
+    let res = await fetchAllCategories(100, 0);
     if (res) {
       setCategories(res?.results);
     }
@@ -39,6 +37,7 @@ const Category = () => {
   const getCategory = async () => {
     let res = await getCategoryById(id);
     if (res) {
+      console.log(res);
       setLoading(true);
       setTimeout(() => {
         setLoading(false);
@@ -110,7 +109,7 @@ const Category = () => {
                 <h1>{categoryy?.name}</h1>
               </div>
               <div className="category__banner_description">
-                <p>{categoryy?.info || "Thông tin cơ bản về chuyên mục"}</p>
+                <p>{categoryy?.describe || "Thông tin cơ bản về chuyên mục"}</p>
               </div>
             </div>
             <div className="category__blog">
@@ -219,15 +218,15 @@ const Category = () => {
               </div>
               <div className="category__blog_doctor">
                 <div className="category__blog_doctor_info">
-                  <h3>Đội ngũ chuyên gia của Hello Bacsi</h3>
+                  <h3>Đội ngũ chuyên gia của HiBacsi</h3>
                   <p>
-                    Đội ngũ cố vấn của Hello Bacsi gồm các chuyên gia sức khỏe
-                    và y bác sĩ từ nhiều chuyên khoa, với đầy đủ chứng nhận,
-                    chứng chỉ hành nghề, hỗ trợ xây dựng và củng cố nội dung
-                    theo chuyên môn của mình. Trách nhiệm của chuyên gia là bảo
-                    đảm tính chính xác về mặt y học ở những nội dung đăng tải
-                    trên Hello Bacsi, thường xuyên cập nhật các thông tin mới về
-                    khoa học, nghiên cứu và sức khỏe.
+                    Đội ngũ cố vấn của HiBacsi gồm các chuyên gia sức khỏe và y
+                    bác sĩ từ nhiều chuyên khoa, với đầy đủ chứng nhận, chứng
+                    chỉ hành nghề, hỗ trợ xây dựng và củng cố nội dung theo
+                    chuyên môn của mình. Trách nhiệm của chuyên gia là bảo đảm
+                    tính chính xác về mặt y học ở những nội dung đăng tải trên
+                    HiBacsi, thường xuyên cập nhật các thông tin mới về khoa
+                    học, nghiên cứu và sức khỏe.
                   </p>
                   <p>
                     Đội ngũ của chúng tôi làm việc không mệt mỏi để những thông

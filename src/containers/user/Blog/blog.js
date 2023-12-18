@@ -18,6 +18,9 @@ const Blog = () => {
     if (res) {
       console.log(res);
       setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
       setBlog(res);
       setDoctor(res?.id_doctor);
       setContent(res?.content);
@@ -25,9 +28,6 @@ const Blog = () => {
     }
   };
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1500);
     getContentBlog();
   }, []);
   return (

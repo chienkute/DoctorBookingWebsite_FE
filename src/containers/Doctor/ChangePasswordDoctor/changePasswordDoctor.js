@@ -50,9 +50,14 @@ const ChangePasswordDoctor = () => {
         values.newpasswd,
         idAccount,
       );
-      if (res) {
+      if (res?.message === "Password Changed") {
+        console.log(res);
+        formik.setValues({
+          newpasswd: "",
+          password: "",
+          confirmpasswd: "",
+        });
         toast.success("Đổi mật khẩu thành công");
-        navigate(`/doctor/information/${id}`);
       } else {
         toast.error("Đổi mật khẩu thất bại");
       }

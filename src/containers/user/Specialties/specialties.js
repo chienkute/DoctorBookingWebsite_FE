@@ -10,7 +10,7 @@ const Specialties = () => {
     getSpecialty();
   }, []);
   const getSpecialty = async () => {
-    let res = await fetchAllSpecialties();
+    let res = await fetchAllSpecialties(100, 0);
     if (res) {
       setLoading(false);
       setSpecialty(res.results);

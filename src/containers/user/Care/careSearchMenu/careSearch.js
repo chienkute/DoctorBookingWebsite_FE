@@ -29,6 +29,9 @@ const CareSearch = () => {
     let res = await getDoctorByNameAddress(debouncedSearchTerm, adress);
     if (res) {
       SetLoadingSkeleton(true);
+      setTimeout(() => {
+        SetLoadingSkeleton(false);
+      }, 1500);
       setDoctor(res?.results);
     }
   };
@@ -36,6 +39,9 @@ const CareSearch = () => {
     let res = await getHospitalByNameAddress(debouncedSearchTerm, adress);
     if (res) {
       SetLoadingSkeleton(true);
+      setTimeout(() => {
+        SetLoadingSkeleton(false);
+      }, 1500);
       setHospital(res?.results);
     }
   };
@@ -43,6 +49,9 @@ const CareSearch = () => {
     let res = await getServiceByNameAddress(debouncedSearchTerm, adress);
     if (res) {
       SetLoadingSkeleton(true);
+      setTimeout(() => {
+        SetLoadingSkeleton(false);
+      }, 1500);
       setService(res?.results);
     }
   };
@@ -50,6 +59,9 @@ const CareSearch = () => {
     let res = await getSpecialtyByNameAddress(debouncedSearchTerm, adress);
     if (res) {
       SetLoadingSkeleton(true);
+      setTimeout(() => {
+        SetLoadingSkeleton(false);
+      }, 1500);
       setSpecialty(res?.results);
     }
   };
@@ -58,10 +70,13 @@ const CareSearch = () => {
     getHospital();
     getService();
     getSpecialty();
+  }, [debouncedSearchTerm, adress]);
+  useEffect(() => {
+    SetLoadingSkeleton(true);
     setTimeout(() => {
       SetLoadingSkeleton(false);
-    }, 1500);
-  }, [debouncedSearchTerm, adress]);
+    }, 1000);
+  }, []);
   // const provinces = [
   //   "An Giang",
   //   "Bà Rịa - Vũng Tàu",

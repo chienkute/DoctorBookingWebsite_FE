@@ -22,10 +22,10 @@ const Search = () => {
   const [show, setShow] = useState(true);
   const [totalPage, setTotalPage] = useState(0);
   const handlePageClick = (event) => {
-    // searchBlogByName(+event.selected + 1);
+    searchNameBlog(+event.selected + 1);
   };
-  const searchNameBlog = async () => {
-    let res = await searchBlogByName(debouncedSearchTerm);
+  const searchNameBlog = async (page) => {
+    let res = await searchBlogByName(debouncedSearchTerm, (page - 1) * 6);
     if (res) {
       console.log(res);
       SetLoadingSkeleton(true);
@@ -38,13 +38,13 @@ const Search = () => {
     }
   };
   useEffect(() => {
-    searchNameBlog();
+    searchNameBlog(1);
     setTimeout(() => {
       setShow(false);
     }, 1500);
   }, []);
   useEffect(() => {
-    searchNameBlog();
+    searchNameBlog(1);
     setTimeout(() => {
       setShow(false);
     }, 1500);
@@ -323,8 +323,8 @@ const Search = () => {
             breakLabel="..."
             nextLabel=">"
             onPageChange={handlePageClick}
-            pageRangeDisplayed={totalPage}
-            pageCount={3}
+            pageRangeDisplayed={3}
+            pageCount={totalPage}
             previousLabel="<"
             pageClassName="page-item"
             pageLinkClassName="page-link"

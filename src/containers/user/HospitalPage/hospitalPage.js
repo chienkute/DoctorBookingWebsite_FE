@@ -12,6 +12,7 @@ import hospavt from "../../../assets/hospital.jpg";
 import doctorImg from "../../../assets/avatar.jpg";
 import {
   fetchAllSpecialties,
+  getDoctorById,
   getHospitalByID,
   // getServiceByIdHospital,
   searchDoctor,
@@ -42,17 +43,28 @@ const HospitalPage = () => {
   const [idDoctor, setIdDoctor] = useState("");
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
   const navigate = useNavigate();
+  const [totalPage, setTotalPage] = useState(0);
+  const pageTotal = totalPage / 6;
+  const roundedNumber = Math.ceil(pageTotal);
   const getDoctor = async () => {
-    let res = await searchDoctor("", "", id, specialty, "");
+    let res = await getDoctorById("", "", id, specialty, "");
     if (res) {
       setDoctor(res?.results);
     }
   };
-  const getDoctorByIdHospital = async () => {
-    let res = await searchDoctor(debouncedSearchDoctor, "", "", "", id);
+  const handlePageClick = (event) => {
+    getDoctorByIdHospital(+event.selected + 1);
+  };
+  const getDoctorByIdHospital = async (page) => {
+    let res = await searchDoctor(debouncedSearchDoctor, "", "", "", id, page);
     if (res) {
+      console.log(res);
       setLoadingSkeleton(true);
+      setTimeout(() => {
+        setLoadingSkeleton(false);
+      }, 1500);
       setDoctorSearch(res?.results);
+      setTotalPage(res?.count);
     }
   };
   // const getService = async () => {
@@ -66,11 +78,14 @@ const HospitalPage = () => {
     let res = await getHospitalByID(id);
     if (res) {
       setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
       setHospital(res);
     }
   };
   const getSpecialty = async () => {
-    let res = await fetchAllSpecialties();
+    let res = await fetchAllSpecialties(100, 0);
     if (res) {
       setSpecialties(res?.results);
     }
@@ -89,15 +104,9 @@ const HospitalPage = () => {
   useEffect(() => {
     getSpecialty();
     getHospitalInfo();
-    setTimeout(() => {
-      setLoading(false);
-    }, 1500);
   }, []);
   useEffect(() => {
-    getDoctorByIdHospital();
-    setTimeout(() => {
-      setLoadingSkeleton(false);
-    }, 1500);
+    getDoctorByIdHospital(1);
   }, [queryDoctor]);
   // useEffect(() => {
   //   // getService();
@@ -702,9 +711,9 @@ const HospitalPage = () => {
                     <ReactPaginate
                       breakLabel="..."
                       nextLabel=">"
-                      // onPageChange={handlePageClick}
+                      onPageChange={handlePageClick}
                       pageRangeDisplayed={5}
-                      pageCount={3}
+                      pageCount={roundedNumber}
                       previousLabel="<"
                       pageClassName="page-item"
                       pageLinkClassName="page-link"
