@@ -44,7 +44,8 @@ const DoctorManagement = () => {
   const [birthday, setBirthday] = useState("");
   const [email, setEmail] = useState("");
   const [idAccout, setIdAccount] = useState("");
-  const pageTotal = cout / 6 + 1;
+  const pageTotal = cout / 6;
+  const roundedNumber = Math.ceil(pageTotal);
   const handlePageClick = (event) => {
     console.log(+event.selected + 1);
     getDoctorById(+event.selected + 1);
@@ -68,13 +69,13 @@ const DoctorManagement = () => {
     }
   };
   useEffect(() => {
-    getDoctorById();
+    getDoctorById(1);
   }, []);
   useEffect(() => {
-    getDoctorById();
+    getDoctorById(1);
   }, [queryDebounce]);
   useEffect(() => {
-    getDoctorById();
+    getDoctorById(1);
   }, [update]);
   const formik = useFormik({
     initialValues: {
@@ -530,7 +531,7 @@ const DoctorManagement = () => {
           nextLabel=">"
           onPageChange={handlePageClick}
           pageRangeDisplayed={5}
-          pageCount={pageTotal}
+          pageCount={roundedNumber}
           previousLabel="<"
           pageClassName="page-item"
           pageLinkClassName="page-link"

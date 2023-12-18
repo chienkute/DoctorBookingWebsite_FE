@@ -11,7 +11,7 @@ const Categories = () => {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const getAllCategories = async () => {
-    let res = await fetchAllCategories();
+    let res = await fetchAllCategories(100, 0);
     if (res?.results) {
       setLoading(false);
       setCategory(res?.results);

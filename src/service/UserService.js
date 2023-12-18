@@ -14,11 +14,11 @@ const getUserID = (id) => {
 const login = (username, password) => {
   return instance.post("api/auth/login/", { username, password });
 };
-const fetchAllSpecialties = (offset) => {
-  return instance.get(`api/specialties/?limit=100&offset=${offset}`);
-};  
-const fecthAllBlog = (page) => {
-  return instance.get(`/api/blogs/?current_page=${page}`);
+const fetchAllSpecialties = (limit, offset) => {
+  return instance.get(`api/specialties/?limit=${limit}&offset=${offset}`);
+};
+const fecthAllBlog = () => {
+  return instance.get(`/api/blogs/?limit=5&offset=0`);
 };
 const fetchAllService = () => {
   return instance.get("/api/services/");
@@ -59,14 +59,16 @@ const Booking = (id_doctor, id_schedule, date, time) => {
 const getBooking = () => {
   return instance.get("/api/appointments/");
 };
-const fetchAllCategories = (page) => {
-  return instance.get(`/api/categories/?current_page=${page}`);
+const fetchAllCategories = (limit, offset) => {
+  return instance.get(`/api/categories/?limit=${limit}&offset=${offset}`);
 };
-const searchBlogByName = (name) => {
-  return instance.get(`/api/search_blog/?name=${name}`);
+const searchBlogByName = (name, offset) => {
+  return instance.get(
+    `/api/search_blog/?name=${name}&limit=6&offset=${offset}`,
+  );
 };
 const getBlogByIdCategory = (id) => {
-  return instance.get(`/api/search_blog/?id_category=${id}`);
+  return instance.get(`/api/search_blog/?id_category=${id}&page=1`);
 };
 const getBlogById = (id) => {
   return instance.get(`/api/blogs/${id}/`);
@@ -101,22 +103,34 @@ const getServiceByNameAddress = (name, city) => {
 const getSpecialtyByNameAddress = (name, city) => {
   return instance.get(`/api/search_specialty/?name=${name}&city=${city}`);
 };
-const searchDoctor = (name, city, id_hospital, id_specialty, id_service) => {
+const searchDoctor = (
+  name,
+  city,
+  id_hospital,
+  id_specialty,
+  id_service,
+  page,
+) => {
+  return instance.get(
+    `/api/search_doctor666/?name=${name}&city=${city}&id_hospital=${id_hospital}&id_specialty=${id_specialty}&id_service=${id_service}&page=${page}`,
+  );
+};
+const getDoctorById = (name, city, id_hospital, id_specialty, id_service) => {
   return instance.get(
     `/api/search_doctor666/?name=${name}&city=${city}&id_hospital=${id_hospital}&id_specialty=${id_specialty}&id_service=${id_service}`,
   );
 };
-const searchHospital = (name, city, id_specialty, id_service) => {
+const searchHospital = (name, city, id_specialty, id_service, page) => {
   return instance.get(
-    `/api/search_hospital666/?name=${name}&city=${city}&id_specialty=${id_specialty}&id_service=${id_service}`,
+    `/api/search_hospital666/?name=${name}&city=${city}&id_specialty=${id_specialty}&id_service=${id_service}&page=${page}`,
   );
 };
 const getSpecialtyByIdHospital = (id_hospital) => {
   return instance.get(`/api/search_specialty666/?id_hospital=${id_hospital}`);
 };
-const getServiceByIdHospital = (name, id_hospital) => {
+const getServiceByIdHospital = (name, id_hospital, page) => {
   return instance.get(
-    `/api/search_service666/?name=${name}&id_hospital=${id_hospital}`,
+    `/api/search_service666/?name=${name}&id_hospital=${id_hospital}&page=${page}`,
   );
 };
 const editAvatar = (id, avatar) => {
@@ -165,4 +179,5 @@ export {
   fecthAllBlog,
   editAvatar,
   fecthAllDoctor,
+  getDoctorById,
 };

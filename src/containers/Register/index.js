@@ -43,7 +43,8 @@ const Register = () => {
     }),
     onSubmit: async (values) => {
       const res = await signup(values.username, values.email, values.password);
-      if (res) {
+      if (res?.user) {
+        console.log(res);
         toast.success("Đăng ký thành công");
         navigate("/login");
       } else {
