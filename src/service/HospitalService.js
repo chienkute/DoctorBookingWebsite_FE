@@ -14,5 +14,11 @@ const addDoctor = (username, password, email) => {
     email,
   });
 };
+const deleteDocotor = (id) => {
+  return instance.delete(`/api/doctors/${id}/`);
+};
+const editHospitalUserName = (username, id) => {
+  return instance.patch(`/api/accounts/${id}/`, { username });
+};
 
-export { editHospital, addDoctor };
+export { editHospital, addDoctor, deleteDocotor, editHospitalUserName };

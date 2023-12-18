@@ -1,22 +1,18 @@
 import React, { memo, useState, useEffect } from "react";
-import "./AccountManager.scss";
+import "./UserManager.scss";
 import { FaRegCheckSquare, FaEraser } from "react-icons/fa";
 // import { FiEdit3 } from "react-icons/fi";
 import { IoInformation } from "react-icons/io5";
 import { FaLock, FaPlus } from "react-icons/fa6";
 import { toast } from "react-toastify";
-import {
-  addHospital,
-  deleteHospital,
-  getAllAccountHospital,
-} from "service/AdminService";
+import { addUser, deleteUser, getAllAcountUser } from "service/AdminService";
 import ReactPaginate from "react-paginate";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 // import { useParams } from "react-router-dom";
 import { AiFillEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Button, Modal } from "react-bootstrap";
-const AccountManager = () => {
+const UserManager = () => {
   // const { id } = useParams();
   const [showAddNewHospital, setShowAddNewHospital] = useState(false);
   const handleCloseAddNewHospital = () => setShowAddNewHospital(false);
@@ -43,7 +39,7 @@ const AccountManager = () => {
     getAccount(+event.selected + 1);
   };
   const getAccount = async (page) => {
-    let res = await getAllAccountHospital((page - 1) * 6);
+    let res = await getAllAcountUser((page - 1) * 6);
     if (res) {
       console.log(res);
       setTotalPage(res?.total_page);
@@ -52,7 +48,7 @@ const AccountManager = () => {
     }
   };
   const deleteAccouns = async (id) => {
-    let res = await deleteHospital(id);
+    let res = await deleteUser(id);
     if (res) {
       console.log(res);
       getAccount(1);
@@ -95,11 +91,7 @@ const AccountManager = () => {
         ),
     }),
     onSubmit: async (values) => {
-      let res = await addHospital(
-        values.username,
-        values.password,
-        values.email,
-      );
+      let res = await addUser(values.username, values.password, values.email);
       if (res) {
         console.log(res);
         formik.setValues({
@@ -141,7 +133,7 @@ const AccountManager = () => {
           centered
         >
           <Modal.Header closeButton>
-            <Modal.Title>Thêm mới bác sĩ</Modal.Title>
+            <Modal.Title>Thêm mới người dùng</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="add__form">
@@ -293,7 +285,7 @@ const AccountManager = () => {
                     <td style={{ maxWidth: "140px" }}>
                       {item?.account?.email}
                     </td>
-                    {item?.account?.role === "hospital" && <td>Bệnh viện</td>}
+                    {item?.account?.role === "user" && <td>Người dùng</td>}
                     <td>
                       <div className="Action">
                         <button
@@ -313,7 +305,7 @@ const AccountManager = () => {
                         >
                           <Modal.Header closeButton>
                             <Modal.Title>
-                              Thông tin tài khoản bệnh viện
+                              Thông tin tài khoản người dùng
                             </Modal.Title>
                           </Modal.Header>
                           <Modal.Body>
@@ -459,4 +451,4 @@ const AccountManager = () => {
   );
 };
 
-export default memo(AccountManager);
+export default memo(UserManager);

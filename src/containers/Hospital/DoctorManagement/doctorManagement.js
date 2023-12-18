@@ -13,10 +13,11 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { searchDoctor } from "service/UserService";
 import { useParams } from "react-router";
 import { AiFillEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { addDoctor } from "service/HospitalService";
+import { addDoctor, deleteDocotor } from "service/HospitalService";
 import { toast } from "react-toastify";
-import { deleteAccount } from "service/AdminService";
 import { FaEraser } from "react-icons/fa6";
+// import ReactPaginate from "react-paginate";
+// import { FaEraser } from "react-icons/fa6";
 const DoctorManagement = () => {
   const { id } = useParams();
   const [showAddNewDoctor, setShowAddNewDoctor] = useState(false);
@@ -49,9 +50,10 @@ const DoctorManagement = () => {
     }
   };
   const deleteAccouns = async (id) => {
-    let res = await deleteAccount(id);
+    let res = await deleteDocotor(id);
     if (res) {
       console.log(res);
+      getDoctorById();
       toast.success("Xóa thành công");
     } else {
       toast.error("Xóa thất bại");
@@ -323,7 +325,9 @@ const DoctorManagement = () => {
                             centered
                           >
                             <Modal.Header closeButton>
-                              <Modal.Title>Thông tin tài khoản sĩ</Modal.Title>
+                              <Modal.Title>
+                                Thông tin tài khoản bác sĩ
+                              </Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                               <div className="add__form">
@@ -353,7 +357,7 @@ const DoctorManagement = () => {
                                     />
                                   </div> */}
                                   <div className="form__col">
-                                    <label htmlFor="">Tài khoản</label>
+                                    <label htmlFor="">Tên tài khoản</label>
                                     <input
                                       type="text"
                                       id="username"
@@ -448,7 +452,7 @@ const DoctorManagement = () => {
         <ReactPaginate
           breakLabel="..."
           nextLabel=">"
-          // onPageChange={handlePageClick}
+          onPageChange={handlePageClick}
           pageRangeDisplayed={5}
           pageCount={3}
           previousLabel="<"
