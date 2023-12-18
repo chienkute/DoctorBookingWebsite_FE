@@ -16,7 +16,7 @@ const login = (username, password) => {
 };
 const fetchAllSpecialties = (offset) => {
   return instance.get(`api/specialties/?limit=100&offset=${offset}`);
-};
+};  
 const fecthAllBlog = (page) => {
   return instance.get(`/api/blogs/?current_page=${page}`);
 };
