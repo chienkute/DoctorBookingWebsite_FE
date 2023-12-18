@@ -47,10 +47,6 @@ const ManageBlog = () => {
   const [formData, setFormData] = useState(new FormData());
   const [totalPage, setTotalPage] = useState(0);
   const [showError, setShowError] = useState(true);
-  console.log(blog);
-  console.log(idCategory);
-  console.log(imageUpdate);
-  console.log(formData);
   var toolbarOptions = [
     ["bold", "italic", "underline", "strike"],
     ["blockquote", "code-block"],
@@ -110,7 +106,7 @@ const ManageBlog = () => {
   };
   const postBlog = async () => {
     let res = await addBlog(idCategory, id, titleAdd, value, imageUpdate);
-    if (res) {
+    if (res?.title) {
       console.log(res);
       getBlogById();
       toast.success("Thêm blog thành công");
@@ -127,7 +123,7 @@ const ManageBlog = () => {
       value,
       imageUpdate,
     );
-    if (res) {
+    if (res?.title) {
       console.log(res);
       getBlogById();
       toast.success("Sửa blog thành công");

@@ -49,12 +49,12 @@ const ManageSpecialty = () => {
   };
   const addSpecialtyByID = async () => {
     let res = await addSpecialty(selectSpecialty, id);
-    if (res) {
+    if (res?.specialty) {
       console.log(res);
       toast.success("Thêm chuyên khoa thành công");
       searchSpecialty();
     } else {
-      toast.error("Thêm thất bại");
+      toast.error("Chuyên khoa đã tồn tại");
     }
   };
   const deleteSpecialtyDoctors = async (specialtyDoctorIds) => {
@@ -270,7 +270,7 @@ const ManageSpecialty = () => {
                             >
                               <Modal.Header closeButton>
                                 <Modal.Title>
-                                  Bạn có muốn xóa chuyên khoa này không ?
+                                  Bạn muốn xóa chuyên khoa này không ?
                                 </Modal.Title>
                               </Modal.Header>
                               <Modal.Body>
