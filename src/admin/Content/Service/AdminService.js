@@ -36,7 +36,9 @@ const AdminService = () => {
   const [imageUpdate, setImageUpdate] = useState([]);
   const [id, setId] = useState("");
   const inputRef = useRef(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
+  const [total, setTotal] = useState(0);
   const handlePageClick = (event) => {
     console.log(+event.selected + 1);
     getAllCategories(+event.selected + 1);
@@ -44,7 +46,10 @@ const AdminService = () => {
   const getAllCategories = async (page) => {
     let res = await fetchAllServices((page - 1) * 6);
     if (res?.results) {
+      console.log(res);
       setTotalPage(res?.total_page);
+      setTotal(res?.count);
+      setCurrentPage(res?.current_page);
       setCategory(res?.results);
     }
   };
@@ -95,12 +100,16 @@ const AdminService = () => {
       let res = await addService(values.name, values.describe, imageUpdate);
       if (res) {
         console.log(res);
-        toast.success("Thêm thành công");
         getAllCategories();
         formik.setValues({
           name: "",
           describe: "",
         });
+        if (res.hasOwnProperty("id")) {
+          toast.success("Thêm thành công");
+        } else {
+          toast.error("Thêm thất bại");
+        }
       } else {
         toast.error("Thêm thất bại");
       }
@@ -235,7 +244,7 @@ const AdminService = () => {
         </div>
         <div className="AdminServiceResult">
           <div className="ResultPerTable">
-            <label for="dropdown">Số kết quả mỗi trang: 6</label>
+            <label for="dropdown">Có {total} kết quả tìm được</label>
           </div>
           <div className="Table">
             <table>
@@ -256,7 +265,7 @@ const AdminService = () => {
                       <td>
                         <input type="checkbox"></input>
                       </td>
-                      <td>{index}</td>
+                      <td>{(currentPage - 1) * 6 + index + 1}</td>
                       <td>{item?.name}</td>
                       <td>
                         <img

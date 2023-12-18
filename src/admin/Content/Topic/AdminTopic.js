@@ -36,6 +36,8 @@ const AdminTopic = () => {
   const [imageUpdate, setImageUpdate] = useState([]);
   const [id, setId] = useState("");
   const inputRef = useRef(null);
+  const [count, setCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const handlePageClick = (event) => {
     console.log(+event.selected + 1);
@@ -44,6 +46,9 @@ const AdminTopic = () => {
   const getAllCategories = async (page) => {
     let res = await fetchAllCategoriess((page - 1) * 6);
     if (res?.results) {
+      console.log(res);
+      setCount(res?.count);
+      setCurrentPage(res?.current_page);
       setTotalPage(res?.total_page);
       setCategory(res?.results);
     }
@@ -236,7 +241,7 @@ const AdminTopic = () => {
         </div>
         <div className="AdminTopicResult">
           <div className="ResultPerTable">
-            <label for="dropdown">Số kết quả mỗi trang: 6</label>
+            <label for="dropdown">Có {count} kết quả tìm được</label>
           </div>
           <div className="Table">
             <table>
@@ -257,7 +262,7 @@ const AdminTopic = () => {
                       <td>
                         <input type="checkbox"></input>
                       </td>
-                      <td>{index}</td>
+                      <td>{index + 1 + (currentPage - 1) * 6}</td>
                       <td>{item?.name}</td>
                       <td>
                         <img

@@ -3,7 +3,7 @@ import "./UserManager.scss";
 import { FaRegCheckSquare, FaEraser } from "react-icons/fa";
 // import { FiEdit3 } from "react-icons/fi";
 import { IoInformation } from "react-icons/io5";
-import { FaLock, FaPlus } from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import { addUser, deleteUser, getAllAcountUser } from "service/AdminService";
 import ReactPaginate from "react-paginate";
@@ -30,11 +30,11 @@ const UserManager = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowConfPassword, setIsShowConfPassword] = useState(false);
   const [totalPage, setTotalPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
   const [accounts, setAccounts] = useState([]);
   const [idAccout, setIdAccount] = useState("");
   const [total, setTotal] = useState(0);
-  const [usernameDefault, setUsernameDefault] = useState("");
-  const [email, setEmail] = useState("");
+  const [targetAcc, setTargetAcc] = useState({});
   const handlePageClick = (event) => {
     getAccount(+event.selected + 1);
   };
@@ -43,6 +43,7 @@ const UserManager = () => {
     if (res) {
       console.log(res);
       setTotalPage(res?.total_page);
+      setCurrentPage(res?.current_page);
       setAccounts(res?.results);
       setTotal(res?.count);
     }
@@ -52,6 +53,7 @@ const UserManager = () => {
     if (res) {
       console.log(res);
       getAccount(1);
+      setCurrentPage(1);
       toast.success("Xóa thành công");
     } else {
       toast.error("Xóa thất bại");
@@ -86,7 +88,7 @@ const UserManager = () => {
       email: Yup.string()
         .required("Bạn chưa nhập email")
         .matches(
-          /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+          /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
           "Vui lòng nhập đúng địa chỉ email",
         ),
     }),
@@ -100,9 +102,13 @@ const UserManager = () => {
           password: "",
         });
         getAccount(1);
-        toast.success("Thêm thành công");
+        if (res.hasOwnProperty("access_token")) {
+          toast.success("Thêm thành công");
+        } else {
+          toast.error("Thêm thất bại");
+        }
       } else {
-        toast.success("Thêm thất bại");
+        toast.error("Thêm thất bại");
       }
     },
   });
@@ -258,7 +264,7 @@ const UserManager = () => {
       </div>
       <div className="AdminUserResult">
         <div className="ResultPerTable">
-          <label for="dropdown">Có {total} kết quả tìm được</label>
+          <label htmlFor="dropdown">Có {total} kết quả tìm được</label>
         </div>
         <div className="Table">
           <table>
@@ -268,8 +274,8 @@ const UserManager = () => {
               </th>
               <th>STT</th>
               <th>Tên tài khoản</th>
-              <th>Email</th>
-              <th>Vai trò</th>
+              <th>Giới tính</th>
+              <th>Địa chỉ</th>
               <th>Hành động</th>
             </tr>
             {accounts &&
@@ -280,20 +286,19 @@ const UserManager = () => {
                     <td>
                       <input type="checkbox"></input>
                     </td>
-                    <td>{index}</td>
+                    <td>{(currentPage - 1) * 6 + index + 1}</td>
                     <td>{item?.account?.username}</td>
-                    <td style={{ maxWidth: "140px" }}>
-                      {item?.account?.email}
-                    </td>
-                    {item?.account?.role === "user" && <td>Người dùng</td>}
+                    {item?.gender && <td>Nam</td>}
+                    {!item?.gender && <td>Nữ</td>}
+                    <td style={{ maxWidth: "140px" }}>{item?.address}</td>
                     <td>
                       <div className="Action">
                         <button
                           className="InfoButton"
                           onClick={() => {
                             handleShowEdit();
-                            setUsernameDefault(item?.account?.username);
-                            setEmail(item?.account?.email);
+                            setTargetAcc(item);
+                            console.log(targetAcc);
                           }}
                         >
                           <IoInformation />
@@ -318,7 +323,57 @@ const UserManager = () => {
                                     id="username"
                                     class="form-control"
                                     autoComplete="off"
-                                    defaultValue={usernameDefault}
+                                    defaultValue={targetAcc?.account?.username}
+                                    disabled
+                                  />
+                                </div>
+                                <div className="form__col">
+                                  <label htmlFor="">Giới tính</label>
+                                  <input
+                                    type="text"
+                                    id="gender"
+                                    class="form-control"
+                                    autoComplete="off"
+                                    defaultValue={
+                                      targetAcc?.gender === null
+                                        ? ""
+                                        : targetAcc?.gender
+                                          ? "Nam"
+                                          : "Nữ"
+                                    }
+                                    disabled
+                                  />
+                                </div>
+                                <div className="form__col">
+                                  <label htmlFor="">Ngày sinh</label>
+                                  <input
+                                    type="text"
+                                    id="birthday"
+                                    class="form-control"
+                                    autoComplete="off"
+                                    defaultValue={targetAcc?.birthday}
+                                    disabled
+                                  />
+                                </div>
+                                <div className="form__col">
+                                  <label htmlFor="">Địa chỉ</label>
+                                  <input
+                                    type="text"
+                                    id="address"
+                                    class="form-control"
+                                    autoComplete="off"
+                                    defaultValue={targetAcc?.address}
+                                    disabled
+                                  />
+                                </div>
+                                <div className="form__col">
+                                  <label htmlFor="">Số điện thoại</label>
+                                  <input
+                                    type="text"
+                                    id="phone"
+                                    class="form-control"
+                                    autoComplete="off"
+                                    defaultValue={targetAcc?.phone}
                                     disabled
                                   />
                                 </div>
@@ -329,7 +384,7 @@ const UserManager = () => {
                                     id="email"
                                     class="form-control"
                                     autoComplete="off"
-                                    defaultValue={email}
+                                    defaultValue={targetAcc?.account?.email}
                                     disabled
                                   />
                                 </div>

@@ -4,7 +4,6 @@ import { FaRegCheckSquare, FaEraser } from "react-icons/fa";
 import { FiEdit3 } from "react-icons/fi";
 import { FaPlus } from "react-icons/fa6";
 import avatar from "../../../assets/avatar.jpg";
-import { UpdateContext } from "context/UpdateContext";
 import { Button, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
@@ -37,6 +36,8 @@ const AdminSpeciality = () => {
   const [imageUpdate, setImageUpdate] = useState([]);
   const [id, setId] = useState("");
   const inputRef = useRef(null);
+  const [count, setCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const handlePageClick = (event) => {
     console.log(+event.selected + 1);
@@ -47,6 +48,8 @@ const AdminSpeciality = () => {
     if (res?.results) {
       console.log(res);
       setTotalPage(res?.total_page);
+      setCurrentPage(res?.current_page);
+      setCount(res?.count);
       setCategory(res?.results);
     }
   };
@@ -237,7 +240,7 @@ const AdminSpeciality = () => {
         </div>
         <div className="AdminSpecialityResult">
           <div className="ResultPerTable">
-            <label for="dropdown">Số kết quả mỗi trang: 6</label>
+            <label for="dropdown">Có {count} kết quả tìm được</label>
             {/* <select id="dropdown">
               <option value="5">5</option>
               <option value="20">20</option>
@@ -264,7 +267,7 @@ const AdminSpeciality = () => {
                       <td>
                         <input type="checkbox"></input>
                       </td>
-                      <td>{index}</td>
+                      <td>{index + 1 + (currentPage - 1) * 6}</td>
                       <td>{item?.name}</td>
                       <td>
                         <img
