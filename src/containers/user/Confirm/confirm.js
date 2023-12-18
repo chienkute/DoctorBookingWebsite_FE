@@ -18,10 +18,11 @@ const Confirm = () => {
   const [doctor, setDoctor] = useState([]);
   const [userInfo, setUserInfo] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { schedule, day, time, days, idUser, timeStart, timeEnd } =
+  const { schedule, time, days, idUser, timeStart, timeEnd, dayBook } =
     location.state;
+  console.log(dayBook);
   const book = async () => {
-    let res = await Booking(id, schedule, day, time);
+    let res = await Booking(id, schedule, dayBook, time);
     if (res) {
       toast.success("Đặt lịch thành công");
       navigate(`/care/doctor/${id}`);
@@ -194,12 +195,12 @@ const Confirm = () => {
                         </p>
                         <p className="confirm__schedule_footer_info_text1">
                           Thứ {days || ""},
-                          {day ? (
+                          {dayBook ? (
                             <Moment
                               format="DD/MM/YYYY"
                               className="moment__text"
                             >
-                              {day}
+                              {dayBook}
                             </Moment>
                           ) : (
                             <p>------</p>
