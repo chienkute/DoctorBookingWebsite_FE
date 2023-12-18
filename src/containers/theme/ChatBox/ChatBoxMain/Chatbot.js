@@ -18,6 +18,7 @@ function Chatbot(props) {
       ]);
     }
     loadWelcomeMessage();
+    console.log(process.env);
   }, []);
   const send = async (text) => {
     const newMessages = messages.concat(
@@ -25,6 +26,10 @@ function Chatbot(props) {
       <BotMessage
         key={messages.length + 2}
         fetchMessage={async () => await API.GetChatbotResponseAI(text)}
+      />,
+      <BotMessage
+        key={messages.length + 2}
+        fetchMessage={async () => await API.GetChatbotResponseG2(text)}
       />,
     );
     setMessages(newMessages);
