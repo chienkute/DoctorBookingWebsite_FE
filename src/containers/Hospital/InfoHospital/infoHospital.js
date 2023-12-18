@@ -9,7 +9,7 @@ import "react-quill/dist/quill.snow.css";
 import { UpdateContext } from "context/UpdateContext";
 import { editAvatar, getHospitalByID } from "service/UserService";
 import { useParams } from "react-router-dom";
-import { editHospital } from "service/HospitalService";
+import { editHospital, editHospitalUserName } from "service/HospitalService";
 import { toast } from "react-toastify";
 const InfoHospital = () => {
   const { update, setUpdate } = useContext(UpdateContext);
@@ -69,6 +69,15 @@ const InfoHospital = () => {
   const handleCallAPI = () => {
     setUpdate(!update);
   };
+  const editInfo = async (username) => {
+    let res = await editHospitalUserName(username, idAccount);
+    if (res) {
+      toast.success("Sửa thành công");
+      console.log(res);
+    } else {
+      toast.error("Sửa thất bại");
+    }
+  };
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -88,6 +97,7 @@ const InfoHospital = () => {
           "Vui lòng nhập đúng địa chỉ email",
         ),
       info: Yup.string().required("Bạn chưa nhập thông tin"),
+      username: Yup.string().required("Bạn chưa nhập tên tài khoản"),
     }),
     onSubmit: (values) => {
       const Edit = async () => {
@@ -107,6 +117,7 @@ const InfoHospital = () => {
       };
       Edit();
       editAvatarUser();
+      editInfo(values.username);
     },
   });
   return (
@@ -236,14 +247,19 @@ const InfoHospital = () => {
               </label>
               <input
                 type="text"
-                id="phone"
+                id="username"
                 placeholder="Số điện thoại"
                 class="form-control"
                 value={formik.values.username}
-                disabled
+                onChange={formik.handleChange}
+                disabled={edit ? true : false}
+                {...formik.getFieldProps("username")}
               />
+              <div className="form__error">
+                {formik.touched.username && formik.errors.username}
+              </div>
             </div>
-            <div className="information__name" style={{ marginTop: "10px" }}>
+            <div className="information__name">
               <label htmlFor="">
                 Email <span className="validate">*</span>
               </label>

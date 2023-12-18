@@ -1,8 +1,4 @@
 const { default: instance } = require("utils/axiosCutomize");
-const token = localStorage.getItem("token");
-const headers = {
-  Authorization: `Bearer ${token}`,
-};
 const fetchAllSchedule = (limit = 100, offset = 0) => {
   return instance.get("api/schedules/?limit=" + limit + "&offset=" + offset);
 };
@@ -142,6 +138,9 @@ const getDoctorAppoinment = (id, offset) => {
     `/api/appointments?doctor_id=${id}&limit=6&offset=${offset}`,
   );
 };
+const editUsername = (username, email, id) => {
+  return instance.patch(`/api/accounts/${id}/`, { username, email });
+};
 export {
   editDoctorInformation,
   getBlog,
@@ -164,4 +163,5 @@ export {
   getSpecialtyByDoctorId,
   getServiceByDoctorId,
   deleteSomeServiceDoctor,
+  editUsername,
 };

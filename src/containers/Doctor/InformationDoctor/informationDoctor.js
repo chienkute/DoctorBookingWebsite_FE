@@ -9,7 +9,7 @@ import * as Yup from "yup";
 import { UpdateContext } from "context/UpdateContext";
 import { editAvatar, getDoctorByID } from "service/UserService";
 import { Form } from "react-bootstrap";
-import { editDoctorInformation } from "service/DoctorService";
+import { editDoctorInformation, editUsername } from "service/DoctorService";
 const InformationDoctor = () => {
   const { id } = useParams();
   const { update, setUpdate } = useContext(UpdateContext);
@@ -73,6 +73,16 @@ const InformationDoctor = () => {
       console.log(res);
     }
   };
+  const editInfo = async (username, email) => {
+    let res = await editUsername(username, email, idAccount);
+    if (res) {
+      toast.success("Sửa thành công");
+      console.log(res);
+    } else {
+      toast.error("Sửa thất bại");
+    }
+  };
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -82,6 +92,8 @@ const InformationDoctor = () => {
       year: year,
       birthday: birthday,
       gender: gender,
+      email: email,
+      username: username,
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Bạn chưa nhập tên bệnh viện"),
@@ -90,6 +102,13 @@ const InformationDoctor = () => {
         .min(9, "Số điện thoại ít nhất phải hơn 9 chữ số"),
       address: Yup.string().required("Bạn chưa nhập địa chỉ"),
       year: Yup.string().required("Bạn chưa nhập số năm làm việc"),
+      username: Yup.string().required("Bạn chưa nhập tên tài khoản"),
+      email: Yup.string()
+        .required("Bạn chưa nhập email")
+        .matches(
+          /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+          "Vui lòng nhập đúng địa chỉ email",
+        ),
     }),
     onSubmit: (values) => {
       const Edit = async () => {
@@ -111,6 +130,7 @@ const InformationDoctor = () => {
       };
       Edit();
       editAvatarUser();
+      editInfo(values.username, values.email);
     },
   });
   return (
@@ -157,13 +177,18 @@ const InformationDoctor = () => {
                 Tài khoản <span className="validate">*</span>
               </label>
               <input
-                type="email"
-                id="email"
+                type="text"
+                id="username"
                 className="form-control"
-                defaultValue={username}
-                disabled
+                value={formik.values.username}
+                onChange={formik.handleChange}
                 autoComplete="off"
+                disabled={edit ? true : false}
+                {...formik.getFieldProps("username")}
               />
+              <div className="form__error">
+                {formik.touched.username && formik.errors.username}
+              </div>
             </div>
             <div className="information__name">
               <label htmlFor="">
@@ -230,10 +255,15 @@ const InformationDoctor = () => {
                 type="email"
                 id="email"
                 className="form-control"
-                defaultValue={email}
-                disabled
+                value={formik.values.email}
+                disabled={edit ? true : false}
                 autoComplete="off"
+                onChange={formik.handleChange}
+                {...formik.getFieldProps("email")}
               />
+              <div className="form__error">
+                {formik.touched.email && formik.errors.email}
+              </div>
             </div>
             <div className="information__name">
               <label htmlFor="">

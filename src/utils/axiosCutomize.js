@@ -13,7 +13,6 @@ instance.interceptors.request.use(
   function (config) {
     const token = localStorage.getItem("token");
     config.headers.Authorization = `Bearer ${token}`;
-    console.log(token);
     NProgress.start();
     // Do something before request is sent
     return config;
