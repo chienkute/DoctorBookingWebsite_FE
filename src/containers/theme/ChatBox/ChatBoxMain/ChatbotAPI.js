@@ -8,8 +8,9 @@ const API = {
     });
   },
   GetChatbotResponseAI: async (question) => {
+    const apiKey = process.env.REACT_APP_API_KEY;
     const urlG2 = "https://api.openai.com/v1/chat/completions";
-    const API_KEY = "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";
+    const API_KEY = `${apiKey}`;
     const headers = {
       Authorization: `Bearer ${API_KEY}`,
       "Content-Type": "application/json",
@@ -40,8 +41,30 @@ const API = {
     }
     return new Promise(function (resolve, reject) {
       setTimeout(function () {
-        resolve(answer);
+        resolve("Câu trả lời của AI là : " + answer);
       }, 2000);
+    });
+  },
+  GetChatbotResponseG2: async (question) => {
+    const urlG2 = "https://09a1-35-202-38-236.ngrok-free.app/gpt2";
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    const requestData = { question };
+    let g2answer = "";
+    try {
+      const response = await axios.post(urlG2, requestData, { headers });
+      if (response) {
+        g2answer = response?.data?.answer;
+      }
+      console.log(response?.data?.answer);
+    } catch (error) {
+      console.error("There was a problem with the request:", error);
+    }
+    return new Promise(function (resolve, reject) {
+      setTimeout(function () {
+        resolve("Câu trả lời của gpt2 là : " + g2answer);
+      }, 3000);
     });
   },
 };
