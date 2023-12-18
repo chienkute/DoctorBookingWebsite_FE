@@ -97,17 +97,24 @@ const DoctorManagement = () => {
     }),
     onSubmit: async (values) => {
       let res = await addDoctor(values.username, values.password, values.email);
-      if (res) {
-        console.log(res);
+      if (res?.doctor) {
         formik.setValues({
           username: "",
           email: "",
           password: "",
         });
+        console.log(res);
         getDoctorById();
+        handleCloseAddNewDoctor();
         toast.success("Thêm thành công");
       } else {
-        toast.success("Thêm thất bại");
+        formik.setValues({
+          username: "",
+          email: "",
+          password: "",
+        });
+        handleCloseAddNewDoctor();
+        toast.error("Tên tài khoản hoặc email đã tồn tại");
       }
     },
   });
@@ -244,13 +251,22 @@ const DoctorManagement = () => {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseAddNewDoctor}>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                formik.setValues({
+                  username: "",
+                  email: "",
+                  password: "",
+                });
+                handleCloseAddNewDoctor();
+              }}
+            >
               Đóng
             </Button>
             <Button
               variant="primary"
               onClick={() => {
-                handleCloseAddNewDoctor();
                 formik.handleSubmit();
                 getDoctorById();
                 setUpdate(!update);

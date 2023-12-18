@@ -72,7 +72,6 @@ const InfoHospital = () => {
   const editInfo = async (username) => {
     let res = await editHospitalUserName(username, idAccount);
     if (res) {
-      toast.success("Sửa thành công");
       console.log(res);
     } else {
       toast.error("Sửa thất bại");
