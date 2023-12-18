@@ -50,8 +50,13 @@ const UserChangePassword = () => {
         values.newpasswd,
         idAccount,
       );
-      if (res) {
-        navigate("/");
+      if (res?.message === "Password Changed") {
+        console.log(res);
+        formik.setValues({
+          newpasswd: "",
+          password: "",
+          confirmpasswd: "",
+        });
         toast.success("Đổi mật khẩu thành công");
       } else {
         toast.error("Đổi mật khẩu thất bại");

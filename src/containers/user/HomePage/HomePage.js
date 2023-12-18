@@ -16,7 +16,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const { update, setUpdate } = useContext(UpdateContext);
   const getBlog = async () => {
-    let res = await fecthAllBlog(1);
+    let res = await fecthAllBlog();
     if (res) {
       setBlog(res?.results);
     }
@@ -84,12 +84,11 @@ function App() {
                 <div className="NewsLargeOptionsContainer">
                   <div className="bold">Sắp xếp theo</div>
                   <div className="NewsLargeOption bold selected">Mới nhất</div>
-                  {/* <div className="NewsLargeOption bold">Mới nhất</div> */}
                 </div>
                 <div className="NewsLarge2ItemsContainer">
                   <ul className="clear NewsLarge2Items flex-center">
                     {blog &&
-                      blog.slice(4, 7).map((item, index) => {
+                      blog.slice(0, 2).map((item, index) => {
                         return (
                           <ItemLarge
                             key={index}
@@ -111,7 +110,7 @@ function App() {
                 <div className="NewsLarge3ItemsContainer">
                   <ul className="clear NewsLarge3Items flex-center">
                     {blog &&
-                      blog.slice(1, 4).map((item, index) => {
+                      blog.slice(2, 5).map((item, index) => {
                         return (
                           <ItemSmall
                             key={index}

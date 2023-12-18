@@ -23,7 +23,7 @@ const ItemLarge = (props) => {
     SetLoadingSkeleton(true);
     setTimeout(() => {
       SetLoadingSkeleton(false);
-    }, 2000);
+    }, 1500);
   }, []);
   const navigate = useNavigate();
   return (
