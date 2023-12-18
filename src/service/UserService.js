@@ -21,19 +21,19 @@ const fecthAllBlog = (page) => {
   return instance.get(`/api/blogs/?current_page=${page}`);
 };
 const fetchAllService = () => {
-  return instance.get("api/services/");
+  return instance.get("/api/services/");
 };
 const getServiceById = (id) => {
-  return instance.get(`api/services/${id}/`);
+  return instance.get(`/api/services/${id}/`);
 };
 const getDoctorByID = (id) => {
-  return instance.get(`api/doctors/${id}/`);
+  return instance.get(`/api/doctors/${id}/`);
 };
 const fetchAllHospital = () => {
   return instance.get("/api/hospitals/");
 };
 const getHospitalByID = (id) => {
-  return instance.get(`api/hospitals/${id}/`);
+  return instance.get(`/api/hospitals/${id}/`);
 };
 const signup = (username, email, password) => {
   return instance.post("api/auth/register/user/", {
@@ -43,7 +43,7 @@ const signup = (username, email, password) => {
   });
 };
 const searchAll = (adress, name) => {
-  return instance.get(`api/search_all/?addres=${adress}&name=${name}`);
+  return instance.get(`/api/search_all/?addres=${adress}&name=${name}`);
 };
 const search = (service, address, specialty, name, hospital) => {
   return instance.get(
@@ -51,7 +51,7 @@ const search = (service, address, specialty, name, hospital) => {
   );
 };
 const scheduleDoctor = (id) => {
-  return instance.get(`/api/getschedulerdoctor?doctor=${id}`);
+  return instance.get(`/api/getschedulerdoctor/?doctor=${id}`);
 };
 const Booking = (id_doctor, id_schedule, date, time) => {
   return instance.post("/api/booking/", { id_doctor, id_schedule, date, time });
@@ -116,7 +116,7 @@ const getSpecialtyByIdHospital = (id_hospital) => {
 };
 const getServiceByIdHospital = (name, id_hospital) => {
   return instance.get(
-    `api/search_service666/?name=${name}&id_hospital=${id_hospital}`,
+    `/api/search_service666/?name=${name}&id_hospital=${id_hospital}`,
   );
 };
 const editAvatar = (id, avatar) => {
@@ -127,7 +127,7 @@ const editAvatar = (id, avatar) => {
   });
 };
 const fecthAllDoctor = () => {
-  return instance.get("api/doctors/");
+  return instance.get("/api/doctors/");
 };
 export {
   getDoctorByNameAddress,

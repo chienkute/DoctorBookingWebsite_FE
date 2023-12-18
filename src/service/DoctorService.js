@@ -1,10 +1,10 @@
 const { default: instance } = require("utils/axiosCutomize");
 const fetchAllSchedule = (limit = 100, offset = 0) => {
-  return instance.get("api/schedules/?limit=" + limit + "&offset=" + offset);
+  return instance.get("/api/schedules/?limit=" + limit + "&offset=" + offset);
 };
 const fetchAllScheduleByDoctorId = (doctorId, limit = 10, offset = 0) => {
   return instance.get(
-    "api/schedulerdoctor/?doctor=" +
+    "/api/schedulerdoctor/?doctor=" +
       doctorId +
       "&limit=" +
       limit +
@@ -14,25 +14,25 @@ const fetchAllScheduleByDoctorId = (doctorId, limit = 10, offset = 0) => {
 };
 const addScheduleDoctor = (doctorId, scheduleId) => {
   console.log("add: doctorid" + doctorId + " scheduleid: " + scheduleId);
-  return instance.post("api/schedulerdoctor/", {
+  return instance.post("/api/schedulerdoctor/", {
     doctor_id: doctorId,
     schedule_id: scheduleId,
   });
 };
 
 const addSomeScheduleDoctor = (doctorId, scheduleIds) => {
-  return instance.post("api/addschedulerdoctors/", {
+  return instance.post("/api/addschedulerdoctors/", {
     doctor_id: doctorId,
     schedule_ids: scheduleIds,
   });
 };
 
 const deleteScheduleDoctor = (scheduleDoctorId) => {
-  return instance.delete("api/schedulerdoctor/" + scheduleDoctorId + "/");
+  return instance.delete("/api/schedulerdoctor/" + scheduleDoctorId + "/");
 };
 
 const deleteSomeScheduleDoctor = (scheduleDoctorIds) => {
-  return instance.post("api/deleteschedulerdoctors/", {
+  return instance.post("/api/deleteschedulerdoctors/", {
     scheduler_doctor_ids: scheduleDoctorIds,
   });
 };
@@ -112,7 +112,7 @@ const getSpecialtyByName = (name, id_doctor) => {
 };
 const getSpecialtyByDoctorId = (id_doctor, limit = 100, offset = 0) => {
   return instance.get(
-    `/api/specialtydoctor?doctor=${id_doctor}&limit=${limit}&offset=${offset}`,
+    `/api/specialtydoctor/?doctor=${id_doctor}&limit=${limit}&offset=${offset}`,
   );
 };
 const getServiceByName = (name, id_doctor) => {
@@ -122,7 +122,7 @@ const getServiceByName = (name, id_doctor) => {
 };
 const getServiceByDoctorId = (id_doctor, limit = 100, offset = 0) => {
   return instance.get(
-    `/api/servicedoctors?doctor=${id_doctor}&limit=${limit}&offset=${offset}`,
+    `/api/servicedoctors/?doctor=${id_doctor}&limit=${limit}&offset=${offset}`,
   );
 };
 const deleteSomeServiceDoctor = (ServiceDoctorIds) => {
@@ -135,7 +135,7 @@ const addService = (service_id, doctor_id) => {
 };
 const getDoctorAppoinment = (id, offset) => {
   return instance.get(
-    `/api/appointments?doctor_id=${id}&limit=6&offset=${offset}`,
+    `/api/appointments/?doctor_id=${id}&limit=6&offset=${offset}`,
   );
 };
 const editUsername = (username, email, id) => {

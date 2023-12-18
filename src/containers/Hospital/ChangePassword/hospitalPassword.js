@@ -49,10 +49,14 @@ const HospitalPassword = () => {
         values.newpasswd,
         idAccount,
       );
-      if (res) {
+      if (res?.message === "Password Changed") {
         console.log(res);
+        formik.setValues({
+          newpasswd: "",
+          password: "",
+          confirmpasswd: "",
+        });
         toast.success("Đổi mật khẩu thành công");
-        navigate(`/hospital/information/${id}`);
       } else {
         toast.error("Đổi mật khẩu thất bại");
       }
@@ -140,7 +144,6 @@ const HospitalPassword = () => {
             </div>
           </div>
         </div>
-
         <button type="submit" class="btn button changePassword__form_button">
           Cập nhật mật khẩu
         </button>
