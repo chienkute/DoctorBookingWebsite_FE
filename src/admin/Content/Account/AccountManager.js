@@ -3,7 +3,7 @@ import "./AccountManager.scss";
 import { FaRegCheckSquare, FaEraser } from "react-icons/fa";
 // import { FiEdit3 } from "react-icons/fi";
 import { IoInformation } from "react-icons/io5";
-import { FaLock, FaPlus } from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import {
   addHospital,
@@ -33,12 +33,12 @@ const AccountManager = () => {
   const [search, setSearch] = useState("");
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowConfPassword, setIsShowConfPassword] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const [accounts, setAccounts] = useState([]);
   const [idAccout, setIdAccount] = useState("");
   const [total, setTotal] = useState(0);
-  const [usernameDefault, setUsernameDefault] = useState("");
-  const [email, setEmail] = useState("");
+  const [tarAcc, setTarAcc] = useState([]);
   const handlePageClick = (event) => {
     getAccount(+event.selected + 1);
   };
@@ -47,6 +47,7 @@ const AccountManager = () => {
     if (res) {
       console.log(res);
       setTotalPage(res?.total_page);
+      setCurrentPage(res?.current_page);
       setAccounts(res?.results);
       setTotal(res?.count);
     }
@@ -90,7 +91,7 @@ const AccountManager = () => {
       email: Yup.string()
         .required("Bạn chưa nhập email")
         .matches(
-          /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+          /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
           "Vui lòng nhập đúng địa chỉ email",
         ),
     }),
@@ -108,9 +109,13 @@ const AccountManager = () => {
           password: "",
         });
         getAccount(1);
-        toast.success("Thêm thành công");
+        if (res.hasOwnProperty("access_token")) {
+          toast.success("Thêm thành công");
+        } else {
+          toast.error("Thêm thất bại");
+        }
       } else {
-        toast.success("Thêm thất bại");
+        toast.error("Thêm thất bại");
       }
     },
   });
@@ -141,7 +146,7 @@ const AccountManager = () => {
           centered
         >
           <Modal.Header closeButton>
-            <Modal.Title>Thêm mới bác sĩ</Modal.Title>
+            <Modal.Title>Thêm mới bệnh viện</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="add__form">
@@ -266,7 +271,7 @@ const AccountManager = () => {
       </div>
       <div className="AdminUserResult">
         <div className="ResultPerTable">
-          <label for="dropdown">Có {total} kết quả tìm được</label>
+          <label htmlFor="dropdown">Có {total} kết quả tìm được</label>
         </div>
         <div className="Table">
           <table>
@@ -276,8 +281,7 @@ const AccountManager = () => {
               </th>
               <th>STT</th>
               <th>Tên tài khoản</th>
-              <th>Email</th>
-              <th>Vai trò</th>
+              <th>Tên bệnh viện</th>
               <th>Hành động</th>
             </tr>
             {accounts &&
@@ -288,20 +292,16 @@ const AccountManager = () => {
                     <td>
                       <input type="checkbox"></input>
                     </td>
-                    <td>{index}</td>
+                    <td>{(currentPage - 1) * 6 + index + 1}</td>
                     <td>{item?.account?.username}</td>
-                    <td style={{ maxWidth: "140px" }}>
-                      {item?.account?.email}
-                    </td>
-                    {item?.account?.role === "hospital" && <td>Bệnh viện</td>}
+                    <td style={{ maxWidth: "140px" }}>{item?.name}</td>
                     <td>
                       <div className="Action">
                         <button
                           className="InfoButton"
                           onClick={() => {
                             handleShowEdit();
-                            setUsernameDefault(item?.account?.username);
-                            setEmail(item?.account?.email);
+                            setTarAcc(item);
                           }}
                         >
                           <IoInformation />
@@ -326,7 +326,29 @@ const AccountManager = () => {
                                     id="username"
                                     class="form-control"
                                     autoComplete="off"
-                                    defaultValue={usernameDefault}
+                                    defaultValue={tarAcc?.account?.username}
+                                    disabled
+                                  />
+                                </div>
+                                <div className="form__col">
+                                  <label htmlFor="">Tên bệnh viện</label>
+                                  <input
+                                    type="text"
+                                    id="name"
+                                    class="form-control"
+                                    autoComplete="off"
+                                    defaultValue={tarAcc?.name}
+                                    disabled
+                                  />
+                                </div>
+                                <div className="form__col">
+                                  <label htmlFor="">Địa chỉ</label>
+                                  <input
+                                    type="text"
+                                    id="address"
+                                    class="form-control"
+                                    autoComplete="off"
+                                    defaultValue={tarAcc?.address}
                                     disabled
                                   />
                                 </div>
@@ -337,7 +359,7 @@ const AccountManager = () => {
                                     id="email"
                                     class="form-control"
                                     autoComplete="off"
-                                    defaultValue={email}
+                                    defaultValue={tarAcc?.account?.email}
                                     disabled
                                   />
                                 </div>
