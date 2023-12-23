@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { AiFillEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { changePassword, getUserID } from "service/UserService";
 import { toast } from "react-toastify";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 const UserChangePassword = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowConfPassword, setIsShowConfPassword] = useState(false);
@@ -22,7 +22,6 @@ const UserChangePassword = () => {
   useEffect(() => {
     getUserByID();
   }, []);
-  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       password: "",

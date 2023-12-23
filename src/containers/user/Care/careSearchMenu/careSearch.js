@@ -14,6 +14,8 @@ import {
 import { useDebounce } from "@uidotdev/usehooks";
 import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateServiceID, updateServiceName } from "redux/userSlice";
 const CareSearch = () => {
   const { show, setShow } = useClickOutSide();
   const [query, setQuery] = useState("");
@@ -25,6 +27,7 @@ const CareSearch = () => {
   const [service, setService] = useState("");
   const debouncedSearchTerm = useDebounce(query, 500);
   const [loadingSkeleton, SetLoadingSkeleton] = useState(true);
+  const dispatch = useDispatch();
   const getDoctor = async () => {
     let res = await getDoctorByNameAddress(debouncedSearchTerm, adress);
     if (res) {
@@ -279,7 +282,17 @@ const CareSearch = () => {
                         specialty.map((item, index) => {
                           return (
                             <Link
-                              to={`/care/searchDoctor/${item.id}/${item.name}`}
+                              to={`/care/search`}
+                              onClick={() => {
+                                const updateName = {
+                                  serviceName: `${item?.name}`,
+                                };
+                                const updateId = {
+                                  serviceId: `${item?.id}`,
+                                };
+                                dispatch(updateServiceName(updateName));
+                                dispatch(updateServiceID(updateId));
+                              }}
                               className="col-2 care__banner_menus_item_col"
                               key={index}
                             >
@@ -409,7 +422,7 @@ const CareSearch = () => {
                     <TbBuildingHospital></TbBuildingHospital>
                   </div>
                   <p>Bệnh viện và Phòng khám</p>
-                  <Link to={"/care/searchDoctor"}>Xem tất cả</Link>
+                  <Link to={"/care/search"}>Xem tất cả</Link>
                 </div>
                 <div className="care__banner_menus_item">
                   {loadingSkeleton ? (
@@ -493,7 +506,7 @@ const CareSearch = () => {
                     <FaUserDoctor></FaUserDoctor>
                   </div>
                   <p>Bác sĩ</p>
-                  <Link to={"/care/searchDoctor"}>Xem tất cả</Link>
+                  <Link to={"/care/search"}>Xem tất cả</Link>
                 </div>
                 <div className="care__banner_menus_item">
                   {loadingSkeleton ? (

@@ -351,7 +351,7 @@ const AppointmentBox = (props) => {
                   dayBook: `${dateBook}`,
                   time: `${time}`,
                   days: `${days}`,
-                  idUser: `${user?.user?.id}`,
+                  idUser: `${user?.id}`,
                   timeStart: `${timeStart}`,
                   timeEnd: `${timeEnd}`,
                 }}

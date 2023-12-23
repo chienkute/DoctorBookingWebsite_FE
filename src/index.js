@@ -11,10 +11,17 @@ import "swiper/scss/navigation";
 import "swiper/scss";
 import "../node_modules/nprogress/nprogress.css";
 import "react-loading-skeleton/dist/skeleton.css";
+// import { PersistGate } from "redux-persist/integration/react";
+import store from "redux/store";
+import { Provider } from "react-redux";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <BrowserRouter>
-    <RouterCustom />
-    <ToastContainer autoClose={1000} />
-  </BrowserRouter>,
+  <Provider store={store}>
+    {/* <PersistGate loading={null} persistor={persistor}> */}
+    <BrowserRouter>
+      <RouterCustom />
+      <ToastContainer autoClose={1000} />
+    </BrowserRouter>
+    {/* </PersistGate> */}
+  </Provider>,
 );

@@ -20,7 +20,7 @@ const UserTab = () => {
     <div className="UserPageMenu">
       <div className="ListOption clear">
         <NavLink
-          to={`/user/information/${user?.user?.id}`}
+          to={`/user/information/${user?.id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive Option selected" : "Option selected"
           }
@@ -43,7 +43,7 @@ const UserTab = () => {
         </NavLink>
 
         <NavLink
-          to={`/user/changePassword/${user?.user?.id}`}
+          to={`/user/changePassword/${user?.id}`}
           className={({ isActive }) =>
             isActive ? "sideBarActive Option selected" : "Option"
           }

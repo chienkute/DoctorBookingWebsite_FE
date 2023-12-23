@@ -70,6 +70,7 @@ const Categories = () => {
                       className="col-md-2"
                       to={`/category/${item.id}/${item.name}`}
                       key={index}
+                      style={{ marginBottom: "20px" }}
                     >
                       <div>
                         <img src={item?.icon || categoriesimage1} alt="" />

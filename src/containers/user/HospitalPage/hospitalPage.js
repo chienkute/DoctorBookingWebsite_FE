@@ -14,6 +14,7 @@ import {
   fetchAllSpecialties,
   getDoctorById,
   getHospitalByID,
+  getSpecialtyByIdHospital,
   // getServiceByIdHospital,
   searchDoctor,
 } from "service/UserService";
@@ -46,6 +47,7 @@ const HospitalPage = () => {
   const [totalPage, setTotalPage] = useState(0);
   const pageTotal = totalPage / 6;
   const roundedNumber = Math.ceil(pageTotal);
+  const [specialHospital, setSpecialHospital] = useState([]);
   const getDoctor = async () => {
     let res = await getDoctorById("", "", id, specialty, "");
     if (res) {
@@ -77,11 +79,18 @@ const HospitalPage = () => {
   const getHospitalInfo = async () => {
     let res = await getHospitalByID(id);
     if (res) {
+      console.log(res);
       setLoading(true);
       setTimeout(() => {
         setLoading(false);
       }, 1500);
       setHospital(res);
+    }
+  };
+  const getSpecialtyHospital = async () => {
+    let res = await getSpecialtyByIdHospital(id);
+    if (res) {
+      setSpecialHospital(res?.results);
     }
   };
   const getSpecialty = async () => {
@@ -104,6 +113,7 @@ const HospitalPage = () => {
   useEffect(() => {
     getSpecialty();
     getHospitalInfo();
+    getSpecialtyHospital();
   }, []);
   useEffect(() => {
     getDoctorByIdHospital(1);
@@ -267,14 +277,10 @@ const HospitalPage = () => {
                       <div className="hospital__body_thongtin_chuyenkhoa">
                         <h2>Chuyên khoa</h2>
                         <ol className="row">
-                          <li className="col-6">Thần kinh</li>
-                          <li className="col-6">Thần kinh</li>
-                          <li className="col-6">Thần kinh</li>
-                          <li className="col-6">Thần kinh</li>
-                          <li className="col-6">Thần kinh</li>
-                          <li className="col-6">Thần kinh</li>
-                          <li className="col-6">Thần kinh</li>
-                          <li className="col-6">Thần kinh</li>
+                          {specialHospital &&
+                            specialHospital.map((item, index) => {
+                              return <li className="col-6">{item?.name}</li>;
+                            })}
                         </ol>
                       </div>
                       <div className="hospital__body_thongtin_chuyenkhoa">

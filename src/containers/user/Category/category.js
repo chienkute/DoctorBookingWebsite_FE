@@ -233,7 +233,7 @@ const Category = () => {
                     tin hữu ích có thể dễ dàng tiếp cận đến bạn đọc, giúp bạn
                     chủ động hơn trong các quyết định chăm sóc sức khỏe.
                   </p>
-                  <a href="/care/searchDoctor">Xem thêm chuyên gia</a>
+                  <a href="/care/search">Xem thêm chuyên gia</a>
                 </div>
                 <div className="category__blog_doctor_item row">
                   {doctor &&
