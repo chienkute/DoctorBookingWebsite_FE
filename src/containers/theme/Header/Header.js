@@ -28,25 +28,40 @@ import {
 } from "service/UserService";
 import { FaUserAlt } from "react-icons/fa";
 import { UpdateContext } from "context/UpdateContext";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateSearch,
+  updateServiceID,
+  updateServiceName,
+} from "redux/userSlice";
 const Header = () => {
   const { update, setUpdate } = useContext(UpdateContext);
-  const [updateImage, setUpdateImage] = useState(false);
+  // const [updateImage, setUpdateImage] = useState(false);
   const [user, setUser] = useState([]);
-  const [image, setImage] = useState("");
-  const [userName, setUserName] = useState("");
+  const [account, setAccount] = useState([]);
+  // const [image, setImage] = useState("");
+  // const [userName, setUserName] = useState("");
   const [value, setValue] = useState("");
   const { show, setShow, nodeRef } = useClickOutSide();
   const [specialty, setSpecialty] = useState([]);
   const [categories, setCategories] = useState([]);
+  const state = useSelector((state) => state.user.changing);
+  const dispatch = useDispatch();
+  console.log(state);
   const navigate = useNavigate();
   const handleKeyDown = (e) => {
+    const updatedSearch = {
+      search: `${value}`,
+    };
     if (e.key === "Enter") {
-      navigate(`/search/${value}`);
+      navigate(`/search`);
+      dispatch(updateSearch(updatedSearch));
     }
   };
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("account");
     navigate("/");
     toast.success("Đăng xuất thành công!");
   };
@@ -56,12 +71,18 @@ const Header = () => {
       setUser(JSON.parse(user));
     }
   };
+  const getAccount = () => {
+    const account = localStorage.getItem("account");
+    if (account) {
+      setAccount(JSON.parse(account));
+    }
+  };
   const getUserByID = async () => {
     let res = await getUserID(user?.user?.id);
     if (res) {
       console.log(res);
-      setUserName(res?.name);
-      setImage(res?.account?.avatar);
+      // setUserName(res?.name);
+      // setImage(res?.account?.avatar);
     }
   };
   const getSpecialty = async () => {
@@ -81,11 +102,17 @@ const Header = () => {
     getUser();
     getService();
     getUserByID();
+    getAccount();
   }, []);
+  // useEffect(() => {
+  //   getUser();
+  //   getUserByID();
+  // }, [updateImage]);
   useEffect(() => {
     getUser();
-    getUserByID();
-  }, [updateImage]);
+    getAccount();
+    // getUserByID();
+  }, [state]);
   return (
     <div>
       <header className="HeaderContainer flex-center">
@@ -278,11 +305,19 @@ const Header = () => {
                         <li
                           onClick={() => {
                             setUpdate(!update);
+                            const updateName = {
+                              serviceName: `${item?.name}`,
+                            };
+                            const updateId = {
+                              serviceId: `${item?.id}`,
+                            };
+                            dispatch(updateServiceName(updateName));
+                            dispatch(updateServiceID(updateId));
                           }}
                         >
                           <Link
                             class="dropdown-item d-flex align-items-center dropdown__item"
-                            to={`/care/searchDoctor/${item.id}/${item.name}`}
+                            to={`/care/search`}
                             key={index}
                           >
                             <div className="header__menu_image">
@@ -319,26 +354,26 @@ const Header = () => {
               <Link
                 onClick={() => {
                   setShow(!show);
-                  setUpdateImage(!updateImage);
+                  // setUpdateImage(!updateImage);
                 }}
               >
-                <img src={image || avatar} alt="" />
+                <img src={account?.avatar || avatar} alt="" />
               </Link>
             </div>
             {show && (
               <div className="HeaderItem">
                 <div className="HeaderItem__user">
                   <div className="HeaderItem__user_avt">
-                    <img src={image || avatar} alt="" />
+                    <img src={account?.avatar || avatar} alt="" />
                   </div>
                   <div className="HeaderItem__user_name">
-                    <h6>{userName || "Họ và tên"}</h6>
+                    <h6>{user?.name || "Họ và tên"}</h6>
                     <p>{user?.account?.username}</p>
                   </div>
                 </div>
                 <div className="HeaderItem__list row">
                   <Link
-                    to={`/user/information/${user?.user?.id}`}
+                    to={`/user/information/${user?.id}`}
                     className="HeaderItem__list_item col-6"
                     onClick={() => {
                       setShow(false);
@@ -350,7 +385,7 @@ const Header = () => {
                     <p>Hồ sơ</p>
                   </Link>
                   <Link
-                    to={`/user/changePassword/${user?.user?.id}`}
+                    to={`/user/changePassword/${user?.id}`}
                     className="HeaderItem__list_item col-6"
                     onClick={() => {
                       setShow(false);

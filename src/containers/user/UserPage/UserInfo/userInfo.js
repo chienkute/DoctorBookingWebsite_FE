@@ -9,6 +9,8 @@ import { toast } from "react-toastify";
 import { MdPhotoCamera } from "react-icons/md";
 import { UpdateContext } from "context/UpdateContext";
 import { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateChanging } from "redux/userSlice";
 const UserInfo = () => {
   const [user, setUser] = useState([]);
   const [edit, setEdit] = useState(false);
@@ -31,6 +33,12 @@ const UserInfo = () => {
   const [imageUpdate, setImageUpdate] = useState([]);
   const [imageOld, setImageOld] = useState("");
   const [formData, setFormData] = useState(new FormData());
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.user.changing);
+  const updatedChange = {
+    changing: !state,
+  };
+  // console.log(state);
   const handleImageClick = () => {
     inputRef.current.click();
   };
@@ -48,6 +56,8 @@ const UserInfo = () => {
   const editAvatarUser = async () => {
     let res = await editAvatar(idAccount, formData);
     if (res) {
+      localStorage.setItem("account", JSON.stringify(res));
+      // dispatch(updateChanging(updatedChange));
       console.log(res);
     }
   };
@@ -61,7 +71,10 @@ const UserInfo = () => {
       birthdayNew,
     );
     if (res) {
+      console.log(res);
       toast.success("Sửa đổi thành công");
+      localStorage.setItem("user", JSON.stringify(res));
+      // dispatch(updateChanging(updatedChange));
       setEdit(false);
     } else {
       toast.error("Sửa đổi thất bại");
@@ -137,7 +150,14 @@ const UserInfo = () => {
             <div className="UserBasicInfo">
               <div className="UserAvatar">
                 {image ? (
-                  <img src={image} alt="BlogImg" className="avatarAfter"></img>
+                  <img
+                    src={image}
+                    alt="BlogImg"
+                    className="avatarAfter"
+                    style={{
+                      transform: "translateX(15px)",
+                    }}
+                  ></img>
                 ) : imageOld ? (
                   <img
                     src={imageOld}
@@ -191,6 +211,7 @@ const UserInfo = () => {
                   setEdit(false);
                   getUserByID();
                   editAvatarUser();
+                  dispatch(updateChanging(updatedChange));
                 }}
               >
                 <div className="user__info">
@@ -294,6 +315,7 @@ const UserInfo = () => {
                   <button
                     onClick={() => {
                       setUpdate(!update);
+                      // dispatch(updateChanging(updatedChange));
                     }}
                   >
                     Lưu thay đổi

@@ -5,7 +5,7 @@ import "../../../style/page.scss";
 import "../../user/SearchDoctor/DoctorSearchResult.scss";
 import "../../user/SearchDoctor/HospitalSearchResult.scss";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import avt from "../../../assets/avatar.png";
 import {
   fetchAllService,
@@ -19,15 +19,17 @@ import dakhoaImages from "../../../assets/chuyenkhoa/dakhoa.png";
 import Skeleton from "react-loading-skeleton";
 import { useContext } from "react";
 import { UpdateContext } from "context/UpdateContext";
+import { useSelector } from "react-redux";
 function SearchDoctor() {
-  const { id, chuyenkhoa } = useParams();
   const [adress, setAdress] = useState("");
   const [address, setAddress] = useState("");
   const [query, setQuery] = useState("");
   const [doctor, setDoctor] = useState([]);
   const [hospital, setHospital] = useState([]);
-  const [specialty, setSpecialty] = useState("");
-  const [specialtyy, setSpecialtyy] = useState("");
+  const serviceName = useSelector((state) => state.user.serviceName);
+  const serviceId = useSelector((state) => state.user.serviceId);
+  const [specialty, setSpecialty] = useState(serviceId);
+  const [specialtyy, setSpecialtyy] = useState(serviceName);
   const [specialties, setSpecialties] = useState(null);
   const [service, setService] = useState("");
   const [services, setServices] = useState([]);
@@ -43,7 +45,8 @@ function SearchDoctor() {
   const navigate = useNavigate();
   const pageTotal = totalPage / 6;
   const roundedNumber = Math.ceil(pageTotal);
-  console.log(roundedNumber);
+  console.log(serviceName);
+  console.log(serviceId);
   const handlePageClick = (event) => {
     console.log(+event.selected + 1);
     getDoctor(+event.selected + 1);
@@ -91,16 +94,6 @@ function SearchDoctor() {
     getHospital(1);
   }, [debouncedSearchTerm, adress, specialty, service]);
   useEffect(() => {
-    if (chuyenkhoa) {
-      setSpecialtyy(chuyenkhoa);
-    } else {
-      setSpecialtyy("");
-    }
-    if (id >= 0) {
-      setSpecialty(id);
-    } else {
-      setSpecialty("");
-    }
     const getAllSpecialty = async () => {
       let res = await fetchAllSpecialties(100, 0);
       if (res) {
@@ -123,6 +116,8 @@ function SearchDoctor() {
     }, 1500);
   }, []);
   useEffect(() => {
+    setSpecialtyy(serviceName);
+    setSpecialty(serviceId);
     getDoctor(1);
     getHospital(1);
     setTimeout(() => {

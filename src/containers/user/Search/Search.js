@@ -8,11 +8,12 @@ import ReactPaginate from "react-paginate";
 import "../../../style/page.scss";
 import { searchBlogByName } from "service/UserService";
 import { useDebounce } from "@uidotdev/usehooks";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
+import { useSelector } from "react-redux";
 const Search = () => {
-  const { name } = useParams();
-  const [searchBlog, setSearchBlog] = useState(name);
+  const state = useSelector((state) => state.user.search);
+  const [searchBlog, setSearchBlog] = useState(state);
   console.log(searchBlog);
   const [dataBlog, setDataBlog] = useState([]);
   const [count, setScount] = useState("");

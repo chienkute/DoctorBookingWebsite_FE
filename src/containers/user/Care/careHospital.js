@@ -22,7 +22,7 @@ const CareHospital = () => {
     <div className="care__hospital">
       <div className="care__hospital_banner">
         <h2>Top Bệnh viện/Phòng Khám Nổi Bật</h2>
-        <a href="/care/searchDoctor">
+        <a href="/care/search">
           <p>Xem tất cả</p>
           <div>
             <MdKeyboardArrowRight></MdKeyboardArrowRight>

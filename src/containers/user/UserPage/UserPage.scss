@@ -98,9 +98,10 @@
   margin-top: 6px;
 }
 .avatarBefore {
-  width: 152px;
-  height: 152px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
+  transform: translateX(15px);
 }
 .UserAccount {
   display: flex;
@@ -132,7 +133,7 @@
   height: fit-content;
 }
 .user {
-  padding-left: 16px;
+  padding-left: 6px;
   height: fit-content;
   display: flex;
   flex-direction: column;

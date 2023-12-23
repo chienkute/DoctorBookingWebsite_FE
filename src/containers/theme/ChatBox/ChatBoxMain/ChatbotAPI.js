@@ -37,6 +37,7 @@ const API = {
       }
       console.log(answer);
     } catch (error) {
+      answer = "Server chatbox đã bị ngắt !!!";
       console.error("There was a problem with the request:", error);
     }
     return new Promise(function (resolve, reject) {
@@ -57,8 +58,8 @@ const API = {
       if (response) {
         g2answer = response?.data?.answer;
       }
-      console.log(response?.data?.answer);
     } catch (error) {
+      g2answer = "Server chatbox đã bị ngắt !!!";
       console.error("There was a problem with the request:", error);
     }
     return new Promise(function (resolve, reject) {
