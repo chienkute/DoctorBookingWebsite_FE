@@ -38,6 +38,9 @@ const UserInfo = () => {
   const updatedChange = {
     changing: !state,
   };
+  const updateAgain = {
+    chaing: !state,
+  };
   // console.log(state);
   const handleImageClick = () => {
     inputRef.current.click();
@@ -74,6 +77,9 @@ const UserInfo = () => {
       console.log(res);
       toast.success("Sửa đổi thành công");
       localStorage.setItem("user", JSON.stringify(res));
+      setTimeout(() => {
+        dispatch(updateChanging(updatedChange));
+      }, [1000]);
       // dispatch(updateChanging(updatedChange));
       setEdit(false);
     } else {
@@ -119,6 +125,7 @@ const UserInfo = () => {
   }
   const handleEdit = () => {
     setEdit(true);
+    dispatch(updateChanging(updatedChange));
   };
   return (
     <div className="UserPageContainer">
@@ -212,6 +219,9 @@ const UserInfo = () => {
                   getUserByID();
                   editAvatarUser();
                   dispatch(updateChanging(updatedChange));
+                  setTimeout(() => {
+                    dispatch(updateChanging(updateAgain));
+                  });
                 }}
               >
                 <div className="user__info">
