@@ -46,8 +46,8 @@ const Header = () => {
   const [specialty, setSpecialty] = useState([]);
   const [categories, setCategories] = useState([]);
   const state = useSelector((state) => state.user.changing);
-  const dispatch = useDispatch();
   console.log(state);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleKeyDown = (e) => {
     const updatedSearch = {

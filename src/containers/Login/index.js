@@ -1,4 +1,4 @@
-import { memo, useState, useEffect } from "react";
+import { memo, useState } from "react";
 // import { MdEmail } from "react-icons/md";
 import { MdAccountCircle } from "react-icons/md";
 import imageLogin from "../../assets/image_1.png";
@@ -10,12 +10,9 @@ import "./login.scss";
 import { login } from "service/UserService";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { updateChanging, updateId } from "redux/userSlice";
 const Login = () => {
   const navigate = useNavigate();
   const [isShowPassword, setIsShowPassword] = useState(false);
-  const dispatch = useDispatch();
   // useEffect(() => {
   //   let token = localStorage.getItem("token");
   //   if (token) {
