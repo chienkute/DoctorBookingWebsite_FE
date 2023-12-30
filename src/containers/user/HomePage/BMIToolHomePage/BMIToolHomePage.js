@@ -7,20 +7,11 @@ class BMIToolHomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      gender: "male",
-      age: 0,
       height: 0,
       weight: 0,
       bmiResult: null,
     };
   }
-  handleGenderChange = (selectedGender) => {
-    this.setState({ gender: selectedGender });
-  };
-
-  handleAgeChange = (event) => {
-    this.setState({ age: parseInt(event.target.value, 10) });
-  };
 
   handleHeightChange = (event) => {
     this.setState({ height: parseInt(event.target.value, 10) });
@@ -40,28 +31,32 @@ class BMIToolHomePage extends React.Component {
   getBMICategory = () => {
     const { bmiResult } = this.state;
     if (bmiResult < 18.5) return "Thiếu cân";
-    if (bmiResult >= 18.5 && bmiResult < 24.9) return "Bình thường";
-    if (bmiResult >= 25 && bmiResult < 29.9) return "Thừa cân";
-    return "Béo phì";
+    if (bmiResult >= 18.5 && bmiResult < 22.9) return "Bình thường";
+    if (bmiResult >= 23 && bmiResult < 24.9) return "Thừa cân";
+    if (bmiResult >= 25 && bmiResult < 29.9) return "Béo phì độ I";
+    return "Béo phì độ II";
   };
 
   getBMIAdvice = () => {
     const { bmiResult } = this.state;
     if (bmiResult < 18.5)
       return "Bạn cần tăng cường dinh dưỡng để đạt trọng lượng lý tưởng.";
-    if (bmiResult >= 18.5 && bmiResult < 24.9)
+    if (bmiResult >= 18.5 && bmiResult < 22.9)
       return "Bạn đang ở trong mức trọng lượng lý tưởng, hãy duy trì chế độ dinh dưỡng và vận động thường xuyên.";
-    if (bmiResult >= 25 && bmiResult < 29.9)
+    if (bmiResult >= 23 && bmiResult < 24.9)
       return "Bạn cần giảm cân để duy trì sức khỏe tốt.";
-    return "Bạn cần có chế độ dinh dưỡng và lối sống lành mạnh.";
+    if (bmiResult >= 25 && bmiResult < 29.9)
+      return "Bạn cần có chế độ dinh dưỡng và lối sống lành mạnh.";
+    return "Bạn cần có chế độ ăn kiêng để có thể duy trì sức khoẻ.";
   };
 
   getBMIColor = () => {
     const { bmiResult } = this.state;
-    if (bmiResult < 18.5) return "#4287f5";
-    if (bmiResult >= 18.5 && bmiResult < 24.9) return "#2be064";
-    if (bmiResult >= 25 && bmiResult < 29.9) return "#e09e2b";
-    return "#db261d";
+    if (bmiResult < 18.5) return "#89b5da";
+    if (bmiResult >= 18.5 && bmiResult < 22.9) return "#7fc89b";
+    if (bmiResult >= 23 && bmiResult < 24.9) return "#ffd401";
+    if (bmiResult >= 25 && bmiResult < 29.9) return "#f19451";
+    return "#e75055";
   };
 
   handleSubmit = (event) => {
@@ -78,27 +73,6 @@ class BMIToolHomePage extends React.Component {
         <div className="BMIToolHomePageContent">
           <div className="BMIFormContainer">
             <form onSubmit={this.handleSubmit}>
-              <div className="BMIFormGender">
-                <p className="bold">Giới tính của bạn</p>
-                <div className="BMIGenderSelection">
-                  <div className="BMIMale flex-center selected">
-                    <FaMale />
-                    <span className="bold">Nam</span>
-                  </div>
-                  <div className="BMIFemale flex-center">
-                    <FaFemale />
-                    <span className="bold">Nữ</span>
-                  </div>
-                </div>
-              </div>
-              <div className="BMIFormAge">
-                <p className="bold">Bạn bao nhiêu tuổi? (năm)</p>
-                <input
-                  type="Number"
-                  placeholder="Số tuổi"
-                  onChange={this.handleAgeChange}
-                ></input>
-              </div>
               <div className="BMIFormHeight">
                 <p className="bold">Bạn cao bao nhiêu? (cm)</p>
                 <input
