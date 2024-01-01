@@ -119,6 +119,7 @@ const UserInfo = () => {
     };
     loadUser();
     getUserByID();
+  // eslint-disable-next-line
   }, []);
   if (user === null) {
     return <div className="UserPageContainer"></div>;

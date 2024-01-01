@@ -21,6 +21,7 @@ const UserChangePassword = () => {
   };
   useEffect(() => {
     getUserByID();
+  // eslint-disable-next-line
   }, []);
   const formik = useFormik({
     initialValues: {

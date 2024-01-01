@@ -27,6 +27,7 @@ function App() {
       setLoading(false);
     }, 1500);
     setUpdate(!update);
+  // eslint-disable-next-line
   }, []);
   return (
     <div>

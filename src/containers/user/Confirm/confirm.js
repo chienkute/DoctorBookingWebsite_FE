@@ -57,6 +57,7 @@ const Confirm = () => {
     getDoctor();
     getUserByID();
     setLoading(true);
+  // eslint-disable-next-line
   }, []);
   if (!location.state) {
     setLoading(true);

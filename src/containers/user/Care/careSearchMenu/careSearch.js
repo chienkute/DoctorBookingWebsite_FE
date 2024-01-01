@@ -73,12 +73,14 @@ const CareSearch = () => {
     getHospital();
     getService();
     getSpecialty();
+  // eslint-disable-next-line
   }, [debouncedSearchTerm, adress]);
   useEffect(() => {
     SetLoadingSkeleton(true);
     setTimeout(() => {
       SetLoadingSkeleton(false);
     }, 1000);
+  // eslint-disable-next-line
   }, []);
   // const provinces = [
   //   "An Giang",

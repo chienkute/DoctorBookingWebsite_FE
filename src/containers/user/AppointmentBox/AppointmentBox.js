@@ -91,6 +91,7 @@ const AppointmentBox = (props) => {
     getIdSchedule();
     handleDayNow();
     getUser();
+  // eslint-disable-next-line
   }, []);
   return (
     <div className="AppointmentBoxContainer">

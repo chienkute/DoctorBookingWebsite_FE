@@ -92,6 +92,7 @@ function SearchDoctor() {
   useEffect(() => {
     getDoctor(1);
     getHospital(1);
+  // eslint-disable-next-line
   }, [debouncedSearchTerm, adress, specialty, service]);
   useEffect(() => {
     const getAllSpecialty = async () => {
@@ -114,6 +115,7 @@ function SearchDoctor() {
     setTimeout(() => {
       setShow(false);
     }, 1500);
+  // eslint-disable-next-line
   }, []);
   useEffect(() => {
     setSpecialtyy(serviceName);
@@ -123,6 +125,7 @@ function SearchDoctor() {
     setTimeout(() => {
       SetLoadingSkeleton(false);
     }, 1500);
+  // eslint-disable-next-line
   }, [update]);
   const province = [
     { value: "Danang", label: "Đà Nẵng" },

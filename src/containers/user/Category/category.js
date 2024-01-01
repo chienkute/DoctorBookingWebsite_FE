@@ -63,6 +63,7 @@ const Category = () => {
     getBlog();
     getService();
     getCategory();
+  // eslint-disable-next-line
   }, []);
   useEffect(() => {
     setLoading(true);
@@ -71,6 +72,7 @@ const Category = () => {
     }, 1500);
     getCategory();
     getBlog();
+  // eslint-disable-next-line
   }, [update]);
   return (
     <div>

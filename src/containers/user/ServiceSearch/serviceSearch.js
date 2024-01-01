@@ -41,6 +41,7 @@ const ServiceSearch = () => {
     setTimeout(() => {
       setLoading(false);
     }, 1500);
+  // eslint-disable-next-line
   }, [queryDebounce]);
   return (
     <div className="serviceSearch">

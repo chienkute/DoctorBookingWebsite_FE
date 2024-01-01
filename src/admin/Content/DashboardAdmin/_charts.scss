@@ -1,29 +1,45 @@
-// Area Chart
-.chart-area {
-  position: relative;
-  height: 10rem;
-  width: 100%;
-  @include media-breakpoint-up(md) {
-    height: 20rem;
-  }
-}
+// // Area Chart
+// .chart-area {
+//   position: relative;
+//   height: 10rem;
+//   width: 100%;
+//   @include media-breakpoint-up(md) {
+//     height: 20rem;
+//   }
+// }
 
-// Bar Chart
-.chart-bar {
-  position: relative;
-  height: 10rem;
-  width: 100%;
-  @include media-breakpoint-up(md) {
-    height: 20rem;
-  }
-}
+// // Bar Chart
+// .chart-bar {
+//   position: relative;
+//   height: 10rem;
+//   width: 100%;
+//   @include media-breakpoint-up(md) {
+//     height: 20rem;
+//   }
+// }
 
-// Pie Chart
-.chart-pie {
-  position: relative;
-  height: 15rem;
-  width: 100%;
-  @include media-breakpoint-up(md) {
-    height: calc(20rem - 43px) !important;
+// // Pie Chart
+// .chart-pie {
+//   position: relative;
+//   height: 15rem;
+//   width: 100%;
+//   @include media-breakpoint-up(md) {
+//     height: calc(20rem - 43px) !important;
+//   }
+// }
+
+
+// interval-select
+.interval-select {
+  margin-top: 10px;
+
+  label {
+    margin-right: 10px;
+    font-weight: bold;
+  }
+
+  select {
+    padding: 8px;
+    font-size: 14px;
   }
 }

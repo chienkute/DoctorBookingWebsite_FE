@@ -43,12 +43,14 @@ const Search = () => {
     setTimeout(() => {
       setShow(false);
     }, 1500);
+  // eslint-disable-next-line
   }, []);
   useEffect(() => {
     searchNameBlog(1);
     setTimeout(() => {
       setShow(false);
     }, 1500);
+  // eslint-disable-next-line
   }, [debouncedSearchTerm]);
   return (
     <div className="searchr">
