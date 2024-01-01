@@ -14,6 +14,7 @@ const Doctor = () => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     getDoctor();
+  // eslint-disable-next-line
   }, []);
   const getDoctor = async () => {
     let res = await getDoctorByID(id);

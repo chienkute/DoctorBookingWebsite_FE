@@ -22,6 +22,7 @@ const Service = () => {
   };
   useEffect(() => {
     getService();
+  // eslint-disable-next-line
   }, []);
   return (
     <div>

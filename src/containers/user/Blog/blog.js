@@ -29,6 +29,7 @@ const Blog = () => {
   };
   useEffect(() => {
     getContentBlog();
+  // eslint-disable-next-line
   }, []);
   return (
     <div>

@@ -109,14 +109,17 @@ const HospitalPage = () => {
   };
   useEffect(() => {
     getDoctor();
+  // eslint-disable-next-line
   }, [specialty]);
   useEffect(() => {
     getSpecialty();
     getHospitalInfo();
     getSpecialtyHospital();
+  // eslint-disable-next-line
   }, []);
   useEffect(() => {
     getDoctorByIdHospital(1);
+  // eslint-disable-next-line
   }, [queryDoctor]);
   // useEffect(() => {
   //   // getService();

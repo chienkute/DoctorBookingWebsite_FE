@@ -25,6 +25,7 @@ const NewsSmall = (props) => {
   useEffect(() => {
     getBlog();
     getCategory();
+  // eslint-disable-next-line
   }, []);
   return (
     <div className="NewsSmallContainer">

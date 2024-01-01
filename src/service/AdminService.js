@@ -109,6 +109,24 @@ const deleteUser = (id) => {
 const getAllAcountUser = (offset) => {
   return instance.get(`/api/users/?limit=6&offset=${offset}`);
 };
+const fetchStatisticalAppointment = (scope) => {
+  return instance.get(`/api/statisticalAppointment/?scope=${scope}`);
+};
+const fetchTopDoctorAppointment = (scope) => {
+  return instance.get(`/api/statisticalTopDoctor/?scope=${scope}`);
+};
+const fetchTopUserAppointment = (scope) => {
+  return instance.get(`/api/statisticalTopUser/?scope=${scope}`);
+};
+const fetchStatisticalBlog = (scope) => {
+  return instance.get(`/api/statisticalBlog/?scope=${scope}`);
+};
+const fetchTopDoctorBlog = (scope) => {
+  return instance.get(`/api/topDoctorBlog/?scope=${scope}`);
+};
+const fetchTopCategoryBlog = (scope) => {
+  return instance.get(`/api/topCategory/?scope=${scope}`);
+};
 export {
   addHospital,
   addCategory,
@@ -128,4 +146,10 @@ export {
   getAllAcountUser,
   addUser,
   deleteUser,
+  fetchStatisticalAppointment,
+  fetchTopDoctorAppointment,
+  fetchTopUserAppointment,
+  fetchStatisticalBlog,
+  fetchTopDoctorBlog,
+  fetchTopCategoryBlog
 };
