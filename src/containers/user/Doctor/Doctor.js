@@ -145,14 +145,16 @@ const Doctor = () => {
                         {doctor?.services &&
                           doctor?.services?.map((item, index) => {
                             return (
-                              <li className="Service">
+                              <li
+                                className="Service"
+                                style={{ marginTop: "10px" }}
+                              >
                                 <div className="ServiceHeader">
                                   {item?.service?.name}
                                 </div>
                                 <div className="ServiceDetails">
                                   Bác sĩ có nhận thăm khám, tư vấn bệnh lý{" "}
-                                  {item?.service?.name} tư vấn tiêm chủng theo
-                                  hình thức Telemedicine.
+                                  {item?.service?.name}.
                                 </div>
                                 <div className="ServiceFee">
                                   <span className="Icon">

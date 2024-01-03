@@ -70,6 +70,9 @@ const searchBlogByName = (name, offset) => {
 const getBlogByIdCategory = (id) => {
   return instance.get(`/api/search_blog/?id_category=${id}&page=1`);
 };
+const searchBlogByIdCategory = (id, page) => {
+  return instance.get(`/api/search_blog/?id_category=${id}&page=${page}`);
+};
 const getBlogById = (id) => {
   return instance.get(`/api/blogs/${id}/`);
 };
@@ -180,4 +183,5 @@ export {
   editAvatar,
   fecthAllDoctor,
   getDoctorById,
+  searchBlogByIdCategory,
 };

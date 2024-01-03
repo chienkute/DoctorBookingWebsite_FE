@@ -7,7 +7,6 @@ import doctorImg from "../../../assets/doctor/tat.jpg";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import "../Category/CategoryListStyle.scss";
-import ReactPaginate from "react-paginate";
 import { Link, useParams } from "react-router-dom";
 import {
   fecthAllDoctor,
@@ -197,26 +196,6 @@ const Category = () => {
               <h3>Xem thêm về {categoryy?.name}</h3>
               <div className="category__blog_item">
                 <CategorySmall id={`${categoryy?.id}`}></CategorySmall>
-                <div className="DoctorResultPageMonitor search__page">
-                  <ReactPaginate
-                    breakLabel="..."
-                    nextLabel=">"
-                    // onPageChange={handlePageClick}
-                    pageRangeDisplayed={5}
-                    pageCount={3}
-                    previousLabel="<"
-                    pageClassName="page-item"
-                    pageLinkClassName="page-link"
-                    previousClassName="page-item previous"
-                    previousLinkClassName="page-link"
-                    nextClassName="page-item previous"
-                    nextLinkClassName="page-link"
-                    breakClassName="page-item"
-                    breakLinkClassName="page-link"
-                    containerClassName="pagination"
-                    activeClassName="active active-pagination"
-                  />
-                </div>
               </div>
               <div className="category__blog_doctor">
                 <div className="category__blog_doctor_info">

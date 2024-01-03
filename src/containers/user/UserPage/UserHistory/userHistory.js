@@ -10,7 +10,7 @@ import {
 } from "service/UserService";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-// import ReactPaginate from "react-paginate";
+import { FaRegStar } from "react-icons/fa";
 import ReactStars from "react-rating-stars-component";
 import Moment from "react-moment";
 import { FaRegCalendarAlt } from "react-icons/fa";
@@ -45,8 +45,8 @@ const UserHistory = () => {
   const [date, setDate] = useState("");
   const [address, setAddress] = useState("");
   const [rating, setRating] = useState("");
-  console.log(rating);
   const [idSchedule, setIdSchedule] = useState("");
+  const [star, setStar] = useState(0);
   console.log(idSchedule);
   const getBooking = async () => {
     let res = await getAppoinment();
@@ -78,6 +78,7 @@ const UserHistory = () => {
     let res = await ratingAppointment(id, rating);
     if (res?.rating) {
       console.log(res);
+      getBooking();
       toast.success("Vote thành công!");
     } else if (res?.detail) {
       toast.error("Lịch hẹn này đã được vote");
@@ -635,7 +636,27 @@ const UserHistory = () => {
                                     </p>
                                   </td>
                                   <td className="d-flex table__action">
-                                    <button
+                                    {item?.rating > 0 ? (
+                                      <button
+                                        type="button"
+                                        class="btn btn-link btn-sm btn-rounded"
+                                        disabled
+                                      >
+                                        Voted
+                                      </button>
+                                    ) : (
+                                      <button
+                                        type="button"
+                                        class="btn btn-link btn-sm btn-rounded"
+                                        onClick={() => {
+                                          handleShowRating();
+                                          setIdSchedule(item?.id);
+                                        }}
+                                      >
+                                        Vote
+                                      </button>
+                                    )}
+                                    {/* <button
                                       type="button"
                                       class="btn btn-link btn-sm btn-rounded"
                                       onClick={() => {
@@ -644,7 +665,7 @@ const UserHistory = () => {
                                       }}
                                     >
                                       Vote
-                                    </button>
+                                    </button> */}
                                     <button
                                       type="button"
                                       class="btn btn-link btn-sm btn-rounded"
@@ -673,6 +694,7 @@ const UserHistory = () => {
                                           item?.schedule_doctor?.doctor
                                             ?.hospital?.address,
                                         );
+                                        setStar(item?.rating);
                                       }}
                                     >
                                       Xem
@@ -770,6 +792,20 @@ const UserHistory = () => {
                                           </p>
                                           <p>{address}</p>
                                         </div>
+                                        {star > 0 && (
+                                          <div className="view__content">
+                                            <p className="view__text">
+                                              Bạn đánh giá cuộc hẹn :
+                                            </p>
+                                            <p>{star}/5</p>
+                                            <FaRegStar
+                                              style={{
+                                                transform: "translateY(-9px)",
+                                                color: "yellow",
+                                              }}
+                                            ></FaRegStar>
+                                          </div>
+                                        )}
                                       </div>
                                     </Modal.Body>
                                     <Modal.Footer>

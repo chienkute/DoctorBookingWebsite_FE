@@ -17,10 +17,6 @@ const Blog = () => {
     let res = await getBlogById(id);
     if (res) {
       console.log(res);
-      setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-      }, 1500);
       setBlog(res);
       setDoctor(res?.id_doctor);
       setContent(res?.content);
@@ -29,7 +25,11 @@ const Blog = () => {
   };
   useEffect(() => {
     getContentBlog();
-  // eslint-disable-next-line
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+    // eslint-disable-next-line
   }, []);
   return (
     <div>
