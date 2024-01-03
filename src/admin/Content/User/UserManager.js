@@ -34,8 +34,11 @@ const UserManager = () => {
   const [accounts, setAccounts] = useState([]);
   const [idAccout, setIdAccount] = useState("");
   const [total, setTotal] = useState(0);
+  const [count, setCount] = useState(0);
   const [targetAcc, setTargetAcc] = useState({});
+  const [page, setPage] = useState(1);
   const handlePageClick = (event) => {
+    setPage(+event.selected + 1);
     getAccount(+event.selected + 1);
   };
   const getAccount = async (page) => {
@@ -46,22 +49,29 @@ const UserManager = () => {
       setCurrentPage(res?.current_page);
       setAccounts(res?.results);
       setTotal(res?.count);
+      setCount(res?.count);
     }
   };
   const deleteAccouns = async (id) => {
     let res = await deleteUser(id);
     if (res) {
       console.log(res);
-      getAccount(1);
-      setCurrentPage(1);
+      getAccount(page);
       toast.success("Xóa thành công");
     } else {
       toast.error("Xóa thất bại");
     }
   };
   useEffect(() => {
-    getAccount();
+    getAccount(1);
   }, []);
+  useEffect(() => {
+    if (search === "") {
+      setCount(total);
+    } else {
+      setCount(filteredCategories.length);
+    }
+  }, [search]);
   const filteredCategories = accounts.filter((item) =>
     item?.account?.username?.toLowerCase().includes(search.toLowerCase()),
   );
@@ -100,12 +110,15 @@ const UserManager = () => {
           username: "",
           email: "",
           password: "",
+          confirmpasswd: "",
         });
-        getAccount(1);
         if (res.hasOwnProperty("access_token")) {
+          handleCloseAddNewHospital();
+          getAccount(page);
           toast.success("Thêm thành công");
         } else {
-          toast.error("Thêm thất bại");
+          handleCloseAddNewHospital();
+          toast.error("Đã tồn tại tài khoản hoặc email!");
         }
       } else {
         toast.error("Thêm thất bại");
@@ -253,7 +266,6 @@ const UserManager = () => {
             <Button
               variant="primary"
               onClick={() => {
-                handleCloseAddNewHospital();
                 formik.handleSubmit();
               }}
             >
@@ -264,7 +276,8 @@ const UserManager = () => {
       </div>
       <div className="AdminUserResult">
         <div className="ResultPerTable">
-          <label htmlFor="dropdown">Có {total} kết quả tìm được</label>
+          {/* <label htmlFor="dropdown"></label> */}
+          <label htmlFor="dropdown">Có {count} kết quả tìm được</label>
         </div>
         <div className="Table">
           <table>
@@ -288,8 +301,13 @@ const UserManager = () => {
                     </td>
                     <td>{(currentPage - 1) * 6 + index + 1}</td>
                     <td>{item?.account?.username}</td>
-                    {item?.gender && <td>Nam</td>}
-                    {!item?.gender && <td>Nữ</td>}
+                    <td>
+                      {item?.gender === true
+                        ? "Nam"
+                        : item?.gender === false
+                          ? "Nữ"
+                          : "Chưa có dữ liệu"}
+                    </td>
                     <td style={{ maxWidth: "140px" }}>{item?.address}</td>
                     <td>
                       <div className="Action">
@@ -298,7 +316,6 @@ const UserManager = () => {
                           onClick={() => {
                             handleShowEdit();
                             setTargetAcc(item);
-                            console.log(targetAcc);
                           }}
                         >
                           <IoInformation />

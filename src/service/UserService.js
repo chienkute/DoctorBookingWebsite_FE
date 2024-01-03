@@ -86,7 +86,7 @@ const getAppoinment = () => {
   return instance.get("/api/appointmentsbyuser/");
 };
 const ratingAppointment = (id, rating) => {
-  return instance.post(`/api/statusappointment/${id}/`, { rating });
+  return instance.post(`/api/ratingappointment/${id}/`, { rating });
 };
 const statusAppoinment = (id, status) => {
   return instance.post(`/api/statusappointment/${id}/`, { status });

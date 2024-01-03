@@ -36,11 +36,47 @@ const AdminTopic = () => {
   const [imageUpdate, setImageUpdate] = useState([]);
   const [id, setId] = useState("");
   const inputRef = useRef(null);
+  const [total, setTotal] = useState(0);
   const [count, setCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
+  const [page, setPage] = useState(1);
+  const [urlImage, setUrlImage] = useState("");
+  const toDataURL = (url) =>
+    fetch(urlImage)
+      .then((response) => response.blob())
+      .then(
+        (blob) =>
+          new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          }),
+      );
+  function dataURLtoFile(dataurl, filename) {
+    var arr = dataurl.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  }
+  const changeFileObejct = () => {
+    toDataURL(urlImage).then((dataUrl) => {
+      var fileData = dataURLtoFile(dataUrl, "icon.jpg");
+      setImageUpdate(fileData);
+    });
+  };
+  useEffect(() => {
+    changeFileObejct();
+  }, [urlImage]);
   const handlePageClick = (event) => {
     console.log(+event.selected + 1);
+    setPage(+event.selected + 1);
     getAllCategories(+event.selected + 1);
   };
   const getAllCategories = async (page) => {
@@ -48,6 +84,7 @@ const AdminTopic = () => {
     if (res?.results) {
       console.log(res);
       setCount(res?.count);
+      setTotal(res?.count);
       setCurrentPage(res?.current_page);
       setTotalPage(res?.total_page);
       setCategory(res?.results);
@@ -56,6 +93,13 @@ const AdminTopic = () => {
   const filteredCategories = category.filter((item) =>
     item.name.toLowerCase().includes(search.toLowerCase()),
   );
+  useEffect(() => {
+    if (search === "") {
+      setCount(total);
+    } else {
+      setCount(filteredCategories.length);
+    }
+  }, [search]);
   const handleImageClick = () => {
     inputRef.current.click();
   };
@@ -65,26 +109,27 @@ const AdminTopic = () => {
   };
   const fixCategory = async (id) => {
     let res = await editCategory(id, nameAdd, describeAdd, imageUpdate);
-    if (res) {
+    if (res?.id) {
       console.log(res);
-      getAllCategories();
+      getAllCategories(page);
+      handleCloseEditBlog();
       toast.success("Sửa thành công");
     } else {
-      toast.error("Sửa thất bại");
+      toast.error("Các trường không được để trống!");
     }
   };
   const deleteCategories = async (id) => {
     let res = await deleteCategory(id);
     if (res) {
       console.log(res);
-      getAllCategories();
+      getAllCategories(page);
       toast.success("Xóa thành công");
     } else {
       toast.error("Xóa thất bại");
     }
   };
   useEffect(() => {
-    getAllCategories();
+    getAllCategories(1);
   }, []);
   const formik = useFormik({
     enableReinitialize: true,
@@ -98,16 +143,16 @@ const AdminTopic = () => {
     }),
     onSubmit: async (values) => {
       let res = await addCategory(values.name, values.describe, imageUpdate);
-      if (res) {
-        console.log(res);
+      if (res?.name) {
         toast.success("Thêm thành công");
-        getAllCategories();
+        handleCloseAddNewBlog();
+        getAllCategories(page);
         formik.setValues({
           name: "",
           describe: "",
         });
       } else {
-        toast.error("Thêm thất bại");
+        toast.error("Các trường không được để trống !");
       }
     },
   });
@@ -135,6 +180,7 @@ const AdminTopic = () => {
             onClick={() => {
               handleShowAddNewBlog();
               setImage("");
+              setImageUpdate("");
             }}
           >
             <FaPlus /> Thêm chuyên mục...
@@ -162,7 +208,6 @@ const AdminTopic = () => {
                         <img
                           src={avatar}
                           alt="BlogImg"
-                          className="avatarBefore"
                           onClick={handleImageClick}
                         ></img>
                       )}
@@ -230,7 +275,6 @@ const AdminTopic = () => {
                 variant="primary"
                 type="submit"
                 onClick={() => {
-                  handleCloseAddNewBlog();
                   formik.handleSubmit();
                 }}
               >
@@ -285,9 +329,10 @@ const AdminTopic = () => {
                               setIcon(item?.icon);
                               setId(item?.id);
                               handleShowEditBlog();
-                              setImage("");
                               setNameAdd(item?.name);
                               setDescribeAdd(item?.describe);
+                              setUrlImage(item?.icon);
+                              setImage("");
                             }}
                           >
                             <FiEdit3 />
@@ -389,7 +434,6 @@ const AdminTopic = () => {
                                 variant="primary"
                                 onClick={() => {
                                   fixCategory(id);
-                                  handleCloseEditBlog();
                                 }}
                               >
                                 Lưu

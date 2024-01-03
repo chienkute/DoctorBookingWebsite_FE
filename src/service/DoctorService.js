@@ -110,9 +110,9 @@ const getSpecialtyByName = (name, id_doctor) => {
     `/api/search_specialty666/?name=${name}&id_doctor=${id_doctor}`,
   );
 };
-const getSpecialtyByDoctorId = (id_doctor, limit = 100, offset = 0) => {
+const getSpecialtyByDoctorId = (id_doctor, offset) => {
   return instance.get(
-    `/api/specialtydoctor/?doctor=${id_doctor}&limit=${limit}&offset=${offset}`,
+    `/api/specialtydoctor/?doctor=${id_doctor}&limit=4&offset=${offset}`,
   );
 };
 const getServiceByName = (name, id_doctor) => {
@@ -120,9 +120,9 @@ const getServiceByName = (name, id_doctor) => {
     `/api/search_service666/?name=${name}&id_doctor=${id_doctor}`,
   );
 };
-const getServiceByDoctorId = (id_doctor, limit = 100, offset = 0) => {
+const getServiceByDoctorId = (id_doctor, offset) => {
   return instance.get(
-    `/api/servicedoctors/?doctor=${id_doctor}&limit=${limit}&offset=${offset}`,
+    `/api/servicedoctors/?doctor=${id_doctor}&limit=4&offset=${offset}`,
   );
 };
 const deleteSomeServiceDoctor = (ServiceDoctorIds) => {

@@ -122,6 +122,16 @@ const InfoHospital = () => {
       editInfo(values.username);
     },
   });
+  const handleClick = () => {
+    getInfoHospital();
+    formik.setValues({
+      name: name,
+      address: adress,
+      email: email,
+      info: info,
+      username: username,
+    });
+  };
   return (
     <div className="information">
       <h1>Hồ sơ cá nhân</h1>
@@ -289,7 +299,8 @@ const InfoHospital = () => {
               type="button"
               onClick={() => {
                 setEdit(true);
-                handleCallAPI();
+                // getInfoHospital();
+                handleClick();
               }}
             >
               Hủy

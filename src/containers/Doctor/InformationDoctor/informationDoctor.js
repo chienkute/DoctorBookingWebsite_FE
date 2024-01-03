@@ -1,4 +1,4 @@
-import { memo, useContext, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import "./informationDoctor.scss";
 import avatar from "../../../assets/avatar.jpg";
 import upload from "../../../assets/upload 1.svg";
@@ -6,16 +6,11 @@ import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { UpdateContext } from "context/UpdateContext";
 import { editAvatar, getDoctorByID } from "service/UserService";
 import { Form } from "react-bootstrap";
 import { editDoctorInformation, editUsername } from "service/DoctorService";
 const InformationDoctor = () => {
   const { id } = useParams();
-  const { update, setUpdate } = useContext(UpdateContext);
-  const handleCallAPI = () => {
-    setUpdate(!update);
-  };
   const inputRef = useRef(null);
   const [edit, setOpenEdit] = useState(true);
   const [name, setName] = useState("");
@@ -58,9 +53,6 @@ const InformationDoctor = () => {
     getInfoDoctor();
   }, []);
   useEffect(() => {
-    getInfoDoctor();
-  }, [update]);
-  useEffect(() => {
     if (imageUpdate !== null) {
       const updatedFormData = new FormData();
       updatedFormData.append("avatar", imageUpdate);
@@ -76,13 +68,11 @@ const InformationDoctor = () => {
   const editInfo = async (username, email) => {
     let res = await editUsername(username, email, idAccount);
     if (res) {
-      // toast.success("Sửa thành công");
       console.log(res);
     } else {
       toast.error("Sửa thất bại");
     }
   };
-
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -134,6 +124,19 @@ const InformationDoctor = () => {
       editInfo(values.username, values.email);
     },
   });
+  const handleClick = () => {
+    getInfoDoctor();
+    formik.setValues({
+      name: name,
+      address: adress,
+      phone: phone,
+      year: year,
+      birthday: birthday,
+      gender: gender,
+      email: email,
+      username: username,
+    });
+  };
   return (
     <div className="information">
       <h1>Hồ sơ cá nhân</h1>
@@ -342,7 +345,7 @@ const InformationDoctor = () => {
               type="button"
               onClick={() => {
                 setOpenEdit(true);
-                handleCallAPI();
+                handleClick();
               }}
             >
               Hủy

@@ -3,7 +3,11 @@ import { memo, useEffect, useState } from "react";
 import "./userHistory.scss";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import { getAppoinment, statusAppoinment } from "service/UserService";
+import {
+  getAppoinment,
+  ratingAppointment,
+  statusAppoinment,
+} from "service/UserService";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 // import ReactPaginate from "react-paginate";
@@ -11,6 +15,7 @@ import ReactStars from "react-rating-stars-component";
 import Moment from "react-moment";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import avatar from "../../../../assets/avatar.jpg";
+import { toast } from "react-toastify";
 const UserHistory = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -40,6 +45,9 @@ const UserHistory = () => {
   const [date, setDate] = useState("");
   const [address, setAddress] = useState("");
   const [rating, setRating] = useState("");
+  console.log(rating);
+  const [idSchedule, setIdSchedule] = useState("");
+  console.log(idSchedule);
   const getBooking = async () => {
     let res = await getAppoinment();
     if (res) {
@@ -59,8 +67,20 @@ const UserHistory = () => {
   };
   const cancelSchedule = async (id) => {
     let res = await statusAppoinment(id, "2");
-    if (res) {
+    if (res?.date) {
       console.log(res);
+      toast.success("Hủy thành công!");
+    } else {
+      toast.error("Có lỗi trong việc xử lý!");
+    }
+  };
+  const vote = async (id) => {
+    let res = await ratingAppointment(id, rating);
+    if (res?.rating) {
+      console.log(res);
+      toast.success("Vote thành công!");
+    } else if (res?.detail) {
+      toast.error("Lịch hẹn này đã được vote");
     }
   };
   useEffect(() => {
@@ -174,7 +194,10 @@ const UserHistory = () => {
                                     <button
                                       type="button"
                                       class="btn btn-link btn-sm btn-rounded"
-                                      onClick={handleShow}
+                                      onClick={() => {
+                                        handleShow();
+                                        setIdSchedule(item?.id);
+                                      }}
                                     >
                                       Hủy
                                     </button>
@@ -231,7 +254,7 @@ const UserHistory = () => {
                                         variant="primary"
                                         onClick={() => {
                                           handleClose();
-                                          cancelSchedule(item.id);
+                                          cancelSchedule(idSchedule);
                                           setUpdate(!update);
                                           getBooking();
                                         }}
@@ -615,7 +638,10 @@ const UserHistory = () => {
                                     <button
                                       type="button"
                                       class="btn btn-link btn-sm btn-rounded"
-                                      onClick={handleShowRating}
+                                      onClick={() => {
+                                        handleShowRating();
+                                        setIdSchedule(item?.id);
+                                      }}
                                     >
                                       Vote
                                     </button>
@@ -682,7 +708,10 @@ const UserHistory = () => {
                                       </Button>
                                       <Button
                                         variant="primary"
-                                        onClick={handleCloseRating}
+                                        onClick={() => {
+                                          handleCloseRating();
+                                          vote(idSchedule);
+                                        }}
                                       >
                                         Xác nhận
                                       </Button>

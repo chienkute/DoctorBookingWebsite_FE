@@ -23,7 +23,6 @@ import infoHospital from "containers/Hospital/InfoHospital/infoHospital";
 import doctorManagement from "containers/Hospital/DoctorManagement/doctorManagement";
 import ManageScheduleDoctor from "containers/Doctor/ManageScheduleDoctor/manageScheduleDoctor";
 import hospitalPassword from "containers/Hospital/ChangePassword/hospitalPassword";
-import dashboardHospital from "containers/Hospital/DashboardHospital/dashboardHospital";
 import changePasswordDoctor from "containers/Doctor/ChangePasswordDoctor/changePasswordDoctor";
 import manageAppointment from "containers/Doctor/ManageAppointment/manageAppointment";
 import manageBlog from "containers/Doctor/ManageBlog/manageBlog";
@@ -87,7 +86,6 @@ const routeHospital = [
   { path: "/hospital/information/:id", component: infoHospital },
   { path: "/hospital/doctormanagement/:id", component: doctorManagement },
   { path: "/hospital/changepassword/:id", component: hospitalPassword },
-  { path: "/hospital/dashboard/", component: dashboardHospital },
 ];
 
 const routeDoctor = [

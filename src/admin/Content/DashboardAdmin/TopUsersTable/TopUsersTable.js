@@ -1,11 +1,11 @@
 // TopUsersTable.jsx
 
-import React from 'react';
-import './TopUsersTable.scss';
+import React from "react";
+import "./TopUsersTable.scss";
 
 const TopUsersTable = ({ topUsers }) => {
   return (
-    <table className="table">
+    <table className="table_dashboard">
       <thead>
         <tr>
           <th>User Name</th>

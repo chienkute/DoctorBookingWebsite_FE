@@ -1,9 +1,9 @@
-import React from 'react';
-import './TopDoctorsTable.scss';
+import React from "react";
+import "./TopDoctorsTable.scss";
 
 const TopDoctorsTable = ({ topDoctor }) => {
   return (
-    <table className="table">
+    <table className="table_top">
       <thead>
         <tr>
           <th>Doctor Name</th>

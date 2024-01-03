@@ -9,6 +9,9 @@
 .previous {
   border: 1px solid $border !important;
   border-radius: 6px;
+  .page-link {
+    background-color: #fff;
+  }
 }
 .pagination {
   display: flex;
@@ -25,5 +28,10 @@
   a {
     color: white !important;
     background: $color-blue !important;
+  }
+}
+.disabled {
+  .page-link {
+    background-color: rgb(217, 217, 217) !important;
   }
 }

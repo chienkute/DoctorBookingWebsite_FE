@@ -32,7 +32,6 @@ const DoctorManagement = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowConfPassword, setIsShowConfPassword] = useState(false);
   const [edit, setEdit] = useState(false);
-  const [update, setUpdate] = useState(false);
   const [doctor, setDoctor] = useState([]);
   const [cout, setCount] = useState("");
   const [query, setQuery] = useState("");
@@ -44,10 +43,12 @@ const DoctorManagement = () => {
   const [birthday, setBirthday] = useState("");
   const [email, setEmail] = useState("");
   const [idAccout, setIdAccount] = useState("");
+  const [page, setPage] = useState(1);
   const pageTotal = cout / 6;
   const roundedNumber = Math.ceil(pageTotal);
   const handlePageClick = (event) => {
     console.log(+event.selected + 1);
+    setPage(+event.selected + 1);
     getDoctorById(+event.selected + 1);
   };
   const getDoctorById = async (page) => {
@@ -62,7 +63,7 @@ const DoctorManagement = () => {
     let res = await deleteDocotor(id);
     if (res) {
       console.log(res);
-      getDoctorById();
+      getDoctorById(page);
       toast.success("Xóa thành công");
     } else {
       toast.error("Xóa thất bại");
@@ -74,9 +75,6 @@ const DoctorManagement = () => {
   useEffect(() => {
     getDoctorById(1);
   }, [queryDebounce]);
-  useEffect(() => {
-    getDoctorById(1);
-  }, [update]);
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -113,7 +111,7 @@ const DoctorManagement = () => {
           password: "",
         });
         console.log(res);
-        getDoctorById();
+        getDoctorById(page);
         handleCloseAddNewDoctor();
         toast.success("Thêm thành công");
       } else {
@@ -122,6 +120,7 @@ const DoctorManagement = () => {
           email: "",
           password: "",
         });
+        getDoctorById(1);
         handleCloseAddNewDoctor();
         toast.error("Tên tài khoản hoặc email đã tồn tại");
       }
@@ -277,8 +276,6 @@ const DoctorManagement = () => {
               variant="primary"
               onClick={() => {
                 formik.handleSubmit();
-                getDoctorById();
-                setUpdate(!update);
               }}
             >
               Lưu
@@ -325,7 +322,7 @@ const DoctorManagement = () => {
                           ? "Nam"
                           : item?.gender === false
                             ? "Nữ"
-                            : "Giới tính thứ ba" || "Chưa có dữ liệu"}
+                            : "Chưa có dữ liệu"}
                       </td>
                       <td>{item?.address || "Chưa có dữ liệu"}</td>
                       <td>
@@ -418,7 +415,13 @@ const DoctorManagement = () => {
                                       id="username"
                                       class="form-control"
                                       autoComplete="off"
-                                      defaultValue={gender ? "Nam" : "Nữ"}
+                                      defaultValue={
+                                        gender === null
+                                          ? ""
+                                          : gender
+                                            ? "Nam"
+                                            : "Nữ"
+                                      }
                                       disabled
                                     />
                                   </div>

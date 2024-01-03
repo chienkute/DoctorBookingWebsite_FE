@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import "./hospitalSide.scss";
 import logo from "assets/logo.png";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { UpdateContext } from "context/UpdateContext";
 const HospitalSide = () => {
@@ -23,9 +23,9 @@ const HospitalSide = () => {
   return (
     <div className="AdminSideMenuContainer">
       <div className="AdminSideMenuLogo">
-        <a href="/admin" alt="AdminPageLink">
+        <Link to={`/hospital/information/${id}`}>
           <img src={logo} alt="Logo"></img>
-        </a>
+        </Link>
       </div>
       <div className="AdminMenu">
         <NavLink
@@ -58,9 +58,6 @@ const HospitalSide = () => {
         <NavLink to={"/login"} className="AdminMenu" onClick={handleLogout}>
           Đăng xuất
         </NavLink>
-        {/* <NavLink to={"/hospital/dashboard"} className="AdminMenu">
-          Thống kê
-        </NavLink> */}
       </div>
     </div>
   );

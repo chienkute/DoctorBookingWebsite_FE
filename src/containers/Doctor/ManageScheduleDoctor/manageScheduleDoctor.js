@@ -4,8 +4,6 @@ import { convertDayOfWeek, convertDayOfWeektoNumber } from "tool/DataTimeTool";
 import {
   fetchAllSchedule,
   fetchAllScheduleByDoctorId,
-  // addScheduleDoctor,
-  // deleteScheduleDoctor,
   addSomeScheduleDoctor,
   deleteSomeScheduleDoctor,
 } from "service/DoctorService.js";
@@ -34,8 +32,6 @@ const ManageScheduleDoctor = () => {
           break;
         }
       }
-      //   let res = await fetchAllSchedule();
-      //   console.log("res", res);
       setSchedules(schedules);
       console.log("schedule", schedules);
     } catch (error) {
@@ -53,8 +49,6 @@ const ManageScheduleDoctor = () => {
           break;
         }
       }
-      //   let res = await fetchAllSchedule();
-      //   console.log("res", res);
       setOldScheduleDoctor(
         oldSchedules.map((oldSchedule) => {
           return {
@@ -121,13 +115,9 @@ const ManageScheduleDoctor = () => {
   }, [schedules]);
 
   const renderTimeMorningDivs = () => {
-    // console.log(choosedIdSchedules.length);
-    // console.log(choosedIdSchedules);
     const timeDivs = [];
     console.log("choosedIdSchedules.length", choosedIdSchedules.length);
     for (let i = 0; i < timeMorning.length; i++) {
-      // console.log("timeMorning[i]['start']", timeMorning[i]['start']);
-      // console.log("format(timeMorning[i]['start'], 'HH:mm')", format(timeMorning[i]['start'], 'HH:mm'));
       const isTimeChosen = choosedIdSchedules.some(
         (choosedIdSchedule) => choosedIdSchedule === timeMorning[i]["id"],
       );
@@ -164,8 +154,6 @@ const ManageScheduleDoctor = () => {
   };
 
   const renderTimeAfternoonDivs = () => {
-    // console.log(choosedIdSchedules.length);
-    // console.log(choosedIdSchedules);
     const timeDivs = [];
     for (let i = 0; i < timeAfternoon.length; i++) {
       const isTimeChosen = choosedIdSchedules.some(
@@ -202,8 +190,6 @@ const ManageScheduleDoctor = () => {
     return timeDivs;
   };
   const renderTimeEveningDivs = () => {
-    // console.log(choosedIdSchedules.length);
-    // console.log(choosedIdSchedules);
     const timeDivs = [];
     for (let i = 0; i < timeEvening.length; i++) {
       const isTimeChosen = choosedIdSchedules.some(
@@ -257,9 +243,6 @@ const ManageScheduleDoctor = () => {
     schedules.forEach((schedule) => {
       // Lấy giá trị "start" và "end" và dayOfWeek của schedule
       const { id, start, end, days_of_week } = schedule;
-      // console.log(days_of_week !== choosedDayOfWeekNumber);
-      // console.log(days_of_week);
-      // console.log(choosedDayOfWeekNumber);
       if (days_of_week !== choosedDayOfWeekNumber) {
         // tiếp tục vòng lặp
         return;

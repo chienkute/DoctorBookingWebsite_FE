@@ -39,8 +39,44 @@ const AdminService = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(0);
+  const [urlImage, setUrlImage] = useState("");
+  const toDataURL = (url) =>
+    fetch(urlImage)
+      .then((response) => response.blob())
+      .then(
+        (blob) =>
+          new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          }),
+      );
+  function dataURLtoFile(dataurl, filename) {
+    var arr = dataurl.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  }
+  const changeFileObejct = () => {
+    toDataURL(urlImage).then((dataUrl) => {
+      var fileData = dataURLtoFile(dataUrl, "icon.jpg");
+      setImageUpdate(fileData);
+    });
+  };
+  useEffect(() => {
+    changeFileObejct();
+  }, [urlImage]);
   const handlePageClick = (event) => {
     console.log(+event.selected + 1);
+    setPage(+event.selected + 1);
     getAllCategories(+event.selected + 1);
   };
   const getAllCategories = async (page) => {
@@ -51,11 +87,19 @@ const AdminService = () => {
       setTotal(res?.count);
       setCurrentPage(res?.current_page);
       setCategory(res?.results);
+      setCount(res?.count);
     }
   };
   const filteredCategories = category.filter((item) =>
     item.name.toLowerCase().includes(search.toLowerCase()),
   );
+  useEffect(() => {
+    if (search === "") {
+      setCount(total);
+    } else {
+      setCount(filteredCategories.length);
+    }
+  }, [search]);
   const handleImageClick = () => {
     inputRef.current.click();
   };
@@ -65,26 +109,27 @@ const AdminService = () => {
   };
   const fixCategory = async (id) => {
     let res = await editService(id, nameAdd, describeAdd, imageUpdate);
-    if (res) {
+    if (res?.id) {
       console.log(res);
       toast.success("Sửa thành công");
-      getAllCategories();
+      getAllCategories(page);
+      handleCloseEditBlog();
     } else {
-      toast.error("Sửa thất bại");
+      toast.error("Các trường không được để trống!");
     }
   };
   const deleteCategories = async (id) => {
     let res = await deleteService(id);
     if (res) {
       console.log(res);
-      getAllCategories();
+      getAllCategories(page);
       toast.success("Xóa thành công");
     } else {
       toast.error("Xóa thất bại");
     }
   };
   useEffect(() => {
-    getAllCategories();
+    getAllCategories(1);
   }, []);
   const formik = useFormik({
     enableReinitialize: true,
@@ -100,15 +145,16 @@ const AdminService = () => {
       let res = await addService(values.name, values.describe, imageUpdate);
       if (res) {
         console.log(res);
-        getAllCategories();
         formik.setValues({
           name: "",
           describe: "",
         });
         if (res.hasOwnProperty("id")) {
+          handleCloseAddNewBlog();
+          getAllCategories(page);
           toast.success("Thêm thành công");
         } else {
-          toast.error("Thêm thất bại");
+          toast.error("Các trường không được để trống !");
         }
       } else {
         toast.error("Thêm thất bại");
@@ -139,6 +185,7 @@ const AdminService = () => {
             onClick={() => {
               handleShowAddNewBlog();
               setImage("");
+              setImageUpdate("");
             }}
           >
             <FaPlus /> Thêm dịch vụ...
@@ -233,7 +280,6 @@ const AdminService = () => {
                 variant="primary"
                 type="submit"
                 onClick={() => {
-                  handleCloseAddNewBlog();
                   formik.handleSubmit();
                 }}
               >
@@ -244,7 +290,7 @@ const AdminService = () => {
         </div>
         <div className="AdminServiceResult">
           <div className="ResultPerTable">
-            <label for="dropdown">Có {total} kết quả tìm được</label>
+            <label for="dropdown">Có {count} kết quả tìm được</label>
           </div>
           <div className="Table">
             <table>
@@ -291,6 +337,7 @@ const AdminService = () => {
                               setImage("");
                               setNameAdd(item?.name);
                               setDescribeAdd(item?.descripe);
+                              setUrlImage(item?.icon);
                             }}
                           >
                             <FiEdit3 />
@@ -392,7 +439,6 @@ const AdminService = () => {
                                 variant="primary"
                                 onClick={() => {
                                   fixCategory(id);
-                                  handleCloseEditBlog();
                                 }}
                               >
                                 Lưu

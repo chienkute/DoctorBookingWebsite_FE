@@ -2,8 +2,8 @@ import React, { memo, useEffect, useState } from "react";
 import "./Doctor.scss";
 import AppointmentBox from "../AppointmentBox/AppointmentBox";
 import avatar from "assets/avatar.png";
-import banking from "assets/ck.png";
-import VISA from "assets/VISA.jpg";
+// import banking from "assets/ck.png";
+// import VISA from "assets/VISA.jpg";
 import { getDoctorByID } from "service/UserService";
 import { useParams } from "react-router-dom";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
@@ -14,7 +14,7 @@ const Doctor = () => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     getDoctor();
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
   const getDoctor = async () => {
     let res = await getDoctorByID(id);
@@ -99,13 +99,11 @@ const Doctor = () => {
                 <div className="Header">
                   <ul className="clear ListTab">
                     <li className="bold Tab selected">Thông tin cơ bản</li>
-                    {/* <li className="bold Tab">Đánh giá (0)</li> */}
                   </ul>
                 </div>
                 <div className="Content">
                   <div className="BasicInfo">
                     <div className="bold Header">Thông tin bác sĩ </div>
-                    {/* <p>{doctor?.info || ""}</p> */}
                     <p>
                       Bác sĩ {doctor?.name} có hơn 5 năm kinh nghiệm trong việc
                       thăm khám và điều trị các vấn đề bệnh lý đa khoa dành cho
@@ -144,23 +142,28 @@ const Doctor = () => {
                     </div>
                     <div className="Content">
                       <ul className="clear ListService">
-                        <li className="Service">
-                          <div className="ServiceHeader">
-                            Tư vấn bệnh lí đa khoa
-                          </div>
-                          <div className="ServiceDetails">
-                            Bác sĩ có nhận thăm khám, tư vấn bệnh lý đa khoa,
-                            bệnh lý Nội khoa, tư vấn tiêm chủng theo hình thức
-                            Telemedicine.
-                          </div>
-                          <div className="ServiceFee">
-                            <span className="Icon">
-                              <RiMoneyDollarCircleLine></RiMoneyDollarCircleLine>
-                            </span>
-                            <span>Phí tư vấn ban đầu từ</span>
-                            <span className="Fee"> {doctor?.price}đ</span>
-                          </div>
-                        </li>
+                        {doctor?.services &&
+                          doctor?.services?.map((item, index) => {
+                            return (
+                              <li className="Service">
+                                <div className="ServiceHeader">
+                                  {item?.service?.name}
+                                </div>
+                                <div className="ServiceDetails">
+                                  Bác sĩ có nhận thăm khám, tư vấn bệnh lý{" "}
+                                  {item?.service?.name} tư vấn tiêm chủng theo
+                                  hình thức Telemedicine.
+                                </div>
+                                <div className="ServiceFee">
+                                  <span className="Icon">
+                                    <RiMoneyDollarCircleLine></RiMoneyDollarCircleLine>
+                                  </span>
+                                  <span>Phí tư vấn ban đầu từ</span>
+                                  <span className="Fee"> {doctor?.price}đ</span>
+                                </div>
+                              </li>
+                            );
+                          })}
                       </ul>
                     </div>
                   </div>
@@ -281,7 +284,7 @@ const Doctor = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="PaymentMethod">
+                  {/* <div className="PaymentMethod">
                     <div className="Header">
                       <div className="HeaderName">Hình thức thanh toán</div>
                     </div>
@@ -301,7 +304,7 @@ const Doctor = () => {
                         </li>
                       </ul>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

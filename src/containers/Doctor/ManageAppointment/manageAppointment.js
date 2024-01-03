@@ -11,7 +11,6 @@ import {
 // import { IoClose } from "react-icons/io5";
 import avatar from "../../../assets/avatar.png";
 import { Button, Modal } from "react-bootstrap";
-// import Form from "react-bootstrap/Form";
 import ReactPaginate from "react-paginate";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useParams } from "react-router";
@@ -19,6 +18,8 @@ import { MdOutlinePending } from "react-icons/md";
 import { getDoctorAppoinment } from "service/DoctorService";
 import { statusAppoinment } from "service/UserService";
 import { toast } from "react-toastify";
+import moment from "moment";
+import { FaRegStar } from "react-icons/fa";
 const ManageAppointment = () => {
   const { id } = useParams();
   const [update, setUpdate] = useState(false);
@@ -34,7 +35,6 @@ const ManageAppointment = () => {
   const [showCancelAppointment, setShowCancelAppointment] = useState(false);
   const handleCloseCancelAppointment = () => setShowCancelAppointment(false);
   const handleShowCancelAppointment = () => setShowCancelAppointment(true);
-  const [edit, setEdit] = useState(false);
   const [query, setQuery] = useState("");
   const [count, setCount] = useState("");
   const [appointment, setAppoinment] = useState([]);
@@ -48,10 +48,16 @@ const ManageAppointment = () => {
   const [date, setDate] = useState("");
   const [idAppointment, setIdAppointment] = useState("");
   const [totalPage, setTotalPage] = useState(0);
-  // const [hasclick, setHasClick] = useState(true);
+  const currentDate = moment();
   const [image, setImage] = useState("");
+  const [rate, setRate] = useState(0);
+  const [status, setStatuss] = useState(0);
   const queryDebounce = useDebounce(query, 500);
+  const [page, setPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [total, setTotal] = useState(0);
   const handlePageClick = (event) => {
+    setPage(+event.selected + 1);
     getAppoinment(+event.selected + 1);
   };
   const getAppoinment = async (page) => {
@@ -60,7 +66,9 @@ const ManageAppointment = () => {
       console.log(res);
       setTotalPage(res?.total_page);
       setAppoinment(res?.results);
+      setCurrentPage(res?.current_page);
       setCount(res?.count);
+      setTotal(res?.count);
     }
   };
   const setStatus = async (id, status) => {
@@ -68,7 +76,7 @@ const ManageAppointment = () => {
     if (res) {
       console.log(res);
       toast.success("Thay đổi thành công");
-      getAppoinment(1);
+      getAppoinment(page);
     } else {
       toast.error("Thay đổi thất bại");
     }
@@ -77,10 +85,17 @@ const ManageAppointment = () => {
     item?.user?.name.toLowerCase().includes(queryDebounce.toLowerCase()),
   );
   useEffect(() => {
-    getAppoinment();
+    if (queryDebounce === "") {
+      setCount(total);
+    } else {
+      setCount(filteredCategories.length);
+    }
+  }, [queryDebounce]);
+  useEffect(() => {
+    getAppoinment(1);
   }, []);
   useEffect(() => {
-    getAppoinment();
+    getAppoinment(page);
   }, [update]);
   const formatTime = (time) => {
     if (time) {
@@ -147,7 +162,7 @@ const ManageAppointment = () => {
                       <td>
                         <input type="checkbox"></input>
                       </td>
-                      <td>{index}</td>
+                      <td>{(currentPage - 1) * 6 + index + 1}</td>
                       <td style={{ transform: "translateY(10px)" }}>
                         <p>{item?.user?.name || "Chưa có tên bệnh nhân"}</p>
                       </td>
@@ -171,13 +186,20 @@ const ManageAppointment = () => {
                             <span>Chưa xác nhận hẹn</span>
                           </div>
                         )}
-                        {item?.status === 1 && (
-                          <div>
-                            {/* <FaRegCheckCircle />
-                            <span>Đã hoàn thành</span> */}
-                            <FaRegCheckCircle style={{ color: "#33E423" }} />
-                            <span>Đã xác nhận hẹn</span>
-                          </div>
+                        {item?.status === 1 ? (
+                          currentDate.isAfter(moment(item?.date)) ? (
+                            <div>
+                              <FaRegCheckCircle />
+                              <span>Đã hoàn thành</span>
+                            </div>
+                          ) : (
+                            <div>
+                              <FaRegCheckCircle style={{ color: "#33E423" }} />
+                              <span>Đã xác nhận hẹn</span>
+                            </div>
+                          )
+                        ) : (
+                          <div></div>
                         )}
                         {item?.status === 2 && (
                           <div>
@@ -192,7 +214,6 @@ const ManageAppointment = () => {
                             className="InfoButton"
                             onClick={() => {
                               handleShowAppointmentInfor();
-                              setEdit(true);
                               setUserName(item?.user?.name);
                               setPhone(item?.user?.phone);
                               setGender(item?.user?.gender);
@@ -204,6 +225,8 @@ const ManageAppointment = () => {
                               setTimeEnd(item?.schedule_doctor?.schedule?.end);
                               setDate(item?.date);
                               setImage(item?.user?.account?.avatar);
+                              setRate(item?.rating);
+                              setStatuss(item?.status);
                             }}
                           >
                             <IoInformation />
@@ -303,6 +326,19 @@ const ManageAppointment = () => {
                                     </div>
                                   </div>
                                 </div>
+                                {status === 1 && (
+                                  <div className="appointmentManage_rating">
+                                    <p>
+                                      Đánh giá : {rate} / 5{"  "}
+                                      <FaRegStar
+                                        style={{
+                                          color: "yellow",
+                                          transform: "translate(10px,-3px)",
+                                        }}
+                                      ></FaRegStar>{" "}
+                                    </p>
+                                  </div>
+                                )}
                               </div>
                             </Modal.Body>
                             <Modal.Footer>

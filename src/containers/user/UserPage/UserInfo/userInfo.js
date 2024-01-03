@@ -41,7 +41,6 @@ const UserInfo = () => {
   const updateAgain = {
     chaing: !state,
   };
-  // console.log(state);
   const handleImageClick = () => {
     inputRef.current.click();
   };
@@ -119,7 +118,7 @@ const UserInfo = () => {
     };
     loadUser();
     getUserByID();
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
   if (user === null) {
     return <div className="UserPageContainer"></div>;

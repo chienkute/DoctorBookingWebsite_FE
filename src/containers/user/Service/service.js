@@ -3,7 +3,7 @@ import "../Service/service.scss";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import serviceImg from "../../../assets/service.png";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
-import chuyenkhoan from "../../../assets/ck.png";
+// import chuyenkhoan from "../../../assets/ck.png";
 import tienmat from "../../../assets/tienmat.png";
 import { getServiceById } from "service/UserService";
 import { useState } from "react";
@@ -22,7 +22,7 @@ const Service = () => {
   };
   useEffect(() => {
     getService();
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
   return (
     <div>
@@ -115,12 +115,6 @@ const Service = () => {
                     <h2>Hình thức thanh toán</h2>
                   </div>
                   <div className="service__main_body_thanhtoan">
-                    <div className="service__main_body_phuongthuc">
-                      <div className="service__main_body_img">
-                        <img src={chuyenkhoan} alt="" />
-                      </div>
-                      <p>Chuyển khoản</p>
-                    </div>
                     <div className="service__main_body_phuongthuc">
                       <div className="service__main_body_img">
                         <img src={tienmat} alt="" />
