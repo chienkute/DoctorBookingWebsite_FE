@@ -1,19 +1,25 @@
-import React, { memo, useContext, useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import "../HomePage/NewsSmall/NewsSmall.scss";
 import blogImg from "assets/blog-img.png";
 import avtImg from "assets/avatar.png";
 import { Link } from "react-router-dom";
-import { getBlogByIdCategory, getCategoryById } from "service/UserService";
-import { UpdateContext } from "context/UpdateContext";
+import { getCategoryById, searchBlogByIdCategory } from "service/UserService";
+import ReactPaginate from "react-paginate";
 const CategorySmall = (props) => {
   const [blog, setBlog] = useState([]);
   const [category, setCategory] = useState([]);
-  const { update, setUpdate } = useContext(UpdateContext);
+  const [cout, setCount] = useState("");
+  const pageTotal = cout / 6;
+  const roundedNumber = Math.ceil(pageTotal);
   const { id } = props;
-  const getBlog = async () => {
-    let res = await getBlogByIdCategory(id);
+  const handlePageClick = (event) => {
+    getBlog(+event.selected + 1);
+  };
+  const getBlog = async (page) => {
+    let res = await searchBlogByIdCategory(id, page);
     if (res) {
       setBlog(res?.results);
+      setCount(res?.count);
     }
   };
   const getCategory = async () => {
@@ -23,7 +29,7 @@ const CategorySmall = (props) => {
     }
   };
   useEffect(() => {
-    getBlog();
+    getBlog(1);
     getCategory();
     // eslint-disable-next-line
   }, []);
@@ -38,7 +44,7 @@ const CategorySmall = (props) => {
         <ul className="ListNewsSmallItems clear">
           {blog &&
             blog.length > 0 &&
-            blog.slice(0, 3).map((item, index) => {
+            blog.map((item, index) => {
               return (
                 <li className="NewsItem" key={index}>
                   <div className="NewsImage1">
@@ -73,6 +79,26 @@ const CategorySmall = (props) => {
               );
             })}
         </ul>
+      </div>
+      <div className="DoctorResultPageMonitor search__page">
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel=">"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={3}
+          pageCount={roundedNumber}
+          previousLabel="<"
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item previous"
+          previousLinkClassName="page-link"
+          nextClassName="page-item previous"
+          nextLinkClassName="page-link"
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          containerClassName="pagination"
+          activeClassName="active active-pagination"
+        />
       </div>
     </div>
   );
