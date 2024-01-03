@@ -61,7 +61,7 @@ const Login = () => {
         navigate(`/doctor/information/${res?.doctor?.id}`);
         toast.success("Đăng nhập thành công");
       } else {
-        toast.error("Lỗi đăng nhập");
+        toast.error("Tài khoản hoặc mật khẩu không chính xác!");
       }
     },
   });

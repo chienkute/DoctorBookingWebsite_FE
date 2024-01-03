@@ -1,16 +1,17 @@
-.table {
+.table_top {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
 
-  th, td {
+  th,
+  td {
     padding: 12px;
     text-align: left;
     border: 1px solid #ddd;
   }
 
   th {
-    background-color: #4CAF50; /* Màu xanh lá cây */
+    background-color: #4caf50; /* Màu xanh lá cây */
     color: white; /* Màu chữ trắng */
     font-weight: bold; /* In đậm */
   }

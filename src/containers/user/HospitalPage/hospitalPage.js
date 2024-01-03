@@ -4,9 +4,9 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import hospitalImage from "../../../assets/hospital.jpg";
 import hospitalBanner from "../../../assets/hospitalbanner.jpg";
 import { CiLocationOn } from "react-icons/ci";
-import chuyenkhoan from "../../../assets/ck.png";
+// import chuyenkhoan from "../../../assets/ck.png";
 import "../Care/care.scss";
-import tienmat from "../../../assets/tienmat.png";
+// import tienmat from "../../../assets/tienmat.png";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import hospavt from "../../../assets/hospital.jpg";
 import doctorImg from "../../../assets/avatar.jpg";
@@ -109,17 +109,17 @@ const HospitalPage = () => {
   };
   useEffect(() => {
     getDoctor();
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [specialty]);
   useEffect(() => {
     getSpecialty();
     getHospitalInfo();
     getSpecialtyHospital();
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
   useEffect(() => {
     getDoctorByIdHospital(1);
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [queryDoctor]);
   // useEffect(() => {
   //   // getService();
@@ -294,7 +294,7 @@ const HospitalPage = () => {
                           <li className="col-6">Tập hồi phục chức năng</li>
                         </ol>
                       </div>
-                      <div>
+                      {/* <div>
                         <h2>Hình thức thanh toán</h2>
                         <div className="hospital__body_thongtin_thanhtoan">
                           <div className="hospital__body_thongtin_phuongthuc">
@@ -310,7 +310,7 @@ const HospitalPage = () => {
                             <p>Tiền mặt</p>
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                     <div className="hospital__schedule">
                       <h5>Đặt lịch ngay</h5>

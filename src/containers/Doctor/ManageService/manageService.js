@@ -10,7 +10,6 @@ import ReactPaginate from "react-paginate";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
-import { UpdateContext } from "context/UpdateContext";
 import { fetchAllService } from "service/UserService";
 import {
   addService,
@@ -34,11 +33,20 @@ const ManageService = () => {
   const [defaultValue, setDefaultValue] = useState("");
   const [defaultDescribe, setDefaultDescribe] = useState("");
   const [icon, setIcon] = useState("");
-  const searchService = async () => {
-    let res = await getServiceByDoctorId(id);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const handlePageClick = (event) => {
+    setPage(+event.selected + 1);
+    searchService(+event.selected + 1);
+  };
+  const searchService = async (page) => {
+    let res = await getServiceByDoctorId(id, (page - 1) * 4);
     if (res) {
       console.log(res);
       setServiceDoctors(res?.results);
+      setCurrentPage(res?.current_page);
+      setTotal(res?.total_page);
     }
   };
   const getAllService = async () => {
@@ -52,9 +60,11 @@ const ManageService = () => {
     if (res?.service) {
       console.log(res);
       toast.success("Thêm dịch vụ thành công");
-      searchService();
+      searchService(page);
     } else if (res?.detail === "service_doctor is exist") {
       toast.error("Dịch vụ đã tồn tại");
+    } else {
+      toast.error("Chưa chọn dịch vụ");
     }
   };
   const filteredCategories = serviceDoctors.filter((item) =>
@@ -65,17 +75,17 @@ const ManageService = () => {
     if (res) {
       console.log(res);
       toast.success("Xóa dịch vụ thành công");
-      searchService();
+      searchService(page);
     } else {
       toast.error("Xóa thất bại");
     }
   };
   useEffect(() => {
-    searchService();
+    searchService(page);
   }, [queryDebounce]);
   useEffect(() => {
+    searchService(1);
     getAllService();
-    searchService();
   }, []);
   return (
     <div>
@@ -127,7 +137,6 @@ const ManageService = () => {
               <button
                 className="btn button mt-4"
                 onClick={async () => {
-                  console.log(choosedCheckboxs);
                   deleteServiceDoctors(choosedCheckboxs);
                 }}
               >
@@ -177,7 +186,7 @@ const ManageService = () => {
                             }}
                           ></input>
                         </td>
-                        <td>{index}</td>
+                        <td>{(currentPage - 1) * 6 + index + 1}</td>
                         <td style={{ transform: "translateY(10px)" }}>
                           <p>{item?.service.name}</p>
                         </td>
@@ -302,23 +311,14 @@ const ManageService = () => {
               </table>
             </div>
           </div>
-          {/* <button
-            className="btn button mt-4"
-            onClick={async () => {
-              console.log(choosedCheckboxs);
-              deleteServiceDoctors(choosedCheckboxs);
-            }}
-          >
-            Xoá các mục đã chọn
-          </button> */}
         </div>
-        {/* <div className="management__pagination">
+        <div className="management__pagination">
           <ReactPaginate
             breakLabel="..."
             nextLabel=">"
             onPageChange={handlePageClick}
-            pageRangeDisplayed={totalPage}
-            pageCount={3}
+            pageRangeDisplayed={3}
+            pageCount={total}
             previousLabel="<"
             pageClassName="page-item"
             pageLinkClassName="page-link"
@@ -331,7 +331,7 @@ const ManageService = () => {
             containerClassName="pagination"
             activeClassName="active active-pagination"
           />
-        </div> */}
+        </div>
       </div>
     </div>
   );

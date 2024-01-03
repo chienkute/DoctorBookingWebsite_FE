@@ -18,7 +18,6 @@ import { fetchAllCategories } from "service/UserService";
 import { toast } from "react-toastify";
 const ManageBlog = () => {
   const { id } = useParams();
-  const [update, setUpdate] = useState(false);
   const [showAddNewBlog, setShowAddNewBlog] = useState(false);
   const handleCloseAddNewBlog = () => setShowAddNewBlog(false);
   const handleShowAddNewBlog = () => setShowAddNewBlog(true);
@@ -47,6 +46,41 @@ const ManageBlog = () => {
   const [formData, setFormData] = useState(new FormData());
   const [totalPage, setTotalPage] = useState(0);
   const [showError, setShowError] = useState(true);
+  const [page, setPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [urlImage, setUrlImage] = useState("");
+  const toDataURL = (url) =>
+    fetch(urlImage)
+      .then((response) => response.blob())
+      .then(
+        (blob) =>
+          new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          }),
+      );
+  function dataURLtoFile(dataurl, filename) {
+    var arr = dataurl.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  }
+  const changeFileObejct = () => {
+    toDataURL(urlImage).then((dataUrl) => {
+      var fileData = dataURLtoFile(dataUrl, "icon.jpg");
+      setImageUpdate(fileData);
+    });
+  };
+  useEffect(() => {
+    changeFileObejct();
+  }, [urlImage]);
   var toolbarOptions = [
     ["bold", "italic", "underline", "strike"],
     ["blockquote", "code-block"],
@@ -75,6 +109,7 @@ const ManageBlog = () => {
   };
   const handlePageClick = (event) => {
     console.log(+event.selected + 1);
+    setPage(+event.selected + 1);
     getBlogById(+event.selected + 1);
   };
   const getBlogById = async (page) => {
@@ -88,6 +123,7 @@ const ManageBlog = () => {
       console.log(res);
       setTotalPage(res?.total_page);
       setBlog(res?.results);
+      setCurrentPage(res?.current_page);
       setCount(res?.count);
     }
   };
@@ -106,12 +142,17 @@ const ManageBlog = () => {
   };
   const postBlog = async () => {
     let res = await addBlog(idCategory, id, titleAdd, value, imageUpdate);
-    if (res?.title) {
+    if (res?.created_at) {
       console.log(res);
-      getBlogById();
+      getBlogById(page);
       toast.success("Thêm blog thành công");
-    } else {
-      toast.error("Thêm thất bại");
+      handleCloseAddNewBlog();
+    } else if (
+      res?.title?.length > 0 ||
+      res?.content?.length > 0 ||
+      res?.category_id?.length > 0
+    ) {
+      toast.error("Các trường không được để trống !!");
     }
   };
   const fixBlog = async (id_blog) => {
@@ -123,19 +164,23 @@ const ManageBlog = () => {
       value,
       imageUpdate,
     );
-    if (res?.title) {
+    if (res?.created_at) {
       console.log(res);
-      getBlogById();
+      getBlogById(page);
       toast.success("Sửa blog thành công");
-    } else {
-      toast.error("Sửa thất bại");
+    } else if (
+      res?.title?.length > 0 ||
+      res?.content?.length > 0 ||
+      res?.category_id?.length > 0
+    ) {
+      toast.error("Các trường không được để trống!!");
     }
   };
   const deleteBlogByID = async (id_blog) => {
     let res = await deleteBlog(id_blog, idCategory, id, titleAdd, value);
     if (res) {
       console.log(res);
-      getBlogById();
+      getBlogById(page);
       toast.success("Xóa blog thành công");
     } else {
       toast.error("Sửa thất bại");
@@ -143,10 +188,10 @@ const ManageBlog = () => {
   };
   useEffect(() => {
     getAllCategory();
-    getBlogById();
+    getBlogById(1);
   }, []);
   useEffect(() => {
-    getBlogById();
+    getBlogById(page);
   }, [queryDebounce, idCategorySearch]);
   const formik = useFormik({
     initialValues: {
@@ -199,6 +244,7 @@ const ManageBlog = () => {
             handleShowAddNewBlog();
             setValue("");
             setImage("");
+            setImageUpdate("");
           }}
         >
           Thêm
@@ -329,11 +375,8 @@ const ManageBlog = () => {
               variant="primary"
               type="submit"
               onClick={() => {
-                handleCloseAddNewBlog();
                 postBlog();
-                setUpdate(!update);
                 setQuery("");
-                getBlogById();
               }}
             >
               Lưu
@@ -366,7 +409,7 @@ const ManageBlog = () => {
                       <td>
                         <input type="checkbox"></input>
                       </td>
-                      <td>{index}</td>
+                      <td>{(currentPage - 1) * 6 + index + 1}</td>
                       <td style={{ transform: "translateY(10px)" }}>
                         <p>{item?.title}</p>
                       </td>
@@ -383,7 +426,6 @@ const ManageBlog = () => {
                               setTitleAdd(`${item?.title}`);
                               setDefaultSelect(`${item?.id_category?.id}`);
                               setImageOld(item?.picture);
-                              // console.log(item.picture);
                             }}
                           >
                             <IoInformation />
@@ -400,6 +442,7 @@ const ManageBlog = () => {
                               setIdEdit(`${item?.id}`);
                               setImageOld(item?.picture);
                               setImage("");
+                              setUrlImage(item?.picture);
                             }}
                           >
                             <FiEdit3 />
@@ -568,9 +611,7 @@ const ManageBlog = () => {
                                   onClick={() => {
                                     handleCloseEditBlog();
                                     fixBlog(idEdit);
-                                    setUpdate(!update);
                                     setQuery("");
-                                    getBlogById();
                                   }}
                                 >
                                   Lưu
@@ -608,8 +649,6 @@ const ManageBlog = () => {
                                 onClick={() => {
                                   handleCloseDeleteBlog();
                                   deleteBlogByID(item?.id);
-                                  setUpdate(!update);
-                                  getBlogById();
                                 }}
                               >
                                 Xác nhận

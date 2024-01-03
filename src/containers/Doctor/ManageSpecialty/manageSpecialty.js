@@ -34,11 +34,20 @@ const ManageSpecialty = () => {
   const [choosedCheckboxs, setChoosedCheckboxs] = useState([]);
   const queryDebounce = useDebounce(query, 500);
   const [icon, setIcon] = useState("");
-  const searchSpecialty = async () => {
-    let res = await getSpecialtyByDoctorId(id);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const handlePageClick = (event) => {
+    setPage(+event.selected + 1);
+    searchSpecialty(+event.selected + 1);
+  };
+  const searchSpecialty = async (page) => {
+    let res = await getSpecialtyByDoctorId(id, (page - 1) * 4);
     if (res) {
       console.log(res);
       setSpecialtyDoctor(res?.results);
+      setCurrentPage(res?.current_page);
+      setTotal(res?.total_page);
     }
   };
   const getAllService = async () => {
@@ -52,9 +61,11 @@ const ManageSpecialty = () => {
     if (res?.specialty) {
       console.log(res);
       toast.success("Thêm chuyên khoa thành công");
-      searchSpecialty();
-    } else {
+      searchSpecialty(page);
+    } else if (res?.detail === "specialty_doctor is exist") {
       toast.error("Chuyên khoa đã tồn tại");
+    } else {
+      toast.error("Chưa chọn chuyên khoa");
     }
   };
   const deleteSpecialtyDoctors = async (specialtyDoctorIds) => {
@@ -62,7 +73,7 @@ const ManageSpecialty = () => {
     if (res) {
       console.log(res);
       toast.success("Xoá thành công");
-      searchSpecialty();
+      searchSpecialty(page);
     } else {
       toast.error("Xoá thất bại");
     }
@@ -71,10 +82,10 @@ const ManageSpecialty = () => {
     item?.specialty?.name.toLowerCase().includes(queryDebounce.toLowerCase()),
   );
   useEffect(() => {
-    searchSpecialty();
+    searchSpecialty(page);
   }, [queryDebounce]);
   useEffect(() => {
-    searchSpecialty();
+    searchSpecialty(1);
     getAllService();
   }, []);
   return (
@@ -177,7 +188,7 @@ const ManageSpecialty = () => {
                             }}
                           ></input>
                         </td>
-                        <td>{index}</td>
+                        <td>{(currentPage - 1) * 6 + index + 1}</td>
                         <td style={{ transform: "translateY(10px)" }}>
                           <p>{item?.specialty.name}</p>
                         </td>
@@ -302,23 +313,14 @@ const ManageSpecialty = () => {
               </table>
             </div>
           </div>
-          {/* <button
-            className="btn button mt-4"
-            onClick={async () => {
-              console.log(choosedCheckboxs);
-              deleteSpecialtyDoctors(choosedCheckboxs);
-            }}
-          >
-            Xoá các mục đã chọn
-          </button> */}
         </div>
-        {/* <div className="management__pagination">
+        <div className="management__pagination">
           <ReactPaginate
             breakLabel="..."
             nextLabel=">"
-            // onPageChange={handlePageClick}
-            pageRangeDisplayed={5}
-            pageCount={3}
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={3}
+            pageCount={total}
             previousLabel="<"
             pageClassName="page-item"
             pageLinkClassName="page-link"
@@ -331,7 +333,7 @@ const ManageSpecialty = () => {
             containerClassName="pagination"
             activeClassName="active active-pagination"
           />
-        </div> */}
+        </div>
       </div>
     </div>
   );

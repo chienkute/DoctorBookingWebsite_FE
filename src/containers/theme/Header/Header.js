@@ -46,7 +46,6 @@ const Header = () => {
   const [specialty, setSpecialty] = useState([]);
   const [categories, setCategories] = useState([]);
   const state = useSelector((state) => state.user.changing);
-  console.log(state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleKeyDown = (e) => {
@@ -141,12 +140,16 @@ const Header = () => {
             <li className="HeaderCategory">
               <div className="HeaderCategoryLink dropdown">
                 <Link
-                  className="bold"
+                  className="bold d-flex"
                   id="dropdownMenuLink"
                   data-mdb-toggle="dropdown"
                   aria-expanded="true"
+                  style={{ transform: "translateY(8px)" }}
                 >
-                  Chuyên mục
+                  <p className="bold">Chuyên mục</p>
+                  <div className="HeaderArrow">
+                    <RiArrowDropDownLine></RiArrowDropDownLine>
+                  </div>
                 </Link>
                 <ul
                   class="dropdown-menu dropdown__menu"
@@ -179,7 +182,6 @@ const Header = () => {
                         </li>
                       );
                     })}
-
                   <li>
                     <a className="header__menu_link" href="/categories">
                       <p>Xem tất cả chuyên mục</p>
@@ -189,9 +191,9 @@ const Header = () => {
                     </a>
                   </li>
                 </ul>
-                <div className="HeaderArrow">
+                {/* <div className="HeaderArrow" onClick={handleImageClick}>
                   <RiArrowDropDownLine></RiArrowDropDownLine>
-                </div>
+                </div> */}
               </div>
             </li>
             {/* <li className="HeaderCategory">
@@ -282,12 +284,16 @@ const Header = () => {
             <li className="HeaderCategory">
               <div className="HeaderCategoryLink dropdown">
                 <Link
-                  className="bold"
+                  className="bold d-flex"
                   id="dropdownMenuLink"
                   data-mdb-toggle="dropdown"
                   aria-expanded="true"
+                  style={{ transform: "translateY(8px)" }}
                 >
-                  Đặt lịch với bác sĩ
+                  <p className="bold">Đặt lịch với bác sĩ</p>
+                  <div className="HeaderArrow">
+                    <RiArrowDropDownLine></RiArrowDropDownLine>
+                  </div>
                 </Link>
                 <ul
                   class="dropdown-menu dropdown__menu3"
@@ -341,9 +347,6 @@ const Header = () => {
                     </a>
                   </li>
                 </ul>
-                <div className="HeaderArrow">
-                  <RiArrowDropDownLine></RiArrowDropDownLine>
-                </div>
               </div>
             </li>
           </ul>

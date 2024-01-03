@@ -38,8 +38,11 @@ const AccountManager = () => {
   const [accounts, setAccounts] = useState([]);
   const [idAccout, setIdAccount] = useState("");
   const [total, setTotal] = useState(0);
+  const [count, setCount] = useState(0);
   const [tarAcc, setTarAcc] = useState([]);
+  const [page, setPage] = useState(1);
   const handlePageClick = (event) => {
+    setPage(+event.selected + 1);
     getAccount(+event.selected + 1);
   };
   const getAccount = async (page) => {
@@ -50,24 +53,39 @@ const AccountManager = () => {
       setCurrentPage(res?.current_page);
       setAccounts(res?.results);
       setTotal(res?.count);
+      setCount(res?.count);
     }
   };
   const deleteAccouns = async (id) => {
     let res = await deleteHospital(id);
     if (res) {
       console.log(res);
-      getAccount(1);
+      getAccount(page);
       toast.success("Xóa thành công");
     } else {
       toast.error("Xóa thất bại");
     }
   };
   useEffect(() => {
-    getAccount();
+    getAccount(1);
   }, []);
-  const filteredCategories = accounts.filter((item) =>
-    item?.account?.username?.toLowerCase().includes(search.toLowerCase()),
-  );
+  // const filteredCategories = accounts.filter((item) =>
+  //   item?.account?.username?.toLowerCase().includes(search.toLowerCase()),
+  // );
+  const filteredCategories = accounts.filter((item) => {
+    const usernameMatch = item?.account?.username
+      ?.toLowerCase()
+      .includes(search.toLowerCase());
+    const nameMatch = item?.name?.toLowerCase().includes(search.toLowerCase());
+    return usernameMatch || nameMatch;
+  });
+  useEffect(() => {
+    if (search === "") {
+      setCount(total);
+    } else {
+      setCount(filteredCategories.length);
+    }
+  }, [search]);
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -108,9 +126,10 @@ const AccountManager = () => {
           email: "",
           password: "",
         });
-        getAccount(1);
         if (res.hasOwnProperty("access_token")) {
-          toast.success("Thêm thành công");
+          handleCloseAddNewHospital();
+          getAccount(page);
+          toast.success("Tài khoản hoặc email đã tồn tại !!");
         } else {
           toast.error("Thêm thất bại");
         }
@@ -260,7 +279,6 @@ const AccountManager = () => {
             <Button
               variant="primary"
               onClick={() => {
-                handleCloseAddNewHospital();
                 formik.handleSubmit();
               }}
             >
@@ -271,7 +289,7 @@ const AccountManager = () => {
       </div>
       <div className="AdminUserResult">
         <div className="ResultPerTable">
-          <label htmlFor="dropdown">Có {total} kết quả tìm được</label>
+          <label htmlFor="dropdown">Có {count} kết quả tìm được</label>
         </div>
         <div className="Table">
           <table>

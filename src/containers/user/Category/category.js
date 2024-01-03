@@ -19,7 +19,7 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import { UpdateContext } from "context/UpdateContext";
 import ItemLarge from "../HomePage/NewsLarge/ItemLarge";
 import ItemSmall from "../HomePage/NewsLarge/ItemSmall";
-import NewsSmall from "../HomePage/NewsSmall/NewsSmall";
+import CategorySmall from "./CategorySmall";
 const Category = () => {
   const { id, name } = useParams();
   const [blog, setBlog] = useState([]);
@@ -63,7 +63,7 @@ const Category = () => {
     getBlog();
     getService();
     getCategory();
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
   useEffect(() => {
     setLoading(true);
@@ -72,7 +72,7 @@ const Category = () => {
     }, 1500);
     getCategory();
     getBlog();
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [update]);
   return (
     <div>
@@ -196,7 +196,7 @@ const Category = () => {
               </div>
               <h3>Xem thêm về {categoryy?.name}</h3>
               <div className="category__blog_item">
-                <NewsSmall id={`${categoryy?.id}`}></NewsSmall>
+                <CategorySmall id={`${categoryy?.id}`}></CategorySmall>
                 <div className="DoctorResultPageMonitor search__page">
                   <ReactPaginate
                     breakLabel="..."
