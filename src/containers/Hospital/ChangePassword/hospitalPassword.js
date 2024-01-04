@@ -58,7 +58,7 @@ const HospitalPassword = () => {
         });
         toast.success("Đổi mật khẩu thành công");
       } else {
-        toast.error("Bạn nhập thiếu trường nào đó !!");
+        toast.error("Mật khẩu cũ không chính xác !");
       }
     },
   });
