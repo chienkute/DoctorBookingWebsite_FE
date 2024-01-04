@@ -8,11 +8,15 @@ import * as Yup from "yup";
 import { AiOutlineEyeInvisible, AiFillEye } from "react-icons/ai";
 import "./login.scss";
 import { login } from "service/UserService";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Button, Modal } from "react-bootstrap";
 const Login = () => {
   const navigate = useNavigate();
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   // useEffect(() => {
   //   let token = localStorage.getItem("token");
   //   if (token) {
@@ -138,13 +142,23 @@ const Login = () => {
             </div>
           </div>
           <div class="mb-4 d-flex justify-content-between">
-            <div></div>
             <div>
               <a href="/register">Đăng ký</a>
             </div>
-            {/* <div>
-              <a href="#!">Quên mật khẩu ?</a>
-            </div> */}
+            <div>
+              <Link onClick={handleShow}>Quên mật khẩu ?</Link>
+            </div>
+            <Modal show={show} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>Bạn muốn cấp lại mật khẩu!!</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>Vui lòng bạn liên hệ với quản trị viên!</Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Đóng
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </div>
           <button
             type="submit"

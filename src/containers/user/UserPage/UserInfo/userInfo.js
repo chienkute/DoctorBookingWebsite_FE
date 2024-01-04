@@ -35,6 +35,39 @@ const UserInfo = () => {
   const [formData, setFormData] = useState(new FormData());
   const dispatch = useDispatch();
   const state = useSelector((state) => state.user.changing);
+  const [urlImage, setUrlImage] = useState("");
+  const toDataURL = (url) =>
+    fetch(urlImage)
+      .then((response) => response.blob())
+      .then(
+        (blob) =>
+          new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          }),
+      );
+  function dataURLtoFile(dataurl, filename) {
+    var arr = dataurl.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  }
+  const changeFileObejct = () => {
+    toDataURL(urlImage).then((dataUrl) => {
+      var fileData = dataURLtoFile(dataUrl, "icon.jpg");
+      setImageUpdate(fileData);
+    });
+  };
+  useEffect(() => {
+    changeFileObejct();
+  }, [urlImage]);
   const updatedChange = {
     changing: !state,
   };
@@ -59,7 +92,6 @@ const UserInfo = () => {
     let res = await editAvatar(idAccount, formData);
     if (res) {
       localStorage.setItem("account", JSON.stringify(res));
-      // dispatch(updateChanging(updatedChange));
       console.log(res);
     }
   };
@@ -107,6 +139,7 @@ const UserInfo = () => {
       setAdressNew(res?.address);
       setImageOld(res?.account?.avatar);
       setIdAccount(res?.account?.id);
+      setUrlImage(res?.account?.avatar);
     }
   };
   useEffect(() => {
