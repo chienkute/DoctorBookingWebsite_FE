@@ -59,7 +59,7 @@ const ChangePasswordDoctor = () => {
         });
         toast.success("Đổi mật khẩu thành công");
       } else {
-        toast.error("Đổi mật khẩu thất bại");
+        toast.error("Mật khẩu cũ không chính xác !");
       }
     },
   });
