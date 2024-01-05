@@ -18,7 +18,7 @@ const Doctor = () => {
   }, []);
   const getDoctor = async () => {
     let res = await getDoctorByID(id);
-    if (res && res?.name) {
+    if (res) {
       setLoading(false);
       setDoctor(res);
     }
@@ -104,25 +104,7 @@ const Doctor = () => {
                 <div className="Content">
                   <div className="BasicInfo">
                     <div className="bold Header">Thông tin bác sĩ </div>
-                    <p>
-                      Bác sĩ {doctor?.name} có hơn 5 năm kinh nghiệm trong việc
-                      thăm khám và điều trị các vấn đề bệnh lý đa khoa dành cho
-                      cả trẻ em lẫn người lớn.
-                    </p>
-                    <p>
-                      Sở hữu nền tảng chuyên môn vững chắc, bác sĩ tốt nghiệp
-                      Bác sĩ đa khoa tại trường Đại học Y Dược Cần Thơ. Bên cạnh
-                      đó, bác sĩ còn sở hữu các chứng chỉ về tim mạch, thường
-                      xuyên tham gia các hội nghị khoa học của Hội Tim mạch Việt
-                      Nam.
-                    </p>
-                    <p>
-                      Hiện tại, bác sĩ chuyên thăm khám và điều trị các vấn đề
-                      bệnh lý nội khoa, đa khoa, tư vấn tiêm chủng. Với tinh
-                      thần trách nhiệm cao cũng như sự ân cần và chu đáo trong
-                      việc tư vấn, khám, bác sĩ nhận được nhiều đánh giá tích
-                      cực từ các bệnh nhân đến điều trị.
-                    </p>
+                    <p>{doctor?.describe || "Chưa có thông tin bác sĩ"}</p>
                   </div>
                   <div className="Strengths">
                     <div className="Header">
