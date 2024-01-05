@@ -58,14 +58,14 @@ const Confirm = () => {
   };
   useEffect(() => {
     if (!location.state) {
-      setLoading(true);
+      setLoading(false);
       return; // Kết thúc sớm useEffect để tránh việc gọi các hàm tiếp theo
     }
+    if (!localStorage.getItem("user")) return navigate("/");
     getDoctor();
     getUserByID();
     setLoading(true);
-    // eslint-disable-next-line
-    // if (!localStorage.getItem("user")) return navigate("/");
+    // eslint - disable - next - line;
   }, []);
   return (
     <div>
