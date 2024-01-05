@@ -80,7 +80,7 @@ const getCategoryById = (id) => {
   return instance.get(`/api/categories/${id}/`);
 };
 const changePassword = (oldpassword, newpassword, id) => {
-  return instance.patch(`/api/accounts/${id}/change_password/`, {
+  return instance.patch(`/api/accounts/${id}/change_password`, {
     oldpassword,
     newpassword,
   });
