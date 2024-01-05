@@ -2,7 +2,7 @@ import { memo, useEffect, useState } from "react";
 import "../HospitalPage/hospitalPage.scss";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import hospitalImage from "../../../assets/hospital.jpg";
-import hospitalBanner from "../../../assets/hospitalbanner.jpg";
+import hospitalBanner from "../../../assets/hospitalBanner.png";
 import { CiLocationOn } from "react-icons/ci";
 // import chuyenkhoan from "../../../assets/ck.png";
 import "../Care/care.scss";
@@ -58,7 +58,7 @@ const HospitalPage = () => {
     getDoctorByIdHospital(+event.selected + 1);
   };
   const getDoctorByIdHospital = async (page) => {
-    let res = await searchDoctor(debouncedSearchDoctor, "", "", "", id, page);
+    let res = await searchDoctor(debouncedSearchDoctor, "", id, "", "", page);
     if (res) {
       console.log(res);
       setLoadingSkeleton(true);
@@ -115,12 +115,13 @@ const HospitalPage = () => {
     getSpecialty();
     getHospitalInfo();
     getSpecialtyHospital();
+    getDoctorByIdHospital(1);
     // eslint-disable-next-line
   }, []);
   useEffect(() => {
     getDoctorByIdHospital(1);
     // eslint-disable-next-line
-  }, [queryDoctor]);
+  }, [debouncedSearchDoctor]);
   // useEffect(() => {
   //   // getService();
   //   setTimeout(() => {
@@ -260,22 +261,7 @@ const HospitalPage = () => {
                       </div>
                       <div className="hospital__body_thongtin_desc">
                         <h2>Thông tin bệnh viện</h2>
-                        <p>
-                          Trải qua hơn 15 năm hoạt động, phòng khám ACC luôn tự
-                          hào là sự lựa chọn hàng đầu của bệnh nhân với các dịch
-                          vụ điều trị các bệnh lý kết hợp giữa Trị liệu thần
-                          kinh cột sống và các bài tập Vật lý trị liệu, Trị liệu
-                          phục hồi chức năng, điều trị thần kinh cột sống
-                          chiropractic, thoát vị đĩa đệm, thoái hóa cột sống .
-                        </p>
-                        <p>
-                          Các cơ sở của ACC đều có địa chỉ thuận tiện cho bệnh
-                          nhân, được đầu tư cơ sở vật chất khang trang. Phòng
-                          Khám ACC - Chiropractic Đà Nẵng là một trong các phòng
-                          khám thuôc chuỗi Phòng khám ACC Việt Nam. Đặc biệt,
-                          tại đây còn có phòng dành riêng cho Vật lý trị liệu,
-                          Phục hồi chức năng rộng rãi, thoáng mát.
-                        </p>
+                        <p style={{ maxWidth: "2250px" }}>{hospital?.info}</p>
                       </div>
                       <div className="hospital__body_thongtin_chuyenkhoa">
                         <h2>Chuyên khoa</h2>
