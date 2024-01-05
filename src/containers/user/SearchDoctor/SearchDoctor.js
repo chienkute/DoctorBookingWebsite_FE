@@ -92,7 +92,7 @@ function SearchDoctor() {
   useEffect(() => {
     getDoctor(1);
     getHospital(1);
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [debouncedSearchTerm, adress, specialty, service]);
   useEffect(() => {
     const getAllSpecialty = async () => {
@@ -115,7 +115,7 @@ function SearchDoctor() {
     setTimeout(() => {
       setShow(false);
     }, 1500);
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
   useEffect(() => {
     setSpecialtyy(serviceName);
@@ -125,7 +125,7 @@ function SearchDoctor() {
     setTimeout(() => {
       SetLoadingSkeleton(false);
     }, 1500);
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [update]);
   const province = [
     { value: "Danang", label: "Đà Nẵng" },
@@ -743,53 +743,6 @@ function SearchDoctor() {
                 <div className="DoctorResultFilterHeader">
                   <header>Chuyên khoa</header>
                 </div>
-                {/* <div className="DoctorResultFilterContent">
-                  <label>
-                    <input
-                      type="radio"
-                      name="AvailableAppointment"
-                      value="any"
-                    ></input>
-                    Ngày bất kì
-                  </label>
-                  <label htmlFor="AA_today">
-                    <input
-                      type="radio"
-                      id="AA_today"
-                      name="AvailableAppointment"
-                      value="today"
-                    ></input>
-                    Hôm nay
-                  </label>
-                  <label htmlFor="AA_tomorrow">
-                    <input
-                      type="radio"
-                      id="AA_tomorrow"
-                      name="AvailableAppointment"
-                      value="tomorrow"
-                    ></input>
-                    Ngày mai
-                  </label>
-
-                  <label htmlFor="AA_7days">
-                    <input
-                      type="radio"
-                      id="AA_7days"
-                      name="AvailableAppointment"
-                      value="7days"
-                    ></input>
-                    7 ngày kế tiếp
-                  </label>
-                  <label htmlFor="AA_weekends">
-                    <input
-                      type="radio"
-                      id="AA_weekends"
-                      name="AvailableAppointment"
-                      value="weekends"
-                    ></input>
-                    Cuối tuần
-                  </label>
-                </div> */}
                 <div className="care__banner_button" style={{ width: "100%" }}>
                   <div className="care__banner_input flex-center dropdown">
                     <input
@@ -900,150 +853,7 @@ function SearchDoctor() {
                   </div>
                 </div>
               </div>
-              {/* <div className="DoctorResultFilter">
-                <div className="DoctorResultFilterHeader">
-                  <header>Loại hình khám</header>
-                </div>
-                <div className="DoctorResultFilterContent">
-                  <label htmlFor="T_away">
-                    <input
-                      type="checkbox"
-                      id="T_away"
-                      name="Type"
-                      value="away"
-                    ></input>
-                    Tư vấn từ xa
-                  </label>
-                  <label htmlFor="T_direct">
-                    <input
-                      type="checkbox"
-                      id="T_direct"
-                      name="Type"
-                      value="direct"
-                    ></input>
-                    Tư vấn trực tiếp
-                  </label>
-                </div>
-              </div> */}
-              {/* <div className="DoctorResultFilter">
-                <div className="DoctorResultFilterHeader">
-                  <header>Cung cấp dịch vụ chăm sóc</header>
-                </div>
-                <div className="DoctorResultFilterContent">
-                  <label htmlFor="HT_adult">
-                    <input
-                      type="checkbox"
-                      id="HT_adult"
-                      name="HumanType"
-                      value="adult"
-                    ></input>
-                    Người lớn
-                  </label>
-                  <label htmlFor="HT_children">
-                    <input
-                      type="checkbox"
-                      id="HT_children"
-                      name="HumanType"
-                      value="children"
-                    ></input>
-                    Trẻ em
-                  </label>
-                </div>
-              </div>
-              <div className="DoctorResultFilter">
-                <div className="DoctorResultFilterHeader">
-                  <header>Giới tính</header>
-                </div>
-                <div className="DoctorResultFilterContent">
-                  <label htmlFor="S_male">
-                    <input
-                      type="checkbox"
-                      id="S_male"
-                      name="Sex"
-                      value="male"
-                    ></input>
-                    Nam
-                  </label>
-                  <label htmlFor="S_female">
-                    <input
-                      type="checkbox"
-                      id="S_female"
-                      name="Sex"
-                      value="female"
-                    ></input>
-                    Nữ
-                  </label>
-                </div>
-              </div>
-              <div className="DoctorResultFilter">
-                <div className="DoctorResultFilterHeader">
-                  <header>Phí tham vấn theo giờ</header>
-                </div>
-                <div className="DoctorResultFilterContent PriceFilter flex-center">
-                  <div>Từ</div>
-                  <div className="InputMinPrice flex-center">
-                    <span>đ </span>
-                    <input
-                      type="number"
-                      name="MinPrice"
-                      id="MinPriceField"
-                    ></input>
-                  </div>
-                  <div>đến</div>
-                  <div className="InputMaxPrice flex-center">
-                    <span>đ </span>
-                    <input
-                      type="number"
-                      name="MaxPrice"
-                      id="MaxPriceField"
-                    ></input>
-                  </div>
-                </div>
-              </div>
-              <div className="DoctorFilterReset">
-                <button className="ResetButton flex-center">
-                  <span>
-                    <FaTrashCan />
-                  </span>
-                  <span>Xoá tất cả</span>
-                </button>
-              </div> */}
             </div>
-            {/* <div className="HospitalResultFilters" id="HospitalResultFilters">
-              <div className="HospitalResultFilter">
-                <div className="HospitalResultFilterHeader">
-                  <header>Có thể nhận lịch hẹn</header>
-                </div>
-                <div className="HospitalResultFilterContent">
-                  <label htmlFor="ST_service">
-                    <input
-                      type="radio"
-                      name="ServiceType"
-                      id="ST_service"
-                      value="ST_service"
-                    ></input>
-                    Dịch vụ
-                  </label>
-                  <label htmlFor="ST_doctor">
-                    <input
-                      type="radio"
-                      name="ServiceType"
-                      id="ST_doctor"
-                      value="ST_doctor"
-                    ></input>
-                    Bác sĩ
-                  </label>
-                </div>
-              </div>
-              <div className="HospitalResultReset">
-                <button className="ResetButton flex-center">
-                  <span>
-                    <FaTrashCan />
-                  </span>
-                  <span>Xoá tất cả</span>
-                </button>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>
