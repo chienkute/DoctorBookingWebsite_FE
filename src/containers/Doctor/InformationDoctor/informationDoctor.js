@@ -27,6 +27,8 @@ const InformationDoctor = () => {
   const [imageOld, setImageOld] = useState("");
   const [formData, setFormData] = useState(new FormData());
   const [urlImage, setUrlImage] = useState("");
+  const [price, setPrice] = useState(0);
+  const [rating, setRating] = useState(0);
   const toDataURL = (url) =>
     fetch(urlImage)
       .then((response) => response.blob())
@@ -81,6 +83,8 @@ const InformationDoctor = () => {
       setEmail(res?.account?.email);
       setUsername(res?.account?.username);
       setUrlImage(res?.account?.avatar);
+      setPrice(res?.price);
+      setRating(res?.rating);
     }
   };
   useEffect(() => {
@@ -118,6 +122,7 @@ const InformationDoctor = () => {
       gender: gender,
       email: email,
       username: username,
+      price: price,
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Bạn chưa nhập tên bệnh viện"),
@@ -126,6 +131,7 @@ const InformationDoctor = () => {
         .min(9, "Số điện thoại ít nhất phải hơn 9 chữ số"),
       address: Yup.string().required("Bạn chưa nhập địa chỉ"),
       year: Yup.string().required("Bạn chưa nhập số năm làm việc"),
+      price: Yup.string().required("Bạn chưa nhập giá dịch vụ"),
       username: Yup.string().required("Bạn chưa nhập tên tài khoản"),
       email: Yup.string()
         .required("Bạn chưa nhập email")
@@ -144,6 +150,7 @@ const InformationDoctor = () => {
           values.year,
           values.birthday,
           values.gender,
+          values.price,
         );
         if (res) {
           console.log(res);
@@ -169,6 +176,7 @@ const InformationDoctor = () => {
       gender: gender,
       email: email,
       username: username,
+      price: price,
     });
   };
   return (
@@ -283,6 +291,23 @@ const InformationDoctor = () => {
                 />
               </div>
             </div>
+            <div className="information__name" style={{ marginTop: "12px" }}>
+              <label htmlFor="">
+                Giá dịch vụ (đ)<span className="validate">*</span>
+              </label>
+              <input
+                type="number"
+                id="price"
+                className="form-control"
+                value={formik.values.price}
+                disabled={edit ? true : false}
+                onChange={formik.handleChange}
+                {...formik.getFieldProps("price")}
+              />
+              <div className="form__error">
+                {formik.touched.price && formik.errors.price}
+              </div>
+            </div>
           </div>
           <div className="information__content2">
             <div className="information__name">
@@ -357,6 +382,17 @@ const InformationDoctor = () => {
               <div className="form__error">
                 {formik.touched.year && formik.errors.year}
               </div>
+            </div>
+            <div className="information__name" style={{ marginTop: "7px" }}>
+              <label htmlFor="">
+                Số sao đánh giá trung bình <span className="validate">*</span>
+              </label>
+              <input
+                className="form-control"
+                disabled
+                autoComplete="off"
+                value={rating}
+              />
             </div>
           </div>
         </div>

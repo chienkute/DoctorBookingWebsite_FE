@@ -48,7 +48,7 @@ const Register = () => {
         toast.success("Đăng ký thành công");
         navigate("/login");
       } else {
-        toast.error("Đăng ký thất bại");
+        toast.error("Tài khoản hoặc email đã tồn tại !!");
       }
     },
   });
