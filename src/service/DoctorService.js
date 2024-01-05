@@ -45,6 +45,7 @@ const editDoctorInformation = (
   years_of_experience,
   birthday,
   gender,
+  price,
 ) => {
   return instance.patch(`/api/doctors/${id}/`, {
     name,
@@ -53,6 +54,7 @@ const editDoctorInformation = (
     years_of_experience,
     birthday,
     gender,
+    price,
   });
 };
 const getBlog = (id, name, id_category, offset) => {

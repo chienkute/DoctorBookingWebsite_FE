@@ -19,15 +19,18 @@ const Confirm = () => {
   const [userInfo, setUserInfo] = useState([]);
   const [loading, setLoading] = useState(true);
   const { schedule, time, days, idUser, timeStart, timeEnd, dayBook } =
-    location.state;
-  console.log(dayBook);
+    location?.state || {};
+  const handleError = () => {
+    toast.error("Bạn cần phải cập nhật đầy đủ thông tin cá nhân !!");
+  };
   const book = async () => {
     let res = await Booking(id, schedule, dayBook, time);
-    if (res) {
+    if (res?.date) {
+      console.log(res);
       toast.success("Đặt lịch thành công");
       navigate(`/care/doctor/${id}`);
       console.log(res);
-    } else {
+    } else if (res?.detail === "Schedule_Doctor is full") {
       toast.error("Lịch đã bị đặt từ trước");
       navigate(`/care/doctor/${id}`);
     }
@@ -48,21 +51,22 @@ const Confirm = () => {
   };
   const getUserByID = async () => {
     let res = await getUserID(idUser);
-    if (res && res?.phone) {
+    if (res) {
       setLoading(false);
       setUserInfo(res);
     }
   };
   useEffect(() => {
+    if (!location.state) {
+      setLoading(true);
+      return; // Kết thúc sớm useEffect để tránh việc gọi các hàm tiếp theo
+    }
     getDoctor();
     getUserByID();
     setLoading(true);
-  // eslint-disable-next-line
+    // eslint-disable-next-line
+    // if (!localStorage.getItem("user")) return navigate("/");
   }, []);
-  if (!location.state) {
-    setLoading(true);
-    return navigate(`"/care/doctor/${id}`);
-  }
   return (
     <div>
       {loading ? (
@@ -110,7 +114,9 @@ const Confirm = () => {
                   <div className="confirm__infor_content_header_text">
                     <p>{userInfo?.name || "-------"}</p>
                     <div className="confirm__infor_content_header_text2">
-                      {userInfo?.gender ? <p>Nam</p> : <p>Nữ</p>}
+                      {userInfo?.gender === true && <p>Nam</p>}
+                      {userInfo?.gender === false && <p>Nữ</p>}
+                      {userInfo?.gender === null && <p>---</p>}
                       <div className="dot"></div>
                       <p>
                         {userInfo?.birthday ? (
@@ -249,9 +255,15 @@ const Confirm = () => {
               >
                 Hủy
               </button>
-              <button type="button" class="btn button" onClick={book}>
-                Xác nhận lịch hẹn
-              </button>
+              {userInfo?.phone === null ? (
+                <button type="button" class="btn button" onClick={handleError}>
+                  Xác nhận lịch hẹn
+                </button>
+              ) : (
+                <button type="button" class="btn button" onClick={book}>
+                  Xác nhận lịch hẹn
+                </button>
+              )}
             </div>
           </div>
         </div>

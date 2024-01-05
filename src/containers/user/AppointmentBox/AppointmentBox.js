@@ -26,7 +26,7 @@ const AppointmentBox = (props) => {
   const [timeStart, setTimeStart] = useState("");
   const [timeEnd, setTimeEnd] = useState("");
   const [dateBook, setDateBook] = useState("");
-  console.log(dateBook);
+  console.log(idSchedule);
   const getUser = () => {
     const user = localStorage.getItem("user");
     if (user) {
@@ -91,7 +91,7 @@ const AppointmentBox = (props) => {
     getIdSchedule();
     handleDayNow();
     getUser();
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
   return (
     <div className="AppointmentBoxContainer">

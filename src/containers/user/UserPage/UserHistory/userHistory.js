@@ -36,7 +36,7 @@ const UserHistory = () => {
   const [scheduleBook, setScheduleBook] = useState([]);
   const [scheduleComing, setScheduleComing] = useState([]);
   const [schedulePassed, setSchedulePassed] = useState([]);
-  const [update, setUpdate] = useState(false);
+  // const [update, setUpdate] = useState(false);
   const [name, setName] = useState("");
   const [specialty, setSpecialty] = useState([]);
   const [hospital, setHospital] = useState("");
@@ -70,6 +70,7 @@ const UserHistory = () => {
     if (res?.date) {
       console.log(res);
       toast.success("Hủy thành công!");
+      getBooking();
     } else {
       toast.error("Có lỗi trong việc xử lý!");
     }
@@ -87,9 +88,9 @@ const UserHistory = () => {
   useEffect(() => {
     getBooking();
   }, []);
-  useEffect(() => {
-    getBooking();
-  }, [update]);
+  // useEffect(() => {
+  //   getBooking();
+  // }, [update]);
   return (
     <div className="UserPageContainer">
       <div className="UserPageContent">
@@ -256,8 +257,6 @@ const UserHistory = () => {
                                         onClick={() => {
                                           handleClose();
                                           cancelSchedule(idSchedule);
-                                          setUpdate(!update);
-                                          getBooking();
                                         }}
                                       >
                                         Xác nhận hủy
@@ -447,7 +446,32 @@ const UserHistory = () => {
                                     <button
                                       type="button"
                                       class="btn btn-link btn-sm btn-rounded"
-                                      onClick={handleShowScheduleComing}
+                                      onClick={() => {
+                                        handleShowScheduleComing();
+                                        setName(
+                                          item?.schedule_doctor?.doctor?.name,
+                                        );
+                                        setSpecialty(
+                                          item?.schedule_doctor?.doctor
+                                            ?.specialties,
+                                        );
+                                        setHospital(
+                                          item?.schedule_doctor?.doctor
+                                            ?.hospital?.name,
+                                        );
+                                        setTimeStart(
+                                          item?.schedule_doctor?.schedule
+                                            ?.start,
+                                        );
+                                        setTimeEnd(
+                                          item?.schedule_doctor?.schedule?.end,
+                                        );
+                                        setDate(item?.date);
+                                        setAddress(
+                                          item?.schedule_doctor?.doctor
+                                            ?.hospital?.address,
+                                        );
+                                      }}
                                       style={{ transform: "translateX(26px)" }}
                                     >
                                       Xem
